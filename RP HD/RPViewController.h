@@ -10,4 +10,14 @@
 
 @interface RPViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *metadataInfo;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImage;
+@property (weak, nonatomic) IBOutlet UIButton *playOrStopButton;
+@property (weak, nonatomic) IBOutlet UIView *volumeViewContainer;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+- (IBAction)playOrStop:(id)sender;
+- (IBAction)bitrateChanged:(id)sender;
+- (IBAction)refreshImage:(id)sender;
+
 @end

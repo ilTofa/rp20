@@ -7,12 +7,18 @@
 //
 
 #import "RPViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface RPViewController ()
 
 @end
 
 @implementation RPViewController
+@synthesize metadataInfo;
+@synthesize coverImage;
+@synthesize playOrStopButton;
+@synthesize volumeViewContainer;
+@synthesize spinner;
 
 - (void)viewDidLoad
 {
@@ -22,6 +28,11 @@
 
 - (void)viewDidUnload
 {
+    [self setMetadataInfo:nil];
+    [self setCoverImage:nil];
+    [self setPlayOrStopButton:nil];
+    [self setVolumeViewContainer:nil];
+    [self setSpinner:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -31,4 +42,12 @@
     return YES;
 }
 
+- (IBAction)playOrStop:(id)sender {
+}
+
+- (IBAction)bitrateChanged:(id)sender {
+}
+
+- (IBAction)refreshImage:(id)sender {
+}
 @end

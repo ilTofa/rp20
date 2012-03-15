@@ -15,6 +15,16 @@
 		64F802411512272E0080D442 /* RPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F802401512272E0080D442 /* RPAppDelegate.m */; };
 		64F802441512272E0080D442 /* RPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F802431512272E0080D442 /* RPViewController.m */; };
 		64F802471512272E0080D442 /* RPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F802451512272E0080D442 /* RPViewController.xib */; };
+		64F80253151228950080D442 /* button-play.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F8024E151228950080D442 /* button-play.png */; };
+		64F80254151228950080D442 /* button-play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F8024F151228950080D442 /* button-play@2x.png */; };
+		64F80255151228950080D442 /* button-stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F80250151228950080D442 /* button-stop.png */; };
+		64F80256151228950080D442 /* button-stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F80251151228950080D442 /* button-stop@2x.png */; };
+		64F80257151228950080D442 /* logo_2011_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F80252151228950080D442 /* logo_2011_rphd.png */; };
+		64F8025F1512338D0080D442 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F8025E1512338D0080D442 /* Icon.png */; };
+		64F80267151234710080D442 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F80266151234710080D442 /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		64F8026C1512386A0080D442 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802691512386A0080D442 /* AudioToolbox.framework */; };
+		64F8026E1512386A0080D442 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F8026B1512386A0080D442 /* MediaPlayer.framework */; };
+		64F80270151239120080D442 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F8026F151239120080D442 /* CFNetwork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,15 +32,26 @@
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		64F802341512272E0080D442 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		64F802381512272E0080D442 /* RP HD-Info.plist */ = {isa = PBXFileReference; path = "RP HD-Info.plist"; sourceTree = "<group>"; };
+		64F802381512272E0080D442 /* RP HD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RP HD-Info.plist"; sourceTree = "<group>"; };
 		64F8023A1512272E0080D442 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		64F8023C1512272E0080D442 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		64F8023E1512272E0080D442 /* RP HD-Prefix.pch */ = {isa = PBXFileReference; path = "RP HD-Prefix.pch"; sourceTree = "<group>"; };
-		64F8023F1512272E0080D442 /* RPAppDelegate.h */ = {isa = PBXFileReference; path = RPAppDelegate.h; sourceTree = "<group>"; };
+		64F8023E1512272E0080D442 /* RP HD-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RP HD-Prefix.pch"; sourceTree = "<group>"; };
+		64F8023F1512272E0080D442 /* RPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPAppDelegate.h; sourceTree = "<group>"; };
 		64F802401512272E0080D442 /* RPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RPAppDelegate.m; sourceTree = "<group>"; };
-		64F802421512272E0080D442 /* RPViewController.h */ = {isa = PBXFileReference; path = RPViewController.h; sourceTree = "<group>"; };
+		64F802421512272E0080D442 /* RPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPViewController.h; sourceTree = "<group>"; };
 		64F802431512272E0080D442 /* RPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RPViewController.m; sourceTree = "<group>"; };
 		64F802461512272E0080D442 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RPViewController.xib; sourceTree = "<group>"; };
+		64F8024E151228950080D442 /* button-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-play.png"; path = "Images/button-play.png"; sourceTree = "<group>"; };
+		64F8024F151228950080D442 /* button-play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-play@2x.png"; path = "Images/button-play@2x.png"; sourceTree = "<group>"; };
+		64F80250151228950080D442 /* button-stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-stop.png"; path = "Images/button-stop.png"; sourceTree = "<group>"; };
+		64F80251151228950080D442 /* button-stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-stop@2x.png"; path = "Images/button-stop@2x.png"; sourceTree = "<group>"; };
+		64F80252151228950080D442 /* logo_2011_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_2011_rphd.png; path = Images/logo_2011_rphd.png; sourceTree = "<group>"; };
+		64F8025E1512338D0080D442 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		64F80265151234710080D442 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
+		64F80266151234710080D442 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
+		64F802691512386A0080D442 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		64F8026B1512386A0080D442 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		64F8026F151239120080D442 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64F80270151239120080D442 /* CFNetwork.framework in Frameworks */,
+				64F8026C1512386A0080D442 /* AudioToolbox.framework in Frameworks */,
+				64F8026E1512386A0080D442 /* MediaPlayer.framework in Frameworks */,
 				64F802311512272E0080D442 /* UIKit.framework in Frameworks */,
 				64F802331512272E0080D442 /* Foundation.framework in Frameworks */,
 				64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */,
@@ -67,6 +91,9 @@
 		64F8022F1512272E0080D442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64F8026F151239120080D442 /* CFNetwork.framework */,
+				64F802691512386A0080D442 /* AudioToolbox.framework */,
+				64F8026B1512386A0080D442 /* MediaPlayer.framework */,
 				64F802301512272E0080D442 /* UIKit.framework */,
 				64F802321512272E0080D442 /* Foundation.framework */,
 				64F802341512272E0080D442 /* CoreGraphics.framework */,
@@ -77,6 +104,8 @@
 		64F802361512272E0080D442 /* RP HD */ = {
 			isa = PBXGroup;
 			children = (
+				64F80264151234710080D442 /* audiostream */,
+				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
 				64F802421512272E0080D442 /* RPViewController.h */,
@@ -96,6 +125,28 @@
 				64F8023E1512272E0080D442 /* RP HD-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		64F8024D151228870080D442 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				64F8025E1512338D0080D442 /* Icon.png */,
+				64F8024E151228950080D442 /* button-play.png */,
+				64F8024F151228950080D442 /* button-play@2x.png */,
+				64F80250151228950080D442 /* button-stop.png */,
+				64F80251151228950080D442 /* button-stop@2x.png */,
+				64F80252151228950080D442 /* logo_2011_rphd.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		64F80264151234710080D442 /* audiostream */ = {
+			isa = PBXGroup;
+			children = (
+				64F80265151234710080D442 /* AudioStreamer.h */,
+				64F80266151234710080D442 /* AudioStreamer.m */,
+			);
+			path = audiostream;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +202,12 @@
 			files = (
 				64F8023B1512272E0080D442 /* InfoPlist.strings in Resources */,
 				64F802471512272E0080D442 /* RPViewController.xib in Resources */,
+				64F80253151228950080D442 /* button-play.png in Resources */,
+				64F80254151228950080D442 /* button-play@2x.png in Resources */,
+				64F80255151228950080D442 /* button-stop.png in Resources */,
+				64F80256151228950080D442 /* button-stop@2x.png in Resources */,
+				64F80257151228950080D442 /* logo_2011_rphd.png in Resources */,
+				64F8025F1512338D0080D442 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +221,7 @@
 				64F8023D1512272E0080D442 /* main.m in Sources */,
 				64F802411512272E0080D442 /* RPAppDelegate.m in Sources */,
 				64F802441512272E0080D442 /* RPViewController.m in Sources */,
+				64F80267151234710080D442 /* AudioStreamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
