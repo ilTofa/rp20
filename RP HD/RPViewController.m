@@ -34,9 +34,11 @@
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
      {
          NSLog(@"HD image url received %@ ", (data) ? @"successfully." : @"with errors.");
+         NSLog(@"received %lld bytes", res.expectedContentLength);
          if(data)
          {
-             NSString *imageUrl = [[NSString stringWithUTF8String:[data bytes]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+             NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//             NSString *imageUrl = [[NSString stringWithUTF8String:[data bytes]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
              if(imageUrl)
              {
                  NSLog(@"Now loading real image url: <%@>", imageUrl);
