@@ -19,8 +19,8 @@
 @synthesize coverImage = _coverImage;
 @synthesize playOrStopButton = _playOrStopButton;
 @synthesize volumeViewContainer = _volumeViewContainer;
-@synthesize webImage = _webImage;
 @synthesize spinner = _spinner;
+@synthesize hdImage = _hdImage;
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
@@ -40,8 +40,20 @@
              NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
              if(imageUrl)
              {
-                 NSLog(@"Now loading real image url: <%@>", imageUrl);
-                 [self.webImage loadHTMLString:[NSString stringWithFormat:@"<body bgcolor=#000000 leftmargin=\"0\" rightmargin=\"0\" topmargin=\"0\" bottommargin=\"0\"><img style=\"width:100%%\" src=\"%@\"/></body>", imageUrl] baseURL:nil];
+                 NSLog(@"Loading HD image from: <%@>", imageUrl);
+                 NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:imageUrl]];
+                 [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+                  {
+                      if(data)
+                      {
+                          UIImage *temp = [UIImage imageWithData:data];
+                          NSLog(@"hdImage is: %@", temp);
+                          // load image on the main thread
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              [self.hdImage setImage:temp];
+                          });
+                      }
+                  }];
              }
              else {
                  NSLog(@"Got an invalid URL");
@@ -146,7 +158,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopSpinner:) name:kStreamConnected object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil]; 
     self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
-    self.webImage.hidden = NO;
+    self.hdImage.hidden = NO;
     [self.theStreamer start];
 }
 
@@ -156,7 +168,7 @@
     [self.theTimer invalidate];
     self.theTimer = nil;
     [self stopSpinner:nil];
-    self.webImage.hidden = YES;
+    self.hdImage.hidden = YES;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
@@ -209,10 +221,9 @@
     // reset text
     self.metadataInfo.text = @"";
     self.theURL = kRPURL64K;
-    [self.webImage loadHTMLString:@"<body bgcolor=#000000></body>" baseURL:nil];
-    self.webImage.layer.cornerRadius = 10.0;
-    self.webImage.clipsToBounds = YES;
-    self.coverImage.layer.cornerRadius = 5.0;
+    self.hdImage.layer.cornerRadius = 8.0;
+    self.hdImage.clipsToBounds = YES;
+    self.coverImage.layer.cornerRadius = 4.0;
     self.coverImage.clipsToBounds = YES;
     // Add the volume (fake it on simulator)
     self.volumeViewContainer.backgroundColor = [UIColor clearColor];
@@ -241,7 +252,7 @@
     [self setImageLoadQueue:nil];
     [self setCoverImage:nil];
     [self setPlayOrStopButton:nil];
-    [self setWebImage:nil];
+    [self setHdImage:nil];
     [super viewDidUnload];
 }
 

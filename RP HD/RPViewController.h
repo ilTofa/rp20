@@ -26,12 +26,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *coverImage;
 @property (weak, nonatomic) IBOutlet UIButton *playOrStopButton;
 @property (weak, nonatomic) IBOutlet UIView *volumeViewContainer;
-@property (weak, nonatomic) IBOutlet UIWebView *webImage;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UIImageView *hdImage;
 
 @property (strong, nonatomic) AudioStreamer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
 @property (strong, nonatomic) NSTimer *theTimer;
+
 @property (copy, nonatomic) NSString *theURL;
 
 - (IBAction)playOrStop:(id)sender;

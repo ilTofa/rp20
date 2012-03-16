@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
+		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
+		64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FD151388860061DD49 /* Default-Landscape.png */; };
+		64AAFA00151389820061DD49 /* AboutBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FF151389820061DD49 /* AboutBox.xib */; };
+		64AAFA06151391210061DD49 /* RPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA05151391200061DD49 /* RPViewController.m */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
 		64F8023B1512272E0080D442 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64F802391512272E0080D442 /* InfoPlist.strings */; };
 		64F8023D1512272E0080D442 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F8023C1512272E0080D442 /* main.m */; };
 		64F802411512272E0080D442 /* RPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F802401512272E0080D442 /* RPAppDelegate.m */; };
-		64F802441512272E0080D442 /* RPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F802431512272E0080D442 /* RPViewController.m */; };
 		64F802471512272E0080D442 /* RPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F802451512272E0080D442 /* RPViewController.xib */; };
 		64F80253151228950080D442 /* button-play.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F8024E151228950080D442 /* button-play.png */; };
 		64F80254151228950080D442 /* button-play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F8024F151228950080D442 /* button-play@2x.png */; };
@@ -28,6 +32,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
+		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
+		64AAF9FD151388860061DD49 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/Default-Landscape.png"; sourceTree = "<group>"; };
+		64AAF9FF151389820061DD49 /* AboutBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutBox.xib; sourceTree = "<group>"; };
+		64AAFA04151391200061DD49 /* RPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPViewController.h; sourceTree = "<group>"; };
+		64AAFA05151391200061DD49 /* RPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPViewController.m; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -38,8 +48,6 @@
 		64F8023E1512272E0080D442 /* RP HD-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RP HD-Prefix.pch"; sourceTree = "<group>"; };
 		64F8023F1512272E0080D442 /* RPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPAppDelegate.h; sourceTree = "<group>"; };
 		64F802401512272E0080D442 /* RPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RPAppDelegate.m; sourceTree = "<group>"; };
-		64F802421512272E0080D442 /* RPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPViewController.h; sourceTree = "<group>"; };
-		64F802431512272E0080D442 /* RPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RPViewController.m; sourceTree = "<group>"; };
 		64F802461512272E0080D442 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RPViewController.xib; sourceTree = "<group>"; };
 		64F8024E151228950080D442 /* button-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-play.png"; path = "Images/button-play.png"; sourceTree = "<group>"; };
 		64F8024F151228950080D442 /* button-play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-play@2x.png"; path = "Images/button-play@2x.png"; sourceTree = "<group>"; };
@@ -108,9 +116,10 @@
 				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
-				64F802421512272E0080D442 /* RPViewController.h */,
-				64F802431512272E0080D442 /* RPViewController.m */,
+				64AAFA04151391200061DD49 /* RPViewController.h */,
+				64AAFA05151391200061DD49 /* RPViewController.m */,
 				64F802451512272E0080D442 /* RPViewController.xib */,
+				64AAF9FF151389820061DD49 /* AboutBox.xib */,
 				64F802371512272E0080D442 /* Supporting Files */,
 			);
 			path = "RP HD";
@@ -130,6 +139,9 @@
 		64F8024D151228870080D442 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
+				64AAF9F8151383220061DD49 /* Screen-Down.png */,
+				64AAF9F9151383220061DD49 /* Screen-Down@2x.png */,
 				64F8025E1512338D0080D442 /* Icon.png */,
 				64F8024E151228950080D442 /* button-play.png */,
 				64F8024F151228950080D442 /* button-play@2x.png */,
@@ -208,6 +220,10 @@
 				64F80256151228950080D442 /* button-stop@2x.png in Resources */,
 				64F80257151228950080D442 /* logo_2011_rphd.png in Resources */,
 				64F8025F1512338D0080D442 /* Icon.png in Resources */,
+				64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */,
+				64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */,
+				64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */,
+				64AAFA00151389820061DD49 /* AboutBox.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,8 +236,8 @@
 			files = (
 				64F8023D1512272E0080D442 /* main.m in Sources */,
 				64F802411512272E0080D442 /* RPAppDelegate.m in Sources */,
-				64F802441512272E0080D442 /* RPViewController.m in Sources */,
 				64F80267151234710080D442 /* AudioStreamer.m in Sources */,
+				64AAFA06151391210061DD49 /* RPViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +351,7 @@
 				64F8024C1512272E0080D442 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
