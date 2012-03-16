@@ -109,8 +109,6 @@
                  else
                      self.coverImage.image = [UIImage imageNamed:@"Radio-160"];
              }];
-            // Now load the big image...
-            [self loadNewImage:nil];
         }
     }
 }
@@ -127,6 +125,27 @@
     self.theURL = [self.theStreamer.url absoluteString];
     [self stopPressed:nil];
     self.metadataInfo.text = @"Stream redirected, please restart...";
+}
+
+-(void)applicationChangedState:(NSNotification *)note
+{
+    NSLog(@"applicationChangedState: %@", note.name);
+    if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
+    {
+        NSLog(@"No more images, please");
+        [self.theTimer invalidate];
+        self.theTimer = nil;
+    }
+    if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
+    {
+        NSLog(@"Images again, please");
+        if(self.theStreamer.isPlaying)
+        {
+            [self loadNewImage:nil];
+            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+        }
+    }
+    
 }
 
 -(void) startSpinner
@@ -158,8 +177,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopSpinner:) name:kStreamConnected object:nil]; 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil]; 
-    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil]; 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil]; 
+    // Only if the app is active, if this is called via events there's no need to load images
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+    {
+        [self loadNewImage:nil];
+        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+    }
     self.hdImage.hidden = NO;
     [self.theStreamer start];
 }
