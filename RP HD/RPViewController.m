@@ -38,7 +38,6 @@
          if(data)
          {
              NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//             NSString *imageUrl = [[NSString stringWithUTF8String:[data bytes]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
              if(imageUrl)
              {
                  NSLog(@"Now loading real image url: <%@>", imageUrl);
@@ -84,9 +83,15 @@
             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
             [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
              {
-                 NSLog(@"coverReceived %@ ", (data) ? @"successfully." : @"with errors.");
                  if(data)
-                     self.coverImage.image = [UIImage imageWithData:data];
+                 {
+                     UIImage *temp = [UIImage imageWithData:data];
+                     NSLog(@"image is: %@", temp);
+                     // load image on the main thread
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [self.coverImage setImage:temp];
+                     });
+                 }
                  else
                      self.coverImage.image = [UIImage imageNamed:@"Radio-160"];
              }];
