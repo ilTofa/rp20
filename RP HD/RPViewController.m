@@ -16,17 +16,20 @@
 @implementation RPViewController
 
 @synthesize metadataInfo = _metadataInfo;
-@synthesize coverImage = _coverImage;
+// @synthesize coverImage = _coverImage;
 @synthesize playOrStopButton = _playOrStopButton;
 @synthesize volumeViewContainer = _volumeViewContainer;
 @synthesize spinner = _spinner;
 @synthesize hdImage = _hdImage;
 @synthesize aboutButton = _aboutButton;
+@synthesize rpWebButton = _rpWebButton;
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
 @synthesize theTimer = _theTimer;
 @synthesize theAboutBox = _theAboutBox;
+@synthesize theWebView = _theWebView;
+@synthesize currentSongForumURL = _currentSongForumURL;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -103,11 +106,17 @@
                      NSLog(@"image is: %@", temp);
                      // load image on the main thread
                      dispatch_async(dispatch_get_main_queue(), ^{
-                         [self.coverImage setImage:temp];
+                         [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
+                         [self.rpWebButton setBackgroundImage:temp forState:UIControlStateHighlighted];
+                         [self.rpWebButton setBackgroundImage:temp forState:UIControlStateSelected];
                      });
                  }
                  else
-                     self.coverImage.image = [UIImage imageNamed:@"Radio-160"];
+                 {
+                     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
+                     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
+                     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
+                 }
              }];
         }
     }
@@ -160,7 +169,9 @@
     if(!note)
     {
         self.metadataInfo.text = @"";
-        self.coverImage.image = [UIImage imageNamed:@"Radio-160"];
+        [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
+        [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
+        [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
     }
 }
 
@@ -174,6 +185,7 @@
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
+    self.rpWebButton.hidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopSpinner:) name:kStreamConnected object:nil]; 
@@ -197,6 +209,7 @@
     self.theTimer = nil;
     [self stopSpinner:nil];
     self.hdImage.hidden = YES;
+    self.rpWebButton.hidden = YES;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
@@ -250,6 +263,17 @@
     [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
+- (IBAction)presentRPWeb:(id)sender 
+{
+    if(self.theWebView == nil)
+    {
+        self.theWebView = [[RPForumView alloc] initWithNibName:@"RPForumView" bundle:[NSBundle mainBundle]];
+        self.theWebView.modalPresentationStyle = UIModalPresentationPageSheet;
+    }
+    [self presentViewController:self.theWebView animated:YES completion:nil];
+    self.theWebView = nil;
+}
+
 #pragma mark -
 #pragma mark LoadUnload
 
@@ -259,11 +283,12 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     // reset text
     self.metadataInfo.text = @"";
+    self.rpWebButton.hidden = YES;
     self.theURL = kRPURL64K;
     self.hdImage.layer.cornerRadius = 8.0;
     self.hdImage.clipsToBounds = YES;
-    self.coverImage.layer.cornerRadius = 4.0;
-    self.coverImage.clipsToBounds = YES;
+    self.rpWebButton.layer.cornerRadius = 4.0;
+    self.rpWebButton.clipsToBounds = YES;
     // Add the volume (fake it on simulator)
     self.volumeViewContainer.backgroundColor = [UIColor clearColor];
     if (!TARGET_IPHONE_SIMULATOR)
@@ -289,10 +314,10 @@
     [self setVolumeViewContainer:nil];
     [self.imageLoadQueue cancelAllOperations];
     [self setImageLoadQueue:nil];
-    [self setCoverImage:nil];
     [self setPlayOrStopButton:nil];
     [self setHdImage:nil];
     [self setAboutButton:nil];
+    [self setRpWebButton:nil];
     [super viewDidUnload];
 }
 

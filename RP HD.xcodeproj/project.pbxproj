@@ -13,6 +13,14 @@
 		64AAFA00151389820061DD49 /* AboutBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FF151389820061DD49 /* AboutBox.xib */; };
 		64AAFA06151391210061DD49 /* RPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA05151391200061DD49 /* RPViewController.m */; };
 		64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA08151393260061DD49 /* RPAboutBox.m */; };
+		64AAFA0D1513A7000061DD49 /* RPForumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA0B1513A6FF0061DD49 /* RPForumView.m */; };
+		64AAFA0E1513A7000061DD49 /* RPForumView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */; };
+		64AAFA111513F41A0061DD49 /* RP-meta.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA0F1513F41A0061DD49 /* RP-meta.png */; };
+		64AAFA121513F41A0061DD49 /* RP-meta@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA101513F41A0061DD49 /* RP-meta@2x.png */; };
+		64AAFA171513F8D30061DD49 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA131513F8D30061DD49 /* back.png */; };
+		64AAFA181513F8D30061DD49 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA141513F8D30061DD49 /* back@2x.png */; };
+		64AAFA191513F8D30061DD49 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA151513F8D30061DD49 /* forward.png */; };
+		64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA161513F8D30061DD49 /* forward@2x.png */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
@@ -41,6 +49,15 @@
 		64AAFA05151391200061DD49 /* RPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPViewController.m; sourceTree = "<group>"; };
 		64AAFA07151393260061DD49 /* RPAboutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPAboutBox.h; sourceTree = "<group>"; };
 		64AAFA08151393260061DD49 /* RPAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAboutBox.m; sourceTree = "<group>"; };
+		64AAFA0A1513A6FF0061DD49 /* RPForumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPForumView.h; sourceTree = "<group>"; };
+		64AAFA0B1513A6FF0061DD49 /* RPForumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPForumView.m; sourceTree = "<group>"; };
+		64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPForumView.xib; sourceTree = "<group>"; };
+		64AAFA0F1513F41A0061DD49 /* RP-meta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RP-meta.png"; path = "Images/RP-meta.png"; sourceTree = "<group>"; };
+		64AAFA101513F41A0061DD49 /* RP-meta@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RP-meta@2x.png"; path = "Images/RP-meta@2x.png"; sourceTree = "<group>"; };
+		64AAFA131513F8D30061DD49 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Images/back.png; sourceTree = "<group>"; };
+		64AAFA141513F8D30061DD49 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "Images/back@2x.png"; sourceTree = "<group>"; };
+		64AAFA151513F8D30061DD49 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = Images/forward.png; sourceTree = "<group>"; };
+		64AAFA161513F8D30061DD49 /* forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward@2x.png"; path = "Images/forward@2x.png"; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -122,6 +139,9 @@
 				64AAFA04151391200061DD49 /* RPViewController.h */,
 				64AAFA05151391200061DD49 /* RPViewController.m */,
 				64F802451512272E0080D442 /* RPViewController.xib */,
+				64AAFA0A1513A6FF0061DD49 /* RPForumView.h */,
+				64AAFA0B1513A6FF0061DD49 /* RPForumView.m */,
+				64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */,
 				64AAFA07151393260061DD49 /* RPAboutBox.h */,
 				64AAFA08151393260061DD49 /* RPAboutBox.m */,
 				64AAF9FF151389820061DD49 /* AboutBox.xib */,
@@ -144,6 +164,12 @@
 		64F8024D151228870080D442 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64AAFA131513F8D30061DD49 /* back.png */,
+				64AAFA141513F8D30061DD49 /* back@2x.png */,
+				64AAFA151513F8D30061DD49 /* forward.png */,
+				64AAFA161513F8D30061DD49 /* forward@2x.png */,
+				64AAFA0F1513F41A0061DD49 /* RP-meta.png */,
+				64AAFA101513F41A0061DD49 /* RP-meta@2x.png */,
 				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
 				64AAF9F8151383220061DD49 /* Screen-Down.png */,
 				64AAF9F9151383220061DD49 /* Screen-Down@2x.png */,
@@ -229,6 +255,13 @@
 				64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */,
 				64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */,
 				64AAFA00151389820061DD49 /* AboutBox.xib in Resources */,
+				64AAFA0E1513A7000061DD49 /* RPForumView.xib in Resources */,
+				64AAFA111513F41A0061DD49 /* RP-meta.png in Resources */,
+				64AAFA121513F41A0061DD49 /* RP-meta@2x.png in Resources */,
+				64AAFA171513F8D30061DD49 /* back.png in Resources */,
+				64AAFA181513F8D30061DD49 /* back@2x.png in Resources */,
+				64AAFA191513F8D30061DD49 /* forward.png in Resources */,
+				64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +277,7 @@
 				64F80267151234710080D442 /* AudioStreamer.m in Sources */,
 				64AAFA06151391210061DD49 /* RPViewController.m in Sources */,
 				64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */,
+				64AAFA0D1513A7000061DD49 /* RPForumView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
