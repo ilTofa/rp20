@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #include <QuartzCore/QuartzCore.h>
 #import "AudioStreamer.h"
+#import "RPAboutBox.h"
 
 #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
 #define kRPURL64K @"http://207.200.96.231:8004"
@@ -28,14 +29,17 @@
 @property (weak, nonatomic) IBOutlet UIView *volumeViewContainer;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UIImageView *hdImage;
+@property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 
 @property (strong, nonatomic) AudioStreamer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
 @property (strong, nonatomic) NSTimer *theTimer;
+@property (strong, nonatomic) UIPopoverController *theAboutBox;
 
 @property (copy, nonatomic) NSString *theURL;
 
 - (IBAction)playOrStop:(id)sender;
 - (IBAction)bitrateChanged:(id)sender;
+- (IBAction)presentAboutBox:(id)sender;
 
 @end

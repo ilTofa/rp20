@@ -12,6 +12,7 @@
 		64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FD151388860061DD49 /* Default-Landscape.png */; };
 		64AAFA00151389820061DD49 /* AboutBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FF151389820061DD49 /* AboutBox.xib */; };
 		64AAFA06151391210061DD49 /* RPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA05151391200061DD49 /* RPViewController.m */; };
+		64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA08151393260061DD49 /* RPAboutBox.m */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
@@ -38,6 +39,8 @@
 		64AAF9FF151389820061DD49 /* AboutBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutBox.xib; sourceTree = "<group>"; };
 		64AAFA04151391200061DD49 /* RPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPViewController.h; sourceTree = "<group>"; };
 		64AAFA05151391200061DD49 /* RPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPViewController.m; sourceTree = "<group>"; };
+		64AAFA07151393260061DD49 /* RPAboutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPAboutBox.h; sourceTree = "<group>"; };
+		64AAFA08151393260061DD49 /* RPAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAboutBox.m; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -119,6 +122,8 @@
 				64AAFA04151391200061DD49 /* RPViewController.h */,
 				64AAFA05151391200061DD49 /* RPViewController.m */,
 				64F802451512272E0080D442 /* RPViewController.xib */,
+				64AAFA07151393260061DD49 /* RPAboutBox.h */,
+				64AAFA08151393260061DD49 /* RPAboutBox.m */,
 				64AAF9FF151389820061DD49 /* AboutBox.xib */,
 				64F802371512272E0080D442 /* Supporting Files */,
 			);
@@ -238,6 +243,7 @@
 				64F802411512272E0080D442 /* RPAppDelegate.m in Sources */,
 				64F80267151234710080D442 /* AudioStreamer.m in Sources */,
 				64AAFA06151391210061DD49 /* RPViewController.m in Sources */,
+				64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

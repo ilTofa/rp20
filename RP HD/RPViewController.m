@@ -9,7 +9,7 @@
 #import "RPViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface RPViewController ()
+@interface RPViewController () <UIPopoverControllerDelegate>
 
 @end
 
@@ -21,10 +21,12 @@
 @synthesize volumeViewContainer = _volumeViewContainer;
 @synthesize spinner = _spinner;
 @synthesize hdImage = _hdImage;
+@synthesize aboutButton = _aboutButton;
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
 @synthesize theTimer = _theTimer;
+@synthesize theAboutBox = _theAboutBox;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -115,7 +117,7 @@
 
 -(void)errorNotificationReceived:(NSNotification *)note
 {
-	NSLog(@"Stream Error.");
+	self.metadataInfo.text = @"Stream Error, please restart...";
     [self stopPressed:nil];
 }
 
@@ -124,7 +126,7 @@
 	NSLog(@"Stream Redirected\nOld: <%@>\nNew: %@", self.theURL, [self.theStreamer.url absoluteString]);
     self.theURL = [self.theStreamer.url absoluteString];
     [self stopPressed:nil];
-    [self playPressed:nil];
+    self.metadataInfo.text = @"Stream redirected, please restart...";
 }
 
 -(void) startSpinner
@@ -211,6 +213,17 @@
     }
 }
 
+- (IBAction)presentAboutBox:(id)sender 
+{
+    if(self.theAboutBox == nil)
+    {
+        self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
+        CGSize aboutSize = {340, 340};
+        self.theAboutBox.popoverContentSize = aboutSize;
+    }
+    [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
 #pragma mark -
 #pragma mark LoadUnload
 
@@ -253,6 +266,7 @@
     [self setCoverImage:nil];
     [self setPlayOrStopButton:nil];
     [self setHdImage:nil];
+    [self setAboutButton:nil];
     [super viewDidUnload];
 }
 
