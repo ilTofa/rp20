@@ -54,13 +54,17 @@
                       {
                           UIImage *temp = [UIImage imageWithData:data];
                           NSLog(@"hdImage is: %@", temp);
-                          // load image on the main thread
-                          dispatch_async(dispatch_get_main_queue(), ^{
-                              [self.hdImage setImage:temp];
-                              // If we have a second screen, update also there
-                              if ([[UIScreen screens] count] > 1)
-                                  [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
-                          });
+                          // Protect from 404's
+                          if(temp)
+                          {
+                              // load image on the main thread
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self.hdImage setImage:temp];
+                                  // If we have a second screen, update also there
+                                  if ([[UIScreen screens] count] > 1)
+                                      [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
+                              });
+                          }
                       }
                   }];
              }
@@ -148,9 +152,13 @@
     NSLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
     {
-        NSLog(@"No more images, please");
-        [self.theTimer invalidate];
-        self.theTimer = nil;
+        // If we don't have a second screen...
+        if ([[UIScreen screens] count] == 1)
+        {
+            NSLog(@"No more images, please");
+            [self.theTimer invalidate];
+            self.theTimer = nil;
+        }
     }
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
     {
@@ -206,6 +214,7 @@
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
     }
     self.hdImage.hidden = NO;
+    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.theStreamer start];
 }
 
@@ -215,6 +224,7 @@
     [self.theTimer invalidate];
     self.theTimer = nil;
     [self stopSpinner:nil];
+    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
     self.hdImage.hidden = YES;
     self.rpWebButton.hidden = YES;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
