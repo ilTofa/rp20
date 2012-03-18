@@ -7,6 +7,7 @@
 //
 
 #import "RPViewController.h"
+#import "RPAppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface RPViewController () <UIPopoverControllerDelegate>
@@ -56,6 +57,9 @@
                           // load image on the main thread
                           dispatch_async(dispatch_get_main_queue(), ^{
                               [self.hdImage setImage:temp];
+                              // If we have a second screen, update also there
+                              if ([[UIScreen screens] count] > 1)
+                                  [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
                           });
                       }
                   }];
@@ -88,6 +92,9 @@
             NSString *temp = [[item substringFromIndex:range.length] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
             NSLog(@"Song name: %@", temp);
             self.metadataInfo.text = temp;
+            // If we have a second screen, update also there
+            if ([[UIScreen screens] count] > 1)
+                ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = temp;
         }
         // Look for URL
         range = [item rangeOfString:@"StreamUrl="];
@@ -362,6 +369,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    NSLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
     if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
         return YES;
     else

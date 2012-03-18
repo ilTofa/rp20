@@ -15,6 +15,35 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
+@synthesize windowTV = _windowTV;
+@synthesize TVviewController = _TVviewController;
+
+- (void) myScreenInit:(UIScreen *)connectedScreen
+{
+    NSLog(@"Init TV screen");
+    //Intitialise TV Screen
+    if(!self.windowTV)
+    {
+        NSLog(@"window init");
+        CGRect frame = connectedScreen.bounds;
+        self.windowTV = [[UIWindow alloc] initWithFrame:frame];
+        self.windowTV.backgroundColor = [UIColor blackColor];
+        [self.windowTV setScreen:connectedScreen];
+        self.windowTV.hidden = NO;
+    }
+    // Generate a view controller and substitute the existing one.
+    self.TVviewController = [[RPTVViewController alloc] initWithNibName:@"RPTVViewController" bundle:[NSBundle mainBundle]];
+    UIViewController* release = self.windowTV.rootViewController;
+    self.windowTV.rootViewController = self.TVviewController;
+    [release removeFromParentViewController];
+}
+
+- (void)screenDidConnect:(NSNotification *)notification 
+{
+    NSLog(@"Second screen notification fired (and catched)");
+    [self myScreenInit:[notification object]];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -22,6 +51,11 @@
     self.viewController = [[RPViewController alloc] initWithNibName:@"RPViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    // Now go for the second screen thing.
+    if ([[UIScreen screens] count] > 1)
+        [self myScreenInit:[[UIScreen screens] objectAtIndex:1]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenDidConnect:) name:UIScreenDidConnectNotification object:nil];
+
     return YES;
 }
 

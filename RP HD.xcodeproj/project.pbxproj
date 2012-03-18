@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		641709621515521C00F53185 /* RPTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641709601515521C00F53185 /* RPTVViewController.m */; };
+		641709631515521C00F53185 /* RPTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 641709611515521C00F53185 /* RPTVViewController.xib */; };
 		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
 		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
 		64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FD151388860061DD49 /* Default-Landscape.png */; };
@@ -41,6 +43,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6417095F1515521C00F53185 /* RPTVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPTVViewController.h; sourceTree = "<group>"; };
+		641709601515521C00F53185 /* RPTVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPTVViewController.m; sourceTree = "<group>"; };
+		641709611515521C00F53185 /* RPTVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPTVViewController.xib; sourceTree = "<group>"; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
 		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
 		64AAF9FD151388860061DD49 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/Default-Landscape.png"; sourceTree = "<group>"; };
@@ -136,6 +141,9 @@
 				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
+				6417095F1515521C00F53185 /* RPTVViewController.h */,
+				641709601515521C00F53185 /* RPTVViewController.m */,
+				641709611515521C00F53185 /* RPTVViewController.xib */,
 				64AAFA04151391200061DD49 /* RPViewController.h */,
 				64AAFA05151391200061DD49 /* RPViewController.m */,
 				64F802451512272E0080D442 /* RPViewController.xib */,
@@ -262,6 +270,7 @@
 				64AAFA181513F8D30061DD49 /* back@2x.png in Resources */,
 				64AAFA191513F8D30061DD49 /* forward.png in Resources */,
 				64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */,
+				641709631515521C00F53185 /* RPTVViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +287,7 @@
 				64AAFA06151391210061DD49 /* RPViewController.m in Sources */,
 				64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */,
 				64AAFA0D1513A7000061DD49 /* RPForumView.m in Sources */,
+				641709621515521C00F53185 /* RPTVViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

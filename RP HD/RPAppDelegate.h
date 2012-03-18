@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPTVViewController.h"
 
 @class RPViewController;
 
 @interface RPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow *windowTV;
 
 @property (strong, nonatomic) RPViewController *viewController;
+@property (strong, nonatomic) RPTVViewController *TVviewController;
 
 @end
