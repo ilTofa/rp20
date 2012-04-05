@@ -9,6 +9,7 @@
 #import "RPViewController.h"
 #import "RPAppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "FlurryAnalytics.h"
 
 @interface RPViewController () <UIPopoverControllerDelegate>
 
@@ -153,6 +154,8 @@
     NSLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
     {
+        if(self.theStreamer.isPlaying)
+            [FlurryAnalytics logEvent:@"Backgrounding while playing"];
         // If we don't have a second screen...
         if ([[UIScreen screens] count] == 1)
         {
@@ -166,6 +169,7 @@
         NSLog(@"Images again, please");
         if(self.theStreamer.isPlaying)
         {
+            [FlurryAnalytics logEvent:@"In Foreground while Playing"];
             [self loadNewImage:nil];
             self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
         }
@@ -196,6 +200,7 @@
 
 - (void)realPlay:(id)sender 
 {
+    [FlurryAnalytics logEvent:@"Streaming" timed:YES];
     self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
     [self startSpinner];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
@@ -222,6 +227,7 @@
 - (void)playFromRedirector
 {
     NSLog(@"Starting play for <%@>.", self.theRedirector);
+
     // Now search for audio redirector type of files
     NSArray *values = [NSArray arrayWithObjects:@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u", nil];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
@@ -262,6 +268,7 @@
 
 - (void)stopPressed:(id)sender 
 {
+    [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
     [self.theStreamer stop];
     [self.theTimer invalidate];
     self.theTimer = nil;
@@ -293,12 +300,15 @@
     {
         case 0:
             self.theRedirector = kRPURL24K;
+            [FlurryAnalytics logEvent:@"24K selected"];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
+            [FlurryAnalytics logEvent:@"64K selected"];
             break;
         case 2:
             self.theRedirector = kRPURL128K;
+            [FlurryAnalytics logEvent:@"128K selected"];
             break;
         default:
             break;

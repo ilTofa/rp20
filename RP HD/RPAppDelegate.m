@@ -9,6 +9,7 @@
 #import "RPAppDelegate.h"
 
 #import "RPViewController.h"
+#import "FlurryAnalytics.h"
 
 @implementation RPAppDelegate
 
@@ -20,6 +21,7 @@
 
 - (void) myScreenInit:(UIScreen *)connectedScreen
 {
+    [FlurryAnalytics logEvent:@"TV Screen inited"];
     NSLog(@"Init TV screen");
     //Intitialise TV Screen
     if(!self.windowTV)
@@ -47,10 +49,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.viewController = [[RPViewController alloc] initWithNibName:@"RPViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    // Init Flurry Analytics
+    [FlurryAnalytics startSession:@"PP44G74JCE81THYJRKTV"];
     // Now go for the second screen thing.
     if ([[UIScreen screens] count] > 1)
         [self myScreenInit:[[UIScreen screens] objectAtIndex:1]];

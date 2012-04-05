@@ -7,6 +7,7 @@
 //
 
 #import "RPForumView.h"
+#import "FlurryAnalytics.h"
 
 @interface RPForumView () <UIWebViewDelegate, UIActionSheetDelegate>
 
@@ -67,6 +68,7 @@
     // Don't show the ugly white window... :)
     self.theWebView.hidden = YES;
     [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:kRPCurrentSongForum]]];
+    [FlurryAnalytics logEvent:@"Forum" timed:YES];
 }
 
 - (void)viewDidUnload
@@ -89,6 +91,7 @@
 
 - (IBAction)viewIsDone:(id)sender 
 {
+    [FlurryAnalytics endTimedEvent:@"Forum" withParameters:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
