@@ -27,6 +27,7 @@
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
+@synthesize theRedirector = _theRedirector;
 @synthesize theTimer = _theTimer;
 @synthesize theAboutBox = _theAboutBox;
 @synthesize theWebView = _theWebView;
@@ -193,7 +194,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (void)playPressed:(id)sender 
+- (void)realPlay:(id)sender 
 {
     self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
     [self startSpinner];
@@ -216,6 +217,47 @@
     self.hdImage.hidden = NO;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.theStreamer start];
+}
+
+- (void)playFromRedirector
+{
+    NSLog(@"Starting play for <%@>.", self.theRedirector);
+    // Now search for audio redirector type of files
+    NSArray *values = [NSArray arrayWithObjects:@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u", nil];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
+    NSArray * searchResults = [values filteredArrayUsingPredicate:predicate];
+    // if an audio redirector is found...
+    if([searchResults count] > 0)
+    {
+        // Now loading the redirector to find the "right" URL
+        NSLog(@"Loading audio redirector of type %@ from <%@>.", [searchResults objectAtIndex:0], self.theRedirector);
+        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
+        [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+         {
+             if(data)
+             {
+                 NSString *redirectorData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 NSLog(@"Data from redirector are:\n<%@>", redirectorData);
+                 // Now get the URLs
+                 NSError *error = NULL;
+                 NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+                 NSTextCheckingResult *result = [detector firstMatchInString:redirectorData options:0 range:NSMakeRange(0, [redirectorData length])];
+                 if(result && result.range.location != NSNotFound)
+                 {
+                     NSLog(@"Found URL: %@", result.URL);                     
+                     self.theURL = [result.URL absoluteString];
+                     // call the play on main thread
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [self realPlay:nil];
+                     });
+                 }
+                 else 
+                     NSLog(@"URL not found in redirector.");
+             }
+             else 
+                 NSLog(@"Error loading redirector: %@", [err localizedDescription]);
+         }];
+    }
 }
 
 - (void)stopPressed:(id)sender 
@@ -242,7 +284,7 @@
     if(self.theStreamer.isPlaying)
         [self stopPressed:nil];
     else
-        [self playPressed:nil];
+        [self playFromRedirector];
 }
 
 - (IBAction)bitrateChanged:(id)sender 
@@ -250,23 +292,21 @@
     switch (((UISegmentedControl *)sender).selectedSegmentIndex) 
     {
         case 0:
-            self.theURL = kRPURL24K;
+            self.theRedirector = kRPURL24K;
             break;
         case 1:
-            self.theURL = kRPURL64K;
+            self.theRedirector = kRPURL64K;
             break;
         case 2:
-            self.theURL = kRPURL128K;
+            self.theRedirector = kRPURL128K;
             break;
         default:
             break;
     }
     // If needed, restart the stream
     if(self.theStreamer.isPlaying)
-    {
         [self stopPressed:nil];
-        [self playPressed:nil];
-    }
+    [self playFromRedirector];
 }
 
 - (IBAction)presentAboutBox:(id)sender 
@@ -301,7 +341,7 @@
     // reset text
     self.metadataInfo.text = @"";
     self.rpWebButton.hidden = YES;
-    self.theURL = kRPURL64K;
+    self.theRedirector = kRPURL64K;
     self.hdImage.layer.cornerRadius = 8.0;
     self.hdImage.clipsToBounds = YES;
     self.rpWebButton.layer.cornerRadius = 4.0;

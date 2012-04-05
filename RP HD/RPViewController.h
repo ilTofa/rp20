@@ -12,13 +12,13 @@
 #import "RPAboutBox.h"
 #import "RPForumView.h"
 
-#define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
-#define kRPURL64K @"http://207.200.96.231:8004"
-#define kRPURL128K @"http://scfire-mtc-aa03.stream.aol.com:80/stream/1048"
+// #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
+// #define kRPURL64K @"http://207.200.96.231:8004"
+// #define kRPURL128K @"http://scfire-mtc-aa03.stream.aol.com:80/stream/1048"
 
-#define kRPm3u24K @"http://www.radioparadise.com/musiclinks/rp_24aac.m3u"
-#define kRPm3u64K @"http://www.radioparadise.com/musiclinks/rp_64aac.m3u"
-#define kRPm3u128K @"http://www.radioparadise.com/musiclinks/rp_128.m3u"
+#define kRPURL24K @"http://www.radioparadise.com/musiclinks/rp_24aac.m3u"
+#define kRPURL64K @"http://www.radioparadise.com/musiclinks/rp_64aac.m3u"
+#define kRPURL128K @"http://www.radioparadise.com/musiclinks/rp_128.m3u"
 
 #define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
 
@@ -40,6 +40,7 @@
 @property (strong, nonatomic) RPForumView *theWebView;
 
 @property (copy, nonatomic) NSString *theURL;
+@property (copy, nonatomic) NSString *theRedirector;
 @property (copy, nonatomic) NSString *currentSongForumURL;
 
 - (IBAction)playOrStop:(id)sender;
