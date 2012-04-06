@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		641709621515521C00F53185 /* RPTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641709601515521C00F53185 /* RPTVViewController.m */; };
 		641709631515521C00F53185 /* RPTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 641709611515521C00F53185 /* RPTVViewController.xib */; };
+		644689FF152F9F8600BCDEBF /* logo_2011_rphd_280@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 644689FE152F9F8600BCDEBF /* logo_2011_rphd_280@2x.png */; };
+		64468A05152FA20E00BCDEBF /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A00152FA20E00BCDEBF /* Icon-Small-50.png */; };
+		64468A06152FA20E00BCDEBF /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */; };
+		64468A07152FA20E00BCDEBF /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A02152FA20E00BCDEBF /* Icon-Small.png */; };
+		64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */; };
+		64468A09152FA20E00BCDEBF /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A04152FA20E00BCDEBF /* Icon@2x.png */; };
+		64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */; };
 		64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6491340F152DFD9A00029692 /* libFlurryAnalytics.a */; };
 		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
 		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
@@ -47,6 +54,14 @@
 		6417095F1515521C00F53185 /* RPTVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPTVViewController.h; sourceTree = "<group>"; };
 		641709601515521C00F53185 /* RPTVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPTVViewController.m; sourceTree = "<group>"; };
 		641709611515521C00F53185 /* RPTVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPTVViewController.xib; sourceTree = "<group>"; };
+		644689FE152F9F8600BCDEBF /* logo_2011_rphd_280@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_rphd_280@2x.png"; path = "Images/logo_2011_rphd_280@2x.png"; sourceTree = "<group>"; };
+		64468A00152FA20E00BCDEBF /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		64468A02152FA20E00BCDEBF /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		64468A04152FA20E00BCDEBF /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/Default-Landscape@2x.png"; sourceTree = "<group>"; };
+		64468A0C152FA45200BCDEBF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		6491340E152DFD9A00029692 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
 		6491340F152DFD9A00029692 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
@@ -175,6 +190,13 @@
 		64F802371512272E0080D442 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				64F8025E1512338D0080D442 /* Icon.png */,
+				64468A00152FA20E00BCDEBF /* Icon-Small-50.png */,
+				64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */,
+				64468A02152FA20E00BCDEBF /* Icon-Small.png */,
+				64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */,
+				64468A04152FA20E00BCDEBF /* Icon@2x.png */,
+				64468A0C152FA45200BCDEBF /* iTunesArtwork */,
 				64F802381512272E0080D442 /* RP HD-Info.plist */,
 				64F802391512272E0080D442 /* InfoPlist.strings */,
 				64F8023C1512272E0080D442 /* main.m */,
@@ -193,14 +215,15 @@
 				64AAFA0F1513F41A0061DD49 /* RP-meta.png */,
 				64AAFA101513F41A0061DD49 /* RP-meta@2x.png */,
 				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
+				64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */,
 				64AAF9F8151383220061DD49 /* Screen-Down.png */,
 				64AAF9F9151383220061DD49 /* Screen-Down@2x.png */,
-				64F8025E1512338D0080D442 /* Icon.png */,
 				64F8024E151228950080D442 /* button-play.png */,
 				64F8024F151228950080D442 /* button-play@2x.png */,
 				64F80250151228950080D442 /* button-stop.png */,
 				64F80251151228950080D442 /* button-stop@2x.png */,
 				64F80252151228950080D442 /* logo_2011_rphd.png */,
+				644689FE152F9F8600BCDEBF /* logo_2011_rphd_280@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -285,6 +308,13 @@
 				64AAFA191513F8D30061DD49 /* forward.png in Resources */,
 				64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */,
 				641709631515521C00F53185 /* RPTVViewController.xib in Resources */,
+				644689FF152F9F8600BCDEBF /* logo_2011_rphd_280@2x.png in Resources */,
+				64468A05152FA20E00BCDEBF /* Icon-Small-50.png in Resources */,
+				64468A06152FA20E00BCDEBF /* Icon-Small-50@2x.png in Resources */,
+				64468A07152FA20E00BCDEBF /* Icon-Small.png in Resources */,
+				64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */,
+				64468A09152FA20E00BCDEBF /* Icon@2x.png in Resources */,
+				64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
