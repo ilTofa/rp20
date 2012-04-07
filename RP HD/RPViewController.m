@@ -153,28 +153,31 @@
 {
     NSLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
-    {
-        if(self.theStreamer.isPlaying)
-            [FlurryAnalytics logEvent:@"Backgrounding while playing"];
-        // If we don't have a second screen...
-        if ([[UIScreen screens] count] == 1)
-        {
-            NSLog(@"No more images, please");
-            [self.theTimer invalidate];
-            self.theTimer = nil;
-        }
-    }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(self.theStreamer.isPlaying)
+            {
+                [FlurryAnalytics logEvent:@"Backgrounding while playing"];
+            }
+            // If we don't have a second screen...
+            if ([[UIScreen screens] count] == 1)
+            {
+                NSLog(@"No more images, please");
+                [self.theTimer invalidate];
+                self.theTimer = nil;
+            }
+        });
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
-    {
-        NSLog(@"Images again, please");
-        if(self.theStreamer.isPlaying)
-        {
-            [FlurryAnalytics logEvent:@"In Foreground while Playing"];
-            [self loadNewImage:nil];
-            self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
-        }
-    }
-    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Images again, please");
+            if(self.theStreamer.isPlaying)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [FlurryAnalytics logEvent:@"In Foreground while Playing"];
+                    [self loadNewImage:nil];
+                    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+                });
+            }
+        });
 }
 
 -(void) startSpinner

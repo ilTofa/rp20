@@ -724,7 +724,7 @@ void ReadStreamCallBack
 					if (myData->metaDataBytesRemaining > 0)
 					{
 						//NSLog(@"meta: %C", bytes[i]);
-						[myData.metaDataString appendFormat:@"%C", bytes[i]];
+						[myData.metaDataString appendFormat:@"%c", bytes[i]];
 					
 						myData->metaDataBytesRemaining -= 1;
 					
