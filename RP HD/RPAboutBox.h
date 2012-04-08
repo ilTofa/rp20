@@ -10,4 +10,6 @@
 
 @interface RPAboutBox : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *lVersion;
+
 @end

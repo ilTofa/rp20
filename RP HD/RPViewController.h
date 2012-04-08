@@ -32,12 +32,18 @@
 @property (weak, nonatomic) IBOutlet UIImageView *hdImage;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 @property (weak, nonatomic) IBOutlet UIButton *rpWebButton;
+@property (weak, nonatomic) IBOutlet UIButton *minimizerButton;
+@property (weak, nonatomic) IBOutlet UIImageView *logoImage;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *bitrateSelector;
+@property (weak, nonatomic) IBOutlet UIButton *songNameButton;
+@property (weak, nonatomic) IBOutlet UIImageView *separatorImage;
 
 @property (strong, nonatomic) AudioStreamer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
 @property (strong, nonatomic) NSTimer *theTimer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
+@property (nonatomic) BOOL isViewMinimized;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;
@@ -48,5 +54,6 @@
 - (IBAction)presentAboutBox:(id)sender;
 - (IBAction)presentRPWeb:(id)sender;
 - (IBAction)songNameOverlayButton:(id)sender;
+- (IBAction)minimizer:(id)sender;
 
 @end

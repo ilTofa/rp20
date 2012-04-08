@@ -25,6 +25,11 @@
 @synthesize hdImage = _hdImage;
 @synthesize aboutButton = _aboutButton;
 @synthesize rpWebButton = _rpWebButton;
+@synthesize minimizerButton = _minimizerButton;
+@synthesize logoImage = _logoImage;
+@synthesize bitrateSelector = _bitrateSelector;
+@synthesize songNameButton = _songNameButton;
+@synthesize separatorImage = _separatorImage;
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
@@ -33,6 +38,7 @@
 @synthesize theAboutBox = _theAboutBox;
 @synthesize theWebView = _theWebView;
 @synthesize currentSongForumURL = _currentSongForumURL;
+@synthesize isViewMinimized = _isViewMinimized;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -223,6 +229,7 @@
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
     }
     self.hdImage.hidden = NO;
+    self.minimizerButton.enabled = YES;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.theStreamer start];
 }
@@ -286,6 +293,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+    if(self.isViewMinimized)
+        [self minimizer:nil];
+    self.minimizerButton.enabled = NO;
     self.theStreamer = nil;
 }
 
@@ -327,8 +337,7 @@
     if(self.theAboutBox == nil)
     {
         self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
-        CGSize aboutSize = {340, 340};
-        self.theAboutBox.popoverContentSize = aboutSize;
+        self.theAboutBox.popoverContentSize = CGSizeMake(340, 361);
     }
     [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
@@ -347,6 +356,47 @@
 - (IBAction)songNameOverlayButton:(id)sender 
 {
     [self presentRPWeb:sender];
+}
+
+- (void) minimizeInterface
+{
+    [UIView animateWithDuration:0.5 
+                     animations:^(void) {
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
+                         self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
+                         self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
+                         self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
+                         self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
+                         self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
+                     }
+                     completion:^(BOOL finished) {
+                         self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;                         
+                     }];    
+}
+
+- (void) maximizeInterface
+{
+    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    [UIView animateWithDuration:0.5
+                     animations:^(void) {
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
+                         self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
+                         self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
+                         self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
+                         self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
+                         self.playOrStopButton.frame = CGRectMake(416, 651, 43, 43);
+                         self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
+                     }];
+}
+
+- (IBAction)minimizer:(id)sender 
+{
+    if(self.isViewMinimized)
+        [self maximizeInterface];
+    else
+        [self minimizeInterface];
+    self.isViewMinimized = !self.isViewMinimized;
 }
 
 #pragma mark -
@@ -380,6 +430,8 @@
         myVolumeView = nil;
     }
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
+    self.isViewMinimized = NO;
+    self.minimizerButton.enabled = NO;
     // Automagically start, as per bg request
     [self playFromRedirector];
 }
@@ -395,6 +447,11 @@
     [self setHdImage:nil];
     [self setAboutButton:nil];
     [self setRpWebButton:nil];
+    [self setMinimizerButton:nil];
+    [self setLogoImage:nil];
+    [self setBitrateSelector:nil];
+    [self setSongNameButton:nil];
+    [self setSeparatorImage:nil];
     [super viewDidUnload];
 }
 
