@@ -375,6 +375,8 @@
         myVolumeView = nil;
     }
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
+    // Automagically start, as per bg request
+    [self playFromRedirector];
 }
 
 - (void)viewDidUnload
