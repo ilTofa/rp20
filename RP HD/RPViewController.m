@@ -344,6 +344,11 @@
     self.theWebView = nil;
 }
 
+- (IBAction)songNameOverlayButton:(id)sender 
+{
+    [self presentRPWeb:sender];
+}
+
 #pragma mark -
 #pragma mark LoadUnload
 

@@ -47,5 +47,6 @@
 - (IBAction)bitrateChanged:(id)sender;
 - (IBAction)presentAboutBox:(id)sender;
 - (IBAction)presentRPWeb:(id)sender;
+- (IBAction)songNameOverlayButton:(id)sender;
 
 @end
