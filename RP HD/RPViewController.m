@@ -47,21 +47,21 @@
     NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImageURLURL]];
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
      {
-         NSLog(@"HD image url received %@ ", (data) ? @"successfully." : @"with errors.");
-         NSLog(@"received %lld bytes", res.expectedContentLength);
+         DLog(@"HD image url received %@ ", (data) ? @"successfully." : @"with errors.");
+         DLog(@"received %lld bytes", res.expectedContentLength);
          if(data)
          {
              NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
              if(imageUrl)
              {
-                 NSLog(@"Loading HD image from: <%@>", imageUrl);
+                 DLog(@"Loading HD image from: <%@>", imageUrl);
                  NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:imageUrl]];
                  [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
                   {
                       if(data)
                       {
                           UIImage *temp = [UIImage imageWithData:data];
-                          NSLog(@"hdImage is: %@", temp);
+                          DLog(@"hdImage is: %@", temp);
                           // Protect from 404's
                           if(temp)
                           {
@@ -77,7 +77,7 @@
                   }];
              }
              else {
-                 NSLog(@"Got an invalid URL");
+                 DLog(@"Got an invalid URL");
              }
          }
      }];
@@ -91,18 +91,18 @@
     // Parse metadata...
     NSString *metadata = self.theStreamer.metaDataString;
     
-    NSLog(@"Raw metadata: %@", metadata);
-    NSLog(@" Stream type: %@", self.theStreamer.streamContentType);
+    DLog(@"Raw metadata: %@", metadata);
+    DLog(@" Stream type: %@", self.theStreamer.streamContentType);
 	NSArray *listItems = [metadata componentsSeparatedByString:@";"];
     NSRange range;
     for (NSString *item in listItems) {
-        NSLog(@"item: %@", item);
+        DLog(@"item: %@", item);
         // Look for title
         range = [item rangeOfString:@"StreamTitle="];
         if(range.location != NSNotFound)
         {
             NSString *temp = [[item substringFromIndex:range.length] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
-            NSLog(@"Song name: %@", temp);
+            DLog(@"Song name: %@", temp);
             self.metadataInfo.text = temp;
             // If we have a second screen, update also there
             if ([[UIScreen screens] count] > 1)
@@ -114,7 +114,7 @@
         {
             NSString *temp = [item substringFromIndex:range.length];
             temp = [temp stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
-            NSLog(@"URL: <%@>", temp);
+            DLog(@"URL: <%@>", temp);
             [self.imageLoadQueue cancelAllOperations];
             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
             [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
@@ -122,7 +122,7 @@
                  if(data)
                  {
                      UIImage *temp = [UIImage imageWithData:data];
-                     NSLog(@"image is: %@", temp);
+                     DLog(@"image is: %@", temp);
                      // load image on the main thread
                      dispatch_async(dispatch_get_main_queue(), ^{
                          [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
@@ -149,7 +149,7 @@
 
 -(void)streamRedirected:(NSNotification *)note
 {
-	NSLog(@"Stream Redirected\nOld: <%@>\nNew: %@", self.theURL, [self.theStreamer.url absoluteString]);
+	DLog(@"Stream Redirected\nOld: <%@>\nNew: %@", self.theURL, [self.theStreamer.url absoluteString]);
     self.theURL = [self.theStreamer.url absoluteString];
     [self stopPressed:nil];
     self.metadataInfo.text = @"Stream redirected, please restart...";
@@ -157,7 +157,7 @@
 
 -(void)applicationChangedState:(NSNotification *)note
 {
-    NSLog(@"applicationChangedState: %@", note.name);
+    DLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
             if(self.theStreamer.isPlaying)
@@ -167,14 +167,14 @@
             // If we don't have a second screen...
             if ([[UIScreen screens] count] == 1)
             {
-                NSLog(@"No more images, please");
+                DLog(@"No more images, please");
                 [self.theTimer invalidate];
                 self.theTimer = nil;
             }
         });
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Images again, please");
+            DLog(@"Images again, please");
             if(self.theStreamer.isPlaying)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -236,7 +236,7 @@
 
 - (void)playFromRedirector
 {
-    NSLog(@"Starting play for <%@>.", self.theRedirector);
+    DLog(@"Starting play for <%@>.", self.theRedirector);
 
     // Now search for audio redirector type of files
     NSArray *values = [NSArray arrayWithObjects:@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u", nil];
@@ -246,21 +246,21 @@
     if([searchResults count] > 0)
     {
         // Now loading the redirector to find the "right" URL
-        NSLog(@"Loading audio redirector of type %@ from <%@>.", [searchResults objectAtIndex:0], self.theRedirector);
+        DLog(@"Loading audio redirector of type %@ from <%@>.", [searchResults objectAtIndex:0], self.theRedirector);
         NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
         [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
          {
              if(data)
              {
                  NSString *redirectorData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                 NSLog(@"Data from redirector are:\n<%@>", redirectorData);
+                 DLog(@"Data from redirector are:\n<%@>", redirectorData);
                  // Now get the URLs
                  NSError *error = NULL;
                  NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
                  NSTextCheckingResult *result = [detector firstMatchInString:redirectorData options:0 range:NSMakeRange(0, [redirectorData length])];
                  if(result && result.range.location != NSNotFound)
                  {
-                     NSLog(@"Found URL: %@", result.URL);                     
+                     DLog(@"Found URL: %@", result.URL);                     
                      self.theURL = [result.URL absoluteString];
                      // call the play on main thread
                      dispatch_async(dispatch_get_main_queue(), ^{
@@ -268,10 +268,10 @@
                      });
                  }
                  else 
-                     NSLog(@"URL not found in redirector.");
+                     DLog(@"URL not found in redirector.");
              }
              else 
-                 NSLog(@"Error loading redirector: %@", [err localizedDescription]);
+                 DLog(@"Error loading redirector: %@", [err localizedDescription]);
          }];
     }
 }
@@ -496,7 +496,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    NSLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
+    DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
     if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
         return YES;
     else

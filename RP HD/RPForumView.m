@@ -40,13 +40,13 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"webloadStarted");
+    DLog(@"webloadStarted");
     [self.theSpinner startAnimating];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"page Loaded");
+    DLog(@"page Loaded");
     self.theWebView.hidden = NO;
     [self.theSpinner stopAnimating];
     self.goForwardButton.enabled = [self.theWebView canGoForward];

@@ -78,7 +78,7 @@ void MyPropertyListenerProc(	void *							inClientData,
 			UInt32 asbdSize = sizeof(asbd);
 			err = AudioFileStreamGetProperty(inAudioFileStream, kAudioFileStreamProperty_DataFormat, &asbdSize, &asbd);
 			if (err) { PRINTERROR("get kAudioFileStreamProperty_DataFormat"); myData->failed = true; break; }
-			//NSLog(@"mFormatID: %c", asbd.mFormatID);
+			//DLog(@"mFormatID: %c", asbd.mFormatID);
 			
 			//
 			// http://blog.stormyprods.com/2009/10/supporting-aac-via-iphone-sdk.html
@@ -86,7 +86,7 @@ void MyPropertyListenerProc(	void *							inClientData,
 			UInt32 formatListSize;
 			err = AudioFileStreamGetPropertyInfo(inAudioFileStream, kAudioFileStreamProperty_FormatList, &formatListSize, &writable);
 			if (!err) {
-				NSLog(@"formatListSize %lu\n", formatListSize);
+				DLog(@"formatListSize %lu\n", formatListSize);
 				
 				// get the FormatList data
 				void* formatListData = calloc(1, formatListSize);
@@ -97,15 +97,15 @@ void MyPropertyListenerProc(	void *							inClientData,
 				for (int x = 0; x < formatListSize; x += sizeof(AudioFormatListItem)){
 					AudioStreamBasicDescription *pasbd = formatListData + x;
 					
-					NSLog(@"rate: %lf  Format:%lu%lu%lu%lu  FramesPerPacket:%lu  bytesPerFrame:%lu ChannelsperFrame:%lu\r\n",
+					DLog(@"rate: %lf  Format:%lu%lu%lu%lu  FramesPerPacket:%lu  bytesPerFrame:%lu ChannelsperFrame:%lu\r\n",
 						  pasbd->mSampleRate, (pasbd->mFormatID>>24)&255, (pasbd->mFormatID>>16)&255, (pasbd->mFormatID>>8)&255, (pasbd->mFormatID)&255,
 						  pasbd->mFramesPerPacket, pasbd->mBytesPerFrame, pasbd->mChannelsPerFrame);
 					
 					if (pasbd->mFormatID == kAudioFormatMPEG4AAC_HE){
-						NSLog(@"Found HE AAC!");
+						DLog(@"Found HE AAC!");
 						// HE AAC isn't supported on the simulator for some reason
 						if (!TARGET_IPHONE_SIMULATOR){
-							NSLog(@"AAC memcpy");
+							DLog(@"AAC memcpy");
 							memcpy(&asbd, pasbd, sizeof(asbd));
 						}
 						break;
@@ -175,7 +175,7 @@ void MyPacketsProc(				void *							inClientData,
 										 &dataRateDataSize,
 										 &myData->bitRate);
 		if (myData->bitRate > 0) {
-			NSLog(@"BITRATE: %d", myData->bitRate);
+			DLog(@"BITRATE: %d", myData->bitRate);
 			// alert interested parties
 			[myData updateBitrate:myData->bitRate];			
 		}
@@ -433,11 +433,11 @@ void MyAudioSessionInterruptionListener(void *inClientData, UInt32 inInterruptio
 	AudioStreamer *radio = (AudioStreamer*)inClientData;
 	if (inInterruptionState == kAudioSessionBeginInterruption) {
 		[radio stop];
-		NSLog(@"kAudioSessionBeginInterruption");
+		DLog(@"kAudioSessionBeginInterruption");
 	}
 	else if (inInterruptionState == kAudioSessionEndInterruption) {
 		//[radio start]; // this doesn't work - radio is gone
-		NSLog(@"kAudioSessionEndInterruption");
+		DLog(@"kAudioSessionEndInterruption");
 	}
 }
 #endif
@@ -463,12 +463,12 @@ void ReadStreamCallBack
 	
 	if (eventType == kCFStreamEventErrorOccurred)
 	{
-		NSLog(@"kCFStreamEventErrorOccurred");
+		DLog(@"kCFStreamEventErrorOccurred");
 		myData->failed = YES;
 	}
 	else if (eventType == kCFStreamEventEndEncountered)
 	{
-		NSLog(@"kCFStreamEventEndEncountered");
+		DLog(@"kCFStreamEventEndEncountered");
 		if (myData->failed || myData->finished)
 		{
 			return;
@@ -510,7 +510,7 @@ void ReadStreamCallBack
 	}
 	else if (eventType == kCFStreamEventHasBytesAvailable)
 	{
-		//NSLog(@"kCFStreamEventHasBytesAvailable");
+		//DLog(@"kCFStreamEventHasBytesAvailable");
 		if (myData->failed || myData->finished)
 		{
 			return;
@@ -552,7 +552,7 @@ void ReadStreamCallBack
 					if (icyCheck != nil && [icyCheck caseInsensitiveCompare:@"ICY 200 OK"] == NSOrderedSame)	
 					{
 						myData.foundIcyStart = YES;
-						NSLog(@"ICY 200 OK");
+						DLog(@"ICY 200 OK");
 					}
 					else
 					{
@@ -569,7 +569,7 @@ void ReadStreamCallBack
 							// only if we haven't already set a content-type
 							if (!myData.streamContentType)
 							{
-								NSLog(@"Stream Content-Type: %@", contentType);
+								DLog(@"Stream Content-Type: %@", contentType);
 								myData.streamContentType = contentType;
 								// if this is not an mp3 stream we need to restart the audio queue
 								if ([myData.streamContentType caseInsensitiveCompare:@"audio/mpeg"] != NSOrderedSame)
@@ -582,14 +582,14 @@ void ReadStreamCallBack
 						if (myData->bitRate == 0 && icyBr)
 						{
 							myData->bitRate = [icyBr intValue];
-							NSLog(@"Stream Bitrate: %@", icyBr);
+							DLog(@"Stream Bitrate: %@", icyBr);
 							[myData updateBitrate:[icyBr intValue]];
 						}
 						
 						myData->metaDataInterval = [metaInt intValue];
 						if (metaInt)
 						{
-							NSLog(@"MetaInt: %@", metaInt);
+							DLog(@"MetaInt: %@", metaInt);
 							myData.parsedHeaders = YES;
 						}
 					}
@@ -598,7 +598,7 @@ void ReadStreamCallBack
 				{
 					// Redirect!
 					myData.redirect = YES;
-					NSLog(@"Redirect to another URL.");
+					DLog(@"Redirect to another URL.");
 					
 					NSString *escapedValue =
 					[(NSString *)CFURLCreateStringByAddingPercentEscapes(
@@ -646,7 +646,7 @@ void ReadStreamCallBack
 							
 							// get the substring for this line
 							NSString *line = [fullString substringWithRange:NSMakeRange(lineStart, (streamStart-lineStart))];
-							NSLog(@"Header Line: %@. Length: %d", line, [line length]);
+							DLog(@"Header Line: %@. Length: %d", line, [line length]);
 							
 							// check if this is icy-metaint
 							NSArray *lineItems = [line componentsSeparatedByString:@":"];
@@ -655,20 +655,20 @@ void ReadStreamCallBack
 								if ([[lineItems objectAtIndex:0] caseInsensitiveCompare:@"icy-metaint"] == NSOrderedSame)
 								{
 									myData->metaDataInterval = [[lineItems objectAtIndex:1] intValue];
-									NSLog(@"ICY MetaInt: %d", myData->metaDataInterval);
+									DLog(@"ICY MetaInt: %d", myData->metaDataInterval);
 								}
 								if ([[lineItems objectAtIndex:0] caseInsensitiveCompare:@"icy-br"] == NSOrderedSame)
 								{
 									uint32_t icybr = [[lineItems objectAtIndex:1] intValue];
 									if (myData->bitRate == 0) {
 										myData->bitRate = icybr;
-										NSLog(@"ICY BR: %d", icybr);
+										DLog(@"ICY BR: %d", icybr);
 										[myData updateBitrate:icybr];										
 									}
 								}
 								if ([[lineItems objectAtIndex:0] caseInsensitiveCompare:@"Content-Type"] == NSOrderedSame)
 								{
-									NSLog(@"ICY Stream Content-Type: %@", [lineItems objectAtIndex:1]);
+									DLog(@"ICY Stream Content-Type: %@", [lineItems objectAtIndex:1]);
 									// only if we haven't already set the content type
 									if (!myData.streamContentType)
 									{
@@ -710,7 +710,7 @@ void ReadStreamCallBack
 					if (myData.foundIcyEnd)
 					{
 						streamStart = streamStart + 4;
-						NSLog(@"Found End.");	
+						DLog(@"Found End.");	
 						myData.parsedHeaders = YES;
 					}
 			}
@@ -723,14 +723,14 @@ void ReadStreamCallBack
 					// is this a metadata byte?
 					if (myData->metaDataBytesRemaining > 0)
 					{
-						//NSLog(@"meta: %C", bytes[i]);
+						//DLog(@"meta: %C", bytes[i]);
 						[myData.metaDataString appendFormat:@"%c", bytes[i]];
 					
 						myData->metaDataBytesRemaining -= 1;
 					
 						if (myData->metaDataBytesRemaining == 0)
 						{
-							NSLog(@"MetaData: %@.", myData.metaDataString);
+							DLog(@"MetaData: %@.", myData.metaDataString);
 							[myData updateMetaData:myData.metaDataString];
 						
 							myData->dataBytesRead = 0;
@@ -742,7 +742,7 @@ void ReadStreamCallBack
 					if (myData->metaDataInterval > 0 && myData->dataBytesRead == myData->metaDataInterval)
 					{
 						myData->metaDataBytesRemaining = bytes[i] * 16;
-						//NSLog(@"Found interval. Interval: %d, Meta Length: %d", myData->metaDataInterval, myData->metaDataBytesRemaining);
+						//DLog(@"Found interval. Interval: %d, Meta Length: %d", myData->metaDataInterval, myData->metaDataBytesRemaining);
 					
 						[myData.metaDataString setString:@""];
 					
@@ -752,7 +752,7 @@ void ReadStreamCallBack
 						}
 						else
 						{
-							NSLog(@"Found interval. Meta Length: %d", myData->metaDataBytesRemaining);
+							DLog(@"Found interval. Meta Length: %d", myData->metaDataBytesRemaining);
 						}
 					
 						continue;
@@ -778,13 +778,13 @@ void ReadStreamCallBack
 				
 				if (lengthNoMetaData > 0)
 				{
-					//NSLog(@"Parsing no meta bytes (Discontinuous).");
+					//DLog(@"Parsing no meta bytes (Discontinuous).");
 					OSStatus err = AudioFileStreamParseBytes(myData->audioFileStream, lengthNoMetaData, bytesNoMetaData, kAudioFileStreamParseFlag_Discontinuity);
 					if (err) { PRINTERROR("AudioFileStreamParseBytes"); myData->failed = true;}
 				}
 				else if (myData->metaDataInterval == 0)	// make sure this isn't a stream with metadata
 				{
-					//NSLog(@"Parsing normal bytes (Discontinuous).");
+					//DLog(@"Parsing normal bytes (Discontinuous).");
 					OSStatus err = AudioFileStreamParseBytes(myData->audioFileStream, length, bytes, kAudioFileStreamParseFlag_Discontinuity);
 					if (err) { PRINTERROR("AudioFileStreamParseBytes"); myData->failed = true;}					
 				}
@@ -793,13 +793,13 @@ void ReadStreamCallBack
 			{
 				if (lengthNoMetaData > 0)
 				{
-					//NSLog(@"Parsing no meta bytes.");
+					//DLog(@"Parsing no meta bytes.");
 					OSStatus err = AudioFileStreamParseBytes(myData->audioFileStream, lengthNoMetaData, bytesNoMetaData, 0);
 					if (err) { PRINTERROR("AudioFileStreamParseBytes"); myData->failed = true; }					
 				}
 				else if (myData->metaDataInterval == 0)	// make sure this isn't a stream with metadata
 				{
-					//NSLog(@"Parsing normal bytes.");
+					//DLog(@"Parsing normal bytes.");
 					OSStatus err = AudioFileStreamParseBytes(myData->audioFileStream, length, bytes, 0);
 					if (err) { PRINTERROR("AudioFileStreamParseBytes"); myData->failed = true; }
 				}
@@ -1050,7 +1050,7 @@ void ReadStreamCallBack
 	} while (isPlaying || !finished);
 	
 cleanup:
-	NSLog(@"startInternal cleanup.");
+	DLog(@"startInternal cleanup.");
 	//
 	// Cleanup the read stream if it is still open
 	//
@@ -1137,7 +1137,7 @@ cleanup:
 	AudioFileTypeID fileTypeHint = kAudioFileMP3Type;	// default to mp3
 	if (streamContentType)
 	{
-		NSLog(@"Audio Type Hint: %@", streamContentType);
+		DLog(@"Audio Type Hint: %@", streamContentType);
 		if ([streamContentType isEqual:@"audio/aac"])
 		{
 			fileTypeHint = kAudioFileAAC_ADTSType;
@@ -1166,14 +1166,14 @@ cleanup:
 //
 - (void)stop
 {
-	NSLog(@"AudioStreamer stop.");
+	DLog(@"AudioStreamer stop.");
 	if (stream)
 	{
 		CFReadStreamClose(stream);
         CFRelease(stream);
 		stream = nil;
 		
-		NSLog(@"AudioStreamer closed stream.");
+		DLog(@"AudioStreamer closed stream.");
 		if (finished)
 		{
 			return;
@@ -1203,7 +1203,7 @@ cleanup:
 			pthread_cond_signal(&cond);
 			pthread_mutex_unlock(&mutex);
 			
-			NSLog(@"AudioStreamer stopped queue.");
+			DLog(@"AudioStreamer stopped queue.");
 		}
 		else
 		{

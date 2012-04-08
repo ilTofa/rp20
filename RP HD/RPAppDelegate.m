@@ -22,11 +22,11 @@
 - (void) myScreenInit:(UIScreen *)connectedScreen
 {
     [FlurryAnalytics logEvent:@"TV Screen inited"];
-    NSLog(@"Init TV screen");
+    DLog(@"Init TV screen");
     //Intitialise TV Screen
     if(!self.windowTV)
     {
-        NSLog(@"window init");
+        DLog(@"window init");
         CGRect frame = connectedScreen.bounds;
         self.windowTV = [[UIWindow alloc] initWithFrame:frame];
         self.windowTV.backgroundColor = [UIColor blackColor];
@@ -42,7 +42,7 @@
 
 - (void)screenDidConnect:(NSNotification *)notification 
 {
-    NSLog(@"Second screen notification fired (and catched)");
+    DLog(@"Second screen notification fired (and catched)");
     [self myScreenInit:[notification object]];
 }
 
