@@ -294,6 +294,8 @@
     // Process stop request.
     [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
     [self.theStreamer stop];
+    if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
+        [self interfaceToNormal];
     // Let's give the stream a couple seconds to really stop itself
     [self startSpinner];
     double delayInSeconds = 2.0;
@@ -311,8 +313,6 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-        if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
-            [self interfaceToNormal];
         self.minimizerButton.enabled = NO;
         self.theStreamer = nil;
         [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
@@ -405,8 +405,8 @@
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
-                         self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
-                         self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
+                         self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
+                         self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                          self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                          self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(416, 651, 43, 43);
@@ -422,8 +422,9 @@
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
-                         self.hdImage.frame = CGRectMake(-398, 0, 1820, 1024);
-                         self.minimizerButton.frame = CGRectMake(-398, 0, 1820, 1024);
+                         // 574 : 768 = 1020 : x -> x = 1020 * 768 / 574
+                         self.hdImage.frame = CGRectMake(-170, 0, 1364, 768);
+                         self.minimizerButton.frame = CGRectMake(-170, 0, 1364, 768);
                          self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                          self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
@@ -442,8 +443,10 @@
             [self interfaceToMinimized];
             break;
         case kInterfaceMinimized:
-            [self interfaceToNormal];
+            [self interfaceToZoomed];
             break;
+        case kInterfaceZoomed:
+            [self interfaceToNormal];
         default:
             DLog(@"minimizer called with self.interfaceState to %d", self.interfaceState);
             break;
