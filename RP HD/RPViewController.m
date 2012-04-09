@@ -202,6 +202,17 @@
         [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
         [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
     }
+    // If this is a real stream connect notification set and enable stop button (on main thread)
+    if(note)
+    {
+        DLog(@"This is stopSpinner from a real notification!");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
+            [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
+            [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];        
+            self.playOrStopButton.enabled = YES;
+        });
+    }
 }
 
 #pragma mark -
@@ -212,9 +223,6 @@
     [FlurryAnalytics logEvent:@"Streaming" timed:YES];
     self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
     [self startSpinner];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
     self.rpWebButton.hidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil]; 
@@ -229,6 +237,7 @@
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
     }
     self.hdImage.hidden = NO;
+    // Stop spinner will re-enable the button on stream connection
     self.minimizerButton.enabled = YES;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.theStreamer start];
@@ -238,6 +247,8 @@
 {
     DLog(@"Starting play for <%@>.", self.theRedirector);
 
+    // Disable button
+    self.playOrStopButton.enabled = NO;
     // Now search for audio redirector type of files
     NSArray *values = [NSArray arrayWithObjects:@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u", nil];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
@@ -278,27 +289,35 @@
 
 - (void)stopPressed:(id)sender 
 {
-    if(![NSThread isMainThread])
-        DLog(@"WARNING!!! Not on Main thread!");
+    // Disable button
+    self.playOrStopButton.enabled = NO;
+    // Process stop request.
     [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
     [self.theStreamer stop];
-    [self.theTimer invalidate];
-    self.theTimer = nil;
-    [self stopSpinner:nil];
-    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
-    self.hdImage.hidden = YES;
-    self.rpWebButton.hidden = YES;
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
-    if(self.isViewMinimized)
-        [self minimizer:nil];
-    self.minimizerButton.enabled = NO;
-    self.theStreamer = nil;
+    // Let's give the stream a couple seconds to really stop itself
+    [self startSpinner];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.theTimer invalidate];
+        self.theTimer = nil;
+        [self stopSpinner:nil];
+        ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
+        self.hdImage.hidden = YES;
+        self.rpWebButton.hidden = YES;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+        if(self.isViewMinimized)
+            [self minimizer:nil];
+        self.minimizerButton.enabled = NO;
+        self.theStreamer = nil;
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
+        self.playOrStopButton.enabled = YES;
+    });
 }
 
 - (IBAction)playOrStop:(id)sender 
