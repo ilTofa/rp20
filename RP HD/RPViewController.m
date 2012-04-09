@@ -309,6 +309,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
         if(self.isViewMinimized)
             [self minimizer:nil];
         self.minimizerButton.enabled = NO;
