@@ -278,6 +278,8 @@
 
 - (void)stopPressed:(id)sender 
 {
+    if(![NSThread isMainThread])
+        DLog(@"WARNING!!! Not on Main thread!");
     [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
     [self.theStreamer stop];
     [self.theTimer invalidate];

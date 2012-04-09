@@ -13,5 +13,5 @@
     #import <Foundation/Foundation.h>
 #endif
 
-// #define DLog(...) NSLog(__VA_ARGS__)
-#define DLog(...) /* */
+#define DLog(...) NSLog(__VA_ARGS__)
+// #define DLog(...) /* */
