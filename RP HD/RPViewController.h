@@ -22,6 +22,12 @@
 
 #define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
 
+typedef enum {
+    kInterfaceNormal,
+    kInterfaceMinimized,
+    kInterfaceZoomed
+} InterfaceMode;
+
 @interface RPViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *metadataInfo;
@@ -43,7 +49,7 @@
 @property (strong, nonatomic) NSTimer *theTimer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
-@property (nonatomic) BOOL isViewMinimized;
+@property (nonatomic) InterfaceMode interfaceState;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;

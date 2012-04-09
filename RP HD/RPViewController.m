@@ -38,7 +38,7 @@
 @synthesize theAboutBox = _theAboutBox;
 @synthesize theWebView = _theWebView;
 @synthesize currentSongForumURL = _currentSongForumURL;
-@synthesize isViewMinimized = _isViewMinimized;
+@synthesize interfaceState = _interfaceState;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -311,8 +311,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-        if(self.isViewMinimized)
-            [self minimizer:nil];
+        if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
+            [self interfaceToNormal];
         self.minimizerButton.enabled = NO;
         self.theStreamer = nil;
         [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
@@ -381,7 +381,7 @@
     [self presentRPWeb:sender];
 }
 
-- (void) minimizeInterface
+- (void) interfaceToMinimized
 {
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
@@ -394,32 +394,60 @@
                          self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                      }
                      completion:^(BOOL finished) {
-                         self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;                         
+                         self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.interfaceState = kInterfaceMinimized;
                      }];    
 }
 
-- (void) maximizeInterface
+- (void) interfaceToNormal
 {
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
-                         self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
-                         self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
+                         self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
+                         self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
                          self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                          self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(416, 651, 43, 43);
                          self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
+                     }
+                     completion:^(BOOL finished) {
+                         self.interfaceState = kInterfaceNormal;                    
                      }];
+}
+
+- (void)interfaceToZoomed
+{
+    [UIView animateWithDuration:0.5 
+                     animations:^(void) {
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.hdImage.frame = CGRectMake(-398, 0, 1820, 1024);
+                         self.minimizerButton.frame = CGRectMake(-398, 0, 1820, 1024);
+                         self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
+                         self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
+                         self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
+                         self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
+                     }
+                     completion:^(BOOL finished) {
+                         self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.interfaceState = kInterfaceZoomed;
+                     }];    
 }
 
 - (IBAction)minimizer:(id)sender 
 {
-    if(self.isViewMinimized)
-        [self maximizeInterface];
-    else
-        [self minimizeInterface];
-    self.isViewMinimized = !self.isViewMinimized;
+    switch (self.interfaceState) {
+        case kInterfaceNormal:
+            [self interfaceToMinimized];
+            break;
+        case kInterfaceMinimized:
+            [self interfaceToNormal];
+            break;
+        default:
+            DLog(@"minimizer called with self.interfaceState to %d", self.interfaceState);
+            break;
+    }
 }
 
 #pragma mark -
@@ -453,7 +481,7 @@
         myVolumeView = nil;
     }
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
-    self.isViewMinimized = NO;
+    self.interfaceState = kInterfaceNormal;
     self.minimizerButton.enabled = NO;
     // Automagically start, as per bg request
     [self playFromRedirector];
