@@ -433,7 +433,7 @@
 					"\"$(SRCROOT)/RP HD/FlurryAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ADD6A305-ED32-451F-9FE0-58B1ADCA8E48";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "45913A3F-0808-40BC-88D0-40BA4DCA5FE1";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -319,6 +319,9 @@
         [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
         [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
         self.playOrStopButton.enabled = YES;
+        // if called from bitrateChanged, restart
+        if(sender == self)
+            [self playFromRedirector]; 
     });
 }
 
@@ -349,10 +352,9 @@
         default:
             break;
     }
-    // If needed, restart the stream
+    // If needed, stop the stream
     if(self.theStreamer.isPlaying)
-        [self stopPressed:nil];
-    [self playFromRedirector];
+        [self stopPressed:self];
 }
 
 - (IBAction)presentAboutBox:(id)sender 
