@@ -278,11 +278,17 @@
                          [self realPlay:nil];
                      });
                  }
-                 else 
+                 else
+                 {
                      DLog(@"URL not found in redirector.");
+                     self.playOrStopButton.enabled = NO;
+                 }
              }
-             else 
+             else
+             {
+                 self.playOrStopButton.enabled = NO;
                  DLog(@"Error loading redirector: %@", [err localizedDescription]);
+             }
          }];
     }
 }
