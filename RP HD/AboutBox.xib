@@ -53,6 +53,7 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
+						<bool key="IBUIEditable">NO</bool>
 						<string key="IBUIText">RP is a blend of many styles and genres of music, carefully selected and mixed by two real human beings. You'll hear modern and classic rock, world music, electronica, even a bit of classical and jazz. What you won't hear are random computer-generated playlists or mind-numbing commercials.</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">3</int>
@@ -85,6 +86,7 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
+						<bool key="IBUIEditable">NO</bool>
 						<string key="IBUIText">This is an unofficial client made by Giacomo Tufano (http://www.ilTofa.com)</string>
 						<object class="NSColor" key="IBUITextColor" id="241203443">
 							<int key="NSColorSpace">3</int>
