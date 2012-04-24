@@ -378,7 +378,10 @@
     if(self.theWebView == nil)
     {
         self.theWebView = [[RPForumView alloc] initWithNibName:@"RPForumView" bundle:[NSBundle mainBundle]];
-        self.theWebView.modalPresentationStyle = UIModalPresentationPageSheet;
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            self.theWebView.modalPresentationStyle = UIModalPresentationPageSheet;
+        else
+            self.theWebView.modalPresentationStyle = UIModalPresentationFullScreen;
     }
     [self presentViewController:self.theWebView animated:YES completion:nil];
     self.theWebView = nil;

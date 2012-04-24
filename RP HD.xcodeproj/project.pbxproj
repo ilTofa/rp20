@@ -26,7 +26,7 @@
 		64AAFA06151391210061DD49 /* RPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA05151391200061DD49 /* RPViewController.m */; };
 		64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA08151393260061DD49 /* RPAboutBox.m */; };
 		64AAFA0D1513A7000061DD49 /* RPForumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64AAFA0B1513A6FF0061DD49 /* RPForumView.m */; };
-		64AAFA0E1513A7000061DD49 /* RPForumView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */; };
+		64AAFA0E1513A7000061DD49 /* RPForumView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA0C1513A6FF0061DD49 /* RPForumView~ipad.xib */; };
 		64AAFA111513F41A0061DD49 /* RP-meta.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA0F1513F41A0061DD49 /* RP-meta.png */; };
 		64AAFA121513F41A0061DD49 /* RP-meta@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA101513F41A0061DD49 /* RP-meta@2x.png */; };
 		64AAFA171513F8D30061DD49 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA131513F8D30061DD49 /* back.png */; };
@@ -34,6 +34,9 @@
 		64AAFA191513F8D30061DD49 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA151513F8D30061DD49 /* forward.png */; };
 		64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA161513F8D30061DD49 /* forward@2x.png */; };
 		64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D481211547577800BC1085 /* RPViewController~iphone.xib */; };
+		64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D4812215475C5300BC1085 /* RPForumView~iphone.xib */; };
+		64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D481241547607D00BC1085 /* SmallLogo_rphd.png */; };
+		64D481271547607D00BC1085 /* SmallLogo_rphd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D481251547607D00BC1085 /* SmallLogo_rphd@2x.png */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
@@ -79,7 +82,7 @@
 		64AAFA08151393260061DD49 /* RPAboutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPAboutBox.m; sourceTree = "<group>"; };
 		64AAFA0A1513A6FF0061DD49 /* RPForumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPForumView.h; sourceTree = "<group>"; };
 		64AAFA0B1513A6FF0061DD49 /* RPForumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPForumView.m; sourceTree = "<group>"; };
-		64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPForumView.xib; sourceTree = "<group>"; };
+		64AAFA0C1513A6FF0061DD49 /* RPForumView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPForumView~ipad.xib"; sourceTree = "<group>"; };
 		64AAFA0F1513F41A0061DD49 /* RP-meta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RP-meta.png"; path = "Images/RP-meta.png"; sourceTree = "<group>"; };
 		64AAFA101513F41A0061DD49 /* RP-meta@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "RP-meta@2x.png"; path = "Images/RP-meta@2x.png"; sourceTree = "<group>"; };
 		64AAFA131513F8D30061DD49 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = Images/back.png; sourceTree = "<group>"; };
@@ -87,6 +90,9 @@
 		64AAFA151513F8D30061DD49 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = Images/forward.png; sourceTree = "<group>"; };
 		64AAFA161513F8D30061DD49 /* forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward@2x.png"; path = "Images/forward@2x.png"; sourceTree = "<group>"; };
 		64D481201547577800BC1085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~iphone.xib"; sourceTree = "<group>"; };
+		64D4812215475C5300BC1085 /* RPForumView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPForumView~iphone.xib"; sourceTree = "<group>"; };
+		64D481241547607D00BC1085 /* SmallLogo_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SmallLogo_rphd.png; path = Images/SmallLogo_rphd.png; sourceTree = "<group>"; };
+		64D481251547607D00BC1085 /* SmallLogo_rphd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SmallLogo_rphd@2x.png"; path = "Images/SmallLogo_rphd@2x.png"; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -185,7 +191,8 @@
 				64D481211547577800BC1085 /* RPViewController~iphone.xib */,
 				64AAFA0A1513A6FF0061DD49 /* RPForumView.h */,
 				64AAFA0B1513A6FF0061DD49 /* RPForumView.m */,
-				64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */,
+				64AAFA0C1513A6FF0061DD49 /* RPForumView~ipad.xib */,
+				64D4812215475C5300BC1085 /* RPForumView~iphone.xib */,
 				64AAFA07151393260061DD49 /* RPAboutBox.h */,
 				64AAFA08151393260061DD49 /* RPAboutBox.m */,
 				64AAF9FF151389820061DD49 /* AboutBox.xib */,
@@ -231,6 +238,8 @@
 				64F8024F151228950080D442 /* button-play@2x.png */,
 				64F80250151228950080D442 /* button-stop.png */,
 				64F80251151228950080D442 /* button-stop@2x.png */,
+				64D481241547607D00BC1085 /* SmallLogo_rphd.png */,
+				64D481251547607D00BC1085 /* SmallLogo_rphd@2x.png */,
 				64F80252151228950080D442 /* logo_2011_rphd.png */,
 				6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */,
 			);
@@ -309,7 +318,7 @@
 				64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */,
 				64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */,
 				64AAFA00151389820061DD49 /* AboutBox.xib in Resources */,
-				64AAFA0E1513A7000061DD49 /* RPForumView.xib in Resources */,
+				64AAFA0E1513A7000061DD49 /* RPForumView~ipad.xib in Resources */,
 				64AAFA111513F41A0061DD49 /* RP-meta.png in Resources */,
 				64AAFA121513F41A0061DD49 /* RP-meta@2x.png in Resources */,
 				64AAFA171513F8D30061DD49 /* back.png in Resources */,
@@ -327,6 +336,9 @@
 				646B5EAA154755D100A2544C /* Icon.png in Resources */,
 				646B5EAC154755D600A2544C /* Icon@2x.png in Resources */,
 				64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */,
+				64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */,
+				64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */,
+				64D481271547607D00BC1085 /* SmallLogo_rphd@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
