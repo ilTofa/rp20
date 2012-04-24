@@ -46,4 +46,8 @@
         return NO;
 }
 
+- (IBAction)OKPressed:(id)sender 
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

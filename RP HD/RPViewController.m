@@ -365,12 +365,26 @@
 
 - (IBAction)presentAboutBox:(id)sender 
 {
-    if(self.theAboutBox == nil)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
-        self.theAboutBox.popoverContentSize = CGSizeMake(340, 361);
+        if(self.theAboutBox == nil)
+        {
+            self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
+            self.theAboutBox.popoverContentSize = CGSizeMake(340, 361);
+        }
+        [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
-    [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    else
+    {
+        RPAboutBox *theAboutBox;
+        if(self.theAboutBox == nil)
+        {
+            theAboutBox = [[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]];
+            theAboutBox.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
+        [self presentViewController:theAboutBox animated:YES completion:nil];
+        theAboutBox = nil;
+    }
 }
 
 - (IBAction)presentRPWeb:(id)sender 

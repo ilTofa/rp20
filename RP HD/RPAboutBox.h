@@ -12,4 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lVersion;
 
+- (IBAction)OKPressed:(id)sender;
+
 @end
