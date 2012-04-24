@@ -33,7 +33,7 @@
 		64AAFA181513F8D30061DD49 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA141513F8D30061DD49 /* back@2x.png */; };
 		64AAFA191513F8D30061DD49 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA151513F8D30061DD49 /* forward.png */; };
 		64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA161513F8D30061DD49 /* forward@2x.png */; };
-		64D4811D154756EC00BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D4811C154756EC00BC1085 /* RPViewController~iphone.xib */; };
+		64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D481211547577800BC1085 /* RPViewController~iphone.xib */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
@@ -86,7 +86,7 @@
 		64AAFA141513F8D30061DD49 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "Images/back@2x.png"; sourceTree = "<group>"; };
 		64AAFA151513F8D30061DD49 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = Images/forward.png; sourceTree = "<group>"; };
 		64AAFA161513F8D30061DD49 /* forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward@2x.png"; path = "Images/forward@2x.png"; sourceTree = "<group>"; };
-		64D4811C154756EC00BC1085 /* RPViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPViewController~iphone.xib"; sourceTree = "<group>"; };
+		64D481201547577800BC1085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~iphone.xib"; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,7 +182,7 @@
 				64AAFA04151391200061DD49 /* RPViewController.h */,
 				64AAFA05151391200061DD49 /* RPViewController.m */,
 				64F802451512272E0080D442 /* RPViewController~ipad.xib */,
-				64D4811C154756EC00BC1085 /* RPViewController~iphone.xib */,
+				64D481211547577800BC1085 /* RPViewController~iphone.xib */,
 				64AAFA0A1513A6FF0061DD49 /* RPForumView.h */,
 				64AAFA0B1513A6FF0061DD49 /* RPForumView.m */,
 				64AAFA0C1513A6FF0061DD49 /* RPForumView.xib */,
@@ -326,7 +326,7 @@
 				6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */,
 				646B5EAA154755D100A2544C /* Icon.png in Resources */,
 				646B5EAC154755D600A2544C /* Icon@2x.png in Resources */,
-				64D4811D154756EC00BC1085 /* RPViewController~iphone.xib in Resources */,
+				64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +350,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		64D481211547577800BC1085 /* RPViewController~iphone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				64D481201547577800BC1085 /* en */,
+			);
+			name = "RPViewController~iphone.xib";
+			sourceTree = "<group>";
+		};
 		64F802391512272E0080D442 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
