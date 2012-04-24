@@ -10,6 +10,7 @@
 
 #import "RPViewController.h"
 #import "FlurryAnalytics.h"
+#import "Appirater.h"
 
 @implementation RPAppDelegate
 
@@ -52,8 +53,9 @@
     self.viewController = [[RPViewController alloc] initWithNibName:@"RPViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-    // Init Flurry Analytics
+    // Init Flurry Analytics & appirater
     [FlurryAnalytics startSession:@"PP44G74JCE81THYJRKTV"];
+    [Appirater appLaunched:YES];
     // Now go for the second screen thing.
     if ([[UIScreen screens] count] > 1)
         [self myScreenInit:[[UIScreen screens] objectAtIndex:1]];
@@ -76,7 +78,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
