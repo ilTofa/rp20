@@ -1,18 +1,16 @@
 Keywords: radio paradise,streaming,radio,shoutcast,mp3,aac,photo,icecast,rock,progressive,FM,DJ,HD,music,free
 
 Text:
-Listen to Radio Paradise HD on your iPad with this (unofficial) client.
-
+Great music and beautiful photos. Listen to Radio Paradise HD with this (unofficial) client.
 Radio Paradise (RP) is a blend of many styles and genres of music, carefully selected and mixed by two real human beings. You'll hear modern and classic rock, world music, electronica, even a bit of classical and jazz. What you won't hear are random computer-generated playlists or mind-numbing commercials.
-
 RP's specialty is taking a diverse assortment of songs and making them flow together in a way that makes sense harmonically, rhythmically, and lyrically — an art that is the very essence of radio. We hope that you'll enjoy RP so much that you'll want to share it with your friends, your family, your co-workers, your neighbors ... well you get the idea.
-
 Radio Paradise HD is the normal high-quality audio stream of Radio Paradise coupled with an ever-changing slideshow of beautiful HD images, often related to the theme or content of the song being played. It's designed to be an engaging audio/visual experience, video "wallpaper" while you enjoy the music. If you mirror the iPad on the Apple TV you'll enjoy the audio-video stream in HD directly on your television, while you will still be able to get more info, the cover art, and rate the song — all from your iPad.
-
 RP also depends on input from you to help fine-tune our music mix. If you hear something that you feel strongly about (either positively or negatively), please take a moment to post a comment on that song. Just click the song title on the playlist page or on the album cover on the lower right corner. We'd also love to hear from you if there's an artist you don't hear, but think would fit in with our music mix. Registered users can upload suggested additions to the library for review.
-
 This app was developed by Giacomo Tufano with permission from Radio Paradise, but it's not endorsed as the official client.
-
 ** PLEASE NOTE: This app is designed for playing only ONE radio station - Radio Paradise. If you want an app for playing thousands of stations, this is not the app you're looking for. **
 
 URL: http://www.iltofa.com/rphd
+
+Version 1.1
+Now an universal app that works both on iPad and iPhone.
+Bug fixes.
