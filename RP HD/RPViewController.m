@@ -30,6 +30,7 @@
 @synthesize bitrateSelector = _bitrateSelector;
 @synthesize songNameButton = _songNameButton;
 @synthesize separatorImage = _separatorImage;
+@synthesize iPhoneLogoImage = _iPhoneLogoImage;
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
@@ -411,12 +412,24 @@
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
-                         self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
-                         self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
-                         self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
-                         self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
-                         self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
-                         self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                         {
+                             self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
+                             self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
+                             self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
+                             self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
+                             self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
+                             self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
+                         }
+                         else 
+                         {
+                             self.hdImage.frame = CGRectMake(0, 25, 480, 270);
+                             self.minimizerButton.frame = CGRectMake(0, 25, 480, 270);
+                             self.metadataInfo.frame = CGRectMake(98, 2, 373, 21);
+                             self.songNameButton.frame = CGRectMake(98, 2, 373, 21);
+                             self.playOrStopButton.frame = CGRectMake(446, 295, 25, 25);
+                             self.iPhoneLogoImage.frame = CGRectMake(18, 0, 25, 25);
+                         }
                      }
                      completion:^(BOOL finished) {
                          self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
@@ -430,12 +443,25 @@
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
-                         self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
-                         self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
-                         self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
-                         self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
-                         self.playOrStopButton.frame = CGRectMake(416, 651, 43, 43);
-                         self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                         {
+                             self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
+                             self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
+                             self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
+                             self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
+                             self.playOrStopButton.frame = CGRectMake(416, 651, 43, 43);
+                             self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
+                         }
+                         else 
+                         {
+                             self.hdImage.frame = CGRectMake(0, 0, 480, 270);
+                             self.minimizerButton.frame = CGRectMake(0, 0, 480, 270);
+                             self.metadataInfo.frame = CGRectMake(98, 16, 373, 21);
+                             self.songNameButton.frame = CGRectMake(98, 16, 373, 21);
+                             self.playOrStopButton.frame = CGRectMake(441, 281, 30, 30);
+                             self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
+                         }
+                         
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;                    
@@ -468,7 +494,10 @@
             [self interfaceToMinimized];
             break;
         case kInterfaceMinimized:
-            [self interfaceToZoomed];
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                [self interfaceToZoomed];
+            else
+                [self interfaceToNormal];
             break;
         case kInterfaceZoomed:
             [self interfaceToNormal];
@@ -531,6 +560,7 @@
     [self setBitrateSelector:nil];
     [self setSongNameButton:nil];
     [self setSeparatorImage:nil];
+    [self setIPhoneLogoImage:nil];
     [super viewDidUnload];
 }
 

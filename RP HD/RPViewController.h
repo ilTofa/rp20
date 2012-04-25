@@ -43,6 +43,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bitrateSelector;
 @property (weak, nonatomic) IBOutlet UIButton *songNameButton;
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImage;
+@property (weak, nonatomic) IBOutlet UIImageView *iPhoneLogoImage;
 
 @property (strong, nonatomic) AudioStreamer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;

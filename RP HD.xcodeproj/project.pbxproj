@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64047A571548B65B00DF6B8F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 64047A551548B65B00DF6B8F /* Default.png */; };
+		64047A581548B65B00DF6B8F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64047A561548B65B00DF6B8F /* Default@2x.png */; };
 		641709621515521C00F53185 /* RPTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641709601515521C00F53185 /* RPTVViewController.m */; };
 		641709631515521C00F53185 /* RPTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 641709611515521C00F53185 /* RPTVViewController.xib */; };
 		64468A05152FA20E00BCDEBF /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A00152FA20E00BCDEBF /* Icon-Small-50.png */; };
@@ -61,6 +63,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		64047A551548B65B00DF6B8F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
+		64047A561548B65B00DF6B8F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
 		6417095F1515521C00F53185 /* RPTVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPTVViewController.h; sourceTree = "<group>"; };
 		641709601515521C00F53185 /* RPTVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPTVViewController.m; sourceTree = "<group>"; };
 		641709611515521C00F53185 /* RPTVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPTVViewController.xib; sourceTree = "<group>"; };
@@ -255,6 +259,8 @@
 				64AAFA101513F41A0061DD49 /* RP-meta@2x.png */,
 				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
 				64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */,
+				64047A551548B65B00DF6B8F /* Default.png */,
+				64047A561548B65B00DF6B8F /* Default@2x.png */,
 				64AAF9F8151383220061DD49 /* Screen-Down.png */,
 				64AAF9F9151383220061DD49 /* Screen-Down@2x.png */,
 				64F8024E151228950080D442 /* button-play.png */,
@@ -364,6 +370,8 @@
 				64D481271547607D00BC1085 /* SmallLogo_rphd@2x.png in Resources */,
 				64D48129154762E100BC1085 /* AboutBox~iphone.xib in Resources */,
 				64D4812B1547678E00BC1085 /* Localizable.strings in Resources */,
+				64047A571548B65B00DF6B8F /* Default.png in Resources */,
+				64047A581548B65B00DF6B8F /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
