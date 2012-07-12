@@ -105,6 +105,20 @@
             NSString *temp = [[item substringFromIndex:range.length] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
             DLog(@"Song name: %@", temp);
             self.metadataInfo.text = temp;
+            // Update metadata info
+            NSArray *songPieces = [temp componentsSeparatedByString:@" - "];
+            if([songPieces count] == 2)
+            {
+                NSDictionary *mpInfo;
+                MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RadioTower"]];
+                mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [songPieces objectAtIndex:0], MPMediaItemPropertyArtist,   
+                          [songPieces objectAtIndex:1], MPMediaItemPropertyTitle,  
+                          albumArt, MPMediaItemPropertyArtwork,
+                          nil];
+                [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
+                DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
+            }
             // If we have a second screen, update also there
             if ([[UIScreen screens] count] > 1)
                 ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = temp;
@@ -124,6 +138,26 @@
                  {
                      UIImage *temp = [UIImage imageWithData:data];
                      DLog(@"image is: %@", temp);
+                     // Update metadata info
+                     if(temp != nil)
+                     {
+                         MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:temp];
+                         NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
+                         if(!artist)
+                             artist = @"";
+                         NSString *title = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyTitle];
+                         if(!title)
+                             title = @"";
+                         NSDictionary *mpInfo;
+                         mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   artist, MPMediaItemPropertyArtist,   
+                                   title, MPMediaItemPropertyTitle,  
+                                   albumArt, MPMediaItemPropertyArtwork,
+                                   nil];
+                         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
+                         DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
+                     }
+
                      // load image on the main thread
                      dispatch_async(dispatch_get_main_queue(), ^{
                          [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
