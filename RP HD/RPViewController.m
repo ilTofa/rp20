@@ -31,6 +31,7 @@
 @synthesize songNameButton = _songNameButton;
 @synthesize separatorImage = _separatorImage;
 @synthesize iPhoneLogoImage = _iPhoneLogoImage;
+@synthesize psdButton = _psdButton;
 @synthesize theStreamer = _theStreamer;
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
@@ -448,6 +449,8 @@
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                             self.psdButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
@@ -456,8 +459,9 @@
                              self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                              self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
+                             self.psdButton.frame = CGRectMake(80, 695, 43, 43);
                          }
-                         else 
+                         else
                          {
                              self.hdImage.frame = CGRectMake(0, 25, 480, 270);
                              self.minimizerButton.frame = CGRectMake(0, 25, 480, 270);
@@ -479,16 +483,19 @@
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                             self.psdButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                              self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
-                             self.playOrStopButton.frame = CGRectMake(416, 651, 43, 43);
+                             self.playOrStopButton.frame = CGRectMake(373, 651, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
+                             self.psdButton.frame = CGRectMake(463, 651, 43, 43);
                          }
-                         else 
+                         else
                          {
                              self.hdImage.frame = CGRectMake(0, 0, 480, 270);
                              self.minimizerButton.frame = CGRectMake(0, 0, 480, 270);
@@ -516,7 +523,8 @@
                          self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
                          self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
-                     }
+                         self.psdButton.frame = CGRectMake(80, 695, 43, 43);
+                    }
                      completion:^(BOOL finished) {
                          self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.interfaceState = kInterfaceZoomed;
@@ -541,6 +549,9 @@
             DLog(@"minimizer called with self.interfaceState to %d", self.interfaceState);
             break;
     }
+}
+
+- (IBAction)startPSD:(id)sender {
 }
 
 #pragma mark -
@@ -597,6 +608,7 @@
     [self setSongNameButton:nil];
     [self setSeparatorImage:nil];
     [self setIPhoneLogoImage:nil];
+    [self setPsdButton:nil];
     [super viewDidUnload];
 }
 
