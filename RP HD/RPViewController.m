@@ -448,7 +448,7 @@
 {
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.aboutButton.alpha = /*self.logoImage.alpha =*/ self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -460,6 +460,7 @@
                              self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                              self.psdButton.frame = CGRectMake(80, 695, 43, 43);
+                             self.logoImage.frame = CGRectMake(20, 2, 300, 94);
                          }
                          else
                          {
@@ -472,7 +473,7 @@
                          }
                      }
                      completion:^(BOOL finished) {
-                         self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.aboutButton.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.interfaceState = kInterfaceMinimized;
                      }];    
 }
@@ -494,6 +495,7 @@
                              self.playOrStopButton.frame = CGRectMake(373, 651, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
                              self.psdButton.frame = CGRectMake(463, 651, 43, 43);
+                             self.logoImage.frame = CGRectMake(20, 626, 300, 94);
                          }
                          else
                          {
@@ -527,6 +529,7 @@
                     }
                      completion:^(BOOL finished) {
                          self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.logoImage.frame = CGRectMake(20, 626, 300, 94);
                          self.interfaceState = kInterfaceZoomed;
                      }];    
 }
