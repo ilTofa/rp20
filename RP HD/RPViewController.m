@@ -110,7 +110,7 @@
             if([songPieces count] == 2)
             {
                 NSDictionary *mpInfo;
-                MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RadioTower"]];
+                MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
                 mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                           [songPieces objectAtIndex:0], MPMediaItemPropertyArtist,   
                           [songPieces objectAtIndex:1], MPMediaItemPropertyTitle,  
@@ -129,6 +129,8 @@
         {
             NSString *temp = [item substringFromIndex:range.length];
             temp = [temp stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
+            // Get largest image RP have (substitute /m/ with /l/ in URL ;)
+            temp = [temp stringByReplacingOccurrencesOfString:@"/m/" withString:@"/l/"];
             DLog(@"URL: <%@>", temp);
             [self.imageLoadQueue cancelAllOperations];
             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];

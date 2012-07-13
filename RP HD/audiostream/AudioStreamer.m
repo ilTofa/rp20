@@ -1008,7 +1008,7 @@ void ReadStreamCallBack
 			[self stop];
 
 #ifdef TARGET_OS_IPHONE
-			/*
+			
 			UIAlertView *alert =
 				[[UIAlertView alloc]
 					initWithTitle:NSLocalizedStringFromTable(@"Audio Error", @"Errors", nil)
@@ -1022,7 +1022,7 @@ void ReadStreamCallBack
 				withObject:nil
 				waitUntilDone:YES];
 			[alert release];
-			*/
+			
 			if (redirect)
 			{
 				[self redirectStreamError:url];
