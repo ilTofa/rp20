@@ -8,11 +8,17 @@
 
 #import "RPLoginController.h"
 
+#import "RPViewController.h"
+
 @interface RPLoginController ()
 
 @end
 
 @implementation RPLoginController
+
+@synthesize parent = _parent;
+@synthesize usernameField = _usernameField;
+@synthesize passwordField = _passwordField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,7 +43,27 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	return YES;
+}
+
+- (void)viewDidUnload {
+    [self setUsernameField:nil];
+    [self setPasswordField:nil];
+    [super viewDidUnload];
+}
+
+- (IBAction)startPSD:(id)sender
+{
+    
+}
+
+- (IBAction)cancel:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (IBAction)createNew:(id)sender
+{
+    
 }
 
 @end

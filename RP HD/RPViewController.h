@@ -11,6 +11,7 @@
 #import "AudioStreamer.h"
 #import "RPAboutBox.h"
 #import "RPForumView.h"
+#import "RPLoginController.h"
 
 // #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
 // #define kRPURL64K @"http://207.200.96.231:8004"
@@ -51,7 +52,9 @@ typedef enum {
 @property (strong, nonatomic) NSTimer *theTimer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
+@property (strong, nonatomic) UIPopoverController *theLoginBox;
 @property (nonatomic) InterfaceMode interfaceState;
+@property (nonatomic) BOOL isLoggedIn;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;

@@ -41,6 +41,7 @@
 @synthesize theWebView = _theWebView;
 @synthesize currentSongForumURL = _currentSongForumURL;
 @synthesize interfaceState = _interfaceState;
+@synthesize isLoggedIn = _isLoggedIn;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -331,6 +332,11 @@
     }
 }
 
+- (void)playPSDNow
+{
+    
+}
+
 - (void)stopPressed:(id)sender 
 {
     // Disable button
@@ -399,6 +405,31 @@
     // If needed, stop the stream
     if(self.theStreamer.isPlaying)
         [self stopPressed:self];
+}
+
+- (IBAction)startPSD:(id)sender
+{
+    if(!self.isLoggedIn)
+    {
+        // Init controller and set ourself for callback
+        RPLoginController * theLoginBox = [[RPLoginController alloc] initWithNibName:@"RPLoginController" bundle:[NSBundle mainBundle]];
+        theLoginBox.parent = self;
+        // if iPad, embed in a popover, go modal for iPhone
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            if(self.theLoginBox == nil)
+                self.theLoginBox = [[UIPopoverController alloc] initWithContentViewController:theLoginBox];
+            self.theLoginBox.popoverContentSize = CGSizeMake(320, 207);
+           [self.theLoginBox presentPopoverFromRect:self.psdButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }
+        else
+        {
+            theLoginBox.modalPresentationStyle = UIModalPresentationFullScreen;
+            [self presentViewController:theLoginBox animated:YES completion:nil];
+        }
+        // Release...
+        theLoginBox = nil;
+    }
 }
 
 - (IBAction)presentAboutBox:(id)sender 
@@ -552,11 +583,6 @@
             DLog(@"minimizer called with self.interfaceState to %d", self.interfaceState);
             break;
     }
-}
-
-- (IBAction)startPSD:(id)sender
-{
-    
 }
 
 #pragma mark -

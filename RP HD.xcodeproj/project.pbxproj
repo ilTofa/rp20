@@ -20,9 +20,9 @@
 		6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */; };
 		646ACA7515B46901001B5B73 /* STKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7415B46901001B5B73 /* STKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		646ACA7815B46A12001B5B73 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646ACA7715B46A12001B5B73 /* Security.framework */; };
-		646ACA7C15B46BFF001B5B73 /* RPLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7A15B46BFF001B5B73 /* RPLoginController.m */; };
-		646ACA7D15B46BFF001B5B73 /* RPLoginController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646ACA7B15B46BFF001B5B73 /* RPLoginController~iphone.xib */; };
-		646ACA7F15B46C45001B5B73 /* RPLoginController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646ACA7E15B46C45001B5B73 /* RPLoginController~ipad.xib */; };
+		646ACA8815B46D6A001B5B73 /* RPLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA8615B46D6A001B5B73 /* RPLoginController.m */; };
+		646ACA8915B46D6A001B5B73 /* RPLoginController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */; };
+		646ACA8B15B47699001B5B73 /* RPLoginController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */; };
 		646B5EAA154755D100A2544C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EA9154755D100A2544C /* Icon.png */; };
 		646B5EAC154755D600A2544C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EAB154755D600A2544C /* Icon@2x.png */; };
 		64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6491340F152DFD9A00029692 /* libFlurryAnalytics.a */; };
@@ -86,10 +86,10 @@
 		646ACA7315B46901001B5B73 /* STKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKeychain.h; sourceTree = "<group>"; };
 		646ACA7415B46901001B5B73 /* STKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKeychain.m; sourceTree = "<group>"; };
 		646ACA7715B46A12001B5B73 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		646ACA7915B46BFF001B5B73 /* RPLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPLoginController.h; sourceTree = "<group>"; };
-		646ACA7A15B46BFF001B5B73 /* RPLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPLoginController.m; sourceTree = "<group>"; };
-		646ACA7B15B46BFF001B5B73 /* RPLoginController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPLoginController~iphone.xib"; sourceTree = "<group>"; };
-		646ACA7E15B46C45001B5B73 /* RPLoginController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPLoginController~ipad.xib"; sourceTree = "<group>"; };
+		646ACA8515B46D6A001B5B73 /* RPLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPLoginController.h; sourceTree = "<group>"; };
+		646ACA8615B46D6A001B5B73 /* RPLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPLoginController.m; sourceTree = "<group>"; };
+		646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPLoginController~ipad.xib"; sourceTree = "<group>"; };
+		646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPLoginController~iphone.xib"; sourceTree = "<group>"; };
 		646B5EA9154755D100A2544C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		646B5EAB154755D600A2544C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		6491340E152DFD9A00029692 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
@@ -250,11 +250,11 @@
 				64AAFA08151393260061DD49 /* RPAboutBox.m */,
 				64AAF9FF151389820061DD49 /* AboutBox~ipad.xib */,
 				64D48128154762E100BC1085 /* AboutBox~iphone.xib */,
-				646ACA7915B46BFF001B5B73 /* RPLoginController.h */,
-				646ACA7A15B46BFF001B5B73 /* RPLoginController.m */,
-				646ACA7B15B46BFF001B5B73 /* RPLoginController~iphone.xib */,
-				646ACA7E15B46C45001B5B73 /* RPLoginController~ipad.xib */,
 				64F802371512272E0080D442 /* Supporting Files */,
+				646ACA8515B46D6A001B5B73 /* RPLoginController.h */,
+				646ACA8615B46D6A001B5B73 /* RPLoginController.m */,
+				646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */,
+				646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */,
 			);
 			path = "RP HD";
 			sourceTree = "<group>";
@@ -408,8 +408,8 @@
 				64047A581548B65B00DF6B8F /* Default@2x.png in Resources */,
 				64AD767D1548B9A7001910E9 /* Default-Portrait.png in Resources */,
 				64AD767E1548B9A7001910E9 /* Default-Portrait@2x.png in Resources */,
-				646ACA7D15B46BFF001B5B73 /* RPLoginController~iphone.xib in Resources */,
-				646ACA7F15B46C45001B5B73 /* RPLoginController~ipad.xib in Resources */,
+				646ACA8915B46D6A001B5B73 /* RPLoginController~ipad.xib in Resources */,
+				646ACA8B15B47699001B5B73 /* RPLoginController~iphone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +429,7 @@
 				641709621515521C00F53185 /* RPTVViewController.m in Sources */,
 				64D48132154767F300BC1085 /* Appirater.m in Sources */,
 				646ACA7515B46901001B5B73 /* STKeychain.m in Sources */,
-				646ACA7C15B46BFF001B5B73 /* RPLoginController.m in Sources */,
+				646ACA8815B46D6A001B5B73 /* RPLoginController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
