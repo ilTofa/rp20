@@ -18,6 +18,8 @@
 		64468A09152FA20E00BCDEBF /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A04152FA20E00BCDEBF /* Icon-72@2x.png */; };
 		64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */; };
 		6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */; };
+		646ACA7515B46901001B5B73 /* STKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7415B46901001B5B73 /* STKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		646ACA7815B46A12001B5B73 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646ACA7715B46A12001B5B73 /* Security.framework */; };
 		646B5EAA154755D100A2544C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EA9154755D100A2544C /* Icon.png */; };
 		646B5EAC154755D600A2544C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EAB154755D600A2544C /* Icon@2x.png */; };
 		64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6491340F152DFD9A00029692 /* libFlurryAnalytics.a */; };
@@ -78,6 +80,9 @@
 		64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		64468A0C152FA45200BCDEBF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_rphd@2x.png"; path = "Images/logo_2011_rphd@2x.png"; sourceTree = "<group>"; };
+		646ACA7315B46901001B5B73 /* STKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKeychain.h; sourceTree = "<group>"; };
+		646ACA7415B46901001B5B73 /* STKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKeychain.m; sourceTree = "<group>"; };
+		646ACA7715B46A12001B5B73 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		646B5EA9154755D100A2544C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		646B5EAB154755D600A2544C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		6491340E152DFD9A00029692 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
@@ -139,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646ACA7815B46A12001B5B73 /* Security.framework in Frameworks */,
 				64D481341547681A00BC1085 /* SystemConfiguration.framework in Frameworks */,
 				64F80270151239120080D442 /* CFNetwork.framework in Frameworks */,
 				64F8026C1512386A0080D442 /* AudioToolbox.framework in Frameworks */,
@@ -153,6 +159,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		646ACA7215B46901001B5B73 /* STKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				646ACA7315B46901001B5B73 /* STKeychain.h */,
+				646ACA7415B46901001B5B73 /* STKeychain.m */,
+			);
+			path = STKeychain;
+			sourceTree = "<group>";
+		};
 		6491340D152DFD9A00029692 /* FlurryAnalytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +206,7 @@
 		64F8022F1512272E0080D442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				646ACA7715B46A12001B5B73 /* Security.framework */,
 				64D481331547681A00BC1085 /* SystemConfiguration.framework */,
 				64F8026F151239120080D442 /* CFNetwork.framework */,
 				64F802691512386A0080D442 /* AudioToolbox.framework */,
@@ -205,6 +221,7 @@
 		64F802361512272E0080D442 /* RP HD */ = {
 			isa = PBXGroup;
 			children = (
+				646ACA7215B46901001B5B73 /* STKeychain */,
 				64D4812C154767A800BC1085 /* appirater */,
 				6491340D152DFD9A00029692 /* FlurryAnalytics */,
 				64F80264151234710080D442 /* audiostream */,
@@ -398,6 +415,7 @@
 				64AAFA0D1513A7000061DD49 /* RPForumView.m in Sources */,
 				641709621515521C00F53185 /* RPTVViewController.m in Sources */,
 				64D48132154767F300BC1085 /* Appirater.m in Sources */,
+				646ACA7515B46901001B5B73 /* STKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
