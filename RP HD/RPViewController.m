@@ -459,6 +459,12 @@
 - (void)playPSDNow:(NSString *)cookieString
 {
     DLog(@"playPSDNow called. Cookie is <%@>", cookieString);
+    // dismiss the popover (if needed)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        if([self.theLoginBox isPopoverVisible])
+            [self.theLoginBox dismissPopoverAnimated:YES];
+    }
     self.cookieString = cookieString;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_replace.php?option=0"]];
     [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
@@ -484,9 +490,9 @@
              // reset stream on main thread
              dispatch_async(dispatch_get_main_queue(), ^{
                  // Stop streamer and restart it.
-                 [self.theStreamer stop];
                  [self.theTimer invalidate];
                  self.theTimer = nil;
+                 [self.theStreamer stop];
                  [self stopSpinner:nil];
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];

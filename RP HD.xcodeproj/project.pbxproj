@@ -513,6 +513,7 @@
 		64F8024B1512272E0080D442 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Giacomo Tufano (68RHGP4K2S)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RP HD-Info.plist";
@@ -522,6 +523,7 @@
 					"\"$(SRCROOT)/RP HD/FlurryAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9E01996D-8E8F-4974-8044-585B6E957698";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
