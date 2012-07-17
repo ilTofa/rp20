@@ -29,6 +29,7 @@
 #define kStreamGotRadioname @"streamRadioname"
 #define kStreamGotGenre @"streamGotGenre"
 #define kStreamIsRedirected @"streamIsRedirected"
+#define kStreamEnd @"streamEnd"
 
 
 @interface AudioStreamer : NSObject

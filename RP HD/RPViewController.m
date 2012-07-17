@@ -48,11 +48,20 @@
 #pragma mark HD images loading
 -(void)loadNewImage:(NSTimer *)timer
 {
-    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImageURLURL]];
+    NSMutableURLRequest *req;
+    if(self.isPSDPlaying)
+    {
+        DLog(@"Requesting PSD image");
+        req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImagePSDURL]];
+        [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+    }
+    else
+    {
+        req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImageURLURL]];
+    }
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
      {
          DLog(@"HD image url received %@ ", (data) ? @"successfully." : @"with errors.");
-         DLog(@"received %lld bytes", res.expectedContentLength);
          if(data)
          {
              NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -89,6 +98,98 @@
 
 #pragma mark -
 #pragma mark AudioStream Notifications management
+
+-(void)PSDMetatadaHandler
+{
+    // This function get metadata directly in case of PSD (no stream metadata)
+    // Get song name first
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_rp2_playlist_ipad.php"]];
+    [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+     {
+         DLog(@"metadata received %@ ", (data) ? @"successfully." : @"with errors.");
+         if(data)
+         {
+             // Get name and massage it (it's web encoded and with triling spaces)
+             NSString *stringData = [[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding];
+             NSArray *values = [stringData componentsSeparatedByString:@"|"];
+             if([values count] != 4)
+             {
+                 NSLog(@"Error in reading metadata from http://www.radioparadise.com/ajax_rp2_playlist_ipad.php: <%@> received.", stringData);
+                 return;
+             }
+             NSString *metaText = [values objectAtIndex:0];
+             metaText = [metaText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+             metaText = [metaText stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"-"];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 self.metadataInfo.text = metaText;
+                 // If we have a second screen, update also there
+                 if ([[UIScreen screens] count] > 1)
+                     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = metaText;
+                 // Update metadata info
+                 NSArray *songPieces = [metaText componentsSeparatedByString:@" - "];
+                 if([songPieces count] == 2)
+                 {
+                     NSDictionary *mpInfo;
+                     MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
+                     mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [songPieces objectAtIndex:0], MPMediaItemPropertyArtist,
+                               [songPieces objectAtIndex:1], MPMediaItemPropertyTitle,
+                               albumArt, MPMediaItemPropertyArtwork,
+                               nil];
+                     [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
+                     DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
+                 }
+             });
+             // Now get almbum artwork
+             NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
+             DLog(@"URL for PSD Artwork: <%@>", temp);
+             [self.imageLoadQueue cancelAllOperations];
+             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
+             [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+              {
+                  if(data)
+                  {
+                      UIImage *temp = [UIImage imageWithData:data];
+                      DLog(@"image is: %@", temp);
+                      // Update metadata info
+                      if(temp != nil)
+                      {
+                          MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:temp];
+                          NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
+                          if(!artist)
+                              artist = @"";
+                          NSString *title = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyTitle];
+                          if(!title)
+                              title = @"";
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              NSDictionary *mpInfo;
+                              mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        artist, MPMediaItemPropertyArtist,
+                                        title, MPMediaItemPropertyTitle,
+                                        albumArt, MPMediaItemPropertyArtwork,
+                                        nil];
+                              [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
+                              DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
+                              // load image on the main thread
+                              [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
+                              [self.rpWebButton setBackgroundImage:temp forState:UIControlStateHighlighted];
+                              [self.rpWebButton setBackgroundImage:temp forState:UIControlStateSelected];
+                          });
+                      }
+                  }
+                  else
+                  {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
+                          [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
+                          [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
+                      });
+                 }
+              }];
+         }
+     }];
+}
 
 -(void)metadataNotificationReceived:(NSNotification *)note
 {
@@ -195,6 +296,15 @@
     self.metadataInfo.text = @"Stream redirected, please restart...";
 }
 
+-(void)streamEnd:(NSNotification *)note
+{
+    if(self.isPSDPlaying)
+    {
+        self.isPSDPlaying = NO;
+        [self stopPressed:self];
+    }
+}
+
 -(void)applicationChangedState:(NSNotification *)note
 {
     DLog(@"applicationChangedState: %@", note.name);
@@ -251,6 +361,12 @@
             [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
             [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];        
             self.playOrStopButton.enabled = YES;
+            // Setup PSD metadata, if needed.
+            if(self.isPSDPlaying)
+            {
+                DLog(@"Getting PSD metadata...");
+                [self PSDMetatadaHandler];
+            }
         });
     }
 }
@@ -268,12 +384,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopSpinner:) name:kStreamConnected object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil]; 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil]; 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamEnd:) name:kStreamEnd object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    // kStreamEnd
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
     {
         [self loadNewImage:nil];
+        // TODO: set interval!
+        DLog(@"HD images timer setup");
         self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
     }
     self.hdImage.hidden = NO;
@@ -357,14 +477,55 @@
              NSNumber *psdSongFadeIn = [values objectAtIndex:2];
              NSNumber *psdSongFadeOut = [values objectAtIndex:3];
              DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
-             
-             // remember to set, at the end: self.isPSDPlaying = YES;
+             [FlurryAnalytics logEvent:@"PSD triggered"];
+             // reset stream on main thread
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 // Stop streamer and restart it.
+                 [self.theStreamer stop];
+                 [self.theTimer invalidate];
+                 self.theTimer = nil;
+                 [self stopSpinner:nil];
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamEnd:) name:kStreamEnd object:nil];
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+                 self.minimizerButton.enabled = NO;
+                 self.theStreamer = nil;
+                 [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
+                 [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
+                 [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
+                 self.playOrStopButton.enabled = YES;
+                 self.theURL = psdSongUrl;
+                 self.isPSDPlaying = YES;
+                 self.psdButton.enabled = NO;
+                 [self realPlay:nil];
+             });
+             // Prepare stop and restart stream after the claimed lenght (minus 1.5 seconds to allow for some fading...
+             double delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 1.5;
+             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+             DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
+             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                 DLog(@"This is the PSD timer triggering...");
+                 // If still playing PSD, restart "normal" stream
+                 if(self.isPSDPlaying)
+                 {
+                     self.isPSDPlaying = NO;
+                     DLog(@"Stopping stream in dispatch_after block");
+                     [self stopPressed:self];
+                 }
+             });
          }
      }];
 }
 
 - (void)stopPressed:(id)sender
 {
+    // In any case, reset PSD changed things. :)
+    self.isPSDPlaying = NO;
+    self.psdButton.enabled = YES;
     // Disable button
     self.playOrStopButton.enabled = NO;
     // Process stop request.
@@ -374,7 +535,7 @@
         [self interfaceToNormal];
     // Let's give the stream a couple seconds to really stop itself
     [self startSpinner];
-    double delayInSeconds = 2.0;
+    double delayInSeconds = 1.0;    //was 2.0: MONITOR!
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.theTimer invalidate];
@@ -387,6 +548,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamEnd object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
         self.minimizerButton.enabled = NO;

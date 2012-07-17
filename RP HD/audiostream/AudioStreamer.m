@@ -471,6 +471,8 @@ void ReadStreamCallBack
 		DLog(@"kCFStreamEventEndEncountered");
 		if (myData->failed || myData->finished)
 		{
+            // Notify listeners (this is probably the end of PSD play).
+//            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kStreamEnd object:nil]];
 			return;
 		}
 		
@@ -507,6 +509,8 @@ void ReadStreamCallBack
 			//
 			myData->failed = YES;
 		}
+        // Notify listeners (this is probably the end of PSD play).
+//        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kStreamEnd object:nil]];
 	}
 	else if (eventType == kCFStreamEventHasBytesAvailable)
 	{

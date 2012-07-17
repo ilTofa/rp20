@@ -22,6 +22,7 @@
 #define kRPURL128K @"http://www.radioparadise.com/musiclinks/rp_128.m3u"
 
 #define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
+#define kHDImagePSDURL @"http://www.radioparadise.com/ajax_image_ipad.php"
 
 typedef enum {
     kInterfaceNormal,
