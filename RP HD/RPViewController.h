@@ -54,11 +54,12 @@ typedef enum {
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
 @property (nonatomic) InterfaceMode interfaceState;
-@property (nonatomic) BOOL isLoggedIn;
+@property (nonatomic) BOOL isPSDPlaying;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;
 @property (copy, nonatomic) NSString *currentSongForumURL;
+@property (copy, nonatomic) NSString *cookieString;
 
 - (IBAction)playOrStop:(id)sender;
 - (IBAction)bitrateChanged:(id)sender;

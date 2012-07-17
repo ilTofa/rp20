@@ -89,7 +89,7 @@
                      self.formHeader.text = @"Network error in login, please retry later.";
                      self.formHeader.textColor = [UIColor redColor];
                  });                
-             NSString *cookieString = [NSString stringWithFormat:@"Cookie: C_username=%@; C_passwd=%@", [values objectAtIndex:0], [values objectAtIndex:1]];
+             NSString *cookieString = [NSString stringWithFormat:@"C_username=%@; C_passwd=%@", [values objectAtIndex:0], [values objectAtIndex:1]];
              dispatch_async(dispatch_get_main_queue(), ^{
                  NSError *err;
                  [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:@"userName"];

@@ -41,7 +41,8 @@
 @synthesize theWebView = _theWebView;
 @synthesize currentSongForumURL = _currentSongForumURL;
 @synthesize interfaceState = _interfaceState;
-@synthesize isLoggedIn = _isLoggedIn;
+@synthesize isPSDPlaying = _isLoggedIn;
+@synthesize cookieString = _cookieString;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -335,9 +336,34 @@
 - (void)playPSDNow:(NSString *)cookieString
 {
     DLog(@"playPSDNow called. Cookie is <%@>", cookieString);
+    self.cookieString = cookieString;
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_replace.php?option=0"]];
+    [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+     {
+         if(data)
+         {
+             NSString *retValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+             retValue = [retValue stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+             NSArray *values = [retValue componentsSeparatedByString:@"|"];
+             if([values count] != 4)
+             {
+                 NSLog(@"ERROR: too many values (%d) returned from ajax_replace", [values count]);
+                 NSLog(@"retValue: <%@>", retValue);
+                 return;
+             }
+             NSString *psdSongUrl = [values objectAtIndex:0];
+             NSNumber *psdSongLenght = [values objectAtIndex:1];
+             NSNumber *psdSongFadeIn = [values objectAtIndex:2];
+             NSNumber *psdSongFadeOut = [values objectAtIndex:3];
+             DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
+             
+             // remember to set, at the end: self.isPSDPlaying = YES;
+         }
+     }];
 }
 
-- (void)stopPressed:(id)sender 
+- (void)stopPressed:(id)sender
 {
     // Disable button
     self.playOrStopButton.enabled = NO;
@@ -409,7 +435,7 @@
 
 - (IBAction)startPSD:(id)sender
 {
-    if(!self.isLoggedIn)
+    if(self.cookieString == nil)
     {
         // Init controller and set ourself for callback
         RPLoginController * theLoginBox = [[RPLoginController alloc] initWithNibName:@"RPLoginController" bundle:[NSBundle mainBundle]];
@@ -430,9 +456,11 @@
         // Release...
         theLoginBox = nil;
     }
+    else // already logged in. no need to show the login box
+        [self playPSDNow:self.cookieString];
 }
 
-- (IBAction)presentAboutBox:(id)sender 
+- (IBAction)presentAboutBox:(id)sender
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -618,6 +646,9 @@
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
     self.interfaceState = kInterfaceNormal;
     self.minimizerButton.enabled = NO;
+    // Set PSD to not logged, not playing
+    self.cookieString = nil;
+    self.isPSDPlaying = NO;
     // Automagically start, as per bg request
     [self playFromRedirector];
 }
