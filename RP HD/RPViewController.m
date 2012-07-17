@@ -43,6 +43,7 @@
 @synthesize interfaceState = _interfaceState;
 @synthesize isPSDPlaying = _isLoggedIn;
 @synthesize cookieString = _cookieString;
+@synthesize psdSongId = _psdSongId;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -141,6 +142,8 @@
                      DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
                  }
              });
+             // remembering songid for forum view
+             self.psdSongId = [values objectAtIndex:1];
              // Now get almbum artwork
              NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
              DLog(@"URL for PSD Artwork: <%@>", temp);
@@ -656,6 +659,10 @@
         else
             self.theWebView.modalPresentationStyle = UIModalPresentationFullScreen;
     }
+    if(self.isPSDPlaying)
+        self.theWebView.songId = self.psdSongId;
+    else
+        self.theWebView.songId = @"now";
     [self presentViewController:self.theWebView animated:YES completion:nil];
     self.theWebView = nil;
 }

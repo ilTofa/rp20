@@ -56,6 +56,7 @@ typedef enum {
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
 @property (nonatomic) InterfaceMode interfaceState;
 @property (nonatomic) BOOL isPSDPlaying;
+@property (copy, nonatomic) NSString *psdSongId;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;

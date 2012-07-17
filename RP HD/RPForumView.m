@@ -24,6 +24,7 @@
 @synthesize actionButton = _actionButton;
 @synthesize theSpinner = _theSpinner;
 @synthesize pageActionSheet = _pageActionSheet;
+@synthesize songId = _songId;
 
 - (UIActionSheet *)pageActionSheet 
 {    
@@ -67,7 +68,8 @@
     [super viewDidLoad];
     // Don't show the ugly white window... :)
     self.theWebView.hidden = YES;
-    [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:kRPCurrentSongForum]]];
+    NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
+    [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
     [FlurryAnalytics logEvent:@"Forum" timed:YES];
 }
 

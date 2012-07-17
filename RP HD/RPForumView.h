@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define kRPCurrentSongForum @"http://www.radioparadise.com/m-content.php?name=Music&file=songinfo&song_id=now"
+#define kRPCurrentSongForum @"http://www.radioparadise.com/m-content.php?name=Music&file=songinfo&song_id=%@"
 
 @interface RPForumView : UIViewController
 
@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *theSpinner;
+
+@property (copy, nonatomic) NSString *songId;
 
 - (IBAction)viewIsDone:(id)sender;
 - (IBAction)goBackClicked:(id)sender;
