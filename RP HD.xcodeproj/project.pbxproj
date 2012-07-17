@@ -250,11 +250,11 @@
 				64AAFA08151393260061DD49 /* RPAboutBox.m */,
 				64AAF9FF151389820061DD49 /* AboutBox~ipad.xib */,
 				64D48128154762E100BC1085 /* AboutBox~iphone.xib */,
-				64F802371512272E0080D442 /* Supporting Files */,
 				646ACA8515B46D6A001B5B73 /* RPLoginController.h */,
 				646ACA8615B46D6A001B5B73 /* RPLoginController.m */,
 				646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */,
 				646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */,
+				64F802371512272E0080D442 /* Supporting Files */,
 			);
 			path = "RP HD";
 			sourceTree = "<group>";
