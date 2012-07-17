@@ -506,8 +506,8 @@
                  self.psdButton.enabled = NO;
                  [self realPlay:nil];
              });
-             // Prepare stop and restart stream after the claimed lenght (minus 1.5 seconds to allow for some fading...
-             double delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 1.5;
+             // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
+             double delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 3;
              dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
              DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
              dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
