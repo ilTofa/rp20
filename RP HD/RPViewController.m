@@ -332,9 +332,9 @@
     }
 }
 
-- (void)playPSDNow
+- (void)playPSDNow:(NSString *)cookieString
 {
-    
+    DLog(@"playPSDNow called. Cookie is <%@>", cookieString);
 }
 
 - (void)stopPressed:(id)sender 

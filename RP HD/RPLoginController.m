@@ -81,9 +81,22 @@
          BOOL invalidLogin = [retValue rangeOfString:@"invalid "].location != NSNotFound;
          if(retValue && !invalidLogin)
          { // If login successful, save info and send information to parent
-             NSError *err;
-             [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:@"userName"];
-             [STKeychain storeUsername:self.usernameField.text andPassword:self.passwordField.text forServiceName:@"RP" updateExisting:YES error:&err];
+             DLog(@"Login to RP is successful");
+             retValue = [retValue stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+             NSArray *values = [retValue componentsSeparatedByString:@"|"];
+             if([values count] != 2)
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.formHeader.text = @"Network error in login, please retry later.";
+                     self.formHeader.textColor = [UIColor redColor];
+                 });                
+             NSString *cookieString = [NSString stringWithFormat:@"Cookie: C_username=%@; C_passwd=%@", [values objectAtIndex:0], [values objectAtIndex:1]];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 NSError *err;
+                 [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:@"userName"];
+                 [STKeychain storeUsername:self.usernameField.text andPassword:self.passwordField.text forServiceName:@"RP" updateExisting:YES error:&err];
+                 [self cancel:nil];
+                 [self.parent playPSDNow:cookieString];
+             });
          }
          else
          { // If not, notify the user (on main thread)

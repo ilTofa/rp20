@@ -68,4 +68,6 @@ typedef enum {
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
 
+- (void)playPSDNow:(NSString *)cookieString;
+
 @end
