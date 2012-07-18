@@ -56,13 +56,13 @@
         NSTimeInterval howMuchTimeBetweenImages;
         switch (self.bitrateSelector.selectedSegmentIndex) {
             case 0:
-                howMuchTimeBetweenImages = 20.0;
+                howMuchTimeBetweenImages = 60.0;
                 break;
             case 1:
                 howMuchTimeBetweenImages = 40.0;
                 break;
             case 2:
-                howMuchTimeBetweenImages = 60.0;
+                howMuchTimeBetweenImages = 20.0;
                 break;
             default:
                 break;
@@ -541,6 +541,11 @@
                  self.psdButton.enabled = NO;
                  [self realPlay:nil];
                  // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
+                 if(self.thePsdTimer)
+                 {
+                     [self.thePsdTimer invalidate];
+                     self.thePsdTimer = nil;
+                 }
                  NSTimeInterval delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 3;
                  DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
                  self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:delayInSeconds target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
