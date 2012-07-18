@@ -37,6 +37,7 @@
 @synthesize theURL = _theURL;
 @synthesize theRedirector = _theRedirector;
 @synthesize theTimer = _theTimer;
+@synthesize thePsdTimer = _thePsdTimer;
 @synthesize theAboutBox = _theAboutBox;
 @synthesize theWebView = _theWebView;
 @synthesize currentSongForumURL = _currentSongForumURL;
@@ -47,6 +48,30 @@
 
 #pragma mark -
 #pragma mark HD images loading
+
+-(void)scheduleImageTimer
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadNewImage:nil];
+        NSTimeInterval howMuchTimeBetweenImages;
+        switch (self.bitrateSelector.selectedSegmentIndex) {
+            case 0:
+                howMuchTimeBetweenImages = 20.0;
+                break;
+            case 1:
+                howMuchTimeBetweenImages = 40.0;
+                break;
+            case 2:
+                howMuchTimeBetweenImages = 60.0;
+                break;
+            default:
+                break;
+        }
+        DLog(@"HD images timer setup to %f.0 seconds", howMuchTimeBetweenImages);
+        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:howMuchTimeBetweenImages target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+    });
+}
+
 -(void)loadNewImage:(NSTimer *)timer
 {
     NSMutableURLRequest *req;
@@ -330,11 +355,8 @@
             DLog(@"Images again, please");
             if(self.theStreamer.isPlaying)
             {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [FlurryAnalytics logEvent:@"In Foreground while Playing"];
-                    [self loadNewImage:nil];
-                    self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
-                });
+                [FlurryAnalytics logEvent:@"In Foreground while Playing"];
+                [self scheduleImageTimer];
             }
         });
 }
@@ -393,12 +415,7 @@
     // kStreamEnd
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-    {
-        [self loadNewImage:nil];
-        // TODO: set interval!
-        DLog(@"HD images timer setup");
-        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
-    }
+        [self scheduleImageTimer];
     self.hdImage.hidden = NO;
     // Stop spinner will re-enable the button on stream connection
     self.minimizerButton.enabled = YES;
@@ -453,6 +470,18 @@
                  DLog(@"Error loading redirector: %@", [err localizedDescription]);
              }
          }];
+    }
+}
+
+-(void)stopPsdFromTimer:(NSTimer *)aTimer
+{
+    DLog(@"This is the PSD timer triggering...");
+    // If still playing PSD, restart "normal" stream
+    if(self.isPSDPlaying)
+    {
+        self.isPSDPlaying = NO;
+        DLog(@"Stopping stream in timer firing");
+        [self stopPressed:self];
     }
 }
 
@@ -511,20 +540,10 @@
                  self.isPSDPlaying = YES;
                  self.psdButton.enabled = NO;
                  [self realPlay:nil];
-             });
-             // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
-             double delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 3;
-             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-             DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
-             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                 DLog(@"This is the PSD timer triggering...");
-                 // If still playing PSD, restart "normal" stream
-                 if(self.isPSDPlaying)
-                 {
-                     self.isPSDPlaying = NO;
-                     DLog(@"Stopping stream in dispatch_after block");
-                     [self stopPressed:self];
-                 }
+                 // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
+                 NSTimeInterval delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 3;
+                 DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
+                 self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:delayInSeconds target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
              });
          }
      }];
