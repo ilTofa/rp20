@@ -50,6 +50,8 @@
 		64D4812B1547678E00BC1085 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64D4812A1547678E00BC1085 /* Localizable.strings */; };
 		64D48132154767F300BC1085 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D48131154767F300BC1085 /* Appirater.m */; };
 		64D481341547681A00BC1085 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D481331547681A00BC1085 /* SystemConfiguration.framework */; };
+		64D60D9D15B6BADA0099A168 /* button-psd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9B15B6BADA0099A168 /* button-psd.png */; };
+		64D60D9E15B6BADA0099A168 /* button-psd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9C15B6BADA0099A168 /* button-psd@2x.png */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
@@ -122,6 +124,8 @@
 		64D48130154767F300BC1085 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		64D48131154767F300BC1085 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		64D481331547681A00BC1085 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		64D60D9B15B6BADA0099A168 /* button-psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd.png"; path = "Images/button-psd.png"; sourceTree = "<group>"; };
+		64D60D9C15B6BADA0099A168 /* button-psd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd@2x.png"; path = "Images/button-psd@2x.png"; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -303,6 +307,8 @@
 				64F80251151228950080D442 /* button-stop@2x.png */,
 				64D481241547607D00BC1085 /* SmallLogo_rphd.png */,
 				64D481251547607D00BC1085 /* SmallLogo_rphd@2x.png */,
+				64D60D9B15B6BADA0099A168 /* button-psd.png */,
+				64D60D9C15B6BADA0099A168 /* button-psd@2x.png */,
 				64F80252151228950080D442 /* logo_2011_rphd.png */,
 				6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */,
 			);
@@ -410,6 +416,8 @@
 				64AD767E1548B9A7001910E9 /* Default-Portrait@2x.png in Resources */,
 				646ACA8915B46D6A001B5B73 /* RPLoginController~ipad.xib in Resources */,
 				646ACA8B15B47699001B5B73 /* RPLoginController~iphone.xib in Resources */,
+				64D60D9D15B6BADA0099A168 /* button-psd.png in Resources */,
+				64D60D9E15B6BADA0099A168 /* button-psd@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
