@@ -480,6 +480,11 @@
     if(self.isPSDPlaying)
     {
         self.isPSDPlaying = NO;
+        if(self.thePsdTimer)
+        {
+            [self.thePsdTimer invalidate];
+            self.thePsdTimer = nil;
+        }
         DLog(@"Stopping stream in timer firing");
         [self stopPressed:self];
     }
@@ -559,6 +564,11 @@
     // In any case, reset PSD changed things. :)
     self.isPSDPlaying = NO;
     self.psdButton.enabled = YES;
+    if(self.thePsdTimer)
+    {
+        [self.thePsdTimer invalidate];
+        self.thePsdTimer = nil;
+    }
     // Disable button
     self.playOrStopButton.enabled = NO;
     // Process stop request.
