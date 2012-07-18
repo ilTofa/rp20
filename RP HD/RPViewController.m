@@ -544,6 +544,7 @@
                  self.theURL = psdSongUrl;
                  self.isPSDPlaying = YES;
                  self.psdButton.enabled = NO;
+                 self.bitrateSelector.enabled = NO;
                  [self realPlay:nil];
                  // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
                  if(self.thePsdTimer)
@@ -564,6 +565,7 @@
     // In any case, reset PSD changed things. :)
     self.isPSDPlaying = NO;
     self.psdButton.enabled = YES;
+    self.bitrateSelector.enabled = YES;
     if(self.thePsdTimer)
     {
         [self.thePsdTimer invalidate];
