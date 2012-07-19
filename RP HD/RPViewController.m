@@ -36,7 +36,7 @@
 @synthesize imageLoadQueue = _imageLoadQueue;
 @synthesize theURL = _theURL;
 @synthesize theRedirector = _theRedirector;
-@synthesize theTimer = _theTimer;
+@synthesize theImagesTimer = _theTimer;
 @synthesize thePsdTimer = _thePsdTimer;
 @synthesize theAboutBox = _theAboutBox;
 @synthesize theWebView = _theWebView;
@@ -46,12 +46,13 @@
 @synthesize cookieString = _cookieString;
 @synthesize psdSongId = _psdSongId;
 @synthesize thePsdStreamer = _thePsdStreamer;
+@synthesize theOldPsdStreamer = _theOldPsdStreamer;
 @synthesize psdDurationInSeconds = _psdDurationInSeconds;
 
 #pragma mark -
 #pragma mark HD images loading
 
--(void)scheduleImageTimer
+-(void)scheduleImagesTimer
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self loadNewImage:nil];
@@ -69,9 +70,16 @@
             default:
                 break;
         }
-        DLog(@"HD images timer setup to %f.0 seconds", howMuchTimeBetweenImages);
-        self.theTimer = [NSTimer scheduledTimerWithTimeInterval:howMuchTimeBetweenImages target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+        self.theImagesTimer = [NSTimer scheduledTimerWithTimeInterval:howMuchTimeBetweenImages target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+        DLog(@"Scheduling images timer (%@) setup to %f.0 seconds", self.theImagesTimer, howMuchTimeBetweenImages);
     });
+}
+
+-(void)unscheduleImagesTimer
+{
+    DLog(@"Unscheduling images timer (%@)", self.theImagesTimer);
+    [self.theImagesTimer invalidate];
+    self.theImagesTimer = nil;
 }
 
 -(void)loadNewImage:(NSTimer *)timer
@@ -339,8 +347,7 @@
             if ([[UIScreen screens] count] == 1)
             {
                 DLog(@"No more images, please");
-                [self.theTimer invalidate];
-                self.theTimer = nil;
+                [self unscheduleImagesTimer];
             }
         });
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
@@ -349,7 +356,7 @@
             if(self.theStreamer.isPlaying)
             {
                 [FlurryAnalytics logEvent:@"In Foreground while Playing"];
-                [self scheduleImageTimer];
+                [self scheduleImagesTimer];
             }
         });
 }
@@ -437,10 +444,16 @@
             self.thePsdTimer = nil;
         }
         DLog(@"Stopping stream in timer firing");
+        [self unscheduleImagesTimer];
+        // restart main stream...
         [self playFromRedirector];
-        [self.thePsdStreamer pause];
-        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
-        self.thePsdStreamer = nil;
+        // ...while giving the delay to the fading
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.thePsdStreamer pause];
+            [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
+            self.thePsdStreamer = nil;
+        });
     }
 }
 
@@ -462,12 +475,19 @@
             self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:[self.psdDurationInSeconds doubleValue] target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
             [self.thePsdStreamer play];
             // Stop main streamer and reset timers it.
-            [self.theTimer invalidate];
-            self.theTimer = nil;
+            [self unscheduleImagesTimer];
             [self removeNotifications];
-            [self.theStreamer stop];
-            self.theStreamer = nil;
-            self.isPSDPlaying = YES;
+            if(self.isPSDPlaying)
+            {
+                [self.theOldPsdStreamer pause];
+                self.theOldPsdStreamer = nil;
+            }
+            else
+            {
+                [self.theStreamer stop];
+                self.theStreamer = nil;
+                self.isPSDPlaying = YES;
+            }
             [self interfacePsd];
         }
         else if (self.thePsdStreamer.status == AVPlayerStatusFailed)
@@ -521,6 +541,12 @@
              [FlurryAnalytics logEvent:@"PSD triggered"];
              // reset stream on main thread
              dispatch_async(dispatch_get_main_queue(), ^{
+                 // If PSD is already running...
+                 if(self.isPSDPlaying)
+                 {
+                     self.theOldPsdStreamer = self.thePsdStreamer;
+                     [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
+                 }
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
                  // Add observer for real start and stop.
@@ -537,27 +563,35 @@
 
 - (void)stopPressed:(id)sender
 {
-    // TODO: allow for PSD stop, also
     [self interfaceStopPending];
     [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
     // Process stop request.
-    [self.theStreamer stop];
-    // Let's give the stream a couple seconds to really stop itself
-    double delayInSeconds = 1.0;    //was 2.0: MONITOR!
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self removeNotifications];
-        [self.theTimer invalidate];
-        self.theTimer = nil;
-        self.theStreamer = nil;
+    if(self.isPSDPlaying)
+    {
+        [self.thePsdStreamer pause];
+        self.thePsdStreamer = nil;
+        [self unscheduleImagesTimer];
         [self interfaceStop];
-        // if called from bitrateChanged, restart
-        if(sender == self)
-            [self playFromRedirector]; 
-    });
+    }
+    else
+    {
+        [self.theStreamer stop];
+        // Let's give the stream a couple seconds to really stop itself
+        double delayInSeconds = 1.0;    //was 2.0: MONITOR!
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self removeNotifications];
+            [self unscheduleImagesTimer];
+            self.theStreamer = nil;
+            [self interfaceStop];
+            // if called from bitrateChanged, restart
+            if(sender == self)
+                [self playFromRedirector];
+        });
+    }
 }
 
-- (IBAction)playOrStop:(id)sender 
+- (IBAction)playOrStop:(id)sender
 {
     if(self.theStreamer.isPlaying)
         [self stopPressed:nil];
@@ -691,6 +725,7 @@
 
 -(void)activateNotifications
 {
+    DLog(@"*** activateNotifications");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamConnected:) name:kStreamConnected object:nil];
@@ -701,6 +736,7 @@
 
 -(void)removeNotifications
 {
+    DLog(@"*** removeNotifications");
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
@@ -711,6 +747,7 @@
 
 -(void)interfaceStop
 {
+    DLog(@"*** interfaceStop");
     if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
         [self interfaceToNormal];
     self.metadataInfo.text = @"";
@@ -737,6 +774,7 @@
 
 -(void)interfaceStopPending
 {
+    DLog(@"*** interfaceStopPending");
     [self.spinner startAnimating];
     if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
         [self interfaceToNormal];
@@ -749,6 +787,7 @@
 
 -(void)interfacePlay
 {
+    DLog(@"*** interfacePlay");
     self.bitrateSelector.enabled = YES;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
@@ -766,7 +805,7 @@
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-        [self scheduleImageTimer];
+        [self scheduleImagesTimer];
     // Setup PSD metadata, if needed.
     if(self.isPSDPlaying)
     {
@@ -777,6 +816,7 @@
 
 -(void)interfacePlayPending
 {
+    DLog(@"*** interfacePlayPending");
     [self.spinner startAnimating];
     self.playOrStopButton.enabled = NO;
     self.bitrateSelector.enabled = NO;
@@ -789,6 +829,7 @@
 
 -(void)interfacePsd
 {
+    DLog(@"*** interfacePsd");
     self.psdButton.enabled = YES;
     self.bitrateSelector.enabled = NO;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
@@ -799,10 +840,14 @@
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
+    self.rpWebButton.enabled = YES;
+    self.rpWebButton.hidden = NO;
+    self.minimizerButton.enabled = YES;
+    self.hdImage.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-        [self scheduleImageTimer];
+        [self scheduleImagesTimer];
     // Setup PSD metadata, if needed.
     if(self.isPSDPlaying)
     {
@@ -813,6 +858,7 @@
 
 -(void)interfacePsdPending
 {
+    DLog(@"*** interfacePsdPending");
     [self.spinner startAnimating];
     self.playOrStopButton.enabled = NO;
     self.bitrateSelector.enabled = NO;
@@ -992,6 +1038,7 @@
     [self setIPhoneLogoImage:nil];
     [self setPsdButton:nil];
     [self setThePsdStreamer:nil];
+    [self setTheOldPsdStreamer:nil];
     [super viewDidUnload];
 }
 

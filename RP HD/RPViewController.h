@@ -53,9 +53,10 @@ typedef enum {
 
 @property (strong, nonatomic) AudioStreamer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
-@property (strong, nonatomic) NSTimer *theTimer;
+@property (strong, nonatomic) NSTimer *theImagesTimer;
 @property (strong, nonatomic) NSTimer *thePsdTimer;
 @property (strong, nonatomic) AVPlayer *thePsdStreamer;
+@property (strong, nonatomic) AVPlayer *theOldPsdStreamer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
