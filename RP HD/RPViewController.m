@@ -45,6 +45,7 @@
 @synthesize isPSDPlaying = _isLoggedIn;
 @synthesize cookieString = _cookieString;
 @synthesize psdSongId = _psdSongId;
+@synthesize thePsdStreamer = _thePsdStreamer;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -324,15 +325,6 @@
     self.metadataInfo.text = @"Stream redirected, please restart...";
 }
 
--(void)streamEnd:(NSNotification *)note
-{
-    if(self.isPSDPlaying)
-    {
-        self.isPSDPlaying = NO;
-        [self stopPressed:self];
-    }
-}
-
 -(void)applicationChangedState:(NSNotification *)note
 {
     DLog(@"applicationChangedState: %@", note.name);
@@ -409,10 +401,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopSpinner:) name:kStreamConnected object:nil]; 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamEnd:) name:kStreamEnd object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    // kStreamEnd
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
         [self scheduleImageTimer];
@@ -479,7 +469,11 @@
     // If still playing PSD, restart "normal" stream
     if(self.isPSDPlaying)
     {
+        [self.thePsdStreamer pause];
+        self.thePsdStreamer = nil;
         self.isPSDPlaying = NO;
+        self.psdButton.enabled = YES;
+        self.bitrateSelector.enabled = YES;
         if(self.thePsdTimer)
         {
             [self.thePsdTimer invalidate];
@@ -523,6 +517,8 @@
              [FlurryAnalytics logEvent:@"PSD triggered"];
              // reset stream on main thread
              dispatch_async(dispatch_get_main_queue(), ^{
+                 // Begin buffering...
+                 self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
                  // Stop streamer and restart it.
                  [self.theTimer invalidate];
                  self.theTimer = nil;
@@ -532,7 +528,6 @@
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
-                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamEnd:) name:kStreamEnd object:nil];
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
                  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
                  self.minimizerButton.enabled = NO;
@@ -545,7 +540,7 @@
                  self.isPSDPlaying = YES;
                  self.psdButton.enabled = NO;
                  self.bitrateSelector.enabled = NO;
-                 [self realPlay:nil];
+//                 [self realPlay:nil];
                  // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
                  if(self.thePsdTimer)
                  {
@@ -555,6 +550,9 @@
                  NSTimeInterval delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 2;
                  DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
                  self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:delayInSeconds target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
+                 [self.thePsdStreamer play];
+                 // TODO: add this to a KVO notification
+                 [self stopSpinner:self];
              });
          }
      }];
@@ -563,14 +561,14 @@
 - (void)stopPressed:(id)sender
 {
     // In any case, reset PSD changed things. :)
-    self.isPSDPlaying = NO;
-    self.psdButton.enabled = YES;
-    self.bitrateSelector.enabled = YES;
-    if(self.thePsdTimer)
-    {
-        [self.thePsdTimer invalidate];
-        self.thePsdTimer = nil;
-    }
+//    self.isPSDPlaying = NO;
+//    self.psdButton.enabled = YES;
+//    self.bitrateSelector.enabled = YES;
+//    if(self.thePsdTimer)
+//    {
+//        [self.thePsdTimer invalidate];
+//        self.thePsdTimer = nil;
+//    }
     // Disable button
     self.playOrStopButton.enabled = NO;
     // Process stop request.
@@ -593,7 +591,6 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamEnd object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
         self.minimizerButton.enabled = NO;
@@ -882,6 +879,7 @@
     [self setSeparatorImage:nil];
     [self setIPhoneLogoImage:nil];
     [self setPsdButton:nil];
+    [self setThePsdStreamer:nil];
     [super viewDidUnload];
 }
 

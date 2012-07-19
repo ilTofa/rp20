@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #include <QuartzCore/QuartzCore.h>
+#include <AVFoundation/AVFoundation.h>
 #import "AudioStreamer.h"
 #import "RPAboutBox.h"
 #import "RPForumView.h"
@@ -52,6 +53,7 @@ typedef enum {
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
 @property (strong, nonatomic) NSTimer *theTimer;
 @property (strong, nonatomic) NSTimer *thePsdTimer;
+@property (strong, nonatomic) AVPlayer *thePsdStreamer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
