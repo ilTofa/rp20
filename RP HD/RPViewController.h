@@ -60,6 +60,7 @@ typedef enum {
 @property (nonatomic) InterfaceMode interfaceState;
 @property (nonatomic) BOOL isPSDPlaying;
 @property (copy, nonatomic) NSString *psdSongId;
+@property (nonatomic) NSNumber *psdDurationInSeconds;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;

@@ -46,6 +46,7 @@
 @synthesize cookieString = _cookieString;
 @synthesize psdSongId = _psdSongId;
 @synthesize thePsdStreamer = _thePsdStreamer;
+@synthesize psdDurationInSeconds = _psdDurationInSeconds;
 
 #pragma mark -
 #pragma mark HD images loading
@@ -470,6 +471,7 @@
     if(self.isPSDPlaying)
     {
         [self.thePsdStreamer pause];
+        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
         self.thePsdStreamer = nil;
         self.isPSDPlaying = NO;
         self.psdButton.enabled = YES;
@@ -481,6 +483,35 @@
         }
         DLog(@"Stopping stream in timer firing");
         [self stopPressed:self];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.thePsdStreamer && [keyPath isEqualToString:@"status"])
+    {
+        if (self.thePsdStreamer.status == AVPlayerStatusReadyToPlay)
+        {
+            DLog(@"psdStreamer is ReadyToPlay for %@ secs", self.psdDurationInSeconds);
+        }
+        else if (self.thePsdStreamer.status == AVPlayerStatusFailed)
+        {
+            // something went wrong. player.error should contain some information
+            DLog(@"Error starting streamer: %@", self.thePsdStreamer.error);
+        }
+        else if (self.thePsdStreamer.status == AVPlayerStatusUnknown)
+        {
+            // something went wrong. player.error should contain some information
+            DLog(@"AVPlayerStatusUnknown");
+        }
+        else
+        {
+            DLog(@"Unknown status received: %d", self.thePsdStreamer.status);
+        }
+    }
+    else
+    {
+        DLog(@"Something else called observeValueForKeyPath. KeyPath is %@", keyPath);
     }
 }
 
@@ -519,6 +550,9 @@
              dispatch_async(dispatch_get_main_queue(), ^{
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
+                 // Add observer for real start and stop.
+                 self.psdDurationInSeconds = [[NSNumber alloc] initWithDouble:([psdSongLenght doubleValue] / 1000.0) - 2];
+                 [self.thePsdStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
                  // Stop streamer and restart it.
                  [self.theTimer invalidate];
                  self.theTimer = nil;
@@ -541,7 +575,7 @@
                  self.psdButton.enabled = NO;
                  self.bitrateSelector.enabled = NO;
 //                 [self realPlay:nil];
-                 // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading...
+                 // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading)...
                  if(self.thePsdTimer)
                  {
                      [self.thePsdTimer invalidate];
@@ -552,7 +586,8 @@
                  self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:delayInSeconds target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
                  [self.thePsdStreamer play];
                  // TODO: add this to a KVO notification
-                 [self stopSpinner:self];
+                 NSNotification *buttami = [NSNotification alloc];
+                 [self stopSpinner:buttami];
              });
          }
      }];
