@@ -446,7 +446,7 @@
         DLog(@"Stopping stream in timer firing");
         [self unscheduleImagesTimer];
         // restart main stream...
-        [self playFromRedirector];
+        [self realPlay:nil];
         // ...while giving the delay to the fading
         [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
