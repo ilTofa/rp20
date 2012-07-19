@@ -354,72 +354,31 @@
         });
 }
 
--(void) startSpinner
+-(void)streamConnected:(NSNotification *)note
 {
-    [self.spinner startAnimating];
-    self.metadataInfo.text = @"";
-}
-
--(void)stopSpinner:(NSNotification *)note
-{
-    [self.spinner stopAnimating];
-    if(!note)
-    {
-        self.metadataInfo.text = @"";
-        [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
-        [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
-        [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
-    }
-    // If this is a real stream connect notification set and enable stop button (on main thread)
-    if(note)
-    {
-        DLog(@"This is stopSpinner from a real notification!");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
-            [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
-            [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];        
-            self.playOrStopButton.enabled = YES;
-            // Setup PSD metadata, if needed.
-            if(self.isPSDPlaying)
-            {
-                DLog(@"Getting PSD metadata...");
-                [self PSDMetatadaHandler];
-            }
-        });
-    }
+    DLog(@"Stream is connected.");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self interfacePlay];
+    });
 }
 
 #pragma mark -
 #pragma mark Actions
 
-- (void)realPlay:(id)sender 
+- (void)realPlay:(id)sender
 {
     [FlurryAnalytics logEvent:@"Streaming" timed:YES];
+    [self interfacePlayPending];
     self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
-    [self startSpinner];
-    self.rpWebButton.hidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil]; 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil]; 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopSpinner:) name:kStreamConnected object:nil]; 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-        [self scheduleImageTimer];
-    self.hdImage.hidden = NO;
-    // Stop spinner will re-enable the button on stream connection
-    self.minimizerButton.enabled = YES;
-    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
+    [self activateNotifications];
     [self.theStreamer start];
 }
 
 - (void)playFromRedirector
 {
     DLog(@"Starting play for <%@>.", self.theRedirector);
+    [self interfacePlayPending];
 
-    // Disable button
-    self.playOrStopButton.enabled = NO;
     // Now search for audio redirector type of files
     NSArray *values = [NSArray arrayWithObjects:@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u", nil];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
@@ -452,12 +411,12 @@
                  else
                  {
                      DLog(@"URL not found in redirector.");
-                     self.playOrStopButton.enabled = NO;
+                     [self interfaceStop];
                  }
              }
              else
              {
-                 self.playOrStopButton.enabled = NO;
+                 [self interfaceStop];
                  DLog(@"Error loading redirector: %@", [err localizedDescription]);
              }
          }];
@@ -466,26 +425,26 @@
 
 -(void)stopPsdFromTimer:(NSTimer *)aTimer
 {
-    DLog(@"This is the PSD timer triggering...");
+    DLog(@"This is the PSD timer triggering the end of the PSD song");
     // If still playing PSD, restart "normal" stream
     if(self.isPSDPlaying)
     {
-        [self.thePsdStreamer pause];
-        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
-        self.thePsdStreamer = nil;
+        [self interfacePlayPending];
         self.isPSDPlaying = NO;
-        self.psdButton.enabled = YES;
-        self.bitrateSelector.enabled = YES;
         if(self.thePsdTimer)
         {
             [self.thePsdTimer invalidate];
             self.thePsdTimer = nil;
         }
         DLog(@"Stopping stream in timer firing");
-        [self stopPressed:self];
+        [self playFromRedirector];
+        [self.thePsdStreamer pause];
+        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
+        self.thePsdStreamer = nil;
     }
 }
 
+// Here PSD streaming is ready to start (and it is started)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == self.thePsdStreamer && [keyPath isEqualToString:@"status"])
@@ -493,11 +452,30 @@
         if (self.thePsdStreamer.status == AVPlayerStatusReadyToPlay)
         {
             DLog(@"psdStreamer is ReadyToPlay for %@ secs", self.psdDurationInSeconds);
+            // Prepare stop and restart stream after the claimed lenght (minus kPsdFadeOutTime seconds to allow for some fading)...
+            if(self.thePsdTimer)
+            {
+                [self.thePsdTimer invalidate];
+                self.thePsdTimer = nil;
+            }
+            DLog(@"We'll stop PSD automagically after %@ secs", self.psdDurationInSeconds);
+            self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:[self.psdDurationInSeconds doubleValue] target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
+            [self.thePsdStreamer play];
+            // Stop main streamer and reset timers it.
+            [self.theTimer invalidate];
+            self.theTimer = nil;
+            [self removeNotifications];
+            [self.theStreamer stop];
+            self.theStreamer = nil;
+            self.isPSDPlaying = YES;
+            [self interfacePsd];
         }
         else if (self.thePsdStreamer.status == AVPlayerStatusFailed)
         {
             // something went wrong. player.error should contain some information
             DLog(@"Error starting streamer: %@", self.thePsdStreamer.error);
+            self.thePsdStreamer = nil;
+            [self playFromRedirector];
         }
         else if (self.thePsdStreamer.status == AVPlayerStatusUnknown)
         {
@@ -518,6 +496,7 @@
 - (void)playPSDNow
 {
     DLog(@"playPSDNow called. Cookie is <%@>", self.cookieString);
+    [self interfacePsdPending];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_replace.php?option=0"]];
     [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
@@ -531,6 +510,7 @@
              {
                  NSLog(@"ERROR: too many values (%d) returned from ajax_replace", [values count]);
                  NSLog(@"retValue: <%@>", retValue);
+                 [self playFromRedirector];
                  return;
              }
              NSString *psdSongUrl = [values objectAtIndex:0];
@@ -544,80 +524,33 @@
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
                  // Add observer for real start and stop.
-                 self.psdDurationInSeconds = [[NSNumber alloc] initWithDouble:([psdSongLenght doubleValue] / 1000.0) - 2];
+                 self.psdDurationInSeconds = [[NSNumber alloc] initWithDouble:([psdSongLenght doubleValue] / 1000.0) - kPsdFadeOutTime];
                  [self.thePsdStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
-                 // Stop streamer and restart it.
-                 [self.theTimer invalidate];
-                 self.theTimer = nil;
-                 [self.theStreamer stop];
-                 [self stopSpinner:nil];
-                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
-                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
-                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
-                 [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
-                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-                 [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-                 self.minimizerButton.enabled = NO;
-                 self.theStreamer = nil;
-                 [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
-                 [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
-                 [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
-                 self.playOrStopButton.enabled = YES;
-                 self.theURL = psdSongUrl;
-                 self.isPSDPlaying = YES;
-                 self.psdButton.enabled = NO;
-                 self.bitrateSelector.enabled = NO;
-//                 [self realPlay:nil];
-                 // Prepare stop and restart stream after the claimed lenght (minus 3 seconds to allow for some fading)...
-                 if(self.thePsdTimer)
-                 {
-                     [self.thePsdTimer invalidate];
-                     self.thePsdTimer = nil;
-                 }
-                 NSTimeInterval delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 2;
-                 DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
-                 self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:delayInSeconds target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
-                 [self.thePsdStreamer play];
-                 // TODO: add this to a KVO notification
-                 NSNotification *buttami = [NSNotification alloc];
-                 [self stopSpinner:buttami];
              });
+         }
+         else // we have an error in PSD processing, (re)start main stream)
+         {
+             [self playFromRedirector];
          }
      }];
 }
 
 - (void)stopPressed:(id)sender
 {
-    // Disable button
-    self.playOrStopButton.enabled = NO;
-    // Process stop request.
+    // TODO: allow for PSD stop, also
+    [self interfaceStopPending];
     [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
+    // Process stop request.
     [self.theStreamer stop];
-    if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
-        [self interfaceToNormal];
     // Let's give the stream a couple seconds to really stop itself
-    [self startSpinner];
     double delayInSeconds = 1.0;    //was 2.0: MONITOR!
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self removeNotifications];
         [self.theTimer invalidate];
         self.theTimer = nil;
-        [self stopSpinner:nil];
-        ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
-        self.hdImage.hidden = YES;
-        self.rpWebButton.hidden = YES;
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-        self.minimizerButton.enabled = NO;
         self.theStreamer = nil;
-        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
-        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
-        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
-        self.playOrStopButton.enabled = YES;
+        [self interfaceStop];
         // if called from bitrateChanged, restart
         if(sender == self)
             [self playFromRedirector]; 
@@ -680,7 +613,9 @@
         theLoginBox = nil;
     }
     else // already logged in. no need to show the login box
+    {
         [self playPSDNow];
+    }
 }
 
 - (void)RPLoginControllerDidCancel:(RPLoginController *)controller
@@ -751,7 +686,142 @@
     [self presentRPWeb:sender];
 }
 
+#pragma mark -
 #pragma mark Interface setup
+
+-(void)activateNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamConnected:) name:kStreamConnected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+-(void)removeNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+-(void)interfaceStop
+{
+    if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
+        [self interfaceToNormal];
+    self.metadataInfo.text = @"";
+    self.psdButton.enabled = YES;
+    self.bitrateSelector.enabled = YES;
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
+    self.playOrStopButton.enabled = YES;
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateNormal];
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
+    self.psdButton.enabled = YES;
+    [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
+    [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
+    [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
+    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
+    self.hdImage.hidden = YES;
+    self.rpWebButton.hidden = YES;
+    self.rpWebButton.enabled = NO;
+    self.minimizerButton.enabled = NO;
+    [self.spinner stopAnimating];
+}
+
+-(void)interfaceStopPending
+{
+    [self.spinner startAnimating];
+    if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
+        [self interfaceToNormal];
+    self.playOrStopButton.enabled = NO;
+    self.bitrateSelector.enabled = NO;
+    self.psdButton.enabled = NO;
+    self.rpWebButton.enabled = NO;
+    self.minimizerButton.enabled = NO;
+}
+
+-(void)interfacePlay
+{
+    self.bitrateSelector.enabled = YES;
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
+    self.playOrStopButton.enabled = YES;
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateNormal];
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
+    self.psdButton.enabled = YES;
+    self.minimizerButton.enabled = YES;
+    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
+    self.rpWebButton.hidden = NO;
+    self.rpWebButton.enabled = YES;
+    self.hdImage.hidden = NO;
+    [self.spinner stopAnimating];
+    // Only if the app is active, if this is called via events there's no need to load images
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+        [self scheduleImageTimer];
+    // Setup PSD metadata, if needed.
+    if(self.isPSDPlaying)
+    {
+        DLog(@"Getting PSD metadata...");
+        [self PSDMetatadaHandler];
+    }
+}
+
+-(void)interfacePlayPending
+{
+    [self.spinner startAnimating];
+    self.playOrStopButton.enabled = NO;
+    self.bitrateSelector.enabled = NO;
+    self.psdButton.enabled = NO;
+    self.rpWebButton.enabled = NO;
+    self.rpWebButton.hidden = NO;
+    self.minimizerButton.enabled = NO;
+    self.hdImage.hidden = NO;
+}
+
+-(void)interfacePsd
+{
+    self.psdButton.enabled = YES;
+    self.bitrateSelector.enabled = NO;
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
+    self.playOrStopButton.enabled = YES;
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateNormal];
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
+    [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateSelected];
+    self.psdButton.enabled = YES;
+    [self.spinner stopAnimating];
+    // Only if the app is active, if this is called via events there's no need to load images
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+        [self scheduleImageTimer];
+    // Setup PSD metadata, if needed.
+    if(self.isPSDPlaying)
+    {
+        DLog(@"Getting PSD metadata...");
+        [self PSDMetatadaHandler];
+    }
+}
+
+-(void)interfacePsdPending
+{
+    [self.spinner startAnimating];
+    self.playOrStopButton.enabled = NO;
+    self.bitrateSelector.enabled = NO;
+    self.psdButton.enabled = NO;
+    self.rpWebButton.enabled = NO;
+    self.rpWebButton.hidden = NO;
+    self.minimizerButton.enabled = NO;
+    self.hdImage.hidden = NO;
+}
 
 - (void) interfaceToMinimized
 {

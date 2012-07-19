@@ -25,6 +25,8 @@
 #define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
 #define kHDImagePSDURL @"http://www.radioparadise.com/ajax_image_ipad.php"
 
+#define kPsdFadeOutTime 3.0
+
 typedef enum {
     kInterfaceNormal,
     kInterfaceMinimized,
