@@ -11,7 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "FlurryAnalytics.h"
 
-@interface RPViewController () <UIPopoverControllerDelegate>
+@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate>
 
 @end
 
@@ -515,16 +515,9 @@
     }
 }
 
-- (void)playPSDNow:(NSString *)cookieString
+- (void)playPSDNow
 {
-    DLog(@"playPSDNow called. Cookie is <%@>", cookieString);
-    // dismiss the popover (if needed)
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        if([self.theLoginBox isPopoverVisible])
-            [self.theLoginBox dismissPopoverAnimated:YES];
-    }
-    self.cookieString = cookieString;
+    DLog(@"playPSDNow called. Cookie is <%@>", self.cookieString);
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_replace.php?option=0"]];
     [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
@@ -595,15 +588,6 @@
 
 - (void)stopPressed:(id)sender
 {
-    // In any case, reset PSD changed things. :)
-//    self.isPSDPlaying = NO;
-//    self.psdButton.enabled = YES;
-//    self.bitrateSelector.enabled = YES;
-//    if(self.thePsdTimer)
-//    {
-//        [self.thePsdTimer invalidate];
-//        self.thePsdTimer = nil;
-//    }
     // Disable button
     self.playOrStopButton.enabled = NO;
     // Process stop request.
@@ -678,7 +662,7 @@
     {
         // Init controller and set ourself for callback
         RPLoginController * theLoginBox = [[RPLoginController alloc] initWithNibName:@"RPLoginController" bundle:[NSBundle mainBundle]];
-        theLoginBox.parent = self;
+        theLoginBox.delegate = self;
         // if iPad, embed in a popover, go modal for iPhone
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
@@ -696,8 +680,29 @@
         theLoginBox = nil;
     }
     else // already logged in. no need to show the login box
-        [self playPSDNow:self.cookieString];
+        [self playPSDNow];
 }
+
+- (void)RPLoginControllerDidCancel:(RPLoginController *)controller
+{
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        [controller dismissModalViewControllerAnimated:YES];
+}
+
+- (void)RPLoginControllerDidSelect:(RPLoginController *)controller withCookies:(NSString *)cookiesString
+{
+    // dismiss the popover (if needed)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        if([self.theLoginBox isPopoverVisible])
+            [self.theLoginBox dismissPopoverAnimated:YES];
+    }
+    else // iPhone
+        [controller dismissModalViewControllerAnimated:YES];
+    self.cookieString = cookiesString;
+    [self playPSDNow];
+}
+
 
 - (IBAction)presentAboutBox:(id)sender
 {
@@ -745,6 +750,8 @@
 {
     [self presentRPWeb:sender];
 }
+
+#pragma mark Interface setup
 
 - (void) interfaceToMinimized
 {

@@ -17,7 +17,7 @@
 
 @implementation RPLoginController
 
-@synthesize parent = _parent;
+@synthesize delegate = _delegate;
 @synthesize usernameField = _usernameField;
 @synthesize passwordField = _passwordField;
 @synthesize formHeader = _formHeader;
@@ -94,10 +94,9 @@
                  NSError *err;
                  [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:@"userName"];
                  [STKeychain storeUsername:self.usernameField.text andPassword:self.passwordField.text forServiceName:@"RP" updateExisting:YES error:&err];
-                 [self cancel:nil];
                  self.formHeader.text = @"Enter your Radio Paradise login";
                  self.formHeader.textColor = [UIColor whiteColor];
-                 [self.parent playPSDNow:cookieString];
+                 [self.delegate RPLoginControllerDidSelect:self withCookies:cookieString];
              });
          }
          else
@@ -112,14 +111,14 @@
 
 - (IBAction)cancel:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate RPLoginControllerDidCancel:self];
 }
 
 - (IBAction)createNew:(id)sender
 {
     // Send user to RP mobile registering form <http://www.radioparadise.com/m-content.php?name=Members&file=register>
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/m-content.php?name=Members&file=register"]];
-    [self cancel:nil];
+    [self.delegate RPLoginControllerDidCancel:self];
 }
 
 @end

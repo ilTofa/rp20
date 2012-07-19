@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class RPViewController;
+@class RPLoginController;
+
+@protocol RPLoginControllerDelegate <NSObject>
+- (void)RPLoginControllerDidCancel:(RPLoginController *)controller;
+- (void)RPLoginControllerDidSelect:(RPLoginController *)controller withCookies:(NSString *)cookiesString;
+@end
 
 @interface RPLoginController : UIViewController
 
-@property(strong, nonatomic) RPViewController *parent;
+@property(weak, nonatomic) id<RPLoginControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UILabel *formHeader;
