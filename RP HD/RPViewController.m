@@ -565,16 +565,15 @@
 {
     [self interfaceStopPending];
     [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
-    // Process stop request.
     if(self.isPSDPlaying)
     {
-        [self.thePsdStreamer pause];
-        self.thePsdStreamer = nil;
-        [self unscheduleImagesTimer];
-        [self interfaceStop];
+        // If PSD is running, simply get back to the main stream by firing the end timer...
+        DLog(@"Manually firing the PSD timer");
+        [self.thePsdTimer fire];
     }
     else
     {
+        // Process stop request.
         [self.theStreamer stop];
         // Let's give the stream a couple seconds to really stop itself
         double delayInSeconds = 1.0;    //was 2.0: MONITOR!
@@ -832,9 +831,9 @@
     DLog(@"*** interfacePsd");
     self.psdButton.enabled = YES;
     self.bitrateSelector.enabled = NO;
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateNormal];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateHighlighted];
+    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateSelected];
     self.playOrStopButton.enabled = YES;
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateNormal];
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
