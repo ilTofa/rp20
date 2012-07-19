@@ -448,10 +448,11 @@
         // restart main stream...
         [self playFromRedirector];
         // ...while giving the delay to the fading
+        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            DLog(@"PSD stream now stopped!");
             [self.thePsdStreamer pause];
-            [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
             self.thePsdStreamer = nil;
         });
     }
@@ -563,8 +564,6 @@
 
 - (void)stopPressed:(id)sender
 {
-    [self interfaceStopPending];
-    [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
     if(self.isPSDPlaying)
     {
         // If PSD is running, simply get back to the main stream by firing the end timer...
@@ -573,6 +572,8 @@
     }
     else
     {
+        [self interfaceStopPending];
+        [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
         // Process stop request.
         [self.theStreamer stop];
         // Let's give the stream a couple seconds to really stop itself
@@ -592,7 +593,7 @@
 
 - (IBAction)playOrStop:(id)sender
 {
-    if(self.theStreamer.isPlaying)
+    if(self.theStreamer.isPlaying || self.isPSDPlaying)
         [self stopPressed:nil];
     else
         [self playFromRedirector];
