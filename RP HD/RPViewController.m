@@ -552,7 +552,7 @@
                      [self.thePsdTimer invalidate];
                      self.thePsdTimer = nil;
                  }
-                 NSTimeInterval delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 3;
+                 NSTimeInterval delayInSeconds = ([psdSongLenght doubleValue] / 1000.0) - 2;
                  DLog(@"We'll stop PSD automagically after %.2f secs", delayInSeconds);
                  self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:delayInSeconds target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
              });
