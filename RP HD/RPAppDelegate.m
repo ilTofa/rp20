@@ -32,7 +32,7 @@
         self.windowTV = [[UIWindow alloc] initWithFrame:frame];
         self.windowTV.backgroundColor = [UIColor blackColor];
         [self.windowTV setScreen:connectedScreen];
-//        self.windowTV.hidden = NO;
+        self.windowTV.hidden = NO;
     }
     // Generate a view controller and substitute the existing one.
     self.TVviewController = [[RPTVViewController alloc] initWithNibName:@"RPTVViewController" bundle:[NSBundle mainBundle]];
