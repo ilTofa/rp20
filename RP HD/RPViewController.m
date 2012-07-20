@@ -346,33 +346,6 @@
     self.metadataInfo.text = @"Stream redirected, please restart...";
 }
 
--(void)applicationChangedState:(NSNotification *)note
-{
-    DLog(@"applicationChangedState: %@", note.name);
-    if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.theStreamer.isPlaying)
-            {
-                [FlurryAnalytics logEvent:@"Backgrounding while playing"];
-            }
-            // If we don't have a second screen...
-            if ([[UIScreen screens] count] == 1)
-            {
-                DLog(@"No more images, please");
-                [self unscheduleImagesTimer];
-            }
-        });
-    if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
-        dispatch_async(dispatch_get_main_queue(), ^{
-            DLog(@"Images again, please");
-            if(self.theStreamer.isPlaying)
-            {
-                [FlurryAnalytics logEvent:@"In Foreground while Playing"];
-                [self scheduleImagesTimer];
-            }
-        });
-}
-
 -(void)streamConnected:(NSNotification *)note
 {
     DLog(@"Stream is connected.");
@@ -1032,6 +1005,9 @@
     self.isPSDPlaying = NO;
     // Automagically start, as per bg request
     [self playFromRedirector];
+    // We would like to receive starts and stops
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
 }
 
 - (void)viewDidUnload
@@ -1054,27 +1030,49 @@
     [self setPsdButton:nil];
     [self setThePsdStreamer:nil];
     [self setTheOldPsdStreamer:nil];
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
     [super viewDidUnload];
 }
 
 #pragma mark -
 #pragma mark Multimedia Remote Control
-- (void)viewDidAppear:(BOOL)animated 
+
+-(void)applicationChangedState:(NSNotification *)note
 {
-    [super viewDidAppear:animated];
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [self becomeFirstResponder];
+    DLog(@"applicationChangedState: %@", note.name);
+    if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(self.theStreamer.isPlaying)
+            {
+                [FlurryAnalytics logEvent:@"Backgrounding while playing"];
+            }
+            // If we don't have a second screen...
+            if ([[UIScreen screens] count] == 1)
+            {
+                DLog(@"No more images, please");
+                [self unscheduleImagesTimer];
+            }
+            // We would like to receive starts and stops
+            [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+            [self becomeFirstResponder];
+        });
+    if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DLog(@"Images again, please");
+            if(self.theStreamer.isPlaying)
+            {
+                [FlurryAnalytics logEvent:@"In Foreground while Playing"];
+                [self scheduleImagesTimer];
+            }
+            [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+            [self resignFirstResponder];
+        });
 }
 
-- (void)viewWillDisappear:(BOOL)animated 
+- (void) remoteControlReceivedWithEvent: (UIEvent *) receivedEvent
 {
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    [self resignFirstResponder];
-    [super viewWillDisappear:animated];
-}
-
-- (void) remoteControlReceivedWithEvent: (UIEvent *) receivedEvent 
-{
+    DLog(@"Remote control received");
     if (receivedEvent.type == UIEventTypeRemoteControl) {
         switch (receivedEvent.subtype) 
         {
