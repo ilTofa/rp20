@@ -320,6 +320,18 @@
     }
 }
 
+-(void)tvExternalScreenInited:(NSNotification *)note
+{
+    // copy metadata and current HD image
+    if ([[UIScreen screens] count] > 1)
+    {
+        ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = self.metadataInfo.text;
+        [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:self.hdImage.image];
+    }
+
+}
+
+
 -(void)errorNotificationReceived:(NSNotification *)note
 {
 	self.metadataInfo.text = @"Stream Error, please restart...";
@@ -730,6 +742,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamConnected:) name:kStreamConnected object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tvExternalScreenInited:) name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
@@ -741,6 +754,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
@@ -844,6 +858,7 @@
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = YES;
     self.hdImage.hidden = NO;
+    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)

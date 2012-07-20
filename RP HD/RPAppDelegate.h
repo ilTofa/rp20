@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "RPTVViewController.h"
 
+#define kTVInited @"tvWindowsInited"
+
 @class RPViewController;
 
 @interface RPAppDelegate : UIResponder <UIApplicationDelegate>

@@ -39,6 +39,8 @@
     UIViewController* release = self.windowTV.rootViewController;
     self.windowTV.rootViewController = self.TVviewController;
     [release removeFromParentViewController];
+    // Post a notification to init tvView data
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kTVInited object:nil]];
 }
 
 - (void)screenDidConnect:(NSNotification *)notification 
