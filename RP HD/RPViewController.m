@@ -243,10 +243,10 @@
     [self.theStreamer play];
 }
 
--(void)presetFadeOutToCurrentTrack:(AVPlayer *)streamToBeFaded startingAt:(int)start forSeconds:(int)duration
+-(void)setupFading:(AVPlayer *)stream fadeOut:(BOOL)isFadingOut startingAt:(CMTime)start ending:(CMTime)end
 {
     // AVPlayerObject is a property which points to an AVPlayer
-    AVPlayerItem *myAVPlayerItem = streamToBeFaded.currentItem;
+    AVPlayerItem *myAVPlayerItem = stream.currentItem;
     AVAsset *myAVAsset = myAVPlayerItem.asset;
     NSArray *audioTracks = [myAVAsset tracksWithMediaType:AVMediaTypeAudio];
     
@@ -254,12 +254,32 @@
     for (AVAssetTrack *track in audioTracks)
     {
         AVMutableAudioMixInputParameters *audioInputParams = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:track];
-        [audioInputParams setVolumeRampFromStartVolume:1.0 toEndVolume:0 timeRange:CMTimeRangeMake(CMTimeMake(start, 1), CMTimeMake(start + duration, 1))];
+        if(isFadingOut)
+            [audioInputParams setVolumeRampFromStartVolume:1.0 toEndVolume:0 timeRange:CMTimeRangeMake(start, end)];
+        else
+            [audioInputParams setVolumeRampFromStartVolume:0 toEndVolume:1.0 timeRange:CMTimeRangeMake(start, end)];
         [allAudioParams addObject:audioInputParams];
     }
     AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
     [audioMix setInputParameters:allAudioParams];
     [myAVPlayerItem setAudioMix:audioMix];
+}
+
+-(void)presetFadeOutToCurrentTrack:(AVPlayer *)streamToBeFaded startingAt:(int)start forSeconds:(int)duration
+{
+    [self setupFading:streamToBeFaded fadeOut:YES startingAt:CMTimeMake(start, 1) ending:CMTimeMake(start + duration, 1)];
+}
+
+-(void)fadeOutCurrentTrackNow:(AVPlayer *)streamToBeFaded forSeconds:(int)duration
+{
+    CMTime startTime = streamToBeFaded.currentItem.currentTime;
+    [self setupFading:streamToBeFaded fadeOut:YES startingAt:startTime ending:CMTimeAdd(startTime, CMTimeMake(duration, 1))];
+}
+
+-(void)fadeInCurrentTrackNow:(AVPlayer *)streamToBeFaded forSeconds:(int)duration
+{
+    CMTime startTime = streamToBeFaded.currentItem.currentTime;
+    [self setupFading:streamToBeFaded fadeOut:NO startingAt:startTime ending:CMTimeAdd(startTime, CMTimeMake(duration, 1))];
 }
 
 -(void)stopPsdFromTimer:(NSTimer *)aTimer
@@ -278,7 +298,7 @@
         DLog(@"Stopping stream in timer firing (starting fade out)");
         [self unscheduleImagesTimer];
         // restart main stream...
-//        [self playMainStream];
+        [self playMainStream];
         // ...while giving the delay to the fading
         [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
@@ -345,7 +365,7 @@
     }
     else if(object == self.theStreamer && [keyPath isEqualToString:@"status"])
     {
-        if (self.thePsdStreamer.status == AVPlayerStatusFailed)
+        if (self.theStreamer.status == AVPlayerStatusFailed)
         {
             // something went wrong. player.error should contain some information
             DLog(@"Error starting the main streamer: %@", self.thePsdStreamer.error);
@@ -356,6 +376,7 @@
         {
             DLog(@"Stream is connected.");
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self fadeInCurrentTrackNow:self.theStreamer forSeconds:5];
                 [self interfacePlay];
             });
         }
@@ -423,7 +444,8 @@
     if(self.isPSDPlaying)
     {
         // If PSD is running, simply get back to the main stream by firing the end timer...
-        DLog(@"Manually firing the PSD timer");
+        DLog(@"Manually firing the PSD timer (starting fading now)");
+        [self fadeOutCurrentTrackNow:self.thePsdStreamer forSeconds:kPsdFadeOutTime];
         [self.thePsdTimer fire];
     }
     else
