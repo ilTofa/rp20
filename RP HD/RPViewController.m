@@ -133,9 +133,38 @@
 }
 
 #pragma mark -
-#pragma mark AudioStream Notifications management
+#pragma mark Metadata management
 
--(void)metatadaHandler
+#pragma TODO: attach metadata here...
+
+-(void)songInfoHandler
+{
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_replace.php?option=0"]];
+    [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+     {
+         if(data)
+         {
+             NSString *retValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+             retValue = [retValue stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+             NSArray *values = [retValue componentsSeparatedByString:@"|"];
+             if([values count] != 4)
+             {
+                 NSLog(@"ERROR: too many values (%d) returned from ajax_replace", [values count]);
+                 NSLog(@"retValue: <%@>", retValue);
+                 [self playMainStream];
+                 return;
+             }
+             NSString *psdSongUrl = [values objectAtIndex:0];
+             NSNumber *psdSongLenght = [values objectAtIndex:1];
+             NSNumber *psdSongFadeIn = [values objectAtIndex:2];
+             NSNumber *psdSongFadeOut = [values objectAtIndex:3];
+             DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
+         }
+     }];
+}
+
+-(void)metatadaHandler:(NSTimer *)timer
 {
     // This function get metadata directly in case of PSD (no stream metadata)
     // Get song name first
@@ -649,7 +678,7 @@
     if(self.isPSDPlaying)
     {
         DLog(@"Getting PSD metadata...");
-        [self metatadaHandler];
+        [self metatadaHandler:nil];
     }
 }
 
@@ -692,7 +721,7 @@
     if(self.isPSDPlaying)
     {
         DLog(@"Getting PSD metadata...");
-        [self metatadaHandler];
+        [self metatadaHandler:nil];
     }
 }
 
