@@ -518,16 +518,20 @@
 
 - (IBAction)startPSD:(id)sender
 {
-    if(self.cookieString == nil)
+    // Try to understand if we have cookie string in KeyChain
+    NSError *err;
+    self.cookieString = [STKeychain getPasswordForUsername:@"cookies" andServiceName:@"RP" error:&err];
+    if(self.cookieString)
     {
-        // Try to understand if we have cookie string in KeyChain
-        NSError *err;
-        self.cookieString = [STKeychain getPasswordForUsername:@"cookies" andServiceName:@"RP" error:&err];
-        if(self.cookieString)
-        {
-            [self playPSDNow];
-            return;
-        }
+        [self playPSDNow];
+        return;
+    }
+    if(self.cookieString != nil)
+    {   // already logged in. no need to show the login box
+        [self playPSDNow];
+    }
+    else
+    {
         // Init controller and set ourself for callback
         RPLoginController * theLoginBox = [[RPLoginController alloc] initWithNibName:@"RPLoginController" bundle:[NSBundle mainBundle]];
         theLoginBox.delegate = self;
@@ -537,7 +541,7 @@
             if(self.theLoginBox == nil)
                 self.theLoginBox = [[UIPopoverController alloc] initWithContentViewController:theLoginBox];
             self.theLoginBox.popoverContentSize = CGSizeMake(320, 207);
-           [self.theLoginBox presentPopoverFromRect:self.psdButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            [self.theLoginBox presentPopoverFromRect:self.psdButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         }
         else
         {
@@ -546,10 +550,6 @@
         }
         // Release...
         theLoginBox = nil;
-    }
-    else // already logged in. no need to show the login box
-    {
-        [self playPSDNow];
     }
 }
 
