@@ -238,7 +238,6 @@
     [FlurryAnalytics logEvent:@"Streaming" timed:YES];
     [self interfacePlayPending];
     self.theStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
-//    self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
     [self activateNotifications];
     [self.theStreamer play];
 }
@@ -332,9 +331,8 @@
             [self.thePsdStreamer play];
             DLog(@"Setting fade out after %@ sec for %.0f sec", self.psdDurationInSeconds, kPsdFadeOutTime);
             [self presetFadeOutToCurrentTrack:self.thePsdStreamer startingAt:[self.psdDurationInSeconds intValue] forSeconds:kPsdFadeOutTime];
-            // Stop main streamer and reset timers it.
+            // Stop main streamer, remove observers and and reset timers it.
             [self unscheduleImagesTimer];
-            [self removeNotifications];
             if(self.isPSDPlaying)
             {
                 // Fade out and quit previous stream
@@ -355,6 +353,8 @@
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     DLog(@"Main stream now stopped!");
                     [self.theStreamer pause];
+                    [self.theStreamer removeObserver:self forKeyPath:@"status"];
+                    [self.theStreamer removeObserver:self forKeyPath:@"rate"];
                     self.theStreamer = nil;
                 });
             }
@@ -386,13 +386,18 @@
             self.theStreamer = nil;
             [self playMainStream];
         }
-        else
+        else if (self.theStreamer.status == AVPlayerStatusReadyToPlay)
+
         {
             DLog(@"Stream is connected.");
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fadeInCurrentTrackNow:self.theStreamer forSeconds:kFadeInTime];
                 [self interfacePlay];
             });
+        }
+        else
+        {
+            DLog(@"Unknown status received: %d", self.thePsdStreamer.status);
         }
     }
     else if(object == self.theStreamer && [keyPath isEqualToString:@"rate"])
@@ -898,6 +903,10 @@
         [self.volumeViewContainer addSubview: myVolumeView];
         myVolumeView = nil;
     }
+    // Prepare for background audio
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive: YES error: nil];
+
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
     self.interfaceState = kInterfaceNormal;
     self.minimizerButton.enabled = NO;
