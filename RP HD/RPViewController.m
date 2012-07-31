@@ -524,8 +524,10 @@
         NSError *err;
         self.cookieString = [STKeychain getPasswordForUsername:@"cookies" andServiceName:@"RP" error:&err];
         if(self.cookieString)
+        {
             [self playPSDNow];
-
+            return;
+        }
         // Init controller and set ourself for callback
         RPLoginController * theLoginBox = [[RPLoginController alloc] initWithNibName:@"RPLoginController" bundle:[NSBundle mainBundle]];
         theLoginBox.delegate = self;
