@@ -70,7 +70,6 @@
 		64F80256151228950080D442 /* button-stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F80251151228950080D442 /* button-stop@2x.png */; };
 		64F80257151228950080D442 /* logo_2011_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F80252151228950080D442 /* logo_2011_rphd.png */; };
 		64F8025F1512338D0080D442 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F8025E1512338D0080D442 /* Icon-72.png */; };
-		64F80267151234710080D442 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F80266151234710080D442 /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64F8026C1512386A0080D442 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802691512386A0080D442 /* AudioToolbox.framework */; };
 		64F8026E1512386A0080D442 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F8026B1512386A0080D442 /* MediaPlayer.framework */; };
 		64F80270151239120080D442 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F8026F151239120080D442 /* CFNetwork.framework */; };
@@ -153,8 +152,6 @@
 		64F80251151228950080D442 /* button-stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-stop@2x.png"; path = "Images/button-stop@2x.png"; sourceTree = "<group>"; };
 		64F80252151228950080D442 /* logo_2011_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_2011_rphd.png; path = Images/logo_2011_rphd.png; sourceTree = "<group>"; };
 		64F8025E1512338D0080D442 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
-		64F80265151234710080D442 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
-		64F80266151234710080D442 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
 		64F802691512386A0080D442 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		64F8026B1512386A0080D442 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		64F8026F151239120080D442 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -247,7 +244,6 @@
 				646ACA7215B46901001B5B73 /* STKeychain */,
 				64D4812C154767A800BC1085 /* appirater */,
 				6491340D152DFD9A00029692 /* FlurryAnalytics */,
-				64F80264151234710080D442 /* audiostream */,
 				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
@@ -329,15 +325,6 @@
 				6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */,
 			);
 			name = Images;
-			sourceTree = "<group>";
-		};
-		64F80264151234710080D442 /* audiostream */ = {
-			isa = PBXGroup;
-			children = (
-				64F80265151234710080D442 /* AudioStreamer.h */,
-				64F80266151234710080D442 /* AudioStreamer.m */,
-			);
-			path = audiostream;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,7 +437,6 @@
 			files = (
 				64F8023D1512272E0080D442 /* main.m in Sources */,
 				64F802411512272E0080D442 /* RPAppDelegate.m in Sources */,
-				64F80267151234710080D442 /* AudioStreamer.m in Sources */,
 				64AAFA06151391210061DD49 /* RPViewController.m in Sources */,
 				64AAFA09151393260061DD49 /* RPAboutBox.m in Sources */,
 				64AAFA0D1513A7000061DD49 /* RPForumView.m in Sources */,

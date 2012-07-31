@@ -729,10 +729,6 @@
 -(void)activateNotifications
 {
     DLog(@"*** activateNotifications");
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(metadataNotificationReceived:) name:kStreamHasMetadata object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorNotificationReceived:) name:kStreamIsInError object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamConnected:) name:kStreamConnected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(streamRedirected:) name:kStreamIsRedirected object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tvExternalScreenInited:) name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -743,14 +739,11 @@
 -(void)removeNotifications
 {
     DLog(@"*** removeNotifications");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamHasMetadata object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsInError object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamConnected object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStreamIsRedirected object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     [self.theStreamer removeObserver:self forKeyPath:@"status"];
+    [self.theStreamer removeObserver:self forKeyPath:@"rate"];
 }
 
 -(void)interfaceStop
