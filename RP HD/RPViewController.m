@@ -161,7 +161,9 @@
                  NSNumber *whenRefresh = [values objectAtIndex:2];
                  if([whenRefresh intValue] <= 0)
                  {
-                     whenRefresh = @([whenRefresh doubleValue] * -1.0);
+                     whenRefresh = @([whenRefresh intValue] * -1);
+                     if([whenRefresh intValue] < 5)
+                         whenRefresh = @(5);
                      DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
                  }
                  else
@@ -241,6 +243,25 @@
     [self.theStreamer play];
 }
 
+-(void)presetFadeOutToCurrentTrack:(AVPlayer *)streamToBeFaded startingAt:(int)start forSeconds:(int)duration
+{
+    // AVPlayerObject is a property which points to an AVPlayer
+    AVPlayerItem *myAVPlayerItem = streamToBeFaded.currentItem;
+    AVAsset *myAVAsset = myAVPlayerItem.asset;
+    NSArray *audioTracks = [myAVAsset tracksWithMediaType:AVMediaTypeAudio];
+    
+    NSMutableArray *allAudioParams = [NSMutableArray array];
+    for (AVAssetTrack *track in audioTracks)
+    {
+        AVMutableAudioMixInputParameters *audioInputParams = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:track];
+        [audioInputParams setVolumeRampFromStartVolume:1.0 toEndVolume:0 timeRange:CMTimeRangeMake(CMTimeMake(start, 1), CMTimeMake(start + duration, 1))];
+        [allAudioParams addObject:audioInputParams];
+    }
+    AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
+    [audioMix setInputParameters:allAudioParams];
+    [myAVPlayerItem setAudioMix:audioMix];
+}
+
 -(void)stopPsdFromTimer:(NSTimer *)aTimer
 {
     DLog(@"This is the PSD timer triggering the end of the PSD song");
@@ -254,10 +275,10 @@
             [self.thePsdTimer invalidate];
             self.thePsdTimer = nil;
         }
-        DLog(@"Stopping stream in timer firing");
+        DLog(@"Stopping stream in timer firing (starting fade out)");
         [self unscheduleImagesTimer];
         // restart main stream...
-        [self playMainStream];
+//        [self playMainStream];
         // ...while giving the delay to the fading
         [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
@@ -287,6 +308,8 @@
             DLog(@"We'll stop PSD automagically after %@ secs", self.psdDurationInSeconds);
             self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:[self.psdDurationInSeconds doubleValue] target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
             [self.thePsdStreamer play];
+            DLog(@"Setting fade out after %@ sec for %.0f sec", self.psdDurationInSeconds, kPsdFadeOutTime);
+            [self presetFadeOutToCurrentTrack:self.thePsdStreamer startingAt:[self.psdDurationInSeconds intValue] forSeconds:kPsdFadeOutTime];
             // Stop main streamer and reset timers it.
             [self unscheduleImagesTimer];
             [self removeNotifications];
