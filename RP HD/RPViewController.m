@@ -471,7 +471,7 @@
         else if (self.thePsdStreamer.status == AVPlayerStatusFailed)
         {
             // something went wrong. player.error should contain some information
-            DLog(@"Error starting streamer: %@", self.thePsdStreamer.error);
+            DLog(@"Error starting PSD streamer: %@", self.thePsdStreamer.error);
             self.thePsdStreamer = nil;
             [self playFromRedirector];
         }
