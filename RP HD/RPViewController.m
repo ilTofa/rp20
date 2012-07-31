@@ -327,6 +327,8 @@
             }
             DLog(@"We'll stop PSD automagically after %@ secs", self.psdDurationInSeconds);
             self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:[self.psdDurationInSeconds doubleValue] target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
+            // start slow
+            [self fadeInCurrentTrackNow:self.thePsdStreamer forSeconds:kFadeInTime];
             [self.thePsdStreamer play];
             DLog(@"Setting fade out after %@ sec for %.0f sec", self.psdDurationInSeconds, kPsdFadeOutTime);
             [self presetFadeOutToCurrentTrack:self.thePsdStreamer startingAt:[self.psdDurationInSeconds intValue] forSeconds:kPsdFadeOutTime];
@@ -335,14 +337,26 @@
             [self removeNotifications];
             if(self.isPSDPlaying)
             {
-                [self.theOldPsdStreamer pause];
-                self.theOldPsdStreamer = nil;
+                // Fade out and quit previous stream
+                [self fadeOutCurrentTrackNow:self.theOldPsdStreamer forSeconds:kPsdFadeOutTime];
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    DLog(@"Previous PSD stream now stopped!");
+                    [self.theOldPsdStreamer pause];
+                    self.theOldPsdStreamer = nil;
+                });
             }
             else
             {
-                [self.theStreamer pause];
-                self.theStreamer = nil;
+                // Fade out and quit main stream
+                [self fadeOutCurrentTrackNow:self.theStreamer forSeconds:kPsdFadeOutTime];
                 self.isPSDPlaying = YES;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    DLog(@"Main stream now stopped!");
+                    [self.theStreamer pause];
+                    self.theStreamer = nil;
+                });
             }
             [self interfacePsd];
         }
@@ -376,7 +390,7 @@
         {
             DLog(@"Stream is connected.");
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self fadeInCurrentTrackNow:self.theStreamer forSeconds:5];
+                [self fadeInCurrentTrackNow:self.theStreamer forSeconds:kFadeInTime];
                 [self interfacePlay];
             });
         }
