@@ -7,6 +7,7 @@
 //
 
 #import "RPAboutBox.h"
+#import "STKeychain/STKeychain.h"
 
 @interface RPAboutBox ()
 
@@ -50,4 +51,11 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (IBAction)Logout:(id)sender
+{
+    NSError *err;
+    [STKeychain deleteItemForUsername:@"cookies" andServiceName:@"RP" error:&err];
+}
+
 @end
