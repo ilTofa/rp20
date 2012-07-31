@@ -168,11 +168,9 @@
                  {
                      NSDictionary *mpInfo;
                      MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
-                     mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [songPieces objectAtIndex:0], MPMediaItemPropertyArtist,
-                               [songPieces objectAtIndex:1], MPMediaItemPropertyTitle,
-                               albumArt, MPMediaItemPropertyArtwork,
-                               nil];
+                     mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
+                               MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
+                               MPMediaItemPropertyArtwork: albumArt};
                      [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                      DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
                  }
@@ -202,11 +200,9 @@
                               title = @"";
                           dispatch_async(dispatch_get_main_queue(), ^{
                               NSDictionary *mpInfo;
-                              mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        artist, MPMediaItemPropertyArtist,
-                                        title, MPMediaItemPropertyTitle,
-                                        albumArt, MPMediaItemPropertyArtwork,
-                                        nil];
+                              mpInfo = @{MPMediaItemPropertyArtist: artist,
+                                        MPMediaItemPropertyTitle: title,
+                                        MPMediaItemPropertyArtwork: albumArt};
                               [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                               DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
                               // load image on the main thread
@@ -253,11 +249,9 @@
             {
                 NSDictionary *mpInfo;
                 MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
-                mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [songPieces objectAtIndex:0], MPMediaItemPropertyArtist,   
-                          [songPieces objectAtIndex:1], MPMediaItemPropertyTitle,  
-                          albumArt, MPMediaItemPropertyArtwork,
-                          nil];
+                mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],   
+                          MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],  
+                          MPMediaItemPropertyArtwork: albumArt};
                 [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                 DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
             }
@@ -293,11 +287,9 @@
                          if(!title)
                              title = @"";
                          NSDictionary *mpInfo;
-                         mpInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   artist, MPMediaItemPropertyArtist,   
-                                   title, MPMediaItemPropertyTitle,  
-                                   albumArt, MPMediaItemPropertyArtwork,
-                                   nil];
+                         mpInfo = @{MPMediaItemPropertyArtist: artist,   
+                                   MPMediaItemPropertyTitle: title,  
+                                   MPMediaItemPropertyArtwork: albumArt};
                          [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                          DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
                      }
@@ -372,7 +364,7 @@
     [self interfacePlayPending];
 
     // Now search for audio redirector type of files
-    NSArray *values = [NSArray arrayWithObjects:@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u", nil];
+    NSArray *values = @[@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u"];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
     NSArray * searchResults = [values filteredArrayUsingPredicate:predicate];
     // if an audio redirector is found...
@@ -536,7 +528,7 @@
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
                  // Add observer for real start and stop.
-                 self.psdDurationInSeconds = [[NSNumber alloc] initWithDouble:([psdSongLenght doubleValue] / 1000.0) - kPsdFadeOutTime];
+                 self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0) - kPsdFadeOutTime);
                  [self.thePsdStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
              });
          }
