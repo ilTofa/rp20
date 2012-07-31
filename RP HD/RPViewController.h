@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #include <QuartzCore/QuartzCore.h>
 #include <AVFoundation/AVFoundation.h>
-#import "AudioStreamer.h"
 #import "RPAboutBox.h"
 #import "RPForumView.h"
 #import "RPLoginController.h"
@@ -25,7 +24,8 @@
 #define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
 #define kHDImagePSDURL @"http://www.radioparadise.com/ajax_image_ipad.php"
 
-#define kPsdFadeOutTime 1.0
+#define kPsdFadeOutTime 5.0
+#define kFadeInTime 4.0
 
 typedef enum {
     kInterfaceNormal,
@@ -51,9 +51,10 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *iPhoneLogoImage;
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
 
-@property (strong, nonatomic) AudioStreamer *theStreamer;
+@property (strong, nonatomic) AVPlayer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
 @property (strong, nonatomic) NSTimer *theImagesTimer;
+@property (strong, nonatomic) NSTimer *theStreamMetadataTimer;
 @property (strong, nonatomic) NSTimer *thePsdTimer;
 @property (strong, nonatomic) AVPlayer *thePsdStreamer;
 @property (strong, nonatomic) AVPlayer *theOldPsdStreamer;

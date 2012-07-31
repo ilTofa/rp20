@@ -94,6 +94,7 @@
                  NSError *err;
                  [[NSUserDefaults standardUserDefaults] setObject:self.usernameField.text forKey:@"userName"];
                  [STKeychain storeUsername:self.usernameField.text andPassword:self.passwordField.text forServiceName:@"RP" updateExisting:YES error:&err];
+                 [STKeychain storeUsername:@"cookies" andPassword:cookieString forServiceName:@"RP" updateExisting:YES error:&err];
                  self.formHeader.text = @"Enter your Radio Paradise login";
                  self.formHeader.textColor = [UIColor whiteColor];
                  [self.delegate RPLoginControllerDidSelect:self withCookies:cookieString];

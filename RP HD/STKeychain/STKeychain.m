@@ -351,7 +351,7 @@ static NSString *STKeychainErrorDomain = @"STKeychainErrorDomain";
 			
 			NSDictionary *query = [[[NSDictionary alloc] initWithObjects:objects forKeys:keys] autorelease];			
 			
-			status = SecItemUpdate((CFDictionaryRef)query, (CFDictionaryRef)[NSDictionary dictionaryWithObject:[password dataUsingEncoding:NSUTF8StringEncoding] forKey:(NSString *)kSecValueData]);
+			status = SecItemUpdate((CFDictionaryRef)query, (CFDictionaryRef)@{(NSString *)kSecValueData: [password dataUsingEncoding:NSUTF8StringEncoding]});
 		}
 	}
 	else {
