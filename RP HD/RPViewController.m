@@ -11,7 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "FlurryAnalytics.h"
 
-@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate>
+@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate>
 
 @end
 
@@ -906,6 +906,7 @@
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive: YES error: nil];
+    [[AVAudioSession sharedInstance] setDelegate:self];
 
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
     self.interfaceState = kInterfaceNormal;
@@ -942,11 +943,38 @@
     [self setTheOldPsdStreamer:nil];
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
+    [[AVAudioSession sharedInstance] setDelegate:nil];
     [super viewDidUnload];
 }
 
 #pragma mark -
-#pragma mark Multimedia Remote Control
+#pragma mark Multimedia and Remote Control
+
+// If interrupted by a call, set interface to stop (user will restart if willing to)
+- (void)beginInterruption
+{
+    // Process stop request.
+    DLog(@"This is the beginInterruption handler");
+    [self unscheduleImagesTimer];
+    if(self.isPSDPlaying)
+    {
+        self.isPSDPlaying = NO;
+        if(self.thePsdTimer)
+        {
+            [self.thePsdTimer invalidate];
+            self.thePsdTimer = nil;
+        }
+        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
+        self.thePsdStreamer = nil;
+    }
+    else
+    {
+        [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
+        [self removeNotifications];
+        self.theStreamer = nil;
+        [self interfaceStop];
+    }
+}
 
 -(void)applicationChangedState:(NSNotification *)note
 {
