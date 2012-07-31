@@ -135,7 +135,7 @@
 #pragma mark -
 #pragma mark AudioStream Notifications management
 
--(void)PSDMetatadaHandler
+-(void)metatadaHandler
 {
     // This function get metadata directly in case of PSD (no stream metadata)
     // Get song name first
@@ -225,93 +225,6 @@
      }];
 }
 
--(void)metadataNotificationReceived:(NSNotification *)note
-{
-    // Parse metadata...
-    NSString *metadata = @""; // self.theStreamer.metaDataString;
-    
-    DLog(@"Raw metadata: %@", metadata);
-//    DLog(@" Stream type: %@", self.theStreamer.streamContentType);
-	NSArray *listItems = [metadata componentsSeparatedByString:@";"];
-    NSRange range;
-    for (NSString *item in listItems) {
-        DLog(@"item: %@", item);
-        // Look for title
-        range = [item rangeOfString:@"StreamTitle="];
-        if(range.location != NSNotFound)
-        {
-            NSString *temp = [[item substringFromIndex:range.length] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
-            DLog(@"Song name: %@", temp);
-            self.metadataInfo.text = temp;
-            // Update metadata info
-            NSArray *songPieces = [temp componentsSeparatedByString:@" - "];
-            if([songPieces count] == 2)
-            {
-                NSDictionary *mpInfo;
-                MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
-                mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],   
-                          MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],  
-                          MPMediaItemPropertyArtwork: albumArt};
-                [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
-            }
-            // If we have a second screen, update also there
-            if ([[UIScreen screens] count] > 1)
-                ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = temp;
-        }
-        // Look for URL
-        range = [item rangeOfString:@"StreamUrl="];
-        if(range.location != NSNotFound)
-        {
-            NSString *temp = [item substringFromIndex:range.length];
-            temp = [temp stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"'\""]];
-            // Get largest image RP have (substitute /m/ with /l/ in URL ;)
-            temp = [temp stringByReplacingOccurrencesOfString:@"/m/" withString:@"/l/"];
-            DLog(@"URL: <%@>", temp);
-            [self.imageLoadQueue cancelAllOperations];
-            NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
-            [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-             {
-                 if(data)
-                 {
-                     UIImage *temp = [UIImage imageWithData:data];
-                     DLog(@"image is: %@", temp);
-                     // Update metadata info
-                     if(temp != nil)
-                     {
-                         MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:temp];
-                         NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
-                         if(!artist)
-                             artist = @"";
-                         NSString *title = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyTitle];
-                         if(!title)
-                             title = @"";
-                         NSDictionary *mpInfo;
-                         mpInfo = @{MPMediaItemPropertyArtist: artist,   
-                                   MPMediaItemPropertyTitle: title,  
-                                   MPMediaItemPropertyArtwork: albumArt};
-                         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                         DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
-                     }
-
-                     // load image on the main thread
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
-                         [self.rpWebButton setBackgroundImage:temp forState:UIControlStateHighlighted];
-                         [self.rpWebButton setBackgroundImage:temp forState:UIControlStateSelected];
-                     });
-                 }
-                 else
-                 {
-                     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
-                     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
-                     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
-                 }
-             }];
-        }
-    }
-}
-
 -(void)tvExternalScreenInited:(NSNotification *)note
 {
     // copy metadata and current HD image
@@ -323,33 +236,10 @@
 
 }
 
-
--(void)errorNotificationReceived:(NSNotification *)note
-{
-	self.metadataInfo.text = @"Stream Error, please restart...";
-    [self stopPressed:nil];
-}
-
--(void)streamRedirected:(NSNotification *)note
-{
-/*	DLog(@"Stream Redirected\nOld: <%@>\nNew: %@", self.theURL, [self.theStreamer.url absoluteString]);
-    self.theURL = [self.theStreamer.url absoluteString];
-    [self stopPressed:nil];
-    self.metadataInfo.text = @"Stream redirected, please restart...";*/
-}
-
--(void)streamConnected:(NSNotification *)note
-{
-    DLog(@"Stream is connected.");
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self interfacePlay];
-    });
-}
-
 #pragma mark -
 #pragma mark Actions
 
-- (void)realPlay:(id)sender
+- (void)playMainStream
 {
     [FlurryAnalytics logEvent:@"Streaming" timed:YES];
     [self interfacePlayPending];
@@ -357,58 +247,6 @@
 //    self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
     [self activateNotifications];
     [self.theStreamer play];
-}
-
-- (void)playFromRedirector
-{
-    DLog(@"Starting play for <%@>.", self.theRedirector);
-    [self interfacePlayPending];
-    // No need to look for the stream url, AVPlayer can "play" the redirector by itself
-    [self realPlay:nil];
-/*
-    // Now search for audio redirector type of files
-    NSArray *values = @[@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u"];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
-    NSArray * searchResults = [values filteredArrayUsingPredicate:predicate];
-    // if an audio redirector is found...
-    if([searchResults count] > 0)
-    {
-        // Now loading the redirector to find the "right" URL
-        DLog(@"Loading audio redirector of type %@ from <%@>.", [searchResults objectAtIndex:0], self.theRedirector);
-        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
-        [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-         {
-             if(data)
-             {
-                 NSString *redirectorData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                 DLog(@"Data from redirector are:\n<%@>", redirectorData);
-                 // Now get the URLs
-                 NSError *error = NULL;
-                 NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
-                 NSTextCheckingResult *result = [detector firstMatchInString:redirectorData options:0 range:NSMakeRange(0, [redirectorData length])];
-                 if(result && result.range.location != NSNotFound)
-                 {
-                     DLog(@"Found URL: %@", result.URL);                     
-                     self.theURL = [result.URL absoluteString];
-                     // call the play on main thread
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         [self realPlay:nil];
-                     });
-                 }
-                 else
-                 {
-                     DLog(@"URL not found in redirector.");
-                     [self interfaceStop];
-                 }
-             }
-             else
-             {
-                 [self interfaceStop];
-                 DLog(@"Error loading redirector: %@", [err localizedDescription]);
-             }
-         }];
-    }
- */
 }
 
 -(void)stopPsdFromTimer:(NSTimer *)aTimer
@@ -427,7 +265,7 @@
         DLog(@"Stopping stream in timer firing");
         [self unscheduleImagesTimer];
         // restart main stream...
-        [self realPlay:nil];
+        [self playMainStream];
         // ...while giving the delay to the fading
         [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
@@ -482,7 +320,7 @@
             // something went wrong. player.error should contain some information
             DLog(@"Error starting PSD streamer: %@", self.thePsdStreamer.error);
             self.thePsdStreamer = nil;
-            [self playFromRedirector];
+            [self playMainStream];
         }
         else if (self.thePsdStreamer.status == AVPlayerStatusUnknown)
         {
@@ -500,8 +338,8 @@
         {
             // something went wrong. player.error should contain some information
             DLog(@"Error starting the main streamer: %@", self.thePsdStreamer.error);
-            //            self.theStreamer = nil;
-            //            [self playFromRedirector];
+            self.theStreamer = nil;
+            [self playMainStream];
         }
         else
         {
@@ -534,7 +372,7 @@
              {
                  NSLog(@"ERROR: too many values (%d) returned from ajax_replace", [values count]);
                  NSLog(@"retValue: <%@>", retValue);
-                 [self playFromRedirector];
+                 [self playMainStream];
                  return;
              }
              NSString *psdSongUrl = [values objectAtIndex:0];
@@ -560,7 +398,7 @@
          }
          else // we have an error in PSD processing, (re)start main stream)
          {
-             [self playFromRedirector];
+             [self playMainStream];
          }
      }];
 }
@@ -589,7 +427,7 @@
             [self interfaceStop];
             // if called from bitrateChanged, restart
             if(sender == self)
-                [self playFromRedirector];
+                [self playMainStream];
         });
     }
 }
@@ -599,7 +437,7 @@
     if(self.theStreamer.rate != 0.0 || self.isPSDPlaying)
         [self stopPressed:nil];
     else
-        [self playFromRedirector];
+        [self playMainStream];
 }
 
 - (IBAction)bitrateChanged:(id)sender 
@@ -811,7 +649,7 @@
     if(self.isPSDPlaying)
     {
         DLog(@"Getting PSD metadata...");
-        [self PSDMetatadaHandler];
+        [self metatadaHandler];
     }
 }
 
@@ -854,7 +692,7 @@
     if(self.isPSDPlaying)
     {
         DLog(@"Getting PSD metadata...");
-        [self PSDMetatadaHandler];
+        [self metatadaHandler];
     }
 }
 
@@ -1018,7 +856,7 @@
     self.cookieString = nil;
     self.isPSDPlaying = NO;
     // Automagically start, as per bg request
-    [self playFromRedirector];
+    [self playMainStream];
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
