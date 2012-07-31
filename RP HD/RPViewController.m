@@ -355,7 +355,6 @@
                     DLog(@"Main stream now stopped!");
                     [self.theStreamer pause];
                     [self.theStreamer removeObserver:self forKeyPath:@"status"];
-                    [self.theStreamer removeObserver:self forKeyPath:@"rate"];
                     self.theStreamer = nil;
                 });
             }
@@ -400,10 +399,6 @@
         {
             DLog(@"Unknown status received: %d", self.thePsdStreamer.status);
         }
-    }
-    else if(object == self.theStreamer && [keyPath isEqualToString:@"rate"])
-    {
-        DLog(@"Main streamer changed status to %@", self.theStreamer.rate == 0.0 ? @"stop" : @"play");
     }
     else
     {
@@ -634,7 +629,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [self.theStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
-    [self.theStreamer addObserver:self forKeyPath:@"rate" options:0 context:nil];
 }
 
 -(void)removeNotifications
@@ -644,7 +638,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     [self.theStreamer removeObserver:self forKeyPath:@"status"];
-    [self.theStreamer removeObserver:self forKeyPath:@"rate"];
 }
 
 -(void)interfaceStop
