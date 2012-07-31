@@ -17,38 +17,6 @@
 
 @implementation RPViewController
 
-@synthesize metadataInfo = _metadataInfo;
-// @synthesize coverImage = _coverImage;
-@synthesize playOrStopButton = _playOrStopButton;
-@synthesize volumeViewContainer = _volumeViewContainer;
-@synthesize spinner = _spinner;
-@synthesize hdImage = _hdImage;
-@synthesize aboutButton = _aboutButton;
-@synthesize rpWebButton = _rpWebButton;
-@synthesize minimizerButton = _minimizerButton;
-@synthesize logoImage = _logoImage;
-@synthesize bitrateSelector = _bitrateSelector;
-@synthesize songNameButton = _songNameButton;
-@synthesize separatorImage = _separatorImage;
-@synthesize iPhoneLogoImage = _iPhoneLogoImage;
-@synthesize psdButton = _psdButton;
-@synthesize theStreamer = _theStreamer;
-@synthesize imageLoadQueue = _imageLoadQueue;
-@synthesize theURL = _theURL;
-@synthesize theRedirector = _theRedirector;
-@synthesize theImagesTimer = _theTimer;
-@synthesize thePsdTimer = _thePsdTimer;
-@synthesize theAboutBox = _theAboutBox;
-@synthesize theWebView = _theWebView;
-@synthesize currentSongForumURL = _currentSongForumURL;
-@synthesize interfaceState = _interfaceState;
-@synthesize isPSDPlaying = _isLoggedIn;
-@synthesize cookieString = _cookieString;
-@synthesize psdSongId = _psdSongId;
-@synthesize thePsdStreamer = _thePsdStreamer;
-@synthesize theOldPsdStreamer = _theOldPsdStreamer;
-@synthesize psdDurationInSeconds = _psdDurationInSeconds;
-
 #pragma mark -
 #pragma mark HD images loading
 
@@ -97,7 +65,6 @@
     }
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
      {
-         DLog(@"HD image url received %@ ", (data) ? @"successfully." : @"with errors.");
          if(data)
          {
              NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -110,7 +77,7 @@
                       if(data)
                       {
                           UIImage *temp = [UIImage imageWithData:data];
-                          DLog(@"hdImage is: %@", temp);
+                          DLog(@"Image decoded, sending it to screen");
                           // Protect from 404's
                           if(temp)
                           {
@@ -135,41 +102,18 @@
 #pragma mark -
 #pragma mark Metadata management
 
-#pragma TODO: attach metadata here...
-
--(void)songInfoHandler
-{
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_replace.php?option=0"]];
-    [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
-    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-     {
-         if(data)
-         {
-             NSString *retValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-             retValue = [retValue stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-             NSArray *values = [retValue componentsSeparatedByString:@"|"];
-             if([values count] != 4)
-             {
-                 NSLog(@"ERROR: too many values (%d) returned from ajax_replace", [values count]);
-                 NSLog(@"retValue: <%@>", retValue);
-                 [self playMainStream];
-                 return;
-             }
-             NSString *psdSongUrl = [values objectAtIndex:0];
-             NSNumber *psdSongLenght = [values objectAtIndex:1];
-             NSNumber *psdSongFadeIn = [values objectAtIndex:2];
-             NSNumber *psdSongFadeOut = [values objectAtIndex:3];
-             DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
-         }
-     }];
-}
-
 -(void)metatadaHandler:(NSTimer *)timer
 {
     // This function get metadata directly in case of PSD (no stream metadata)
+    DLog(@"This is metatadaHandler: called %@", (timer == nil) ? @"directly" : @"from the 'self-timer'");
     // Get song name first
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_rp2_playlist_ipad.php"]];
-    [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+    // Shutdown cache (don't) and cookie management (we'll send them manually, if needed)
+    [req setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+    [req setHTTPShouldHandleCookies:NO];
+    // Add cookies only for PSD play
+    if(self.isPSDPlaying)
+        [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
      {
          DLog(@"metadata received %@ ", (data) ? @"successfully." : @"with errors.");
@@ -206,6 +150,26 @@
              });
              // remembering songid for forum view
              self.psdSongId = [values objectAtIndex:1];
+             // Set a timer to refresh ourselves if this is the standard stream.
+             if(!self.isPSDPlaying)
+             {
+                 if(self.theStreamMetadataTimer != nil)
+                 {
+                     [self.theStreamMetadataTimer invalidate];
+                     self.theStreamMetadataTimer = nil;
+                 }
+                 NSNumber *whenRefresh = [values objectAtIndex:2];
+                 if([whenRefresh intValue] <= 0)
+                 {
+                     whenRefresh = @([whenRefresh doubleValue] * -1.0);
+                     DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
+                 }
+                 else
+                     DLog(@"This song will last for %.0f seconds, rescheduling ourselves for refresh", [whenRefresh doubleValue]);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.theStreamMetadataTimer = [NSTimer scheduledTimerWithTimeInterval:[whenRefresh doubleValue] target:self selector:@selector(metatadaHandler:) userInfo:nil repeats:NO];
+                 });
+             }
              // Now get almbum artwork
              NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
              DLog(@"URL for PSD Artwork: <%@>", temp);
@@ -234,7 +198,6 @@
                                         MPMediaItemPropertyArtwork: albumArt};
                               [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                               DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
-                              // load image on the main thread
                               [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
                               [self.rpWebButton setBackgroundImage:temp forState:UIControlStateHighlighted];
                               [self.rpWebButton setBackgroundImage:temp forState:UIControlStateSelected];
@@ -310,10 +273,6 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     DLog(@"*** observeValueForKeyPath:ofObject:change:context called!");
-    if(object == self.theStreamer && [keyPath isEqualToString:@"rate"])
-    {
-        DLog(@"Main streamer changed status to %@", self.theStreamer.rate == 0.0 ? @"stop" : @"play");
-    }
     if (object == self.thePsdStreamer && [keyPath isEqualToString:@"status"])
     {
         if (self.thePsdStreamer.status == AVPlayerStatusReadyToPlay)
@@ -377,6 +336,10 @@
                 [self interfacePlay];
             });
         }
+    }
+    else if(object == self.theStreamer && [keyPath isEqualToString:@"rate"])
+    {
+        DLog(@"Main streamer changed status to %@", self.theStreamer.rate == 0.0 ? @"stop" : @"play");
     }
     else
     {
@@ -637,6 +600,11 @@
     self.rpWebButton.hidden = YES;
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
+    if(self.theStreamMetadataTimer != nil)
+    {
+        [self.theStreamMetadataTimer invalidate];
+        self.theStreamMetadataTimer = nil;
+    }
     [self.spinner stopAnimating];
 }
 
@@ -674,12 +642,9 @@
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
         [self scheduleImagesTimer];
-    // Setup PSD metadata, if needed.
-    if(self.isPSDPlaying)
-    {
-        DLog(@"Getting PSD metadata...");
-        [self metatadaHandler:nil];
-    }
+    // Start metadata reading.
+    DLog(@"Starting metadata handler...");
+    [self metatadaHandler:nil];
 }
 
 -(void)interfacePlayPending
@@ -717,12 +682,8 @@
     // Only if the app is active, if this is called via events there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
         [self scheduleImagesTimer];
-    // Setup PSD metadata, if needed.
-    if(self.isPSDPlaying)
-    {
-        DLog(@"Getting PSD metadata...");
-        [self metatadaHandler:nil];
-    }
+    DLog(@"Getting PSD metadata...");
+    [self metatadaHandler:nil];
 }
 
 -(void)interfacePsdPending
