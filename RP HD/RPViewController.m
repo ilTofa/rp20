@@ -228,10 +228,10 @@
 -(void)metadataNotificationReceived:(NSNotification *)note
 {
     // Parse metadata...
-    NSString *metadata = self.theStreamer.metaDataString;
+    NSString *metadata = @""; // self.theStreamer.metaDataString;
     
     DLog(@"Raw metadata: %@", metadata);
-    DLog(@" Stream type: %@", self.theStreamer.streamContentType);
+//    DLog(@" Stream type: %@", self.theStreamer.streamContentType);
 	NSArray *listItems = [metadata componentsSeparatedByString:@";"];
     NSRange range;
     for (NSString *item in listItems) {
@@ -332,10 +332,10 @@
 
 -(void)streamRedirected:(NSNotification *)note
 {
-	DLog(@"Stream Redirected\nOld: <%@>\nNew: %@", self.theURL, [self.theStreamer.url absoluteString]);
+/*	DLog(@"Stream Redirected\nOld: <%@>\nNew: %@", self.theURL, [self.theStreamer.url absoluteString]);
     self.theURL = [self.theStreamer.url absoluteString];
     [self stopPressed:nil];
-    self.metadataInfo.text = @"Stream redirected, please restart...";
+    self.metadataInfo.text = @"Stream redirected, please restart...";*/
 }
 
 -(void)streamConnected:(NSNotification *)note
@@ -353,16 +353,19 @@
 {
     [FlurryAnalytics logEvent:@"Streaming" timed:YES];
     [self interfacePlayPending];
-    self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
+    self.theStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
+//    self.theStreamer = [[AudioStreamer alloc] initWithURL:[NSURL URLWithString:self.theURL]];
     [self activateNotifications];
-    [self.theStreamer start];
+    [self.theStreamer play];
 }
 
 - (void)playFromRedirector
 {
     DLog(@"Starting play for <%@>.", self.theRedirector);
     [self interfacePlayPending];
-
+    // No need to look for the stream url, AVPlayer can "play" the redirector by itself
+    [self realPlay:nil];
+/*
     // Now search for audio redirector type of files
     NSArray *values = @[@".m3u", @".pls", @".wax", @".ram", @".pls", @".m4u"];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@" %@ ENDSWITH[cd] SELF ", self.theRedirector];
@@ -405,6 +408,7 @@
              }
          }];
     }
+ */
 }
 
 -(void)stopPsdFromTimer:(NSTimer *)aTimer
@@ -438,6 +442,11 @@
 // Here PSD streaming is ready to start (and it is started)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    DLog(@"*** observeValueForKeyPath:ofObject:change:context called!");
+    if(object == self.theStreamer && [keyPath isEqualToString:@"rate"])
+    {
+        DLog(@"Main streamer changed status to %@", self.theStreamer.rate == 0.0 ? @"stop" : @"play");
+    }
     if (object == self.thePsdStreamer && [keyPath isEqualToString:@"status"])
     {
         if (self.thePsdStreamer.status == AVPlayerStatusReadyToPlay)
@@ -462,7 +471,7 @@
             }
             else
             {
-                [self.theStreamer stop];
+                [self.theStreamer pause];
                 self.theStreamer = nil;
                 self.isPSDPlaying = YES;
             }
@@ -483,6 +492,23 @@
         else
         {
             DLog(@"Unknown status received: %d", self.thePsdStreamer.status);
+        }
+    }
+    else if(object == self.theStreamer && [keyPath isEqualToString:@"status"])
+    {
+        if (self.thePsdStreamer.status == AVPlayerStatusFailed)
+        {
+            // something went wrong. player.error should contain some information
+            DLog(@"Error starting the main streamer: %@", self.thePsdStreamer.error);
+            //            self.theStreamer = nil;
+            //            [self playFromRedirector];
+        }
+        else
+        {
+            DLog(@"Stream is connected.");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self interfacePlay];
+            });
         }
     }
     else
@@ -552,7 +578,7 @@
         [self interfaceStopPending];
         [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
         // Process stop request.
-        [self.theStreamer stop];
+        [self.theStreamer pause];
         // Let's give the stream a couple seconds to really stop itself
         double delayInSeconds = 1.0;    //was 2.0: MONITOR!
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
@@ -570,7 +596,7 @@
 
 - (IBAction)playOrStop:(id)sender
 {
-    if(self.theStreamer.isPlaying || self.isPSDPlaying)
+    if(self.theStreamer.rate != 0.0 || self.isPSDPlaying)
         [self stopPressed:nil];
     else
         [self playFromRedirector];
@@ -596,7 +622,7 @@
             break;
     }
     // If needed, stop the stream
-    if(self.theStreamer.isPlaying)
+    if(self.theStreamer.rate != 0.0)
         [self stopPressed:self];
 }
 
@@ -710,6 +736,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tvExternalScreenInited:) name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [self.theStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
+    [self.theStreamer addObserver:self forKeyPath:@"rate" options:0 context:nil];
 }
 
 -(void)removeNotifications
@@ -722,6 +750,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [self.theStreamer removeObserver:self forKeyPath:@"status"];
 }
 
 -(void)interfaceStop
@@ -1035,7 +1064,7 @@
     DLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.theStreamer.isPlaying)
+            if(self.theStreamer.rate != 0.0)
             {
                 [FlurryAnalytics logEvent:@"Backgrounding while playing"];
             }
@@ -1052,7 +1081,7 @@
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
             DLog(@"Images again, please");
-            if(self.theStreamer.isPlaying)
+            if(self.theStreamer.rate != 0.0)
             {
                 [FlurryAnalytics logEvent:@"In Foreground while Playing"];
                 [self scheduleImagesTimer];
