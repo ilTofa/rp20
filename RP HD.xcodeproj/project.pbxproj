@@ -15,7 +15,6 @@
 		64468A06152FA20E00BCDEBF /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */; };
 		64468A07152FA20E00BCDEBF /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A02152FA20E00BCDEBF /* Icon-Small.png */; };
 		64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */; };
-		64468A09152FA20E00BCDEBF /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A04152FA20E00BCDEBF /* Icon-72@2x.png */; };
 		64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */; };
 		6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */; };
 		6456AE8315B8C94D0060EC8E /* button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6456AE8115B8C94D0060EC8E /* button-left.png */; };
@@ -31,6 +30,7 @@
 		646B5EAC154755D600A2544C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EAB154755D600A2544C /* Icon@2x.png */; };
 		648C68C615C823600065043D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648C68C515C823600065043D /* CoreMedia.framework */; };
 		64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6491340F152DFD9A00029692 /* libFlurryAnalytics.a */; };
+		64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64983AC615C8A7E300C626A9 /* Icon-72@2x.png */; };
 		6499667C15B81AFF00C68479 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6499667B15B81AFF00C68479 /* AVFoundation.framework */; };
 		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
 		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
@@ -86,7 +86,6 @@
 		64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		64468A02152FA20E00BCDEBF /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		64468A04152FA20E00BCDEBF /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		64468A0C152FA45200BCDEBF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_rphd@2x.png"; path = "Images/logo_2011_rphd@2x.png"; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		648C68C515C823600065043D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6491340E152DFD9A00029692 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
 		6491340F152DFD9A00029692 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
+		64983AC615C8A7E300C626A9 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
 		6499667B15B81AFF00C68479 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
 		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
@@ -278,6 +278,7 @@
 		64F802371512272E0080D442 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				64983AC615C8A7E300C626A9 /* Icon-72@2x.png */,
 				64D4812A1547678E00BC1085 /* Localizable.strings */,
 				646B5EAB154755D600A2544C /* Icon@2x.png */,
 				646B5EA9154755D100A2544C /* Icon.png */,
@@ -286,7 +287,6 @@
 				64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */,
 				64468A02152FA20E00BCDEBF /* Icon-Small.png */,
 				64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */,
-				64468A04152FA20E00BCDEBF /* Icon-72@2x.png */,
 				64468A0C152FA45200BCDEBF /* iTunesArtwork */,
 				64F802381512272E0080D442 /* RP HD-Info.plist */,
 				64F802391512272E0080D442 /* InfoPlist.strings */,
@@ -406,7 +406,6 @@
 				64468A06152FA20E00BCDEBF /* Icon-Small-50@2x.png in Resources */,
 				64468A07152FA20E00BCDEBF /* Icon-Small.png in Resources */,
 				64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */,
-				64468A09152FA20E00BCDEBF /* Icon-72@2x.png in Resources */,
 				64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */,
 				6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */,
 				646B5EAA154755D100A2544C /* Icon.png in Resources */,
@@ -429,6 +428,7 @@
 				64606AA015B85E5C00CA0FC6 /* button-psd-active@2x.png in Resources */,
 				6456AE8315B8C94D0060EC8E /* button-left.png in Resources */,
 				6456AE8415B8C94D0060EC8E /* button-left@2x.png in Resources */,
+				64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
