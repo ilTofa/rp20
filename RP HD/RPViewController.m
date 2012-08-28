@@ -245,6 +245,7 @@
 
 -(void)setupFading:(AVPlayer *)stream fadeOut:(BOOL)isFadingOut startingAt:(CMTime)start ending:(CMTime)end
 {
+    DLog(@"This is setupFading fading %@ stream %@ from %lld to %lld", isFadingOut ? @"out" : @"in", stream, start.value/start.timescale, end.value/end.timescale);
     // AVPlayerObject is a property which points to an AVPlayer
     AVPlayerItem *myAVPlayerItem = stream.currentItem;
     AVAsset *myAVAsset = myAVPlayerItem.asset;
@@ -255,9 +256,10 @@
     {
         AVMutableAudioMixInputParameters *audioInputParams = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:track];
         if(isFadingOut)
-            [audioInputParams setVolumeRampFromStartVolume:1.0 toEndVolume:0 timeRange:CMTimeRangeMake(start, end)];
+            [audioInputParams setVolumeRampFromStartVolume:1.0 toEndVolume:0 timeRange:CMTimeRangeFromTimeToTime(start, end)];
         else
-            [audioInputParams setVolumeRampFromStartVolume:0 toEndVolume:1.0 timeRange:CMTimeRangeMake(start, end)];
+            [audioInputParams setVolumeRampFromStartVolume:0 toEndVolume:1.0 timeRange:CMTimeRangeFromTimeToTime(start, end)];
+        DLog(@"Adding %@ to allAudioParams", audioInputParams);
         [allAudioParams addObject:audioInputParams];
     }
     AVMutableAudioMix *audioMix = [AVMutableAudioMix audioMix];
@@ -267,19 +269,28 @@
 
 -(void)presetFadeOutToCurrentTrack:(AVPlayer *)streamToBeFaded startingAt:(int)start forSeconds:(int)duration
 {
+    DLog(@"This is presetFadeOutToCurrentTrack called for %@, starting at %d and for %d seconds.", streamToBeFaded, start, duration);
     [self setupFading:streamToBeFaded fadeOut:YES startingAt:CMTimeMake(start, 1) ending:CMTimeMake(start + duration, 1)];
 }
 
 -(void)fadeOutCurrentTrackNow:(AVPlayer *)streamToBeFaded forSeconds:(int)duration
 {
+    int32_t preferredTimeScale = 600;
+    CMTime durationTime = CMTimeMakeWithSeconds((Float64)duration, preferredTimeScale);
     CMTime startTime = streamToBeFaded.currentItem.currentTime;
-    [self setupFading:streamToBeFaded fadeOut:YES startingAt:startTime ending:CMTimeAdd(startTime, CMTimeMake(duration, 1))];
+    CMTime endTime = CMTimeAdd(startTime, durationTime);
+    DLog(@"This is fadeOutCurrentTrackNow called for %@ and %d seconds (current time is %lld).", streamToBeFaded, duration, startTime.value/startTime.timescale);
+    [self setupFading:streamToBeFaded fadeOut:YES startingAt:startTime ending:endTime];
 }
 
 -(void)fadeInCurrentTrackNow:(AVPlayer *)streamToBeFaded forSeconds:(int)duration
 {
+    int32_t preferredTimeScale = 600;
+    CMTime durationTime = CMTimeMakeWithSeconds((Float64)duration, preferredTimeScale);
     CMTime startTime = streamToBeFaded.currentItem.currentTime;
-    [self setupFading:streamToBeFaded fadeOut:NO startingAt:startTime ending:CMTimeAdd(startTime, CMTimeMake(duration, 1))];
+    CMTime endTime = CMTimeAdd(startTime, durationTime);
+    DLog(@"This is fadeInCurrentTrackNow called for %@ and %d seconds (current time is %lld).", streamToBeFaded, duration, startTime.value/startTime.timescale);
+    [self setupFading:streamToBeFaded fadeOut:NO startingAt:startTime ending:endTime];
 }
 
 -(void)stopPsdFromTimer:(NSTimer *)aTimer
@@ -551,6 +562,16 @@
         // Release...
         theLoginBox = nil;
     }
+}
+
+- (IBAction)debugFadeIn:(id)sender
+{
+    [self fadeInCurrentTrackNow:(self.isPSDPlaying) ? self.thePsdStreamer : self.theStreamer forSeconds:3];
+}
+
+- (IBAction)debugFadeOut:(id)sender
+{
+    [self fadeOutCurrentTrackNow:(self.isPSDPlaying) ? self.thePsdStreamer : self.theStreamer forSeconds:3];
 }
 
 - (void)RPLoginControllerDidCancel:(RPLoginController *)controller

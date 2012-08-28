@@ -79,4 +79,7 @@ typedef enum {
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
 
+- (IBAction)debugFadeIn:(id)sender;
+- (IBAction)debugFadeOut:(id)sender;
+
 @end
