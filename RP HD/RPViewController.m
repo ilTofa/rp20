@@ -358,8 +358,7 @@
             }
             else
             {
-                // Fade out and quit main stream
-                [self fadeOutCurrentTrackNow:self.theStreamer forSeconds:kPsdFadeOutTime];
+                // Quit main stream after fade-in of PSD
                 self.isPSDPlaying = YES;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -402,7 +401,6 @@
         {
             DLog(@"Stream is connected.");
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self fadeInCurrentTrackNow:self.theStreamer forSeconds:kFadeInTime];
                 [self interfacePlay];
             });
         }
@@ -454,7 +452,7 @@
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
                  // Add observer for real start and stop.
-                 self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0) - kPsdFadeOutTime);
+                 self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0));
                  [self.thePsdStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
              });
          }
