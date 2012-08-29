@@ -24,7 +24,6 @@
 -(void)scheduleImagesTimer
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadNewImage:nil];
         NSTimeInterval howMuchTimeBetweenImages;
         switch (self.bitrateSelector.selectedSegmentIndex) {
             case 0:
@@ -40,6 +39,8 @@
                 break;
         }
         self.theImagesTimer = [NSTimer scheduledTimerWithTimeInterval:howMuchTimeBetweenImages target:self selector:@selector(loadNewImage:) userInfo:nil repeats:YES];
+        // While we are at it, let's load a first image...
+        [self loadNewImage:nil];
         DLog(@"Scheduling images timer (%@) setup to %f.0 seconds", self.theImagesTimer, howMuchTimeBetweenImages);
     });
 }
@@ -330,19 +331,21 @@
         if (self.thePsdStreamer.status == AVPlayerStatusReadyToPlay)
         {
             DLog(@"psdStreamer is ReadyToPlay for %@ secs", self.psdDurationInSeconds);
-            // Prepare stop and restart stream after the claimed lenght (minus kPsdFadeOutTime seconds to allow for some fading)...
+            // reduce psdDurationInSeconds to allow for some fading
+            NSNumber *startPsdFadingTime = @([self.psdDurationInSeconds doubleValue] - kPsdFadeOutTime);
+            // Prepare stop and restart stream after the claimed lenght (minus kPsdFadeOutTime seconds to allow for fading)...
             if(self.thePsdTimer)
             {
                 [self.thePsdTimer invalidate];
                 self.thePsdTimer = nil;
             }
-            DLog(@"We'll stop PSD automagically after %@ secs", self.psdDurationInSeconds);
-            self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:[self.psdDurationInSeconds doubleValue] target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
+            DLog(@"We'll start PSD fading and prepare to stop after %@ secs", startPsdFadingTime);
+            self.thePsdTimer = [NSTimer scheduledTimerWithTimeInterval:[startPsdFadingTime doubleValue] target:self selector:@selector(stopPsdFromTimer:) userInfo:nil repeats:NO];
             // start slow
             [self fadeInCurrentTrackNow:self.thePsdStreamer forSeconds:kFadeInTime];
             [self.thePsdStreamer play];
-            DLog(@"Setting fade out after %@ sec for %.0f sec", self.psdDurationInSeconds, kPsdFadeOutTime);
-            [self presetFadeOutToCurrentTrack:self.thePsdStreamer startingAt:[self.psdDurationInSeconds intValue] forSeconds:kPsdFadeOutTime];
+            DLog(@"Setting fade out after %@ sec for %.0f sec", startPsdFadingTime, kPsdFadeOutTime);
+            [self presetFadeOutToCurrentTrack:self.thePsdStreamer startingAt:[startPsdFadingTime intValue] forSeconds:kPsdFadeOutTime];
             // Stop main streamer, remove observers and and reset timers it.
             [self unscheduleImagesTimer];
             if(self.isPSDPlaying)
@@ -360,7 +363,7 @@
             {
                 // Quit main stream after fade-in of PSD
                 self.isPSDPlaying = YES;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kFadeInTime * NSEC_PER_SEC);
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     DLog(@"Main stream now stopped!");
                     [self.theStreamer pause];
