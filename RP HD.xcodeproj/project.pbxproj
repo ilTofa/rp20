@@ -58,6 +58,9 @@
 		64D481341547681A00BC1085 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D481331547681A00BC1085 /* SystemConfiguration.framework */; };
 		64D60D9D15B6BADA0099A168 /* button-psd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9B15B6BADA0099A168 /* button-psd.png */; };
 		64D60D9E15B6BADA0099A168 /* button-psd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9C15B6BADA0099A168 /* button-psd@2x.png */; };
+		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
+		64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */; };
+		64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */; };
 		64F802311512272E0080D442 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802301512272E0080D442 /* UIKit.framework */; };
 		64F802331512272E0080D442 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802321512272E0080D442 /* Foundation.framework */; };
 		64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F802341512272E0080D442 /* CoreGraphics.framework */; };
@@ -137,6 +140,12 @@
 		64D481331547681A00BC1085 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		64D60D9B15B6BADA0099A168 /* button-psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd.png"; path = "Images/button-psd.png"; sourceTree = "<group>"; };
 		64D60D9C15B6BADA0099A168 /* button-psd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd@2x.png"; path = "Images/button-psd@2x.png"; sourceTree = "<group>"; };
+		64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
+		64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
+		64F5AF7015EE5EAE0018B38A /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
+		64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
+		64F5AF7215EE5EAE0018B38A /* SDCloudUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCloudUserDefaults.h; sourceTree = "<group>"; };
+		64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCloudUserDefaults.m; sourceTree = "<group>"; };
 		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -208,6 +217,19 @@
 			path = appirater;
 			sourceTree = "<group>";
 		};
+		64F5AF6D15EE5EAE0018B38A /* iCloud */ = {
+			isa = PBXGroup;
+			children = (
+				64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */,
+				64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */,
+				64F5AF7015EE5EAE0018B38A /* NSString+UUID.h */,
+				64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */,
+				64F5AF7215EE5EAE0018B38A /* SDCloudUserDefaults.h */,
+				64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */,
+			);
+			path = iCloud;
+			sourceTree = "<group>";
+		};
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +267,7 @@
 		64F802361512272E0080D442 /* RP HD */ = {
 			isa = PBXGroup;
 			children = (
+				64F5AF6D15EE5EAE0018B38A /* iCloud */,
 				646ACA7215B46901001B5B73 /* STKeychain */,
 				64D4812C154767A800BC1085 /* appirater */,
 				6491340D152DFD9A00029692 /* FlurryAnalytics */,
@@ -448,6 +471,9 @@
 				64D48132154767F300BC1085 /* Appirater.m in Sources */,
 				646ACA7515B46901001B5B73 /* STKeychain.m in Sources */,
 				646ACA8815B46D6A001B5B73 /* RPLoginController.m in Sources */,
+				64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */,
+				64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */,
+				64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
