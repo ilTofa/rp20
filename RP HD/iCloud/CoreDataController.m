@@ -93,7 +93,6 @@
  */
 
 #import "CoreDataController.h"
-#import "AppDelegate.h"
 #import "Person.h"
 #import "SharedMeta.h"
 

@@ -16,7 +16,7 @@
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     if (uuid) 
     {
-        uuidString = (NSString *)CFUUIDCreateString(NULL, uuid);
+        uuidString = (__bridge NSString *)CFUUIDCreateString(NULL, uuid);
         CFRelease(uuid);
     }
     return uuidString;
