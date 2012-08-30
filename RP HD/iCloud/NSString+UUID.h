@@ -12,4 +12,6 @@
 
 + (NSString *)uuid;
 
+- (NSString *)sha256;
+
 @end
