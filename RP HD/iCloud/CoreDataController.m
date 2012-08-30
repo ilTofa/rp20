@@ -93,8 +93,6 @@
  */
 
 #import "CoreDataController.h"
-#import "Person.h"
-#import "SharedMeta.h"
 
 NSString * kiCloudPersistentStoreFilename = @"iCloudStore.sqlite";
 NSString * kFallbackPersistentStoreFilename = @"fallbackStore.sqlite"; //used when iCloud is not available

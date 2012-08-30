@@ -33,6 +33,7 @@
 		64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64983AC615C8A7E300C626A9 /* Icon-72@2x.png */; };
 		6499667C15B81AFF00C68479 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6499667B15B81AFF00C68479 /* AVFoundation.framework */; };
 		64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */; };
+		64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCDC15EF6D2F0088F8D3 /* Song.m */; };
 		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
 		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
 		64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FD151388860061DD49 /* Default-Landscape.png */; };
@@ -112,6 +113,8 @@
 		64983AC615C8A7E300C626A9 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
 		6499667B15B81AFF00C68479 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		64A0DCC715EF667D0088F8D3 /* rphd.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = rphd.xcdatamodel; sourceTree = "<group>"; };
+		64A0DCDB15EF6D2F0088F8D3 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		64A0DCDC15EF6D2F0088F8D3 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
 		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
 		64AAF9FD151388860061DD49 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/Default-Landscape.png"; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				64F5AF7215EE5EAE0018B38A /* SDCloudUserDefaults.h */,
 				64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */,
 				64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */,
+				64A0DCDB15EF6D2F0088F8D3 /* Song.h */,
+				64A0DCDC15EF6D2F0088F8D3 /* Song.m */,
 			);
 			path = iCloud;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */,
 				64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */,
 				64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */,
+				64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
