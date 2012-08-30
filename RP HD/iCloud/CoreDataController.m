@@ -94,6 +94,9 @@
 
 #import "CoreDataController.h"
 
+#import "NSString+UUID.h"
+#import "Song.h"
+
 NSString * kiCloudPersistentStoreFilename = @"iCloudStore.sqlite";
 NSString * kFallbackPersistentStoreFilename = @"fallbackStore.sqlite"; //used when iCloud is not available
 NSString * kSeedStoreFilename = @"seedStore.sqlite"; //holds the seed person records
@@ -117,7 +120,7 @@ static NSOperationQueue *_presentedItemOperationQueue;
 
 - (void)deDupe:(NSNotification *)importNotification;
 
-- (void)addPerson:(Person *)person toStore:(NSPersistentStore *)store withContext:(NSManagedObjectContext *)moc;
+- (void)addSong:(Song *)song toStore:(NSPersistentStore *)store withContext:(NSManagedObjectContext *)moc;
 - (BOOL)seedStore:(NSPersistentStore *)store withPersistentStoreAtURL:(NSURL *)seedStoreURL error:(NSError * __autoreleasing *)error;
 
 - (void)copyContainerToSandbox;
@@ -466,7 +469,8 @@ static NSOperationQueue *_presentedItemOperationQueue;
 
 #pragma mark -
 #pragma mark Application Lifecycle - Uniquing
-- (void)deDupe:(NSNotification *)importNotification {
+- (void)deDupe:(NSNotification *)importNotification
+{
     //if importNotification, scope dedupe by inserted records
     //else no search scope, prey for efficiency.
     @autoreleasepool {
@@ -474,82 +478,98 @@ static NSOperationQueue *_presentedItemOperationQueue;
         NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] init];
         [moc setPersistentStoreCoordinator:_psc];
 
-        NSFetchRequest *fr = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+        NSFetchRequest *fr = [[NSFetchRequest alloc] initWithEntityName:@"Song"];
         [fr setIncludesPendingChanges:NO]; //distinct has to go down to the db, not implemented for in memory filtering
         [fr setFetchBatchSize:1000]; //protect thy memory
         
-        NSExpression *countExpr = [NSExpression expressionWithFormat:@"count:(emailAddress)"];
+        NSExpression *countExpr = [NSExpression expressionWithFormat:@"count:(sha)"];
         NSExpressionDescription *countExprDesc = [[NSExpressionDescription alloc] init];
         [countExprDesc setName:@"count"];
         [countExprDesc setExpression:countExpr];
         [countExprDesc setExpressionResultType:NSInteger64AttributeType];
         
-        NSAttributeDescription *emailAttr = [[[[[_psc managedObjectModel] entitiesByName] objectForKey:@"Person"] propertiesByName] objectForKey:@"emailAddress"];
-        [fr setPropertiesToFetch:[NSArray arrayWithObjects:emailAttr, countExprDesc, nil]];
-        [fr setPropertiesToGroupBy:[NSArray arrayWithObject:emailAttr]];
+        NSAttributeDescription *songHash = [[[[[_psc managedObjectModel] entitiesByName] objectForKey:@"Song"] propertiesByName] objectForKey:@"sha"];
+        [fr setPropertiesToFetch:[NSArray arrayWithObjects:songHash, countExprDesc, nil]];
+        [fr setPropertiesToGroupBy:[NSArray arrayWithObject:songHash]];
         
         [fr setResultType:NSDictionaryResultType];
         
         NSArray *countDictionaries = [moc executeFetchRequest:fr error:&error];
-        NSMutableArray *emailsWithDupes = [[NSMutableArray alloc] init];
+        NSMutableArray *dupedSongs = [[NSMutableArray alloc] init];
         for (NSDictionary *dict in countDictionaries) {
             NSNumber *count = [dict objectForKey:@"count"];
             if ([count integerValue] > 1) {
-                [emailsWithDupes addObject:[dict objectForKey:@"emailAddress"]];
+                [dupedSongs addObject:[dict objectForKey:@"sha"]];
             }
         }
         
-        NSLog(@"Emails with dupes: %@", emailsWithDupes);
+        NSLog(@"Song with dupes: %@", dupedSongs);
         
         //fetch out all the duplicate records
-        fr = [NSFetchRequest fetchRequestWithEntityName:@"Person"];
+        fr = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
         [fr setIncludesPendingChanges:NO];
         
         
-        NSPredicate *p = [NSPredicate predicateWithFormat:@"emailAddress IN (%@)", emailsWithDupes];
+        NSPredicate *p = [NSPredicate predicateWithFormat:@"sha IN (%@)", dupedSongs];
         [fr setPredicate:p];
         
-        NSSortDescriptor *emailSort = [NSSortDescriptor sortDescriptorWithKey:@"emailAddress" ascending:YES];
+        NSSortDescriptor *emailSort = [NSSortDescriptor sortDescriptorWithKey:@"sha" ascending:YES];
         [fr setSortDescriptors:[NSArray arrayWithObject:emailSort]];
         
         NSUInteger batchSize = 500; //can be set 100-10000 objects depending on individual object size and available device memory
         [fr setFetchBatchSize:batchSize];
         NSArray *dupes = [moc executeFetchRequest:fr error:&error];
         
-        Person *prevPerson = nil;
+        Song *prevSong = nil;
         
         NSUInteger i = 1;
-        for (Person *person in dupes) {
-            if (prevPerson) {
-                if ([person.emailAddress isEqualToString:prevPerson.emailAddress]) {
-                    if ([person.recordUUID compare:prevPerson.recordUUID] == NSOrderedAscending) {
-                        [moc deleteObject:person];
-                    } else {
-                        [moc deleteObject:prevPerson];
-                        prevPerson = person;
+        for (Song *song in dupes)
+        {
+            if (prevSong)
+            {
+                if ([song.sha isEqualToString:prevSong.sha])
+                {
+                    if ([song.dateadded compare:prevSong.dateadded] == NSOrderedAscending)
+                    {
+                        [moc deleteObject:song];
                     }
-                } else {
-                    prevPerson = person;
+                    else
+                    {
+                        [moc deleteObject:prevSong];
+                        prevSong = song;
+                    }
                 }
-            } else {
-                prevPerson = person;
+                else
+                {
+                    prevSong = song;
+                }
+            }
+            else
+            {
+                prevSong = song;
             }
             
-            if (0 == (i % batchSize)) {
+            if (0 == (i % batchSize))
+            {
                 //save the changes after each batch, this helps control memory pressure by turning previously examined objects back in to faults
-                if ([moc save:&error]) {
+                if ([moc save:&error])
+                {
                     NSLog(@"Saved successfully after uniquing");
-                } else {
+                }
+                else
+                {
                     NSLog(@"Error saving unique results: %@", error);
                 }
             }
-            
             i++;
         }
         
-        if ([moc save:&error]) {
+        if ([moc save:&error])
+        {
             NSLog(@"Saved successfully after uniquing");
-        } else {
+        }
+        else
+        {
             NSLog(@"Error saving unique results: %@", error);
         }
     }
@@ -557,20 +577,21 @@ static NSOperationQueue *_presentedItemOperationQueue;
 
 #pragma mark -
 #pragma mark Application Lifecycle - Seeding
-- (void)addPerson:(Person *)person toStore:(NSPersistentStore *)store withContext:(NSManagedObjectContext *)moc {
-    NSEntityDescription *entity = [person entity];
-    Person *newPerson = [[Person alloc] initWithEntity:entity
-                           insertIntoManagedObjectContext:moc];
+- (void)addSong:(Song *)song toStore:(NSPersistentStore *)store withContext:(NSManagedObjectContext *)moc
+{
+    NSEntityDescription *entity = [song entity];
+    Song *newSong = [[Song alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
-    newPerson.firstName = person.firstName;
-    newPerson.lastName = person.lastName;
-    newPerson.emailAddress = person.emailAddress;
-    newPerson.recordUUID = (person.recordUUID == nil) ? [[[NSUUID alloc] init] UUIDString] : person.recordUUID;
-    newPerson.stateISOCode = person.stateISOCode;
-    [moc assignObject:newPerson toPersistentStore:store];
+    newSong.title = song.title;
+    newSong.artist = song.artist;
+    newSong.dateadded = song.dateadded;
+    NSString *fullTitle = [NSString stringWithFormat:@"%@ - %@", song.artist, song.title];
+    newSong.sha = [fullTitle sha256];
+    [moc assignObject:newSong toPersistentStore:store];
 }
 
-- (BOOL)seedStore:(NSPersistentStore *)store withPersistentStoreAtURL:(NSURL *)seedStoreURL error:(NSError * __autoreleasing *)error {
+- (BOOL)seedStore:(NSPersistentStore *)store withPersistentStoreAtURL:(NSURL *)seedStoreURL error:(NSError * __autoreleasing *)error
+{
     BOOL success = YES;
     NSError *localError = nil;
     
@@ -582,24 +603,27 @@ static NSOperationQueue *_presentedItemOperationQueue;
                                                                    URL:seedStoreURL
                                                                options:seedStoreOptions
                                                                  error:&localError];
-    if (seedStore) {
+    if (seedStore)
+    {
         NSManagedObjectContext *seedMOC = [[NSManagedObjectContext alloc] init];
         [seedMOC setPersistentStoreCoordinator:seedPSC];
         
         //fetch all the person objects, use a batched fetch request to control memory usage
-        NSFetchRequest *fr = [NSFetchRequest fetchRequestWithEntityName:@"Person"];
+        NSFetchRequest *fr = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
         NSUInteger batchSize = 5000;
         [fr setFetchBatchSize:batchSize];
         
-        NSArray *people = [seedMOC executeFetchRequest:fr error:&localError];
+        NSArray *songs = [seedMOC executeFetchRequest:fr error:&localError];
         NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [moc setPersistentStoreCoordinator:_psc];
         NSUInteger i = 1;
-        for (Person *person in people) {
-            [self addPerson:person toStore:store withContext:moc];
+        for (Song *song in songs)
+        {
+            [self addSong:song toStore:store withContext:moc];
             if (0 == (i % batchSize)) {
                 success = [moc save:&localError];
-                if (success) {
+                if (success)
+                {
                     /*
                      Reset the managed object context to free the memory for the inserted objects
                      The faulting array used for the fetch request will automatically free objects
@@ -607,7 +631,8 @@ static NSOperationQueue *_presentedItemOperationQueue;
                      the lifecycle of the context
                      */
                     [moc reset];
-                } else {
+                } else
+                {
                     NSLog(@"Error saving during seed: %@", localError);
                     break;
                 }
@@ -617,17 +642,22 @@ static NSOperationQueue *_presentedItemOperationQueue;
         }
         
         //one last save
-        if ([moc hasChanges]) {
+        if ([moc hasChanges])
+        {
             success = [moc save:&localError];
             [moc reset];
         }
-    } else {
+    }
+    else
+    {
         success = NO;
         NSLog(@"Error adding seed store: %@", localError);
     }
     
-    if (NO == success) {
-        if (localError  && (error != NULL)) {
+    if (NO == success)
+    {
+        if (localError  && (error != NULL))
+        {
             *error = localError;
         }
     }
