@@ -35,6 +35,8 @@
 		64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */; };
 		64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCDC15EF6D2F0088F8D3 /* Song.m */; };
 		64A0DCDF15EF72560088F8D3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64A0DCDE15EF72560088F8D3 /* CoreData.framework */; };
+		64A0DCFF15F503810088F8D3 /* SongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCFD15F503810088F8D3 /* SongsViewController.m */; };
+		64A0DD0015F503810088F8D3 /* SongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A0DCFE15F503810088F8D3 /* SongsViewController.xib */; };
 		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
 		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
 		64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FD151388860061DD49 /* Default-Landscape.png */; };
@@ -117,6 +119,10 @@
 		64A0DCDB15EF6D2F0088F8D3 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		64A0DCDC15EF6D2F0088F8D3 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64A0DCDE15EF72560088F8D3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		64A0DCFB15F4FB710088F8D3 /* RP HD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "RP HD.entitlements"; sourceTree = "<group>"; };
+		64A0DCFC15F503800088F8D3 /* SongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongsViewController.h; sourceTree = "<group>"; };
+		64A0DCFD15F503810088F8D3 /* SongsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongsViewController.m; sourceTree = "<group>"; };
+		64A0DCFE15F503810088F8D3 /* SongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongsViewController.xib; sourceTree = "<group>"; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
 		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
 		64AAF9FD151388860061DD49 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/Default-Landscape.png"; sourceTree = "<group>"; };
@@ -225,7 +231,7 @@
 			path = appirater;
 			sourceTree = "<group>";
 		};
-		64F5AF6D15EE5EAE0018B38A /* iCloud */ = {
+		64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */ = {
 			isa = PBXGroup;
 			children = (
 				64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */,
@@ -237,7 +243,11 @@
 				64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */,
 				64A0DCDB15EF6D2F0088F8D3 /* Song.h */,
 				64A0DCDC15EF6D2F0088F8D3 /* Song.m */,
+				64A0DCFC15F503800088F8D3 /* SongsViewController.h */,
+				64A0DCFD15F503810088F8D3 /* SongsViewController.m */,
+				64A0DCFE15F503810088F8D3 /* SongsViewController.xib */,
 			);
+			name = SongsInTheCloud;
 			path = iCloud;
 			sourceTree = "<group>";
 		};
@@ -279,7 +289,7 @@
 		64F802361512272E0080D442 /* RP HD */ = {
 			isa = PBXGroup;
 			children = (
-				64F5AF6D15EE5EAE0018B38A /* iCloud */,
+				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
 				646ACA7215B46901001B5B73 /* STKeychain */,
 				64D4812C154767A800BC1085 /* appirater */,
 				6491340D152DFD9A00029692 /* FlurryAnalytics */,
@@ -322,6 +332,7 @@
 				64468A01152FA20E00BCDEBF /* Icon-Small-50@2x.png */,
 				64468A02152FA20E00BCDEBF /* Icon-Small.png */,
 				64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */,
+				64A0DCFB15F4FB710088F8D3 /* RP HD.entitlements */,
 				64468A0C152FA45200BCDEBF /* iTunesArtwork */,
 				64F802381512272E0080D442 /* RP HD-Info.plist */,
 				64F802391512272E0080D442 /* InfoPlist.strings */,
@@ -464,6 +475,7 @@
 				6456AE8315B8C94D0060EC8E /* button-left.png in Resources */,
 				6456AE8415B8C94D0060EC8E /* button-left@2x.png in Resources */,
 				64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */,
+				64A0DD0015F503810088F8D3 /* SongsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +500,7 @@
 				64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */,
 				64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */,
 				64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */,
+				64A0DCFF15F503810088F8D3 /* SongsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +584,7 @@
 		64F8024B1512272E0080D442 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Giacomo Tufano (68RHGP4K2S)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
@@ -590,6 +604,7 @@
 		64F8024C1512272E0080D442 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Giacomo Tufano";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
