@@ -110,8 +110,22 @@
 
 - (IBAction)editTable:(id)sender
 {
-    // Should be a toggle, to be implemented.
-    [self.tableView setEditing:YES animated:YES];
+    if(self.tableView.isEditing)
+    {
+//        UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(done)];
+//        self.editButton = newButton;
+//        newButton = nil;
+        DLog(@"Stopped editing on song table");
+        [self.tableView setEditing:NO animated:YES];
+    }
+    else
+    {
+//        UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+//        self.editButton = newButton;
+//        newButton = nil;
+        DLog(@"Starting editing on song table");
+        [self.tableView setEditing:YES animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
