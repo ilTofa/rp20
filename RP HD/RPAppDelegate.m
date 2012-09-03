@@ -11,6 +11,7 @@
 #import "RPViewController.h"
 #import "FlurryAnalytics.h"
 #import "Appirater.h"
+#import "CoreDataController.h"
 
 @implementation RPAppDelegate
 
@@ -55,6 +56,9 @@
     self.viewController = [[RPViewController alloc] initWithNibName:@"RPViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    // Init core data
+    _coreDataController = [[CoreDataController alloc] init];
+
     // Init Flurry Analytics & appirater
     [FlurryAnalytics startSession:@"PP44G74JCE81THYJRKTV"];
     [Appirater appLaunched:YES];
