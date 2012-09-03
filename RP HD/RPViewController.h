@@ -12,6 +12,7 @@
 #import "RPAboutBox.h"
 #import "RPForumView.h"
 #import "RPLoginController.h"
+#import "SongsViewController.h"
 
 // #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
 // #define kRPURL64K @"http://207.200.96.231:8004"
@@ -61,6 +62,7 @@ typedef enum {
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
+
 @property (nonatomic) InterfaceMode interfaceState;
 @property (nonatomic) BOOL isPSDPlaying;
 @property (copy, nonatomic) NSString *psdSongId;
@@ -78,6 +80,7 @@ typedef enum {
 - (IBAction)songNameOverlayButton:(id)sender;
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
+- (IBAction)showSongsList:(id)sender;
 
 - (IBAction)debugFadeIn:(id)sender;
 - (IBAction)debugFadeOut:(id)sender;

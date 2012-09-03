@@ -595,6 +595,17 @@
     [self playPSDNow];
 }
 
+- (IBAction)showSongsList:(id)sender
+{
+    SongsViewController *theSongsBox = [[SongsViewController alloc] initWithNibName:@"SongsViewController" bundle:[NSBundle mainBundle]];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        theSongsBox.modalPresentationStyle = UIModalPresentationPageSheet;
+    else
+        theSongsBox.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:theSongsBox animated:YES completion:nil];
+    theSongsBox = nil;
+}
+
 
 - (IBAction)presentAboutBox:(id)sender
 {
