@@ -319,11 +319,13 @@ static NSOperationQueue *_presentedItemOperationQueue;
 
 - (void)asyncLoadPersistentStores {
     NSError *error = nil;
-    if ([self loadLocalPersistentStore:&error]) {
+    
+    // No need to add a local store, in this case.
+/*    if ([self loadLocalPersistentStore:&error]) {
         NSLog(@"Added local store");
     } else {
         NSLog(@"Unable to add local persistent store: %@", error);
-    }
+    }*/
     
     //if iCloud is available, add the persistent store
     //if iCloud is not available, or the add call fails, fallback to local storage
