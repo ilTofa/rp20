@@ -11,6 +11,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "FlurryAnalytics.h"
 #import "STKeychain/STKeychain.h"
+#import "SongAdder.h"
+#import "Song.h"
 
 @interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate>
 
@@ -152,6 +154,8 @@
              });
              // remembering songid for forum view
              self.psdSongId = [values objectAtIndex:1];
+             // In any case, reset the "add song" button to enabled state (we have a new song, it seems).
+             self.addSongButton.enabled = YES;
              // Set a timer to refresh ourselves if this is the standard stream.
              if(!self.isPSDPlaying)
              {
@@ -606,7 +610,32 @@
     theSongsBox = nil;
 }
 
-- (IBAction)addCurrentSong:(id)sender {
+- (IBAction)addCurrentSong:(id)sender
+{
+    // Recover song data...
+    NSArray *songPieces = [self.metadataInfo.text componentsSeparatedByString:@" - "];
+    if([songPieces count] == 2)
+    {
+        self.addSongButton.enabled = NO;
+        // No save for RP metadata filler
+        if([[songPieces objectAtIndex:0] isEqualToString:@"Commercial-free"])
+            return;
+        SongAdder *theAdder = [[SongAdder alloc] initWithTitle:[songPieces objectAtIndex:1] andArtist:[songPieces objectAtIndex:0]];
+        NSError *err;
+        if(![theAdder addSong:&err])
+        {
+            // An error occurred when saving...
+            NSString *temp = [NSString stringWithFormat:@"While saving the song got the error %@, %@", err, [err userInfo]];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:temp delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            [alert show];
+            self.addSongButton.enabled = YES;
+        }
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Malformed song name, cannot save it." delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+        [alert show];        
+    }
 }
 
 
@@ -702,6 +731,7 @@
     self.rpWebButton.hidden = YES;
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
+    self.addSongButton.enabled = NO;
     if(self.theStreamMetadataTimer != nil)
     {
         [self.theStreamMetadataTimer invalidate];
@@ -721,6 +751,7 @@
     self.psdButton.enabled = NO;
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
+    self.addSongButton.enabled = NO;
 }
 
 -(void)interfacePlay
@@ -739,6 +770,7 @@
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     self.rpWebButton.hidden = NO;
     self.rpWebButton.enabled = YES;
+    self.addSongButton.enabled = YES;
     self.hdImage.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
@@ -759,6 +791,7 @@
     self.rpWebButton.enabled = NO;
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = NO;
+    self.addSongButton.enabled = NO;
     self.hdImage.hidden = NO;
 }
 
@@ -775,6 +808,7 @@
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
+    self.addSongButton.enabled = YES;
     self.rpWebButton.enabled = YES;
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = YES;
@@ -798,6 +832,7 @@
     self.rpWebButton.enabled = NO;
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = NO;
+    self.addSongButton.enabled = NO;
     self.hdImage.hidden = NO;
 }
 

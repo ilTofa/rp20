@@ -58,6 +58,7 @@
     [self.window makeKeyAndVisible];
     // Init core data
     _coreDataController = [[CoreDataController alloc] init];
+    [_coreDataController loadPersistentStores];
 
     // Init Flurry Analytics & appirater
     [FlurryAnalytics startSession:@"PP44G74JCE81THYJRKTV"];

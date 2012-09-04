@@ -245,25 +245,7 @@ static NSOperationQueue *_presentedItemOperationQueue;
         return success;
     }
     
-    NSFileManager *fm = [[NSFileManager alloc] init];
-    
-    //load the store file containing the 50 states
     NSURL *storeURL = [[self applicationSandboxStoresDirectory] URLByAppendingPathComponent:kLocalStoreFilename];
-    
-    if (NO == [fm fileExistsAtPath:[storeURL path]]) {
-        //copy it from the bundle
-        NSURL *bundleURL = [[NSBundle mainBundle] URLForResource:@"localStore" withExtension:@"sqlite"];
-        if (nil == bundleURL) {
-            NSLog(@"Local store not found in bundle, this is likely a build issue, make sure the store file is being copied as a bundle resource.");
-            abort();
-        }
-        
-        success = [fm copyItemAtURL:bundleURL toURL:storeURL error:&localError];
-        if (NO == success) {
-            NSLog(@"Trouble copying the local store file from the bundle: %@", localError);
-            abort();
-        }
-    }
     
     //add the store, use the "LocalConfiguration" to make sure state entities all end up in this store and that no iCloud entities end up in it
     _localStore = [_psc addPersistentStoreWithType:NSSQLiteStoreType

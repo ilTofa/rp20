@@ -13,6 +13,12 @@
 
 @interface SongAdder : NSObject
 
-+(BOOL)addSong:(Song *)theSong error:(NSError **)outError;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * artist;
+@property (nonatomic, retain) NSDate * dateadded;
+@property (nonatomic, retain) NSString * sha;
+
+-(id)initWithTitle:(NSString *)title andArtist:(NSString *)artist;
+-(BOOL)addSong:(NSError **)outError;
 
 @end
