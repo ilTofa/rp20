@@ -840,7 +840,7 @@
 {
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
-                         self.aboutButton.alpha = /*self.logoImage.alpha =*/ self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.aboutButton.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -861,21 +861,22 @@
                              self.metadataInfo.frame = CGRectMake(98, 2, 373, 21);
                              self.songNameButton.frame = CGRectMake(98, 2, 373, 21);
                              self.playOrStopButton.frame = CGRectMake(446, 295, 25, 25);
+                             self.addSongButton.frame = CGRectMake(9, 295, 25, 25);
                              self.iPhoneLogoImage.frame = CGRectMake(18, 0, 25, 25);
                          }
                      }
                      completion:^(BOOL finished) {
-                         self.aboutButton.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.aboutButton.hidden = self.bitrateSelector.hidden = self.songListButton.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.interfaceState = kInterfaceMinimized;
                      }];    
 }
 
 - (void) interfaceToNormal
 {
-    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.songListButton.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -895,7 +896,8 @@
                              self.minimizerButton.frame = CGRectMake(0, 0, 480, 270);
                              self.metadataInfo.frame = CGRectMake(98, 16, 373, 21);
                              self.songNameButton.frame = CGRectMake(98, 16, 373, 21);
-                             self.playOrStopButton.frame = CGRectMake(441, 281, 30, 30);
+                             self.playOrStopButton.frame = CGRectMake(435, 278, 36, 36);
+                             self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
                          }
                          
@@ -1018,6 +1020,7 @@
     [self resignFirstResponder];
     [[AVAudioSession sharedInstance] setDelegate:nil];
     [self setAddSongButton:nil];
+    [self setSongListButton:nil];
     [super viewDidUnload];
 }
 
