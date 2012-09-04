@@ -50,12 +50,21 @@
     });
 }
 
+- (void)setupTheToolbar
+{
+    UIBarButtonItem *theCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(userDone:)];
+    UIBarButtonItem *theSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *theEdit = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(self.tableView.isEditing) ? UIBarButtonSystemItemDone : UIBarButtonSystemItemEdit target:self action:@selector(editTable:)];
+    NSArray *theButtons = @[theCancel, theSpace, theEdit];
+    [self.theToolbar setItems:theButtons animated:NO];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
  
     // setup
-    self.editButton.enabled = YES;
+    [self setupTheToolbar];
     
     self.managedObjectContext = ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).coreDataController.mainThreadContext;
     
@@ -83,6 +92,7 @@
 
 - (void)viewDidUnload {
     [self setEditButton:nil];
+    [self setTheToolbar:nil];
     [super viewDidUnload];
 }
 
@@ -110,22 +120,9 @@
 
 - (IBAction)editTable:(id)sender
 {
-    if(self.tableView.isEditing)
-    {
-//        UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(done)];
-//        self.editButton = newButton;
-//        newButton = nil;
-        DLog(@"Stopped editing on song table");
-        [self.tableView setEditing:NO animated:YES];
-    }
-    else
-    {
-//        UIBarButtonItem *newButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-//        self.editButton = newButton;
-//        newButton = nil;
-        DLog(@"Starting editing on song table");
-        [self.tableView setEditing:YES animated:YES];
-    }
+    DLog(@"%@ editing on song table", (self.tableView.isEditing) ? @"Stopping" : @"Starting");
+    [self.tableView setEditing:!(self.tableView.isEditing) animated:YES];
+    [self setupTheToolbar];
 }
 
 #pragma mark - Table view data source

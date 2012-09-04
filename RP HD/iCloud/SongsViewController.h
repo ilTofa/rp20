@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIToolbar *theToolbar;
 
 - (IBAction)userDone:(id)sender;
 - (IBAction)editTable:(id)sender;
