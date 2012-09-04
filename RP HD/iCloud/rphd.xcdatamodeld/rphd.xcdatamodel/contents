@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1807" systemVersion="12B19" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Song" representedClassName="Song" syncable="YES">
-        <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dateadded" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="sha" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artist" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="dateadded" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="sha" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <configuration name="CloudConfig">
         <memberEntity name="Song"/>
     </configuration>
     <elements>
-        <element name="Song" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Song" positionX="0" positionY="0" width="128" height="105"/>
     </elements>
 </model>

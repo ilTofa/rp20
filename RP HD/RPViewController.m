@@ -840,9 +840,9 @@
 {
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
-                         self.aboutButton.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.aboutButton.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                             self.psdButton.alpha = 0.0;
+                             self.psdButton.alpha = self.songListButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
@@ -850,6 +850,8 @@
                              self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                              self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                              self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
+                             self.addSongButton.frame = CGRectMake(150, 695, 43, 43);
+                             self.songListButton.frame = CGRectMake(220, 695, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                              self.psdButton.frame = CGRectMake(80, 695, 43, 43);
                              self.logoImage.frame = CGRectMake(20, 2, 300, 94);
@@ -866,28 +868,30 @@
                          }
                      }
                      completion:^(BOOL finished) {
-                         self.aboutButton.hidden = self.bitrateSelector.hidden = self.songListButton.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.aboutButton.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.interfaceState = kInterfaceMinimized;
                      }];    
 }
 
 - (void) interfaceToNormal
 {
-    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.songListButton.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                             self.psdButton.alpha = 1.0;
+                             self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                              self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
-                             self.playOrStopButton.frame = CGRectMake(373, 651, 43, 43);
+                             self.playOrStopButton.frame = CGRectMake(350, 634, 43, 43);
+                             self.addSongButton.frame = CGRectMake(440, 634, 43, 43);
+                             self.songListButton.frame = CGRectMake(485, 686, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
-                             self.psdButton.frame = CGRectMake(463, 651, 43, 43);
+                             self.psdButton.frame = CGRectMake(395, 686, 43, 43);
                              self.logoImage.frame = CGRectMake(20, 626, 300, 94);
                          }
                          else
