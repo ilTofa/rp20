@@ -606,6 +606,9 @@
     theSongsBox = nil;
 }
 
+- (IBAction)addCurrentSong:(id)sender {
+}
+
 
 - (IBAction)presentAboutBox:(id)sender
 {
@@ -979,6 +982,7 @@
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
     [[AVAudioSession sharedInstance] setDelegate:nil];
+    [self setAddSongButton:nil];
     [super viewDidUnload];
 }
 

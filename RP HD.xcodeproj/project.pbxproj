@@ -17,6 +17,7 @@
 		64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */; };
 		64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */; };
 		6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */; };
+		64563B5815F65EF300664C74 /* SongAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 64563B5715F65EF300664C74 /* SongAdder.m */; };
 		6456AE8315B8C94D0060EC8E /* button-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 6456AE8115B8C94D0060EC8E /* button-left.png */; };
 		6456AE8415B8C94D0060EC8E /* button-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6456AE8215B8C94D0060EC8E /* button-left@2x.png */; };
 		64606A9F15B85E5C00CA0FC6 /* button-psd-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 64606A9D15B85E5C00CA0FC6 /* button-psd-active.png */; };
@@ -97,6 +98,8 @@
 		64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		64468A0C152FA45200BCDEBF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_rphd@2x.png"; path = "Images/logo_2011_rphd@2x.png"; sourceTree = "<group>"; };
+		64563B5615F65EF300664C74 /* SongAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongAdder.h; sourceTree = "<group>"; };
+		64563B5715F65EF300664C74 /* SongAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongAdder.m; sourceTree = "<group>"; };
 		6456AE8115B8C94D0060EC8E /* button-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-left.png"; path = "Images/button-left.png"; sourceTree = "<group>"; };
 		6456AE8215B8C94D0060EC8E /* button-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-left@2x.png"; path = "Images/button-left@2x.png"; sourceTree = "<group>"; };
 		64606A9D15B85E5C00CA0FC6 /* button-psd-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd-active.png"; path = "Images/button-psd-active.png"; sourceTree = "<group>"; };
@@ -246,6 +249,8 @@
 				64A0DCFC15F503800088F8D3 /* SongsViewController.h */,
 				64A0DCFD15F503810088F8D3 /* SongsViewController.m */,
 				64A0DCFE15F503810088F8D3 /* SongsViewController.xib */,
+				64563B5615F65EF300664C74 /* SongAdder.h */,
+				64563B5715F65EF300664C74 /* SongAdder.m */,
 			);
 			name = SongsInTheCloud;
 			path = iCloud;
@@ -501,6 +506,7 @@
 				64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */,
 				64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */,
 				64A0DCFF15F503810088F8D3 /* SongsViewController.m in Sources */,
+				64563B5815F65EF300664C74 /* SongAdder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,6 +51,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImage;
 @property (weak, nonatomic) IBOutlet UIImageView *iPhoneLogoImage;
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
+@property (weak, nonatomic) IBOutlet UIButton *addSongButton;
 
 @property (strong, nonatomic) AVPlayer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
@@ -81,6 +82,7 @@ typedef enum {
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
 - (IBAction)showSongsList:(id)sender;
+- (IBAction)addCurrentSong:(id)sender;
 
 - (IBAction)debugFadeIn:(id)sender;
 - (IBAction)debugFadeOut:(id)sender;
