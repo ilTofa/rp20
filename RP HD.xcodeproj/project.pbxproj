@@ -33,6 +33,7 @@
 		646ACA8B15B47699001B5B73 /* RPLoginController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */; };
 		646B5EAA154755D100A2544C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EA9154755D100A2544C /* Icon.png */; };
 		646B5EAC154755D600A2544C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EAB154755D600A2544C /* Icon@2x.png */; };
+		64701A2415F6B31900282502 /* SongsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64701A2315F6B31900282502 /* SongsViewController~ipad.xib */; };
 		648C68C615C823600065043D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648C68C515C823600065043D /* CoreMedia.framework */; };
 		64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6491340F152DFD9A00029692 /* libFlurryAnalytics.a */; };
 		64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64983AC615C8A7E300C626A9 /* Icon-72@2x.png */; };
@@ -121,6 +122,7 @@
 		646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPLoginController~iphone.xib"; sourceTree = "<group>"; };
 		646B5EA9154755D100A2544C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		646B5EAB154755D600A2544C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		64701A2315F6B31900282502 /* SongsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SongsViewController~ipad.xib"; sourceTree = "<group>"; };
 		648C68C515C823600065043D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6491340E152DFD9A00029692 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
 		6491340F152DFD9A00029692 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				64A0DCFC15F503800088F8D3 /* SongsViewController.h */,
 				64A0DCFD15F503810088F8D3 /* SongsViewController.m */,
 				64A0DCFE15F503810088F8D3 /* SongsViewController.xib */,
+				64701A2315F6B31900282502 /* SongsViewController~ipad.xib */,
 				64563B5615F65EF300664C74 /* SongAdder.h */,
 				64563B5715F65EF300664C74 /* SongAdder.m */,
 			);
@@ -497,6 +500,7 @@
 				64208F6C15F6AA3900205CB9 /* button-addsong@2x.png in Resources */,
 				64208F6D15F6AA3900205CB9 /* button-songlist.png in Resources */,
 				64208F6E15F6AA3900205CB9 /* button-songlist@2x.png in Resources */,
+				64701A2415F6B31900282502 /* SongsViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
