@@ -39,7 +39,6 @@
 		64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64983AC615C8A7E300C626A9 /* Icon-72@2x.png */; };
 		6499667C15B81AFF00C68479 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6499667B15B81AFF00C68479 /* AVFoundation.framework */; };
 		64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */; };
-		64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCDC15EF6D2F0088F8D3 /* Song.m */; };
 		64A0DCDF15EF72560088F8D3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64A0DCDE15EF72560088F8D3 /* CoreData.framework */; };
 		64A0DCFF15F503810088F8D3 /* SongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCFD15F503810088F8D3 /* SongsViewController.m */; };
 		64A0DD0015F503810088F8D3 /* SongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A0DCFE15F503810088F8D3 /* SongsViewController.xib */; };
@@ -69,6 +68,7 @@
 		64D481341547681A00BC1085 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D481331547681A00BC1085 /* SystemConfiguration.framework */; };
 		64D60D9D15B6BADA0099A168 /* button-psd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9B15B6BADA0099A168 /* button-psd.png */; };
 		64D60D9E15B6BADA0099A168 /* button-psd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9C15B6BADA0099A168 /* button-psd@2x.png */; };
+		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
 		64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */; };
 		64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */; };
@@ -129,8 +129,6 @@
 		64983AC615C8A7E300C626A9 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
 		6499667B15B81AFF00C68479 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		64A0DCC715EF667D0088F8D3 /* rphd.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = rphd.xcdatamodel; sourceTree = "<group>"; };
-		64A0DCDB15EF6D2F0088F8D3 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		64A0DCDC15EF6D2F0088F8D3 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64A0DCDE15EF72560088F8D3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		64A0DCFB15F4FB710088F8D3 /* RP HD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "RP HD.entitlements"; sourceTree = "<group>"; };
 		64A0DCFC15F503800088F8D3 /* SongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongsViewController.h; sourceTree = "<group>"; };
@@ -166,6 +164,8 @@
 		64D481331547681A00BC1085 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		64D60D9B15B6BADA0099A168 /* button-psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd.png"; path = "Images/button-psd.png"; sourceTree = "<group>"; };
 		64D60D9C15B6BADA0099A168 /* button-psd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd@2x.png"; path = "Images/button-psd@2x.png"; sourceTree = "<group>"; };
+		64DFC65115F7469C00214188 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		64DFC65215F7469C00214188 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
 		64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
 		64F5AF7015EE5EAE0018B38A /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
@@ -253,9 +253,9 @@
 				64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */,
 				64F5AF7215EE5EAE0018B38A /* SDCloudUserDefaults.h */,
 				64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */,
+				64DFC65115F7469C00214188 /* Song.h */,
+				64DFC65215F7469C00214188 /* Song.m */,
 				64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */,
-				64A0DCDB15EF6D2F0088F8D3 /* Song.h */,
-				64A0DCDC15EF6D2F0088F8D3 /* Song.m */,
 				64A0DCFC15F503800088F8D3 /* SongsViewController.h */,
 				64A0DCFD15F503810088F8D3 /* SongsViewController.m */,
 				64A0DCFE15F503810088F8D3 /* SongsViewController.xib */,
@@ -524,9 +524,9 @@
 				64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */,
 				64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */,
 				64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */,
-				64A0DCDD15EF6D2F0088F8D3 /* Song.m in Sources */,
 				64A0DCFF15F503810088F8D3 /* SongsViewController.m in Sources */,
 				64563B5815F65EF300664C74 /* SongAdder.m in Sources */,
+				64DFC65315F7469C00214188 /* Song.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

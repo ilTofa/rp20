@@ -2,7 +2,7 @@
 //  Song.m
 //  RP HD
 //
-//  Created by Giacomo Tufano on 30/08/12.
+//  Created by Giacomo Tufano on 05/09/12.
 //
 //
 
@@ -11,9 +11,10 @@
 
 @implementation Song
 
-@dynamic title;
 @dynamic artist;
 @dynamic dateadded;
 @dynamic sha;
+@dynamic title;
+@dynamic cover;
 
 @end

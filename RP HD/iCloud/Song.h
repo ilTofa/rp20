@@ -2,7 +2,7 @@
 //  Song.h
 //  RP HD
 //
-//  Created by Giacomo Tufano on 30/08/12.
+//  Created by Giacomo Tufano on 05/09/12.
 //
 //
 
@@ -12,9 +12,10 @@
 
 @interface Song : NSManagedObject
 
-@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * artist;
 @property (nonatomic, retain) NSDate * dateadded;
 @property (nonatomic, retain) NSString * sha;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSData * cover;
 
 @end

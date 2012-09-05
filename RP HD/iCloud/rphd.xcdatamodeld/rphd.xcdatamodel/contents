@@ -2,6 +2,7 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1807" systemVersion="12B19" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Song" representedClassName="Song" syncable="YES">
         <attribute name="artist" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="cover" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="dateadded" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="sha" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
@@ -10,6 +11,6 @@
         <memberEntity name="Song"/>
     </configuration>
     <elements>
-        <element name="Song" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Song" positionX="0" positionY="0" width="128" height="120"/>
     </elements>
 </model>
