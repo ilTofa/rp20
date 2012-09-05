@@ -164,24 +164,29 @@ static NSOperationQueue *_presentedItemOperationQueue;
     
     if([NSFileManager instancesRespondToSelector:@selector(ubiquityIdentityToken)])
     {
+        NSLog(@"iCloud on iOS 6 present");
         _currentUbiquityToken = [[NSFileManager defaultManager] ubiquityIdentityToken];
+        //subscribe to the account change notification
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(iCloudAccountChanged:)
+                                                     name:NSUbiquityIdentityDidChangeNotification
+                                                   object:nil];
     }
     else
     {
         NSURL *iCloudContainer = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
         if(iCloudContainer)
-            ;
+        {
+            NSLog(@"iCloud on iOS 5 present");
+            _currentUbiquityToken = iCloudContainer;
+        }
         else // iCloud not available
         {
+            NSLog(@"iCloud *NOT* present");
             _currentUbiquityToken = nil;
         }
     }
     
-    //subscribe to the account change notification
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(iCloudAccountChanged:)
-                                                 name:NSUbiquityIdentityDidChangeNotification
-                                               object:nil];
     return self;
 }
 
@@ -772,9 +777,18 @@ static NSOperationQueue *_presentedItemOperationQueue;
         foldersByToken = [NSMutableDictionary dictionary];
     }
     NSString *storeDirectoryUUID = [foldersByToken objectForKey:token];
-    if (storeDirectoryUUID == nil) {
-        NSUUID *uuid = [[NSUUID alloc] init];
-        storeDirectoryUUID = [uuid UUIDString];
+    if (storeDirectoryUUID == nil)
+    {
+        // iOS 6 code path
+        if([NSUUID class])
+        {
+            NSUUID *uuid = [[NSUUID alloc] init];
+            storeDirectoryUUID = [uuid UUIDString];
+        }
+        else
+        {
+            storeDirectoryUUID = [NSString uuid];
+        }
         [foldersByToken setObject:storeDirectoryUUID forKey:token];
         tokenData = [NSKeyedArchiver archivedDataWithRootObject:foldersByToken];
         [tokenData writeToFile:[tokenURL path] atomically:YES];
