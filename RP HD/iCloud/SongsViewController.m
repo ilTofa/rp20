@@ -27,7 +27,9 @@
 // we will see the NSManagedObjectContext set up before any persistent stores are registered
 // we will need to fetch again after the persistent store is loaded
 //
-- (void)reloadFetchedResults:(NSNotification *)note {
+- (void)reloadFetchedResults:(NSNotification *)note
+{
+    DLog(@"this is reloadFetchedResults: that got a notification.");
     dispatch_async(dispatch_get_main_queue(), ^{
         NSError *error = nil;
         
@@ -68,35 +70,21 @@
     // setup
     [self setupTheToolbar];
     [self hideSearchBar];
-    
-    self.managedObjectContext = ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).coreDataController.mainThreadContext;
-    
-    /*
-     // Notifications to be honored during controller lifecycle (remember to delete notification requests after)
-     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-     [[NSNotificationCenter defaultCenter] addObserver:rootViewController selector:@selector(reloadFetchedResults:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:appDelegate.coreDataController.psc];
-     [[NSNotificationCenter defaultCenter] addObserver:rootViewController selector:@selector(reloadFetchedResults:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:appDelegate.coreDataController.psc];
-*/
-    
-    NSError *error = nil;
-    if (self.fetchedResultsController != nil) {
-        if (![[self fetchedResultsController] performFetch:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-     
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-    
+    RPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = appDelegate.coreDataController.mainThreadContext;    
+     // Notifications to be honored during controller lifecycle
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFetchedResults:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:appDelegate.coreDataController.psc];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFetchedResults:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:appDelegate.coreDataController.psc];
+    self.searchString = @"";
+    self.searchScope = 0;
+    [self setupFetchExecAndReload];
 }
 
 - (void)viewDidUnload {
     [self setEditButton:nil];
     [self setTheToolbar:nil];
     [self setSearchBar:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
 }
 
@@ -224,51 +212,11 @@
 }
 
 #pragma mark -
-#pragma mark Fetched results controller
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    
-    // Set up the fetched results controller
-    //
-    // Create the fetch request for the entity
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song"
-                                              inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *dateAddedSortDesc = [[NSSortDescriptor alloc] initWithKey:@"dateadded" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:dateAddedSortDesc, nil];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate,
-    // nil for section name key path means "no sections"
-    NSFetchedResultsController *aFetchedResultsController =
-    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                        managedObjectContext:self.managedObjectContext
-                                          sectionNameKeyPath:nil
-                                                   cacheName:nil];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-    return _fetchedResultsController;
-}
-
-
-#pragma mark -
 #pragma mark Fetched results controller delegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
+    DLog(@"this is controllerWillChangeContent");
     [self.tableView beginUpdates];
 }
 
@@ -276,6 +224,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
+    DLog(@"This is controller didChangeObject:atIndexPath:forChangeType:newIndexPath:");
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -300,6 +249,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    DLog(@"This is controllerDidChangeContent:");
     [self.tableView endUpdates];
 }
 
@@ -314,7 +264,68 @@
  */
 
 #pragma mark -
-#pragma mark Search delegate
+#pragma mark Search and search delegate
+
+- (void)setupFetchExecAndReload
+{
+    // Set up the fetched results controller
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Song"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *dateAddedSortDesc = [[NSSortDescriptor alloc] initWithKey:@"dateadded" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:dateAddedSortDesc, nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    NSString *queryString;
+    switch (self.searchScope) {
+        case 0:
+            queryString = [NSString stringWithFormat:@"artist like[c] \"*%@*\"", self.searchString];
+            break;
+        case 1:
+            queryString = [NSString stringWithFormat:@"title like[c] \"*%@*\"", self.searchString];
+            break;
+            ;
+        default:
+            queryString = nil;
+            break;
+    }
+    if(queryString)
+    {
+        DLog(@"Fetching again. Query string is: '%@'", queryString);
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:queryString];
+		[fetchRequest setPredicate:predicate];
+    }
+    // Edit the section name key path and cache name if appropriate,
+    // nil for section name key path means "no sections"
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                        managedObjectContext:self.managedObjectContext
+                                                                          sectionNameKeyPath:nil
+                                                                                   cacheName:nil];
+    self.fetchedResultsController.delegate = self;
+    DLog(@"Fetch setup to: %@", self.fetchedResultsController);
+    NSError *error = nil;
+    if (self.fetchedResultsController != nil) {
+        if (![[self fetchedResultsController] performFetch:&error]) {
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        else
+            [self.tableView reloadData];
+    }
+}
 
 - (void) hideSearchBar
 {
@@ -324,6 +335,9 @@
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
     DLog(@"Search scope changed to %d", selectedScope);
+    self.searchScope = selectedScope;
+    [self setupFetchExecAndReload];
+    [self.tableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -331,13 +345,16 @@
     DLog(@"Cancel clicked");
     [searchBar resignFirstResponder];
     [self hideSearchBar];
-    searchBar.text = @"";
+    searchBar.text = self.searchString = @"";
+    [self setupFetchExecAndReload];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     DLog(@"Search should start for '%@'", searchBar.text);
     [searchBar resignFirstResponder];
+    self.searchString = searchBar.text;
+    [self setupFetchExecAndReload];
 }
 
 @end

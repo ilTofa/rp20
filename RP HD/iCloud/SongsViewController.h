@@ -17,7 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (weak, nonatomic) IBOutlet UIToolbar *theToolbar;
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSString *searchString;
+@property (nonatomic) NSInteger searchScope;
 
 - (IBAction)userDone:(id)sender;
 - (IBAction)editTable:(id)sender;
