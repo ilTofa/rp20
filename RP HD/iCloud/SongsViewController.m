@@ -67,6 +67,7 @@
  
     // setup
     [self setupTheToolbar];
+    [self hideSearchBar];
     
     self.managedObjectContext = ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).coreDataController.mainThreadContext;
     
@@ -95,6 +96,7 @@
 - (void)viewDidUnload {
     [self setEditButton:nil];
     [self setTheToolbar:nil];
+    [self setSearchBar:nil];
     [super viewDidUnload];
 }
 
@@ -310,5 +312,32 @@
  [self.tableView reloadData];
  }
  */
+
+#pragma mark -
+#pragma mark Search delegate
+
+- (void) hideSearchBar
+{
+    self.tableView.contentOffset = CGPointMake( 0, self.searchBar.frame.size.height );
+}
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
+{
+    DLog(@"Search scope changed to %d", selectedScope);
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    DLog(@"Cancel clicked");
+    [searchBar resignFirstResponder];
+    [self hideSearchBar];
+    searchBar.text = @"";
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    DLog(@"Search should start for '%@'", searchBar.text);
+    [searchBar resignFirstResponder];
+}
 
 @end
