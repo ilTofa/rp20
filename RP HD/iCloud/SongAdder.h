@@ -17,8 +17,9 @@
 @property (nonatomic, retain) NSString * artist;
 @property (nonatomic, retain) NSDate * dateadded;
 @property (nonatomic, retain) NSString * sha;
+@property (nonatomic, retain) NSData *cover;
 
--(id)initWithTitle:(NSString *)title andArtist:(NSString *)artist;
+-(id)initWithTitle:(NSString *)title andArtist:(NSString *)artist andCoversheet:(UIImage *)cover;
 -(BOOL)addSong:(NSError **)outError;
 
 @end

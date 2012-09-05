@@ -10,6 +10,8 @@
 #import "RPAppDelegate.h"
 #import "CoreDataController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "Song.h"
 
 @interface SongsViewController ()
@@ -103,6 +105,9 @@
     // Probably a custom cell should be used (with an image for the cover and the date added)
     cell.textLabel.text = song.title;
     cell.detailTextLabel.text = song.artist;
+    [cell.imageView.layer setCornerRadius:5.0f];
+    [cell.imageView.layer setMasksToBounds:YES];
+    [cell.imageView setImage:[UIImage imageWithData:song.cover]];
 }
 
 - (void)didReceiveMemoryWarning

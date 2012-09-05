@@ -144,6 +144,7 @@
                  if([songPieces count] == 2)
                  {
                      NSDictionary *mpInfo;
+                     self.coverImage = nil;
                      MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
                      mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
                                MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
@@ -187,12 +188,13 @@
               {
                   if(data)
                   {
-                      UIImage *temp = [UIImage imageWithData:data];
-                      DLog(@"image is: %@", temp);
+                      self.coverImage = [UIImage imageWithData:data];
+                      DLog(@"image is: %@", self.coverImage);
                       // Update metadata info
-                      if(temp != nil)
+                      if(self.coverImage != nil)
                       {
-                          MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:temp];
+                          // Update cover art cache
+                          MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                           NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
                           if(!artist)
                               artist = @"";
@@ -206,9 +208,9 @@
                                         MPMediaItemPropertyArtwork: albumArt};
                               [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                               DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
-                              [self.rpWebButton setBackgroundImage:temp forState:UIControlStateNormal];
-                              [self.rpWebButton setBackgroundImage:temp forState:UIControlStateHighlighted];
-                              [self.rpWebButton setBackgroundImage:temp forState:UIControlStateSelected];
+                              [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateNormal];
+                              [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateHighlighted];
+                              [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateSelected];
                           });
                       }
                   }
@@ -620,7 +622,7 @@
         // No save for RP metadata filler
         if([[songPieces objectAtIndex:0] isEqualToString:@"Commercial-free"])
             return;
-        SongAdder *theAdder = [[SongAdder alloc] initWithTitle:[songPieces objectAtIndex:1] andArtist:[songPieces objectAtIndex:0]];
+        SongAdder *theAdder = [[SongAdder alloc] initWithTitle:[songPieces objectAtIndex:1] andArtist:[songPieces objectAtIndex:0] andCoversheet:self.coverImage];
         NSError *err;
         if(![theAdder addSong:&err])
         {
