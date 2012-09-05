@@ -106,6 +106,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
+    if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
+        return YES;
+    else
+        return NO;
+}
+
 #pragma mark - Action buttons
 
 - (IBAction)userDone:(id)sender
