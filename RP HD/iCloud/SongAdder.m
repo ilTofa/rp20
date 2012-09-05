@@ -28,7 +28,6 @@
         if(cover == nil)
             cover = [UIImage imageNamed:@"RP-meta"];
         _cover = UIImagePNGRepresentation([cover roundedThumbnail:178 withFixedScale:YES cornerSize:6 borderSize:1]);
-//        _cover = UIImagePNGRepresentation([[cover squaredThumbnail:89] roundedCornerImage:6 borderSize:1]);
     }
     return self;
 }
