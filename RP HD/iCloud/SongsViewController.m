@@ -11,10 +11,11 @@
 #import "CoreDataController.h"
 
 #import <QuartzCore/QuartzCore.h>
-
+#import <MessageUI/MessageUI.h>
+#import <Twitter/Twitter.h>
 #import "Song.h"
 
-@interface SongsViewController ()
+@interface SongsViewController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -209,15 +210,98 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     // Create and push a detail view controller
-     DetailViewController *detailViewController = [[DetailViewController alloc] init];
-     Person *selectedPerson = (Person *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
-     // Pass the selected person to the new view controller.
-     detailViewController.person = selectedPerson;
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    // Check what the user wants to do and do it. :)
+    Song *selectedSong = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    self.theSelectedArtist = selectedSong.artist;
+    self.theSelectedTitle = selectedSong.title;
+    self.theSelectedCover = selectedSong.cover;
+    NSString *actionTitle = [NSString stringWithFormat:@"%@ - %@", self.theSelectedArtist, self.theSelectedTitle];
+    UIActionSheet *theChoices;
+    theChoices = [[UIActionSheet alloc] initWithTitle:actionTitle delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send by e-mail", @"Tweet it", @"iTunes Store", nil];
+    [theChoices showInView:self.view];
+}
+
+#pragma mark -
+#pragma mark UIActionSheetDelegate method: where the choice is made. :)
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *action;
+    switch (buttonIndex) {
+        case 3:
+            action = @"cancel";
+            break;
+        case 0:
+            action = @"send an e-mail";
+            if([MFMailComposeViewController canSendMail])
+                [self sendSongByEmail];
+            else
+            {
+                UIAlertView *alertBox = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sorry, cannot send email from this device. Please check configuration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alertBox show];
+            }
+            break;
+        case 1:
+            action = @"twit";
+            if([TWTweetComposeViewController canSendTweet])
+                [self sendSongByTweet];
+            else
+            {
+                UIAlertView *alertBox = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sorry, cannot send a tweet now from this device. Please check network and/or configuration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alertBox show];
+            }
+            break;
+        case 2:
+            action = @"go to the store";
+            break;
+        default:
+            action = @"do something impossible";
+            break;
+    }
+    DLog(@"User wants to %@", action);
+}
+
+-(void) sendSongByTweet
+{
+    TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init];
+    [tweetViewController setInitialText:[NSString stringWithFormat:@"%@ - %@\n", self.theSelectedArtist, self.theSelectedTitle]];
+    [tweetViewController addImage:[UIImage imageWithData:self.theSelectedCover]];
+    [tweetViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
+        switch (result) {
+            case TWTweetComposeViewControllerResultCancelled:
+                DLog(@"Tweet cancelled.");
+                break;
+            case TWTweetComposeViewControllerResultDone:
+                DLog(@"Tweet done.");
+                break;
+            default:
+                break;
+        }        
+        [self dismissModalViewControllerAnimated:YES];
+    }];
+    
+    [self presentModalViewController:tweetViewController animated:YES];
+}
+
+-(void) sendSongByEmail
+{
+    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+    controller.mailComposeDelegate = self;
+    [controller setSubject:@"Song saved in Radio Paradise HD Slideshow"];
+    [controller setMessageBody:[NSString stringWithFormat:@"%@ - %@\n", self.theSelectedArtist, self.theSelectedTitle] isHTML:NO];
+    [controller addAttachmentData:self.theSelectedCover mimeType:@"image/png" fileName:@"Cover.png"];
+    if (controller)
+        [self presentModalViewController:controller animated:YES];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent) {
+        DLog(@"e-mail Sent!");
+    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -

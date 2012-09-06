@@ -22,6 +22,10 @@
 @property (strong, nonatomic) NSString *searchString;
 @property (nonatomic) NSInteger searchScope;
 
+@property (strong, nonatomic) NSString *theSelectedTitle;
+@property (strong, nonatomic) NSString *theSelectedArtist;
+@property (strong, nonatomic) NSData *theSelectedCover;
+
 - (IBAction)userDone:(id)sender;
 - (IBAction)editTable:(id)sender;
 
