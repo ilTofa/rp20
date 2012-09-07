@@ -218,7 +218,13 @@
     NSString *actionTitle = [NSString stringWithFormat:@"%@ - %@", self.theSelectedArtist, self.theSelectedTitle];
     UIActionSheet *theChoices;
     theChoices = [[UIActionSheet alloc] initWithTitle:actionTitle delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send by e-mail", @"Tweet it", @"iTunes Store", nil];
-    [theChoices showInView:self.view];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [theChoices showFromRect:cell.frame inView:self.view animated:YES];
+    }
+    else
+        [theChoices showInView:self.view];
 }
 
 #pragma mark -
