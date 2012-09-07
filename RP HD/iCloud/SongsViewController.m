@@ -253,6 +253,7 @@
             break;
         case 2:
             action = @"go to the store";
+            [self gotoStore];
             break;
         default:
             action = @"do something impossible";
@@ -302,6 +303,89 @@
         DLog(@"e-mail Sent!");
     }
     [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark -
+#pragma mark iTunes Store management
+
+-(void)gotoStore
+{
+    DLog(@"trying to get current locale setting");
+    // For easy testing with other locales
+    // NSLocale *pvtLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
+    NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
+    NSString *countryID = [locale objectForKey:NSLocaleCountryCode];
+    DLog(@"Device is (probably) in %@", countryID);
+    // Now looking for the right store.
+    NSString *storeCode;
+    if([countryID isEqualToString:@"US"])
+        storeCode = @"us";
+    else if ([countryID isEqualToString:@"GB"] || [countryID isEqualToString:@"UK"])
+        storeCode = @"gb";
+    else if ([countryID isEqualToString:@"IT"])
+        storeCode = @"it";
+    else if ([countryID isEqualToString:@"DE"])
+        storeCode = @"de";
+    else if ([countryID isEqualToString:@"FR"])
+        storeCode = @"fr";
+    else if ([countryID isEqualToString:@"CA"])
+        storeCode = @"ca";
+    else
+        storeCode = @"us";
+    DLog(@"Found store code: %@", storeCode);
+    // Now search for the song and quit.
+    [self iTunesSearchFor:[NSString stringWithFormat:@"%@ %@", self.theSelectedArtist, self.theSelectedTitle] onStoreCode:storeCode];
+    [self userDone:nil];
+}
+
+-(void)iTunesSearchFor:(NSString *)searchString onStoreCode:(NSString *)storeCode
+{
+    NSString *searchUrl = [[[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@&country=%@&media=music&limit=1", searchString, storeCode] stringByReplacingOccurrencesOfString:@" " withString:@"+"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    DLog(@"Store URL is: %@", searchUrl);
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:searchUrl]];
+    [req setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+    [NSURLConnection sendAsynchronousRequest:req queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+     {
+         DLog(@" %@ ", (data) ? @"successfully." : @"with errors.");
+         if(data)
+         {
+             // Get JSON data
+             NSError *err;
+             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+             if(!jsonObject)
+             {
+                 NSLog(@"Error reading JSON data: %@", [err description]);
+                 return;
+             }
+             else
+             {
+                 NSArray *songsData = [jsonObject objectForKey:@"results"];
+                 if(songsData == nil || [songsData count] ==0)
+                 {
+                     NSLog(@"Error in JSON dictionary: %@", jsonObject);
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The song seems to not exist on iTunes Store. You could retry after a while." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                         [alert show];
+                     });
+                     return;
+                 }
+                 NSDictionary *songData = [songsData objectAtIndex:0];
+                 if(!songData)
+                 {
+                     NSLog(@"Error in JSON first level array: %@", songsData);
+                     return;
+                 }
+                 DLog(@"Song data\n%@", songData);
+                 NSString *songURL = [songData objectForKey:@"collectionViewUrl"];
+                 if(!songURL)
+                 {
+                     NSLog(@"Error in song dictionary: %@", songData);
+                     return;
+                 }
+                 DLog(@"The requested song URL is: %@", songURL);
+             }
+         }
+     }];
 }
 
 #pragma mark -
