@@ -26,6 +26,8 @@
 @property (strong, nonatomic) NSString *theSelectedArtist;
 @property (strong, nonatomic) NSData *theSelectedCover;
 
+@property (strong, nonatomic) NSURL *iTunesURL;
+
 - (IBAction)userDone:(id)sender;
 - (IBAction)editTable:(id)sender;
 

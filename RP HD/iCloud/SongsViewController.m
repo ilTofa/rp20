@@ -382,11 +382,53 @@
                      NSLog(@"Error in song dictionary: %@", songData);
                      return;
                  }
-                 DLog(@"The requested song URL is: %@", songURL);
+                 DLog(@"The requested song URL is: <%@>. Calling it.", songURL);
+                 self.iTunesURL = [NSURL URLWithString:songURL];
+                 // Skip redirection engine for direct URLs
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     if([self.iTunesURL.host hasSuffix:@"itunes.apple.com"])
+                         [[UIApplication sharedApplication] openURL:self.iTunesURL];
+                     else
+                         [self openReferralURL:self.iTunesURL];
+                 });
              }
          }
      }];
 }
+
+// That's Apple code from QA1629
+
+// Process a LinkShare/TradeDoubler/DGM URL to something iPhone can handle
+- (void)openReferralURL:(NSURL *)referralURL
+{
+    NSURLConnection *con = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:referralURL] delegate:self startImmediately:YES];
+    if(!con)
+        NSLog(@"Error in connecting to %@", referralURL);
+}
+
+// Save the most recent URL in case multiple redirects occur
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+{
+    self.iTunesURL = [response URL];
+    if( [self.iTunesURL.host hasSuffix:@"itunes.apple.com"])
+    {
+        [connection cancel];
+        [self connectionDidFinishLoading:connection];
+        return nil;
+    }
+    else
+    {
+        DLog(@"Got redirected to <%@>", self.iTunesURL);
+        return request;
+    }
+}
+
+// No more redirects; use the last URL saved
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    [[UIApplication sharedApplication] openURL:self.iTunesURL];
+}
+
 
 #pragma mark -
 #pragma mark Fetched results controller delegate
