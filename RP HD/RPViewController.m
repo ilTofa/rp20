@@ -50,8 +50,10 @@
 -(void)unscheduleImagesTimer
 {
     DLog(@"Unscheduling images timer (%@)", self.theImagesTimer);
-    [self.theImagesTimer invalidate];
-    self.theImagesTimer = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.theImagesTimer invalidate];
+        self.theImagesTimer = nil;
+    });
 }
 
 -(void)loadNewImage:(NSTimer *)timer
