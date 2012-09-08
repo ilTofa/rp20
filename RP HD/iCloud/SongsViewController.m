@@ -14,6 +14,7 @@
 #import <MessageUI/MessageUI.h>
 #import <Twitter/Twitter.h>
 #import "Song.h"
+#import "FlurryAnalytics.h"
 
 @interface SongsViewController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
@@ -277,9 +278,11 @@
         switch (result) {
             case TWTweetComposeViewControllerResultCancelled:
                 DLog(@"Tweet cancelled.");
+                [FlurryAnalytics logEvent:@"Tweet cancelled"];
                 break;
             case TWTweetComposeViewControllerResultDone:
                 DLog(@"Tweet done.");
+                [FlurryAnalytics logEvent:@"Tweet sent"];
                 break;
             default:
                 break;
@@ -307,7 +310,10 @@
 {
     if (result == MFMailComposeResultSent) {
         DLog(@"e-mail Sent!");
+        [FlurryAnalytics logEvent:@"email sent"];
     }
+    else
+        [FlurryAnalytics logEvent:@"email canceled"];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -320,31 +326,54 @@
     // For easy testing with other locales
     // NSLocale *pvtLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
     NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
-    NSString *countryID = [locale objectForKey:NSLocaleCountryCode];
-    DLog(@"Device is (probably) in %@", countryID);
-    // Now looking for the right store.
-    NSString *storeCode;
-    if([countryID isEqualToString:@"US"])
-        storeCode = @"us";
-    else if ([countryID isEqualToString:@"GB"] || [countryID isEqualToString:@"UK"])
-        storeCode = @"gb";
-    else if ([countryID isEqualToString:@"IT"])
-        storeCode = @"it";
-    else if ([countryID isEqualToString:@"DE"])
-        storeCode = @"de";
-    else if ([countryID isEqualToString:@"FR"])
-        storeCode = @"fr";
-    else if ([countryID isEqualToString:@"CA"])
-        storeCode = @"ca";
-    else
-        storeCode = @"us";
-    DLog(@"Found store code: %@", storeCode);
+    NSString *storeCode = [locale objectForKey:NSLocaleCountryCode];
+    DLog(@"Device is configured for %@", storeCode);
     // Now search for the song and quit.
-    [self iTunesSearchFor:[NSString stringWithFormat:@"%@ %@", self.theSelectedArtist, self.theSelectedTitle] onStoreCode:storeCode];
+    [self sendUserToStoreFor:[NSString stringWithFormat:@"%@ %@", self.theSelectedArtist, self.theSelectedTitle] onStoreCode:storeCode];
     [self userDone:nil];
 }
 
--(void)iTunesSearchFor:(NSString *)searchString onStoreCode:(NSString *)storeCode
+-(NSString *)generateAffiliateLinkFor:(NSString *)iTunesUrl andStoreCode:(NSString *)storeCode
+{
+    NSString *returnUrl;
+    NSRange rangeForQuestionMark = [iTunesUrl rangeOfString:@"?" options:NSCaseInsensitiveSearch];
+    if([storeCode isEqualToString:@"us"])
+    {
+        // Generate a linkshare URL (use '?' o '&' a seconda se ci sia già un '?' o no)
+        returnUrl = [NSString stringWithFormat:@"%@%@partnerId=30&siteID=pXVJV/M7i5Q", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
+    }
+    else if ([storeCode isEqualToString:@"gb"] || [storeCode isEqualToString:@"uk"])
+    {
+        // Generate a Tradedoubler link
+        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23708&a=2141801&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
+    }
+    else if ([storeCode isEqualToString:@"it"])
+    {
+        // Generate a Tradedoubler link
+        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=24373&a=2165395&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
+    }
+    else if ([storeCode isEqualToString:@"de"])
+    {
+        // Generate a Tradedoubler link
+        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23761&a=2141800&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
+    }
+    else if ([storeCode isEqualToString:@"fr"])
+    {
+        // Generate a Tradedoubler link
+        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23753&a=2141803&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
+    }
+    else
+    {
+        // Simply send the user to "plain" store (without affiliate links)
+        returnUrl = iTunesUrl;
+    }
+    returnUrl = [returnUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    DLog(@"Affiliate link is: <%@>", returnUrl);
+    [FlurryAnalytics logEvent:@"Sent to iTunes Store" withParameters:@{@"countryCode" : storeCode}];
+    return returnUrl;
+}
+
+-(void)sendUserToStoreFor:(NSString *)searchString onStoreCode:(NSString *)storeCode
 {
     NSString *searchUrl = [[[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@&country=%@&media=music&limit=1", searchString, storeCode] stringByReplacingOccurrencesOfString:@" " withString:@"+"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     DLog(@"Store URL is: %@", searchUrl);
@@ -388,8 +417,10 @@
                      NSLog(@"Error in song dictionary: %@", songData);
                      return;
                  }
-                 DLog(@"The requested song URL is: <%@>. Calling it.", songURL);
-                 self.iTunesURL = [NSURL URLWithString:songURL];
+                 DLog(@"The requested song URL is: <%@>.", songURL);
+                 NSString *affiliateLinkUrl = [self generateAffiliateLinkFor:songURL andStoreCode:storeCode];
+                 DLog(@"Affiliate URL for the same is: <%@>. Calling it.", songURL);
+                 self.iTunesURL = [NSURL URLWithString:affiliateLinkUrl];
                  // Skip redirection engine for direct URLs
                  dispatch_async(dispatch_get_main_queue(), ^{
                      if([self.iTunesURL.host hasSuffix:@"itunes.apple.com"])
