@@ -324,7 +324,7 @@
 {
     DLog(@"trying to get current locale setting");
     // For easy testing with other locales
-    // NSLocale *pvtLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"];
+//    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
     NSString *storeCode = [locale objectForKey:NSLocaleCountryCode];
     DLog(@"Device is configured for %@", storeCode);
@@ -337,27 +337,27 @@
 {
     NSString *returnUrl;
     NSRange rangeForQuestionMark = [iTunesUrl rangeOfString:@"?" options:NSCaseInsensitiveSearch];
-    if([storeCode isEqualToString:@"us"])
+    if([storeCode caseInsensitiveCompare:@"us"] == NSOrderedSame)
     {
         // Generate a linkshare URL (use '?' o '&' a seconda se ci sia già un '?' o no)
         returnUrl = [NSString stringWithFormat:@"%@%@partnerId=30&siteID=pXVJV/M7i5Q", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
     }
-    else if ([storeCode isEqualToString:@"gb"] || [storeCode isEqualToString:@"uk"])
+    else if ([storeCode caseInsensitiveCompare:@"gb"] == NSOrderedSame || [storeCode caseInsensitiveCompare:@"uk"] == NSOrderedSame)
     {
         // Generate a Tradedoubler link
         returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23708&a=2141801&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
     }
-    else if ([storeCode isEqualToString:@"it"])
+    else if ([storeCode caseInsensitiveCompare:@"it"] == NSOrderedSame)
     {
         // Generate a Tradedoubler link
         returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=24373&a=2165395&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
     }
-    else if ([storeCode isEqualToString:@"de"])
+    else if ([storeCode caseInsensitiveCompare:@"de"] == NSOrderedSame)
     {
         // Generate a Tradedoubler link
         returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23761&a=2141800&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
     }
-    else if ([storeCode isEqualToString:@"fr"])
+    else if ([storeCode caseInsensitiveCompare:@"fr"] == NSOrderedSame)
     {
         // Generate a Tradedoubler link
         returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23753&a=2141803&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
@@ -414,12 +414,16 @@
                  NSString *songURL = [songData objectForKey:@"collectionViewUrl"];
                  if(!songURL)
                  {
-                     NSLog(@"Error in song dictionary: %@", songData);
-                     return;
+                     songURL = [songData objectForKey:@"trackViewUrl"];
+                     if(!songURL)
+                     {
+                         NSLog(@"Error in song dictionary: %@", songData);
+                         return;
+                     }
                  }
                  DLog(@"The requested song URL is: <%@>.", songURL);
                  NSString *affiliateLinkUrl = [self generateAffiliateLinkFor:songURL andStoreCode:storeCode];
-                 DLog(@"Affiliate URL for the same is: <%@>. Calling it.", songURL);
+                 DLog(@"Affiliate URL for the same is: <%@>. Calling it.", affiliateLinkUrl);
                  self.iTunesURL = [NSURL URLWithString:affiliateLinkUrl];
                  // Skip redirection engine for direct URLs
                  dispatch_async(dispatch_get_main_queue(), ^{
