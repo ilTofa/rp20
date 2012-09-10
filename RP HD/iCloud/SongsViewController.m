@@ -342,6 +342,11 @@
         // Generate a linkshare URL (use '?' o '&' a seconda se ci sia già un '?' o no)
         returnUrl = [NSString stringWithFormat:@"%@%@partnerId=30&siteID=pXVJV/M7i5Q", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
     }
+    else if([storeCode caseInsensitiveCompare:@"ca"] == NSOrderedSame)
+    {
+        // Generate a linkshare URL (use '?' o '&' a seconda se ci sia già un '?' o no)
+        returnUrl = [NSString stringWithFormat:@"%@%@partnerId=30&siteID=pXVJV/M7i5Q", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
+    }
     else if ([storeCode caseInsensitiveCompare:@"gb"] == NSOrderedSame || [storeCode caseInsensitiveCompare:@"uk"] == NSOrderedSame)
     {
         // Generate a Tradedoubler link
