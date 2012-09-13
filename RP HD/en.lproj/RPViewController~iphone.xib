@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
 		<string key="IBDocument.SystemVersion">12B19</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2829</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
 		<string key="IBDocument.AppKitVersion">1187</string>
 		<string key="IBDocument.HIToolboxVersion">624.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1914</string>
+			<string key="NS.object.0">1926</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -118,15 +118,14 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<string key="IBUIText">Song name</string>
+						<reference key="IBUITextColor" ref="21445055"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
-						<string key="IBUIText">Song name</string>
-						<reference key="IBUITextColor" ref="21445055"/>
 						<int key="IBUITextAlignment">2</int>
 						<reference key="IBUIFontDescription" ref="755692884"/>
 						<reference key="IBUIFont" ref="787197724"/>
-						<int key="IBUIAutoshrinkMode">2</int>
 					</object>
 					<object class="IBUIButton" id="109510731">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -134,7 +133,6 @@
 						<string key="NSFrame">{{435, 278}, {36, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -859,6 +857,6 @@
 			<string key="button-psd.png">{43, 43}</string>
 			<string key="button-songlist.png">{43, 43}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1914</string>
+		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>
