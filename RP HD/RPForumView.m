@@ -7,7 +7,8 @@
 //
 
 #import "RPForumView.h"
-#import "FlurryAnalytics.h"
+
+#import "LocalyticsSession.h"
 
 @interface RPForumView () <UIWebViewDelegate, UIActionSheetDelegate>
 
@@ -70,7 +71,7 @@
     self.theWebView.hidden = YES;
     NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
     [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
-    [FlurryAnalytics logEvent:@"Forum" timed:YES];
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"ForumOpened"];
 }
 
 - (void)viewDidUnload
@@ -93,7 +94,6 @@
 
 - (IBAction)viewIsDone:(id)sender 
 {
-    [FlurryAnalytics endTimedEvent:@"Forum" withParameters:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

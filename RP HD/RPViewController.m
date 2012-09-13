@@ -9,7 +9,7 @@
 #import "RPViewController.h"
 #import "RPAppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "FlurryAnalytics.h"
+#import "LocalyticsSession.h"
 #import "STKeychain/STKeychain.h"
 #import "SongAdder.h"
 #import "Song.h"
@@ -245,7 +245,7 @@
 
 - (void)playMainStream
 {
-    [FlurryAnalytics logEvent:@"Streaming" timed:YES];
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"playMainStream"];
     [self interfacePlayPending];
     self.theStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
     [self activateNotifications];
@@ -451,7 +451,7 @@
              NSNumber *psdSongFadeIn = [values objectAtIndex:2];
              NSNumber *psdSongFadeOut = [values objectAtIndex:3];
              DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
-             [FlurryAnalytics logEvent:@"PSD triggered"];
+             [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"PSD triggered"];
              // reset stream on main thread
              dispatch_async(dispatch_get_main_queue(), ^{
                  // If PSD is already running...
@@ -486,7 +486,7 @@
     else
     {
         [self interfaceStopPending];
-        [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
+        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Stop"];
         // Process stop request.
         [self.theStreamer pause];
         // Let's give the stream a couple seconds to really stop itself
@@ -518,15 +518,15 @@
     {
         case 0:
             self.theRedirector = kRPURL24K;
-            [FlurryAnalytics logEvent:@"24K selected"];
+            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"24K selected"];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
-            [FlurryAnalytics logEvent:@"64K selected"];
+            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"64K selected"];
             break;
         case 2:
             self.theRedirector = kRPURL128K;
-            [FlurryAnalytics logEvent:@"128K selected"];
+            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"128K selected"];
             break;
         default:
             break;
@@ -1112,11 +1112,16 @@
     }
     else
     {
-        [FlurryAnalytics endTimedEvent:@"Streaming" withParameters:nil];
+        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Stop"];
         [self removeNotifications];
         self.theStreamer = nil;
         [self interfaceStop];
     }
+    if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
+        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Play interrupted by call or event"];
+    // In any case (also if not playing stop localytics
+    [[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 -(void)applicationChangedState:(NSNotification *)note
@@ -1124,9 +1129,16 @@
     DLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.theStreamer.rate != 0.0)
+            // If backgrounding during play, don't quit Localytics session
+            if(self.theStreamer.rate != 0.0 || self.isPSDPlaying)
             {
-                [FlurryAnalytics logEvent:@"Backgrounding while playing"];
+                [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Backgrounding while playing"];
+                [[LocalyticsSession sharedLocalyticsSession] upload];
+            }
+            else
+            {
+                [[LocalyticsSession sharedLocalyticsSession] close];
+                [[LocalyticsSession sharedLocalyticsSession] upload];
             }
             // If we don't have a second screen...
             if ([[UIScreen screens] count] == 1)
@@ -1140,11 +1152,20 @@
         });
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
-            DLog(@"Images again, please");
-            if(self.theStreamer.rate != 0.0)
+            if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
             {
-                [FlurryAnalytics logEvent:@"In Foreground while Playing"];
-                [self scheduleImagesTimer];
+                [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"In Foreground while Playing"];
+                // If we don't have a second screen (else the timer was not stopped
+                if ([[UIScreen screens] count] == 1)
+                {
+                    DLog(@"Images again, please");
+                    [self scheduleImagesTimer];
+                }
+            }
+            else
+            {
+                [[LocalyticsSession sharedLocalyticsSession] resume];
+                [[LocalyticsSession sharedLocalyticsSession] upload];                
             }
             [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
             [self resignFirstResponder];
@@ -1158,11 +1179,15 @@
         switch (receivedEvent.subtype) 
         {
             case UIEventSubtypeRemoteControlTogglePlayPause:
+                [[LocalyticsSession sharedLocalyticsSession] close];
+                [[LocalyticsSession sharedLocalyticsSession] upload];
                 [self playOrStop: nil];
                 break;
             case UIEventSubtypeRemoteControlPreviousTrack:
                 break;
             case UIEventSubtypeRemoteControlNextTrack:
+                // Start PSD on "next track" request
+                [self startPSD:nil];
                 break;
             default:
                 break;

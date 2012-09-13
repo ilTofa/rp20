@@ -12,6 +12,11 @@
 		6407D27515F8EB3800E80E24 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6407D27415F8EB3800E80E24 /* MessageUI.framework */; };
 		6407D27815F8F2B700E80E24 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6407D27715F8F2B700E80E24 /* Twitter.framework */; };
 		640C3F871601D20300631AAD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 640C3F861601D20300631AAD /* Default-568h@2x.png */; };
+		640C3F9116020CF600631AAD /* LocalyticsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 640C3F8B16020CF600631AAD /* LocalyticsDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		640C3F9216020CF600631AAD /* LocalyticsSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 640C3F8D16020CF600631AAD /* LocalyticsSession.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		640C3F9316020CF600631AAD /* LocalyticsUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 640C3F8F16020CF600631AAD /* LocalyticsUploader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		640C3F95160213E300631AAD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 640C3F94160213E300631AAD /* libsqlite3.dylib */; };
+		640C3F971602140E00631AAD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 640C3F961602140D00631AAD /* libz.dylib */; };
 		641709621515521C00F53185 /* RPTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641709601515521C00F53185 /* RPTVViewController.m */; };
 		641709631515521C00F53185 /* RPTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 641709611515521C00F53185 /* RPTVViewController.xib */; };
 		64208F6B15F6AA3900205CB9 /* button-addsong.png in Resources */ = {isa = PBXBuildFile; fileRef = 64208F6715F6AA3900205CB9 /* button-addsong.png */; };
@@ -38,7 +43,6 @@
 		646B5EAC154755D600A2544C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EAB154755D600A2544C /* Icon@2x.png */; };
 		64701A2415F6B31900282502 /* SongsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64701A2315F6B31900282502 /* SongsViewController~ipad.xib */; };
 		648C68C615C823600065043D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648C68C515C823600065043D /* CoreMedia.framework */; };
-		64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6491340F152DFD9A00029692 /* libFlurryAnalytics.a */; };
 		64983AC715C8A7E300C626A9 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64983AC615C8A7E300C626A9 /* Icon-72@2x.png */; };
 		6499667C15B81AFF00C68479 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6499667B15B81AFF00C68479 /* AVFoundation.framework */; };
 		64A0DCC815EF667D0088F8D3 /* rphd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCC615EF667D0088F8D3 /* rphd.xcdatamodeld */; };
@@ -100,6 +104,15 @@
 		6407D27415F8EB3800E80E24 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6407D27715F8F2B700E80E24 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		640C3F861601D20300631AAD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/Default-568h@2x.png"; sourceTree = "<group>"; };
+		640C3F8A16020CF600631AAD /* LocalyticsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsDatabase.h; sourceTree = "<group>"; };
+		640C3F8B16020CF600631AAD /* LocalyticsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsDatabase.m; sourceTree = "<group>"; };
+		640C3F8C16020CF600631AAD /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
+		640C3F8D16020CF600631AAD /* LocalyticsSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsSession.m; sourceTree = "<group>"; };
+		640C3F8E16020CF600631AAD /* LocalyticsUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsUploader.h; sourceTree = "<group>"; };
+		640C3F8F16020CF600631AAD /* LocalyticsUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsUploader.m; sourceTree = "<group>"; };
+		640C3F9016020CF600631AAD /* WebserviceConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebserviceConstants.h; sourceTree = "<group>"; };
+		640C3F94160213E300631AAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		640C3F961602140D00631AAD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6417095F1515521C00F53185 /* RPTVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPTVViewController.h; sourceTree = "<group>"; };
 		641709601515521C00F53185 /* RPTVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPTVViewController.m; sourceTree = "<group>"; };
 		641709611515521C00F53185 /* RPTVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPTVViewController.xib; sourceTree = "<group>"; };
@@ -131,8 +144,6 @@
 		646B5EAB154755D600A2544C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		64701A2315F6B31900282502 /* SongsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SongsViewController~ipad.xib"; sourceTree = "<group>"; };
 		648C68C515C823600065043D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		6491340E152DFD9A00029692 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
-		6491340F152DFD9A00029692 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		64983AC615C8A7E300C626A9 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
 		6499667B15B81AFF00C68479 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		64A0DCC715EF667D0088F8D3 /* rphd.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = rphd.xcdatamodel; sourceTree = "<group>"; };
@@ -208,6 +219,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				640C3F971602140E00631AAD /* libz.dylib in Frameworks */,
+				640C3F95160213E300631AAD /* libsqlite3.dylib in Frameworks */,
 				6407D27815F8F2B700E80E24 /* Twitter.framework in Frameworks */,
 				6407D27515F8EB3800E80E24 /* MessageUI.framework in Frameworks */,
 				64A0DCDF15EF72560088F8D3 /* CoreData.framework in Frameworks */,
@@ -221,13 +234,27 @@
 				64F802311512272E0080D442 /* UIKit.framework in Frameworks */,
 				64F802331512272E0080D442 /* Foundation.framework in Frameworks */,
 				64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */,
-				64913410152DFD9A00029692 /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		640C3F8916020CF600631AAD /* Localytics */ = {
+			isa = PBXGroup;
+			children = (
+				640C3F8A16020CF600631AAD /* LocalyticsDatabase.h */,
+				640C3F8B16020CF600631AAD /* LocalyticsDatabase.m */,
+				640C3F8C16020CF600631AAD /* LocalyticsSession.h */,
+				640C3F8D16020CF600631AAD /* LocalyticsSession.m */,
+				640C3F8E16020CF600631AAD /* LocalyticsUploader.h */,
+				640C3F8F16020CF600631AAD /* LocalyticsUploader.m */,
+				640C3F9016020CF600631AAD /* WebserviceConstants.h */,
+			);
+			name = Localytics;
+			path = "RP HD/Localytics";
+			sourceTree = "<group>";
+		};
 		646ACA7215B46901001B5B73 /* STKeychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,15 +262,6 @@
 				646ACA7415B46901001B5B73 /* STKeychain.m */,
 			);
 			path = STKeychain;
-			sourceTree = "<group>";
-		};
-		6491340D152DFD9A00029692 /* FlurryAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				6491340E152DFD9A00029692 /* FlurryAnalytics.h */,
-				6491340F152DFD9A00029692 /* libFlurryAnalytics.a */,
-			);
-			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
 		64D4812C154767A800BC1085 /* appirater */ = {
@@ -283,6 +301,7 @@
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
+				640C3F8916020CF600631AAD /* Localytics */,
 				64F802361512272E0080D442 /* RP HD */,
 				64F8022F1512272E0080D442 /* Frameworks */,
 				64F8022D1512272E0080D442 /* Products */,
@@ -300,6 +319,7 @@
 		64F8022F1512272E0080D442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				640C3F94160213E300631AAD /* libsqlite3.dylib */,
 				6407D27715F8F2B700E80E24 /* Twitter.framework */,
 				6407D27415F8EB3800E80E24 /* MessageUI.framework */,
 				64A0DCDE15EF72560088F8D3 /* CoreData.framework */,
@@ -323,7 +343,6 @@
 				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
 				646ACA7215B46901001B5B73 /* STKeychain */,
 				64D4812C154767A800BC1085 /* appirater */,
-				6491340D152DFD9A00029692 /* FlurryAnalytics */,
 				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
@@ -354,6 +373,7 @@
 		64F802371512272E0080D442 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				640C3F961602140D00631AAD /* libz.dylib */,
 				640C3F861601D20300631AAD /* Default-568h@2x.png */,
 				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
 				64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */,
@@ -545,6 +565,9 @@
 				64563B5815F65EF300664C74 /* SongAdder.m in Sources */,
 				64DFC65315F7469C00214188 /* Song.m in Sources */,
 				64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */,
+				640C3F9116020CF600631AAD /* LocalyticsDatabase.m in Sources */,
+				640C3F9216020CF600631AAD /* LocalyticsSession.m in Sources */,
+				640C3F9316020CF600631AAD /* LocalyticsUploader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

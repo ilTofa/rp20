@@ -9,7 +9,7 @@
 #import "RPAppDelegate.h"
 
 #import "RPViewController.h"
-#import "FlurryAnalytics.h"
+#import "LocalyticsSession.h"
 #import "Appirater.h"
 #import "CoreDataController.h"
 
@@ -23,7 +23,7 @@
 
 - (void) myScreenInit:(UIScreen *)connectedScreen
 {
-    [FlurryAnalytics logEvent:@"TV Screen inited"];
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"TV Screen inited"];
     DLog(@"Init TV screen");
     //Intitialise TV Screen
     if(!self.windowTV)
@@ -60,8 +60,8 @@
     _coreDataController = [[CoreDataController alloc] init];
     [_coreDataController loadPersistentStores];
 
-    // Init Flurry Analytics & appirater
-    [FlurryAnalytics startSession:@"PP44G74JCE81THYJRKTV"];
+    // Init Localytics & appirater
+    [[LocalyticsSession sharedLocalyticsSession] startSession:@"e11cda37f7203321df08793-aeb86da4-fda0-11e1-53d7-00ef75f32667"];
     [Appirater appLaunched:YES];
     // Now go for the second screen thing.
     if ([[UIScreen screens] count] > 1)
@@ -79,13 +79,14 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [Appirater appEnteredForeground:YES];
+    [[LocalyticsSession sharedLocalyticsSession] resume];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -95,7 +96,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 @end
