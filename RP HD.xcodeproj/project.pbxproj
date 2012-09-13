@@ -11,6 +11,7 @@
 		64047A581548B65B00DF6B8F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64047A561548B65B00DF6B8F /* Default@2x.png */; };
 		6407D27515F8EB3800E80E24 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6407D27415F8EB3800E80E24 /* MessageUI.framework */; };
 		6407D27815F8F2B700E80E24 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6407D27715F8F2B700E80E24 /* Twitter.framework */; };
+		640C3F871601D20300631AAD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 640C3F861601D20300631AAD /* Default-568h@2x.png */; };
 		641709621515521C00F53185 /* RPTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641709601515521C00F53185 /* RPTVViewController.m */; };
 		641709631515521C00F53185 /* RPTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 641709611515521C00F53185 /* RPTVViewController.xib */; };
 		64208F6B15F6AA3900205CB9 /* button-addsong.png in Resources */ = {isa = PBXBuildFile; fileRef = 64208F6715F6AA3900205CB9 /* button-addsong.png */; };
@@ -98,6 +99,7 @@
 		64047A561548B65B00DF6B8F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
 		6407D27415F8EB3800E80E24 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6407D27715F8F2B700E80E24 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		640C3F861601D20300631AAD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/Default-568h@2x.png"; sourceTree = "<group>"; };
 		6417095F1515521C00F53185 /* RPTVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPTVViewController.h; sourceTree = "<group>"; };
 		641709601515521C00F53185 /* RPTVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPTVViewController.m; sourceTree = "<group>"; };
 		641709611515521C00F53185 /* RPTVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPTVViewController.xib; sourceTree = "<group>"; };
@@ -352,6 +354,13 @@
 		64F802371512272E0080D442 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				640C3F861601D20300631AAD /* Default-568h@2x.png */,
+				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
+				64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */,
+				64AD767B1548B9A7001910E9 /* Default-Portrait.png */,
+				64AD767C1548B9A7001910E9 /* Default-Portrait@2x.png */,
+				64047A551548B65B00DF6B8F /* Default.png */,
+				64047A561548B65B00DF6B8F /* Default@2x.png */,
 				64983AC615C8A7E300C626A9 /* Icon-72@2x.png */,
 				64D4812A1547678E00BC1085 /* Localizable.strings */,
 				646B5EAB154755D600A2544C /* Icon@2x.png */,
@@ -380,12 +389,6 @@
 				64AAFA161513F8D30061DD49 /* forward@2x.png */,
 				64AAFA0F1513F41A0061DD49 /* RP-meta.png */,
 				64AAFA101513F41A0061DD49 /* RP-meta@2x.png */,
-				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
-				64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */,
-				64AD767B1548B9A7001910E9 /* Default-Portrait.png */,
-				64AD767C1548B9A7001910E9 /* Default-Portrait@2x.png */,
-				64047A551548B65B00DF6B8F /* Default.png */,
-				64047A561548B65B00DF6B8F /* Default@2x.png */,
 				64AAF9F8151383220061DD49 /* Screen-Down.png */,
 				64AAF9F9151383220061DD49 /* Screen-Down@2x.png */,
 				6456AE8115B8C94D0060EC8E /* button-left.png */,
@@ -514,6 +517,7 @@
 				64208F6D15F6AA3900205CB9 /* button-songlist.png in Resources */,
 				64208F6E15F6AA3900205CB9 /* button-songlist@2x.png in Resources */,
 				64701A2415F6B31900282502 /* SongsViewController~ipad.xib in Resources */,
+				640C3F871601D20300631AAD /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
