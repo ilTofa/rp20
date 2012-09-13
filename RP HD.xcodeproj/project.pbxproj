@@ -261,7 +261,8 @@
 				646ACA7315B46901001B5B73 /* STKeychain.h */,
 				646ACA7415B46901001B5B73 /* STKeychain.m */,
 			);
-			path = STKeychain;
+			name = STKeychain;
+			path = "RP HD/STKeychain";
 			sourceTree = "<group>";
 		};
 		64D4812C154767A800BC1085 /* appirater */ = {
@@ -270,7 +271,8 @@
 				64D48130154767F300BC1085 /* Appirater.h */,
 				64D48131154767F300BC1085 /* Appirater.m */,
 			);
-			path = appirater;
+			name = appirater;
+			path = "RP HD/appirater";
 			sourceTree = "<group>";
 		};
 		64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */ = {
@@ -301,6 +303,8 @@
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
+				64D4812C154767A800BC1085 /* appirater */,
+				646ACA7215B46901001B5B73 /* STKeychain */,
 				640C3F8916020CF600631AAD /* Localytics */,
 				64F802361512272E0080D442 /* RP HD */,
 				64F8022F1512272E0080D442 /* Frameworks */,
@@ -341,8 +345,6 @@
 			isa = PBXGroup;
 			children = (
 				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
-				646ACA7215B46901001B5B73 /* STKeychain */,
-				64D4812C154767A800BC1085 /* appirater */,
 				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
@@ -657,10 +659,7 @@
 				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RP HD-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/RP HD/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8BF757E7-3803-46F1-9293-5AA8CEF4D404";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -677,10 +676,7 @@
 				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RP HD-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/RP HD/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6E999D6F-17FA-4C17-9422-7764E7BFB7ED";
 				TARGETED_DEVICE_FAMILY = "1,2";

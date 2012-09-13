@@ -448,8 +448,8 @@
              }
              NSString *psdSongUrl = [values objectAtIndex:0];
              NSNumber *psdSongLenght = [values objectAtIndex:1];
-             NSNumber *psdSongFadeIn = [values objectAtIndex:2];
-             NSNumber *psdSongFadeOut = [values objectAtIndex:3];
+             NSNumber * __unused psdSongFadeIn = [values objectAtIndex:2];
+             NSNumber * __unused psdSongFadeOut = [values objectAtIndex:3];
              DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
              [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"PSD triggered"];
              // reset stream on main thread
