@@ -1019,11 +1019,6 @@
     self.theRedirector = kRPURL64K;
     // Detect iPhone 5
     [self initializeIPhoneInterface];
-    // set bounds and corners
-    self.hdImage.layer.cornerRadius = 8.0;
-    self.hdImage.clipsToBounds = YES;
-    self.rpWebButton.layer.cornerRadius = 4.0;
-    self.rpWebButton.clipsToBounds = YES;
     // Add the volume (fake it on simulator)
     self.volumeViewContainer.backgroundColor = [UIColor clearColor];
     if (!TARGET_IPHONE_SIMULATOR)
@@ -1060,6 +1055,13 @@
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
+    // Give a touch to the UI after a while (only on iPhone 5). This is a terrible hack, I know.
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f)
+    {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+            [self interfaceToNormal];
+        });
+    }
 }
 
 - (void)viewDidUnload

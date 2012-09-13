@@ -14,3 +14,9 @@ URL: http://www.iltofa.com/rphd
 Version 1.1
 Now an universal app that works both on iPad and iPhone.
 Bug fixes.
+
+Version 2.0
+Play Something Different (PSD). Now, if you don't like a song you can skip it, listening to something else.
+iPhone 5 and iOS 6 support.
+Saving of favorites songs while you listen. The list is shared over iCloud through all your devices.
+bug fixes.
