@@ -69,6 +69,8 @@
     {
         req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImageURLURL]];
     }
+    [req setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+    [req addValue:@"no-cache" forHTTPHeaderField:@"Cache-Control"];
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
      {
          if(data)
@@ -116,6 +118,7 @@
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_rp2_playlist_ipad.php"]];
     // Shutdown cache (don't) and cookie management (we'll send them manually, if needed)
     [req setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+    [req addValue:@"no-cache" forHTTPHeaderField:@"Cache-Control"];
     [req setHTTPShouldHandleCookies:NO];
     // Add cookies only for PSD play
     if(self.isPSDPlaying)
