@@ -164,14 +164,16 @@
              // remembering songid for forum view
              self.psdSongId = [values objectAtIndex:1];
              // In any case, reset the "add song" button to enabled state (we have a new song, it seems).
-             self.addSongButton.enabled = YES;
+             dispatch_async(dispatch_get_main_queue(), ^{ self.addSongButton.enabled = YES; });
              // Set a timer to refresh ourselves if this is the standard stream.
              if(!self.isPSDPlaying)
              {
                  if(self.theStreamMetadataTimer != nil)
                  {
-                     [self.theStreamMetadataTimer invalidate];
-                     self.theStreamMetadataTimer = nil;
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [self.theStreamMetadataTimer invalidate];
+                         self.theStreamMetadataTimer = nil;
+                     });
                  }
                  NSNumber *whenRefresh = [values objectAtIndex:2];
                  if([whenRefresh intValue] <= 0)
@@ -200,15 +202,15 @@
                       // Update metadata info
                       if(self.coverImage != nil)
                       {
-                          // Update cover art cache
-                          MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
-                          NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
-                          if(!artist)
-                              artist = @"";
-                          NSString *title = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyTitle];
-                          if(!title)
-                              title = @"";
                           dispatch_async(dispatch_get_main_queue(), ^{
+                              // Update cover art cache
+                              MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
+                              NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
+                              if(!artist)
+                                  artist = @"";
+                              NSString *title = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyTitle];
+                              if(!title)
+                                  title = @"";
                               NSDictionary *mpInfo;
                               mpInfo = @{MPMediaItemPropertyArtist: artist,
                                         MPMediaItemPropertyTitle: title,
