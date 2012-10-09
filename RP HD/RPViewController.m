@@ -78,14 +78,13 @@
              NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
              if(imageUrl)
              {
-                 DLog(@"Loading HD image from: <%@>", imageUrl);
                  NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:imageUrl]];
                  [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
                   {
                       if(data)
                       {
                           UIImage *temp = [UIImage imageWithData:data];
-                          DLog(@"Image decoded, sending it to screen");
+                          DLog(@"Loaded %@, sending it to screen", [res URL]);
                           // Protect from 404's
                           if(temp)
                           {
@@ -97,6 +96,10 @@
                                       [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
                               });
                           }
+                      }
+                      else
+                      {
+                          DLog(@"Failed loading image from: <%@>", [res URL]);
                       }
                   }];
              }
@@ -155,7 +158,7 @@
                                MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
                                MPMediaItemPropertyArtwork: albumArt};
                      [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                     DLog(@"set MPNowPlayingInfoCenter to %@", mpInfo);
+                     DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
                  }
              });
              // remembering songid for forum view
@@ -186,7 +189,7 @@
              }
              // Now get almbum artwork
              NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
-             DLog(@"URL for PSD Artwork: <%@>", temp);
+             DLog(@"URL for Artwork: <%@>", temp);
              [self.imageLoadQueue cancelAllOperations];
              NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
              [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
@@ -194,7 +197,6 @@
                   if(data)
                   {
                       self.coverImage = [UIImage imageWithData:data];
-                      DLog(@"image is: %@", self.coverImage);
                       // Update metadata info
                       if(self.coverImage != nil)
                       {
@@ -212,7 +214,7 @@
                                         MPMediaItemPropertyTitle: title,
                                         MPMediaItemPropertyArtwork: albumArt};
                               [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                              DLog(@"set MPNowPlayingInfoCenter (with album) to %@", mpInfo);
+                              DLog(@"set MPNowPlayingInfoCenter (with album) to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateNormal];
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateHighlighted];
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateSelected];
