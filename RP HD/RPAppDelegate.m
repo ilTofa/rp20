@@ -62,6 +62,11 @@
 
     // Init Localytics & appirater
     [[LocalyticsSession sharedLocalyticsSession] startSession:@"e11cda37f7203321df08793-aeb86da4-fda0-11e1-53d7-00ef75f32667"];
+    [Appirater setAppId:@"517818306"];
+    [Appirater setDaysUntilPrompt:3];
+    [Appirater setUsesUntilPrompt:10];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
     [Appirater appLaunched:YES];
     // Now go for the second screen thing.
     if ([[UIScreen screens] count] > 1)
@@ -85,6 +90,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    [Appirater appEnteredForeground:YES];
     [[LocalyticsSession sharedLocalyticsSession] resume];
     [[LocalyticsSession sharedLocalyticsSession] upload];
 }

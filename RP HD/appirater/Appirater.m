@@ -48,6 +48,14 @@ NSString *const kAppiraterReminderRequestDate		= @"kAppiraterReminderRequestDate
 
 NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
 
+static NSString *_appId;
+static double _daysUntilPrompt = 30;
+static NSInteger _usesUntilPrompt = 20;
+static NSInteger _significantEventsUntilPrompt = -1;
+static double _timeBeforeReminding = 1;
+static BOOL _debug = NO;
+static id<AppiraterDelegate> _delegate;
+
 @interface Appirater ()
 - (BOOL)connectedToNetwork;
 + (Appirater*)sharedInstance;
@@ -60,6 +68,33 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 @implementation Appirater 
 
 @synthesize ratingAlert;
+
++ (void) setAppId:(NSString *)appId {
+    _appId = appId;
+}
+
++ (void) setDaysUntilPrompt:(double)value {
+    _daysUntilPrompt = value;
+}
+
++ (void) setUsesUntilPrompt:(NSInteger)value {
+    _usesUntilPrompt = value;
+}
+
++ (void) setSignificantEventsUntilPrompt:(NSInteger)value {
+    _significantEventsUntilPrompt = value;
+}
+
++ (void) setTimeBeforeReminding:(double)value {
+    _timeBeforeReminding = value;
+}
+
++ (void) setDebug:(BOOL)debug {
+    _debug = debug;
+}
++ (void)setDelegate:(id<AppiraterDelegate>)delegate{
+	_delegate = delegate;
+}
 
 - (BOOL)connectedToNetwork {
     // Create zero addy
@@ -99,6 +134,7 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             appirater = [[Appirater alloc] init];
+			appirater.delegate = _delegate;
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive) name:
                 UIApplicationWillResignActiveNotification object:nil];
         });
@@ -109,34 +145,38 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 
 - (void)showRatingAlert {
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:APPIRATER_MESSAGE_TITLE
-                                                        message:APPIRATER_MESSAGE
-                                                       delegate:self
-                                              cancelButtonTitle:APPIRATER_CANCEL_BUTTON
-                                              otherButtonTitles:APPIRATER_RATE_BUTTON, APPIRATER_RATE_LATER, nil];
+														 message:APPIRATER_MESSAGE
+														delegate:self
+											   cancelButtonTitle:APPIRATER_CANCEL_BUTTON
+											   otherButtonTitles:APPIRATER_RATE_BUTTON, APPIRATER_RATE_LATER, nil];
 	self.ratingAlert = alertView;
 	[alertView show];
+	
+	if(self.delegate && [self.delegate respondsToSelector:@selector(appiraterDidDisplayAlert:)]){
+		[self.delegate appiraterDidDisplayAlert:self];
+	}
 }
 
 - (BOOL)ratingConditionsHaveBeenMet {
-	if (APPIRATER_DEBUG)
+	if (_debug)
 		return YES;
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
 	NSDate *dateOfFirstLaunch = [NSDate dateWithTimeIntervalSince1970:[userDefaults doubleForKey:kAppiraterFirstUseDate]];
 	NSTimeInterval timeSinceFirstLaunch = [[NSDate date] timeIntervalSinceDate:dateOfFirstLaunch];
-	NSTimeInterval timeUntilRate = 60 * 60 * 24 * APPIRATER_DAYS_UNTIL_PROMPT;
+	NSTimeInterval timeUntilRate = 60 * 60 * 24 * _daysUntilPrompt;
 	if (timeSinceFirstLaunch < timeUntilRate)
 		return NO;
 	
 	// check if the app has been used enough
 	int useCount = [userDefaults integerForKey:kAppiraterUseCount];
-	if (useCount <= APPIRATER_USES_UNTIL_PROMPT)
+	if (useCount <= _usesUntilPrompt)
 		return NO;
 	
 	// check if the user has done enough significant events
 	int sigEventCount = [userDefaults integerForKey:kAppiraterSignificantEventCount];
-	if (sigEventCount <= APPIRATER_SIG_EVENTS_UNTIL_PROMPT)
+	if (sigEventCount <= _significantEventsUntilPrompt)
 		return NO;
 	
 	// has the user previously declined to rate this version of the app?
@@ -150,7 +190,7 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 	// if the user wanted to be reminded later, has enough time passed?
 	NSDate *reminderRequestDate = [NSDate dateWithTimeIntervalSince1970:[userDefaults doubleForKey:kAppiraterReminderRequestDate]];
 	NSTimeInterval timeSinceReminderRequest = [[NSDate date] timeIntervalSinceDate:reminderRequestDate];
-	NSTimeInterval timeUntilReminder = 60 * 60 * 24 * APPIRATER_TIME_BEFORE_REMINDING;
+	NSTimeInterval timeUntilReminder = 60 * 60 * 24 * _timeBeforeReminding;
 	if (timeSinceReminderRequest < timeUntilReminder)
 		return NO;
 	
@@ -170,7 +210,7 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 		[userDefaults setObject:version forKey:kAppiraterCurrentVersion];
 	}
 	
-	if (APPIRATER_DEBUG)
+	if (_debug)
 		NSLog(@"APPIRATER Tracking version: %@", trackingVersion);
 	
 	if ([trackingVersion isEqualToString:version])
@@ -187,7 +227,7 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 		int useCount = [userDefaults integerForKey:kAppiraterUseCount];
 		useCount++;
 		[userDefaults setInteger:useCount forKey:kAppiraterUseCount];
-		if (APPIRATER_DEBUG)
+		if (_debug)
 			NSLog(@"APPIRATER Use count: %d", useCount);
 	}
 	else
@@ -218,7 +258,7 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 		[userDefaults setObject:version forKey:kAppiraterCurrentVersion];
 	}
 	
-	if (APPIRATER_DEBUG)
+	if (_debug)
 		NSLog(@"APPIRATER Tracking version: %@", trackingVersion);
 	
 	if ([trackingVersion isEqualToString:version])
@@ -235,7 +275,7 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 		int sigEventCount = [userDefaults integerForKey:kAppiraterSignificantEventCount];
 		sigEventCount++;
 		[userDefaults setInteger:sigEventCount forKey:kAppiraterSignificantEventCount];
-		if (APPIRATER_DEBUG)
+		if (_debug)
 			NSLog(@"APPIRATER Significant event count: %d", sigEventCount);
 	}
 	else
@@ -294,14 +334,14 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 
 - (void)hideRatingAlert {
 	if (self.ratingAlert.visible) {
-		if (APPIRATER_DEBUG)
+		if (_debug)
 			NSLog(@"APPIRATER Hiding Alert");
 		[self.ratingAlert dismissWithClickedButtonIndex:-1 animated:NO];
 	}	
 }
 
 + (void)appWillResignActive {
-	if (APPIRATER_DEBUG)
+	if (_debug)
 		NSLog(@"APPIRATER appWillResignActive");
 	[[Appirater sharedInstance] hideRatingAlert];
 }
@@ -325,7 +365,10 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 	NSLog(@"APPIRATER NOTE: iTunes App Store is not supported on the iOS simulator. Unable to open App Store page.");
 #else
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	NSString *reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%d", APPIRATER_APP_ID]];
+
+	// this URL Scheme should work in the iOS 6 App Store in addition to older stores
+	NSString *reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", _appId]];
+	
 	[userDefaults setBool:YES forKey:kAppiraterRatedCurrentVersion];
 	[userDefaults synchronize];
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
@@ -341,18 +384,27 @@ NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZSto
 			// they don't want to rate it
 			[userDefaults setBool:YES forKey:kAppiraterDeclinedToRate];
 			[userDefaults synchronize];
+			if(self.delegate && [self.delegate respondsToSelector:@selector(appiraterDidDeclineToRate:)]){
+				[self.delegate appiraterDidDeclineToRate:self];
+			}
 			break;
 		}
 		case 1:
 		{
 			// they want to rate it
 			[Appirater rateApp];
+			if(self.delegate && [self.delegate respondsToSelector:@selector(appiraterDidOptToRate:)]){
+				[self.delegate appiraterDidOptToRate:self];
+			}
 			break;
 		}
 		case 2:
 			// remind them later
 			[userDefaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:kAppiraterReminderRequestDate];
 			[userDefaults synchronize];
+			if(self.delegate && [self.delegate respondsToSelector:@selector(appiraterDidOptToRemindLater:)]){
+				[self.delegate appiraterDidOptToRemindLater:self];
+			}
 			break;
 		default:
 			break;
