@@ -536,6 +536,8 @@
         default:
             break;
     }
+    // Save it for next time (+1 to use 0 as "not saved")
+    [[NSUserDefaults standardUserDefaults] setInteger:1 + ((UISegmentedControl *)sender).selectedSegmentIndex forKey:@"bitrate"];
     // If needed, stop the stream
     if(self.theStreamer.rate != 0.0)
         [self stopPressed:self];
@@ -1021,7 +1023,17 @@
     // reset text
     self.metadataInfo.text = @"";
     self.rpWebButton.hidden = YES;
-    self.theRedirector = kRPURL64K;
+    // Let's see if we already have a preferred bitrate
+    int savedBitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"bitrate"];
+    if(savedBitrate == 0)
+    {
+        self.theRedirector = kRPURL64K;
+    }
+    else
+    {
+        self.bitrateSelector.selectedSegmentIndex = savedBitrate - 1;
+        [self bitrateChanged:self.bitrateSelector];
+    }
     // Detect iPhone 5
     [self initializeIPhoneInterface];
     // Add the volume (fake it on simulator)
