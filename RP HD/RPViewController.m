@@ -378,8 +378,7 @@
             {
                 // Quit main stream after fade-in of PSD
                 self.isPSDPlaying = YES;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kFadeInTime * NSEC_PER_SEC);
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kFadeInTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
                     DLog(@"Main stream now stopped!");
                     [self.theStreamer pause];
                     [self.theStreamer removeObserver:self forKeyPath:@"status"];
