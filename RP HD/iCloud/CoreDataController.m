@@ -171,6 +171,11 @@ static NSOperationQueue *_presentedItemOperationQueue;
                                                  selector:@selector(iCloudAccountChanged:)
                                                      name:NSUbiquityIdentityDidChangeNotification
                                                    object:nil];
+        // Subscribe to changes in store.
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(persistentStoreChanged:)
+                                                     name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                                                   object:_psc];
     }
     else
     {
@@ -179,6 +184,11 @@ static NSOperationQueue *_presentedItemOperationQueue;
         {
             NSLog(@"iCloud on iOS 5 present");
             _currentUbiquityToken = iCloudContainer;
+            // Subscribe to changes in store.
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(persistentStoreChanged:)
+                                                         name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                                                       object:_psc];
         }
         else // iCloud not available
         {
@@ -188,6 +198,12 @@ static NSOperationQueue *_presentedItemOperationQueue;
     }
     
     return self;
+}
+
+- (void)persistentStoreChanged:(NSNotification *)notification
+{
+    DLog(@"*** this is NSPersistentStoreDidImportUbiquitousContentChangesNotification called with: %@", notification);
+    [CoreDataController mergeiCloudChangeNotification:notification withManagedObjectContext:self.mainThreadContext];
 }
 
 - (void)dealloc {

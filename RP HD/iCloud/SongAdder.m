@@ -35,8 +35,7 @@
 -(BOOL)addSong:(NSError **)outError
 {
     BOOL retValue = YES;
-    NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [addingContext setPersistentStoreCoordinator:((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).coreDataController.psc];
+    NSManagedObjectContext *addingContext = ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).coreDataController.mainThreadContext;
     Song *theSongToBeSaved = [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:addingContext];
     theSongToBeSaved.title = self.title;
     theSongToBeSaved.artist = self.artist;
