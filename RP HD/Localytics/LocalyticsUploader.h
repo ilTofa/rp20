@@ -1,10 +1,10 @@
 //  LocalyticsUploader.h
 //  Copyright (C) 2012 Char Software Inc., DBA Localytics
-// 
+//
 //  This code is provided under the Localytics Modified BSD License.
 //  A copy of this license has been distributed in a file called LICENSE
-//  with this source code.  
-// 
+//  with this source code.
+//
 // Please visit www.localytics.com for more information.
 
 #import <UIKit/UIKit.h>
@@ -19,7 +19,7 @@ extern NSString * const kLocalyticsKeyResponseBody;
 @interface LocalyticsUploader : NSObject {
 }
 
-@property (readonly) BOOL isUploading;
+@property (readonly, atomic) BOOL isUploading;
 
 /*!
  @method sharedLocalyticsUploader
@@ -60,5 +60,15 @@ extern NSString * const kLocalyticsKeyResponseBody;
  @param callback Callback is the method of the target class that is to be called with the data begin returned by an upload
  */
 - (void)uploaderWithApplicationKey:(NSString *)localyticsApplicationKey useHTTPS:(BOOL)useHTTPS installId:(NSString *)installId resultTarget:(id)target callback:(SEL)callbackMethod;
+
+
+/*!
+ @method LocalyticsUploader
+ @abstract Upload Facebook attribution data to Localytics.
+ @param localyticsApplicationKey the Localytics application ID
+ @param originalAttribution Attribution cookie captured at install time
+ @param currentAttribution Current attribution cookie at time of upload
+ */
+- (void)uploaderFacebookWithApplicationKey:(NSString *)appKey originalAttribution:(NSString *)originalAttribution currentAttribution:(NSString *)currentAttribution installId:(NSString *)installId uniqueIdentifier:(NSString *)uniqueIdentifier advertisingIdentifier:(NSString *)advertisingIdentifier;
 
 @end
