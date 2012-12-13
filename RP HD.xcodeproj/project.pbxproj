@@ -501,6 +501,7 @@
 		64F8022F1512272E0080D442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				640C3F961602140D00631AAD /* libz.dylib */,
 				640C3F94160213E300631AAD /* libsqlite3.dylib */,
 				6407D27715F8F2B700E80E24 /* Twitter.framework */,
 				6407D27415F8EB3800E80E24 /* MessageUI.framework */,
@@ -553,7 +554,6 @@
 		64F802371512272E0080D442 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				640C3F961602140D00631AAD /* libz.dylib */,
 				640C3F861601D20300631AAD /* Default-568h@2x.png */,
 				64AAF9FD151388860061DD49 /* Default-Landscape.png */,
 				64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */,
