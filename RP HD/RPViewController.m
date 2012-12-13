@@ -723,6 +723,7 @@
 -(void)interfaceStop
 {
     DLog(@"*** interfaceStop");
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
     if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
         [self interfaceToNormal];
     self.metadataInfo.text = @"";
@@ -770,6 +771,7 @@
 -(void)interfacePlay
 {
     DLog(@"*** interfacePlay");
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     self.bitrateSelector.enabled = YES;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
