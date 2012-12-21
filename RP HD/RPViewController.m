@@ -135,7 +135,7 @@
 			txtColor = [UIColor blackColor];
 	}
 	
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
     if(slideshowIsOn)
     {
         [self.view setBackgroundColor:txtColor];
@@ -145,13 +145,21 @@
     else
     {
         self.backgroundColor = bckColor;
+        if([bckColor pc_isBlackOrWhite])
+            self.segmentedColor = [UIColor darkGrayColor];
+        else
+            self.segmentedColor = bckColor;
         if(!self.viewIsLandscape)
+        {
             [self.view setBackgroundColor:bckColor];
-//        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.25] centre:CGPointMake(0.5, 0.25) radius:1.5];
+            if(![bckColor pc_isBlackOrWhite])
+            self.bitrateSelector.tintColor = self.segmentedColor;
+        }
+        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:[bckColor colorWithAlphaComponent:0.25] endColor:bckColor centre:CGPointMake(0.5, 0.25) radius:1.1];
         DLog(@"Set background color to %@", bckColor);
-        self.metadataTextColor = [txtColor colorWithAlphaComponent:1.0];
+        self.metadataTextColor = txtColor;
         if(!self.viewIsLandscape)
-            [self.metadataInfo setTextColor:[txtColor colorWithAlphaComponent:1.0]];
+            [self.metadataInfo setTextColor:txtColor];
     }
 	imageColors = nil;
 }
@@ -1030,6 +1038,7 @@
                              self.metadataInfo.textColor = [UIColor whiteColor];
                              self.metadataInfo.textAlignment = NSTextAlignmentRight;
                              self.view.backgroundColor = [UIColor blackColor];
+                             self.bitrateSelector.tintColor = [UIColor darkGrayColor];
                          }
                      }
                      completion:^(BOOL finished) {
@@ -1118,7 +1127,7 @@
                              self.metadataInfo.textColor = self.metadataTextColor;
                              self.metadataInfo.textAlignment = NSTextAlignmentCenter;
                              self.view.backgroundColor = self.backgroundColor;
-                             self.bitrateSelector.tintColor = self.backgroundColor;
+                             self.bitrateSelector.tintColor = self.segmentedColor;
                          }
                          
                      }

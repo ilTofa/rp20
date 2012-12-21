@@ -82,6 +82,7 @@ typedef enum {
 @property (copy, nonatomic) NSString *rawMetadataString;
 @property (strong, nonatomic) UIColor *metadataTextColor;
 @property (strong, nonatomic) UIColor *backgroundColor;
+@property (strong, nonatomic) UIColor *segmentedColor;
 @property (copy, nonatomic) NSString *cookieString;
 
 - (IBAction)playOrStop:(id)sender;
