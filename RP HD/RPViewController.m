@@ -1340,35 +1340,48 @@
 #pragma mark -
 #pragma mark Multimedia and Remote Control
 
-// If interrupted by a call, set interface to stop (user will restart if willing to)
-- (void)beginInterruption
+- (void)endInterruptionWithFlags:(NSUInteger)flags
 {
-    // Process stop request.
-    DLog(@"This is the beginInterruption handler");
-    [self unscheduleImagesTimer];
-    if(self.isPSDPlaying)
+    DLog(@"This is the endInterruptionWithFlags: handler");
+    if(flags == AVAudioSessionInterruptionFlags_ShouldResume)
     {
-        self.isPSDPlaying = NO;
-        if(self.thePsdTimer)
+        DLog(@"AudioSession is ready to be resumed, doing it.");
+        if(self.isPSDPlaying)
         {
-            [self.thePsdTimer invalidate];
-            self.thePsdTimer = nil;
+            [self.thePsdStreamer play];
         }
-        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
-        self.thePsdStreamer = nil;
+        else
+        {
+            [self.theStreamer play];
+        }
     }
     else
     {
-        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Stop"];
-        [self removeNotifications];
-        self.theStreamer = nil;
-        [self interfaceStop];
+        DLog(@"Audiosession is lost. Resetting interface and application status.");
+        if(self.isPSDPlaying)
+        {
+            self.isPSDPlaying = NO;
+            if(self.thePsdTimer)
+            {
+                [self.thePsdTimer invalidate];
+                self.thePsdTimer = nil;
+            }
+            [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
+            self.thePsdStreamer = nil;
+        }
+        else
+        {
+            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Stop"];
+            [self removeNotifications];
+            self.theStreamer = nil;
+            [self interfaceStop];
+        }
+        if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
+            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Play interrupted by call or event"];
+        // In any case (also if not playing stop localytics
+        [[LocalyticsSession sharedLocalyticsSession] close];
+        [[LocalyticsSession sharedLocalyticsSession] upload];
     }
-    if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
-        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Play interrupted by call or event"];
-    // In any case (also if not playing stop localytics
-    [[LocalyticsSession sharedLocalyticsSession] close];
-    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 -(void)applicationChangedState:(NSNotification *)note
@@ -1388,7 +1401,7 @@
                 [[LocalyticsSession sharedLocalyticsSession] upload];
             }
             // If we don't have a second screen...
-            if ([[UIScreen screens] count] == 1)
+            if ([[UIScreen screens] count] == 1 && self.viewIsLandscape)
             {
                 DLog(@"No more images, please");
                 [self unscheduleImagesTimer];
@@ -1403,7 +1416,7 @@
             {
                 [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"In Foreground while Playing"];
                 // If we don't have a second screen (else the timer was not stopped
-                if ([[UIScreen screens] count] == 1)
+                if ([[UIScreen screens] count] == 1 && self.viewIsLandscape)
                 {
                     DLog(@"Images again, please");
                     [self scheduleImagesTimer];
