@@ -146,7 +146,7 @@
     {
         self.backgroundColor = bckColor;
         if(!self.viewIsLandscape)
-        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.25] centre:CGPointMake(0.5, 0.25) radius:1.1];
+        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.0] centre:CGPointMake(0.5, 0.25) radius:1.5];
         DLog(@"Set background color to %@", bckColor);
         self.metadataTextColor = txtColor;
         if([txtColor pc_isBlackOrWhite])
@@ -982,12 +982,12 @@
 
 - (void) interfaceToNormal
 {
-    self.minimizerButton.enabled = YES;
-    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = NO;
+    self.minimizerButton.enabled = self.aboutButton.alpha = YES;
+    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 0.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.hdImage.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.hdImage.alpha = self.aboutButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -1069,12 +1069,12 @@
 
 -(void)interfaceToPortrait:(NSTimeInterval)animationDuration
 {
-    self.minimizerButton.enabled = NO;
+    self.minimizerButton.enabled = self.aboutButton.alpha = NO;
     self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
-                         self.hdImage.alpha = 0.0;
+                         self.hdImage.alpha = self.aboutButton.alpha = 0.0;
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -1132,7 +1132,7 @@
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
-                         self.hdImage.hidden = YES;
+                         self.hdImage.hidden = self.aboutButton.hidden = YES;
                          if(self.theStreamMetadataTimer)
                              [self.theStreamMetadataTimer fire];
                      }];
