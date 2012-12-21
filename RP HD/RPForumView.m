@@ -69,6 +69,7 @@
     [super viewDidLoad];
     // Don't show the ugly white window... :)
     self.theWebView.hidden = YES;
+    self.isForumShown = YES;
     NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
     [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
     [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"ForumOpened"];
@@ -82,9 +83,8 @@
     [self setRefreshButton:nil];
     [self setActionButton:nil];
     [self setTheSpinner:nil];
+    [self setLyricsButton:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -115,6 +115,40 @@
 - (IBAction)actionClicked:(id)sender 
 {
     [self.pageActionSheet showFromBarButtonItem:self.actionButton animated:YES];
+}
+
+- (IBAction)loadLyrics:(id)sender
+{
+    if(self.isForumShown)
+    {
+        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"lyricsClicked"];
+        if(self.theWebView.isLoading)
+            [self.theWebView stopLoading];
+        DLog(@"Metadata info for lyrics is %@", self.currentSongName);
+        // URL-encode song and artist names
+        NSString *temp = self.currentSongName;
+        temp = [temp stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        temp = [temp stringByReplacingOccurrencesOfString:@"@" withString:@"%40"];
+        temp = [temp stringByReplacingOccurrencesOfString:@"?" withString:@"%3F"];
+        temp = [temp stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
+        temp = [temp stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        NSString *baseDDGUrl;
+        baseDDGUrl = @"https://duckduckgo.com/?q=\\lyrics+%@";
+        NSString *searchURL = [NSString stringWithFormat:baseDDGUrl, temp];
+        searchURL = [searchURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        DLog(@"Loading lyrics from <%@>", searchURL);
+        [self.lyricsButton setTitle:@"Forum"];
+        self.isForumShown = NO;
+        [self.theWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:searchURL]]];
+    }
+    else
+    {
+        DLog(@"Get back to forum view");
+        [self.lyricsButton setTitle:@"Lyrics"];
+        self.isForumShown = YES;
+        NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
+        [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
+    }
 }
 
 #pragma mark -

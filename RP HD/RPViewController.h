@@ -78,6 +78,7 @@ typedef enum {
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;
 @property (copy, nonatomic) NSString *currentSongForumURL;
+@property (copy, nonatomic) NSString *rawMetadataString;
 @property (copy, nonatomic) NSString *cookieString;
 
 - (IBAction)playOrStop:(id)sender;

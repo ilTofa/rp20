@@ -17,14 +17,19 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *goForwardButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *lyricsButton;
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *theSpinner;
 
 @property (copy, nonatomic) NSString *songId;
+@property (copy, nonatomic) NSString *currentSongName;
+@property BOOL isForumShown;
 
 - (IBAction)viewIsDone:(id)sender;
 - (IBAction)goBackClicked:(id)sender;
 - (IBAction)goForwardClicked:(id)sender;
 - (IBAction)refreshClicked:(id)sender;
 - (IBAction)actionClicked:(id)sender;
+- (IBAction)loadLyrics:(id)sender;
 
 @end

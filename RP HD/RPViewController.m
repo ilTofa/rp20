@@ -182,7 +182,7 @@
              metaText = [metaText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
              metaText = [metaText stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"-"];
              dispatch_async(dispatch_get_main_queue(), ^{
-                 self.metadataInfo.text = metaText;
+                 self.metadataInfo.text = self.rawMetadataString = metaText;
                  // If we have a second screen, update also there
                  if ([[UIScreen screens] count] > 1)
                      ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = metaText;
@@ -197,6 +197,8 @@
                                MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
                                MPMediaItemPropertyArtwork: albumArt};
                      [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
+                     if(self.viewIsLandscape)
+                         self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", songPieces[0], songPieces[1]];
                      DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
                  }
              });
@@ -242,6 +244,13 @@
                       if(self.coverImage != nil)
                       {
                           dispatch_async(dispatch_get_main_queue(), ^{
+                              if(self.viewIsLandscape)
+                              {
+                                  // Setting background...
+                                  [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
+                                  // Set image
+                                  self.coverImageView.image = self.coverImage;
+                              }
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
@@ -728,6 +737,7 @@
         self.theWebView.songId = self.psdSongId;
     else
         self.theWebView.songId = @"now";
+    self.theWebView.currentSongName = self.rawMetadataString;
     [self presentViewController:self.theWebView animated:YES completion:nil];
     self.theWebView = nil;
 }
@@ -764,7 +774,7 @@
     [UIApplication sharedApplication].idleTimerDisabled = NO;
     if(self.interfaceState == kInterfaceMinimized || self.interfaceState == kInterfaceZoomed)
         [self interfaceToNormal];
-    self.metadataInfo.text = @"";
+    self.metadataInfo.text = self.rawMetadataString = @"";
     self.psdButton.enabled = YES;
     self.bitrateSelector.enabled = YES;
     [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
@@ -1102,7 +1112,7 @@
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     // reset text
-    self.metadataInfo.text = @"";
+    self.metadataInfo.text = self.rawMetadataString = @"";
     self.rpWebButton.hidden = YES;
     // Let's see if we already have a preferred bitrate
     int savedBitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"bitrate"];
