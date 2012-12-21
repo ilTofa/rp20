@@ -55,8 +55,7 @@
 
 + (UIColor *)findTextColor:(UIImage *)image imageColors:(NSCountedSet**)colors lazy:(BOOL)lazy
 {
-    [CoverArt imageDump:image];
-    
+//    [CoverArt imageDump:image];    
     CGImageRef cgimage = image.CGImage;
 	
 	NSInteger pixelsWide = CGImageGetWidth(cgimage);

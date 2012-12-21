@@ -74,11 +74,14 @@ typedef enum {
 @property (nonatomic) NSNumber *psdDurationInSeconds;
 
 @property BOOL viewIsLandscape;
+@property BOOL viewIsRotating;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;
 @property (copy, nonatomic) NSString *currentSongForumURL;
 @property (copy, nonatomic) NSString *rawMetadataString;
+@property (strong, nonatomic) UIColor *metadataTextColor;
+@property (strong, nonatomic) UIColor *backgroundColor;
 @property (copy, nonatomic) NSString *cookieString;
 
 - (IBAction)playOrStop:(id)sender;

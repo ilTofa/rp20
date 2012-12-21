@@ -135,7 +135,7 @@
 			txtColor = [UIColor blackColor];
 	}
 	
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    CGRect screenRect = [[UIScreen mainScreen] bounds];
     if(slideshowIsOn)
     {
         [self.view setBackgroundColor:txtColor];
@@ -144,10 +144,14 @@
     }
     else
     {
-        [self.view setBackgroundColor:bckColor];
-        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.25] centre:CGPointMake(0.5, 0.25) radius:1.5];
+        self.backgroundColor = bckColor;
+        if(!self.viewIsLandscape)
+            [self.view setBackgroundColor:bckColor];
+//        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.25] centre:CGPointMake(0.5, 0.25) radius:1.5];
         DLog(@"Set background color to %@", bckColor);
-        [self.metadataInfo setTextColor:[txtColor colorWithAlphaComponent:1.0]];
+        self.metadataTextColor = [txtColor colorWithAlphaComponent:1.0];
+        if(!self.viewIsLandscape)
+            [self.metadataInfo setTextColor:[txtColor colorWithAlphaComponent:1.0]];
     }
 	imageColors = nil;
 }
@@ -197,7 +201,7 @@
                                MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
                                MPMediaItemPropertyArtwork: albumArt};
                      [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                     if(self.viewIsLandscape)
+                     if(!self.viewIsLandscape)
                          self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", songPieces[0], songPieces[1]];
                      DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
                  }
@@ -230,7 +234,7 @@
                      self.theStreamMetadataTimer = [NSTimer scheduledTimerWithTimeInterval:[whenRefresh doubleValue] target:self selector:@selector(metatadaHandler:) userInfo:nil repeats:NO];
                  });
              }
-             // Now get almbum artwork
+             // Now get album artwork
              NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
              DLog(@"URL for Artwork: <%@>", temp);
              [self.imageLoadQueue cancelAllOperations];
@@ -246,8 +250,7 @@
                           dispatch_async(dispatch_get_main_queue(), ^{
                               // Set image
                               self.coverImageView.image = self.coverImage;
-                              if(self.viewIsLandscape)
-                                  [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
+                              [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
@@ -973,11 +976,11 @@
 - (void) interfaceToNormal
 {
     self.minimizerButton.enabled = YES;
-    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 0.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.hdImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -1022,9 +1025,12 @@
                              // in any case...
                              self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
+                             self.metadataInfo.numberOfLines = 1;
+                             self.metadataInfo.text = self.rawMetadataString;
                              self.metadataInfo.textColor = [UIColor whiteColor];
+                             self.metadataInfo.textAlignment = NSTextAlignmentRight;
+                             self.view.backgroundColor = [UIColor blackColor];
                          }
-                         
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
@@ -1107,15 +1113,21 @@
                              // in any case...
                              self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
                              self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
+                             self.metadataInfo.numberOfLines = 2;
+                             self.metadataInfo.text = self.rawMetadataString;
+                             self.metadataInfo.textColor = self.metadataTextColor;
+                             self.metadataInfo.textAlignment = NSTextAlignmentCenter;
+                             self.view.backgroundColor = self.backgroundColor;
+                             self.bitrateSelector.tintColor = self.backgroundColor;
                          }
                          
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
                          self.hdImage.hidden = YES;
+                         if(self.theStreamMetadataTimer)
+                             [self.theStreamMetadataTimer fire];
                      }];
-
-    
 }
 
 - (IBAction)minimizer:(id)sender
@@ -1164,19 +1176,31 @@
     return UIInterfaceOrientationLandscapeLeft;
 }
 
-- (void)viewDidLayoutSubviews
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    DLog(@"This is willRotateToInterfaceOrientation");
+    self.viewIsRotating = YES;
+}
+
+-(void)viewDidLayoutSubviews
+{
+    if(self.viewIsRotating)
     {
-        self.viewIsLandscape = YES;
-        [self interfaceToNormal];
+        DLog(@"This is viewDidLayoutSubviews called for a \"real\" rotation");
+        self.viewIsRotating = NO;
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            self.viewIsLandscape = YES;
+            [self interfaceToNormal];
+        }
+        else
+        {
+            self.viewIsLandscape = NO;
+            [self interfaceToPortrait:0.5];
+        }
     }
     else
-    {
-        self.viewIsLandscape = NO;
-        [self interfaceToPortrait:0.5];
-    }
-    DLog(@"didRotateFromInterfaceOrientation: called for %@", (self.viewIsLandscape) ? @"landscape" : @"portrait");
+        DLog(@"This is viewDidLayoutSubviews called for a layout change");
 }
 
 #pragma mark -
