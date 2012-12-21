@@ -146,7 +146,7 @@
     {
         self.backgroundColor = bckColor;
         if(!self.viewIsLandscape)
-        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:[bckColor colorWithAlphaComponent:0.25] endColor:bckColor centre:CGPointMake(0.5, 0.25) radius:1.1];
+        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.25] centre:CGPointMake(0.5, 0.25) radius:1.1];
         DLog(@"Set background color to %@", bckColor);
         self.metadataTextColor = txtColor;
         if([txtColor pc_isBlackOrWhite])

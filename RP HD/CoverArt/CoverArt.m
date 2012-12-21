@@ -70,6 +70,8 @@
     size_t bpr = CGImageGetBytesPerRow(cgimage);
     size_t bpp = CGImageGetBitsPerPixel(cgimage);
     size_t bpc = CGImageGetBitsPerComponent(cgimage);
+    if(bpc == 0)
+        return [UIColor blackColor];
     size_t bytes_per_pixel = bpp / bpc;
 
     CGDataProviderRef provider = CGImageGetDataProvider(cgimage);
