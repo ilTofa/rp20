@@ -975,9 +975,11 @@
 
 - (void) interfaceToNormal
 {
+    self.minimizerButton.enabled = YES;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
+                         self.coverImageView.alpha = self.backgroundImageView.alpha = 0.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
@@ -1001,9 +1003,12 @@
                                  self.hdImage.frame = CGRectMake(0, 0, 568, 320);
                                  self.minimizerButton.frame = CGRectMake(0, 0, 568, 320);
                                  self.metadataInfo.frame = CGRectMake(98, 16, 450, 21);
-
                                  self.songNameButton.frame = CGRectMake(98, 16, 450, 21);
                                  self.playOrStopButton.frame = CGRectMake(512, 278, 36, 36);
+                                 self.volumeViewContainer.frame = CGRectMake(324, 283, 180, 25);
+                                 self.songListButton.frame = CGRectMake(280, 278, 36, 36);
+                                 self.psdButton.frame = CGRectMake(236, 278, 36, 36);
+                                 self.bitrateSelector.frame = CGRectMake(77, 281, 151, 30);
                              }
                              else
                              { // "normal" iPhone
@@ -1012,15 +1017,21 @@
                                  self.metadataInfo.frame = CGRectMake(98, 16, 373, 21);
                                  self.songNameButton.frame = CGRectMake(98, 16, 373, 21);
                                  self.playOrStopButton.frame = CGRectMake(435, 278, 36, 36);
+                                 self.bitrateSelector.frame = CGRectMake(77, 281, 110, 30);
+                                 self.psdButton.frame = CGRectMake(193, 278, 36, 36);
+                                 self.songListButton.frame = CGRectMake(235, 278, 36, 36);
+                                 self.volumeViewContainer.frame = CGRectMake(277, 283, 150, 25);
                              }
                              // in any case...
                              self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
+                             self.metadataInfo.textColor = [UIColor whiteColor];
                          }
                          
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
+                         self.coverImageView.hidden = self.backgroundImageView.hidden = YES;
                      }];
 }
 
@@ -1045,7 +1056,72 @@
                      }];    
 }
 
-- (IBAction)minimizer:(id)sender 
+-(void)interfaceToPortrait
+{
+    self.minimizerButton.enabled = NO;
+    self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
+    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    [UIView animateWithDuration:0.5
+                     animations:^(void) {
+                         self.hdImage.alpha = 0.0;
+                         self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                             self.psdButton.alpha = self.songListButton.alpha = 1.0;
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                         {
+                             self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
+                             self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
+                             self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
+                             self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
+                             self.playOrStopButton.frame = CGRectMake(350, 634, 43, 43);
+                             self.addSongButton.frame = CGRectMake(440, 634, 43, 43);
+                             self.songListButton.frame = CGRectMake(485, 686, 43, 43);
+                             self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
+                             self.psdButton.frame = CGRectMake(395, 686, 43, 43);
+                             self.logoImage.frame = CGRectMake(20, 626, 300, 94);
+                         }
+                         else
+                         {
+                             if([UIScreen mainScreen].bounds.size.height == 568.0f)
+                             { // iPhone 5
+                                 self.hdImage.frame = CGRectMake(0, 0, 568, 320); //
+                                 self.addSongButton.frame = CGRectMake(98, 512, 36, 36); //
+                                 self.iPhoneLogoImage.frame = CGRectMake(22, 405, 40, 40); //
+                                 self.metadataInfo.frame = CGRectMake(20, 328, 280, 60); //
+                                 self.playOrStopButton.frame = CGRectMake(264, 514, 36, 36); //
+                                 self.bitrateSelector.frame = CGRectMake(79, 410, 221, 30);
+                                 self.psdButton.frame = CGRectMake(181, 514, 36, 36);
+                                 self.songListButton.frame = CGRectMake(22, 512, 36, 36);
+                                 self.volumeViewContainer.frame = CGRectMake(20, 468, 280, 25);
+                             }
+                             else
+                             { // "normal" iPhone
+                                 self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
+                                 self.addSongButton.frame = CGRectMake(98, 424, 36, 36); //
+                                 self.iPhoneLogoImage.frame = CGRectMake(22, 349, 40, 40); //
+                                 self.metadataInfo.frame = CGRectMake(20, 298, 280, 60); //
+                                 self.playOrStopButton.frame = CGRectMake(264, 426, 36, 36); //
+                                 self.bitrateSelector.frame = CGRectMake(79, 354, 221, 30);
+                                 self.psdButton.frame = CGRectMake(181, 426, 36, 36);
+                                 self.songListButton.frame = CGRectMake(22, 424, 36, 36);
+                                 self.volumeViewContainer.frame = CGRectMake(20, 396, 280, 25);
+                             }
+                             // in any case...
+                             self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
+                             self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
+                         }
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         self.interfaceState = kInterfaceNormal;
+                         self.hdImage.hidden = YES;
+                     }];
+
+    
+}
+
+- (IBAction)minimizer:(id)sender
 {
     switch (self.interfaceState) {
         case kInterfaceNormal:
