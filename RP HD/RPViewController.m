@@ -244,13 +244,10 @@
                       if(self.coverImage != nil)
                       {
                           dispatch_async(dispatch_get_main_queue(), ^{
+                              // Set image
+                              self.coverImageView.image = self.coverImage;
                               if(self.viewIsLandscape)
-                              {
-                                  // Setting background...
                                   [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
-                                  // Set image
-                                  self.coverImageView.image = self.coverImage;
-                              }
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
@@ -1056,12 +1053,12 @@
                      }];    
 }
 
--(void)interfaceToPortrait
+-(void)interfaceToPortrait:(NSTimeInterval)animationDuration
 {
     self.minimizerButton.enabled = NO;
     self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:animationDuration
                      animations:^(void) {
                          self.hdImage.alpha = 0.0;
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
@@ -1169,15 +1166,22 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    DLog(@"View is rotating to %@.", UIInterfaceOrientationIsLandscape(toInterfaceOrientation) ? @"landscape" : @"portrait");
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
         self.viewIsLandscape = YES;
+        [self interfaceToNormal];
     }
     else
     {
         self.viewIsLandscape = NO;
+        [self interfaceToPortrait:0.5];
     }
-    DLog(@"View is rotating to %@.", (self.viewIsLandscape) ? @"landscape" : @"portrait");
+    DLog(@"View rotated to %@", (self.viewIsLandscape) ? @"landscape" : @"portrait");
 }
 
 #pragma mark -

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "64F8022B1512272E0080D442"
-               BuildableName = "RP HD.app"
+               BuildableName = "RadioParadise.app"
                BlueprintName = "RadioParadise"
                ReferencedContainer = "container:RadioParadise.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "64F8022B1512272E0080D442"
-            BuildableName = "RP HD.app"
+            BuildableName = "RadioParadise.app"
             BlueprintName = "RadioParadise"
             ReferencedContainer = "container:RadioParadise.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "64F8022B1512272E0080D442"
-            BuildableName = "RP HD.app"
+            BuildableName = "RadioParadise.app"
             BlueprintName = "RadioParadise"
             ReferencedContainer = "container:RadioParadise.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "64F8022B1512272E0080D442"
-            BuildableName = "RP HD.app"
+            BuildableName = "RadioParadise.app"
             BlueprintName = "RadioParadise"
             ReferencedContainer = "container:RadioParadise.xcodeproj">
          </BuildableReference>
