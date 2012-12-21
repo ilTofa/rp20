@@ -475,15 +475,18 @@
 				64563B5715F65EF300664C74 /* SongAdder.m */,
 			);
 			name = SongsInTheCloud;
-			path = iCloud;
+			path = "RP HD/iCloud";
 			sourceTree = "<group>";
 		};
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
+				640C3F8916020CF600631AAD /* Localytics */,
+				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
+				64F8024D151228870080D442 /* Images */,
 				64D4812C154767A800BC1085 /* appirater */,
 				646ACA7215B46901001B5B73 /* STKeychain */,
-				640C3F8916020CF600631AAD /* Localytics */,
+				64F802371512272E0080D442 /* Supporting Files */,
 				64F802361512272E0080D442 /* RP HD */,
 				64F8022F1512272E0080D442 /* Frameworks */,
 				64F8022D1512272E0080D442 /* Products */,
@@ -523,8 +526,6 @@
 		64F802361512272E0080D442 /* RP HD */ = {
 			isa = PBXGroup;
 			children = (
-				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
-				64F8024D151228870080D442 /* Images */,
 				64F8023F1512272E0080D442 /* RPAppDelegate.h */,
 				64F802401512272E0080D442 /* RPAppDelegate.m */,
 				6417095F1515521C00F53185 /* RPTVViewController.h */,
@@ -546,7 +547,6 @@
 				646ACA8615B46D6A001B5B73 /* RPLoginController.m */,
 				646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */,
 				646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */,
-				64F802371512272E0080D442 /* Supporting Files */,
 			);
 			path = "RP HD";
 			sourceTree = "<group>";
@@ -578,6 +578,7 @@
 				64F8023E1512272E0080D442 /* RP HD-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			path = "RP HD";
 			sourceTree = "<group>";
 		};
 		64F8024D151228870080D442 /* Images */ = {
@@ -611,6 +612,7 @@
 				6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */,
 			);
 			name = Images;
+			path = "RP HD";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

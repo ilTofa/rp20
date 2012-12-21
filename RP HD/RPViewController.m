@@ -1017,6 +1017,32 @@
 }
 
 #pragma mark -
+#pragma mark Rotation management
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
+    if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        return YES;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && interfaceOrientation == UIInterfaceOrientationPortrait)
+        return YES;
+    return NO;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    NSUInteger retValue = UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        retValue |= UIInterfaceOrientationMaskPortrait;
+    return retValue;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationLandscapeLeft;
+}
+
+#pragma mark -
 #pragma mark LoadUnload
 
 - (void)viewDidLoad
@@ -1220,15 +1246,6 @@
 - (BOOL) canBecomeFirstResponder 
 {
     return YES;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
-    if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
-        return YES;
-    else
-        return NO;
 }
 
 @end
