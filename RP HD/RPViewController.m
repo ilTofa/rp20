@@ -145,21 +145,20 @@
     else
     {
         self.backgroundColor = bckColor;
-        if([bckColor pc_isBlackOrWhite])
-            self.segmentedColor = [UIColor darkGrayColor];
-        else
-            self.segmentedColor = bckColor;
         if(!self.viewIsLandscape)
-        {
-            [self.view setBackgroundColor:bckColor];
-            if(![bckColor pc_isBlackOrWhite])
-            self.bitrateSelector.tintColor = self.segmentedColor;
-        }
         self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:[bckColor colorWithAlphaComponent:0.25] endColor:bckColor centre:CGPointMake(0.5, 0.25) radius:1.1];
         DLog(@"Set background color to %@", bckColor);
         self.metadataTextColor = txtColor;
+        if([txtColor pc_isBlackOrWhite])
+            self.segmentedColor = [UIColor darkGrayColor];
+        else
+            self.segmentedColor = txtColor;
         if(!self.viewIsLandscape)
+        {
+            [self.view setBackgroundColor:bckColor];
             [self.metadataInfo setTextColor:txtColor];
+            self.bitrateSelector.tintColor = self.segmentedColor;
+        }
     }
 	imageColors = nil;
 }
@@ -1180,11 +1179,11 @@
     return retValue;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return UIInterfaceOrientationLandscapeLeft;
-}
-
+//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+//{
+//    return UIInterfaceOrientationLandscapeLeft;
+//}
+//
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     DLog(@"This is willRotateToInterfaceOrientation");
@@ -1210,6 +1209,7 @@
     }
     else
         DLog(@"This is viewDidLayoutSubviews called for a layout change");
+    [super viewDidLayoutSubviews];
 }
 
 #pragma mark -
@@ -1271,6 +1271,10 @@
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        [self interfaceToNormal];
+    else
+        [self interfaceToPortrait:0.1];
     // Give a touch to the UI after a while (only on iPhone 5). This is a terrible hack, I know.
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f)
     {
