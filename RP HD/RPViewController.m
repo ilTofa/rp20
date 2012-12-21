@@ -27,6 +27,11 @@
 
 -(void)scheduleImagesTimer
 {
+    if(self.theImagesTimer)
+    {
+        DLog(@"*** WARNING: scheduleImagesTimer called with a valid timer already active!");
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         NSTimeInterval howMuchTimeBetweenImages;
         switch (self.bitrateSelector.selectedSegmentIndex) {
@@ -52,6 +57,11 @@
 -(void)unscheduleImagesTimer
 {
     DLog(@"Unscheduling images timer (%@)", self.theImagesTimer);
+    if(self.theImagesTimer == nil)
+    {
+        DLog(@"*** WARNING: unscheduleImagesTimer called with no valid timer around!");
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.theImagesTimer invalidate];
         self.theImagesTimer = nil;
@@ -378,7 +388,8 @@
             self.thePsdTimer = nil;
         }
         DLog(@"Stopping stream in timer firing (starting fade out)");
-        [self unscheduleImagesTimer];
+        if(self.theImagesTimer)
+            [self unscheduleImagesTimer];
         // restart main stream...
         [self playMainStream];
         // ...while giving the delay to the fading
@@ -417,7 +428,8 @@
             DLog(@"Setting fade out after %@ sec for %.0f sec", startPsdFadingTime, kPsdFadeOutTime);
             [self presetFadeOutToCurrentTrack:self.thePsdStreamer startingAt:[startPsdFadingTime intValue] forSeconds:kPsdFadeOutTime];
             // Stop main streamer, remove observers and and reset timers it.
-            [self unscheduleImagesTimer];
+            if(self.theImagesTimer)
+                [self unscheduleImagesTimer];
             if(self.isPSDPlaying)
             {
                 // Fade out and quit previous stream
@@ -555,7 +567,8 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self removeNotifications];
-            [self unscheduleImagesTimer];
+            if(self.theImagesTimer)
+                [self unscheduleImagesTimer];
             self.theStreamer = nil;
             [self interfaceStop];
             // if called from bitrateChanged, restart
@@ -844,7 +857,7 @@
     self.hdImage.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && self.viewIsLandscape)
         [self scheduleImagesTimer];
     // Start metadata reading.
     DLog(@"Starting metadata handler...");
@@ -886,7 +899,7 @@
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && self.viewIsLandscape)
         [self scheduleImagesTimer];
     DLog(@"Getting PSD metadata...");
     [self metatadaHandler:nil];
@@ -1198,11 +1211,17 @@
         self.viewIsRotating = NO;
         if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
         {
+            // if no image timer but systems is playing, schedule timers...
+            if(self.theImagesTimer == nil && (self.theStreamer.rate != 0.0  || self.isPSDPlaying))
+                [self scheduleImagesTimer];
             self.viewIsLandscape = YES;
             [self interfaceToNormal];
         }
         else
         {
+            // If the streamer for images is active, kill it
+            if(self.theImagesTimer)
+                [self unscheduleImagesTimer];
             self.viewIsLandscape = NO;
             [self interfaceToPortrait:0.5];
         }
@@ -1266,15 +1285,21 @@
     self.hdImage.clipsToBounds = YES;
     self.rpWebButton.layer.cornerRadius = 4.0;
     self.rpWebButton.clipsToBounds = YES;
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        self.viewIsLandscape = YES;
+        [self interfaceToNormal];
+    }
+    else
+    {
+        self.viewIsLandscape = NO;
+        [self interfaceToPortrait:0.1];
+    }
     // Automagically start, as per bg request
     [self playMainStream];
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
-    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-        [self interfaceToNormal];
-    else
-        [self interfaceToPortrait:0.1];
     // Give a touch to the UI after a while (only on iPhone 5). This is a terrible hack, I know.
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f)
     {
