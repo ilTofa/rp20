@@ -53,6 +53,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
 @property (weak, nonatomic) IBOutlet UIButton *addSongButton;
 @property (weak, nonatomic) IBOutlet UIButton *songListButton;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @property (strong, nonatomic) AVPlayer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
@@ -70,6 +72,8 @@ typedef enum {
 @property (nonatomic) BOOL isPSDPlaying;
 @property (copy, nonatomic) NSString *psdSongId;
 @property (nonatomic) NSNumber *psdDurationInSeconds;
+
+@property BOOL viewIsLandscape;
 
 @property (copy, nonatomic) NSString *theURL;
 @property (copy, nonatomic) NSString *theRedirector;

@@ -13,6 +13,8 @@
 #import "STKeychain/STKeychain.h"
 #import "SongAdder.h"
 #import "Song.h"
+#import "CoverArt.h"
+#import "UIColor+DarkAddition.h"
 
 @interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate>
 
@@ -90,6 +92,8 @@
                           {
                               // load image on the main thread
                               dispatch_async(dispatch_get_main_queue(), ^{
+                                  // Setting background...
+                                  [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
                                   [self.hdImage setImage:temp];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
@@ -112,6 +116,43 @@
 
 #pragma mark -
 #pragma mark Metadata management
+
+- (void)setViewBackgroundFromImage:(UIImage *)anImage withSlideShowOn:(BOOL)slideshowIsOn
+{
+	NSCountedSet *imageColors = nil;
+    // Don't count all the pixel on the big slideshow photo...
+	UIColor *txtColor = [CoverArt findTextColor:anImage imageColors:&imageColors lazy:slideshowIsOn];
+    if(!txtColor)
+        txtColor = [UIColor blackColor];
+	UIColor *bckColor = nil;
+	BOOL darkText = [txtColor pc_isDarkColor];
+    DLog(@"%@ color is %@", slideshowIsOn ? @"Background" : @"Text", [txtColor colorWithAlphaComponent:1.0]);
+    [CoverArt findBackgroundColor:imageColors backgroundColor:&bckColor textColor:txtColor];
+	if (txtColor == nil)
+	{
+		NSLog(@"Setting default primary color");
+		if (darkText)
+			txtColor = [UIColor whiteColor];
+		else
+			txtColor = [UIColor blackColor];
+	}
+	
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    if(slideshowIsOn)
+    {
+        [self.view setBackgroundColor:txtColor];
+        DLog(@"Set text color to %@", bckColor);
+        [self.metadataInfo setTextColor:[bckColor colorWithAlphaComponent:1.0]];
+    }
+    else
+    {
+        [self.view setBackgroundColor:bckColor];
+        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.25] centre:CGPointMake(0.5, 0.25) radius:1.5];
+        DLog(@"Set background color to %@", bckColor);
+        [self.metadataInfo setTextColor:[txtColor colorWithAlphaComponent:1.0]];
+    }
+	imageColors = nil;
+}
 
 -(void)metatadaHandler:(NSTimer *)timer
 {
@@ -179,7 +220,7 @@
                  if([whenRefresh intValue] <= 0)
                  {
                      whenRefresh = @([whenRefresh intValue] * -1);
-                     if([whenRefresh intValue] < 5)
+                     if([whenRefresh intValue] < 5 || [whenRefresh intValue] > 30)
                          whenRefresh = @(5);
                      DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
                  }
@@ -1040,6 +1081,19 @@
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
     return UIInterfaceOrientationLandscapeLeft;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    {
+        self.viewIsLandscape = YES;
+    }
+    else
+    {
+        self.viewIsLandscape = NO;
+    }
+    DLog(@"View is rotating to %@.", (self.viewIsLandscape) ? @"landscape" : @"portrait");
 }
 
 #pragma mark -
