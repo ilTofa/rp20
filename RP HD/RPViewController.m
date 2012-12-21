@@ -92,8 +92,6 @@
                           {
                               // load image on the main thread
                               dispatch_async(dispatch_get_main_queue(), ^{
-                                  // Setting background...
-                                  [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
                                   [self.hdImage setImage:temp];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
