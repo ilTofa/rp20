@@ -91,6 +91,9 @@
 		64D481341547681A00BC1085 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D481331547681A00BC1085 /* SystemConfiguration.framework */; };
 		64D60D9D15B6BADA0099A168 /* button-psd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9B15B6BADA0099A168 /* button-psd.png */; };
 		64D60D9E15B6BADA0099A168 /* button-psd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9C15B6BADA0099A168 /* button-psd@2x.png */; };
+		64DFA2B41684C2A600D4423C /* CoverArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFA2AF1684C2A600D4423C /* CoverArt.m */; };
+		64DFA2B51684C2A600D4423C /* PCCountedColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFA2B11684C2A600D4423C /* PCCountedColor.m */; };
+		64DFA2B61684C2A600D4423C /* UIColor+DarkAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFA2B31684C2A600D4423C /* UIColor+DarkAddition.m */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
 		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
@@ -215,6 +218,12 @@
 		64D481331547681A00BC1085 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		64D60D9B15B6BADA0099A168 /* button-psd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd.png"; path = "Images/button-psd.png"; sourceTree = "<group>"; };
 		64D60D9C15B6BADA0099A168 /* button-psd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd@2x.png"; path = "Images/button-psd@2x.png"; sourceTree = "<group>"; };
+		64DFA2AE1684C2A600D4423C /* CoverArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverArt.h; sourceTree = "<group>"; };
+		64DFA2AF1684C2A600D4423C /* CoverArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverArt.m; sourceTree = "<group>"; };
+		64DFA2B01684C2A600D4423C /* PCCountedColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCCountedColor.h; sourceTree = "<group>"; };
+		64DFA2B11684C2A600D4423C /* PCCountedColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCCountedColor.m; sourceTree = "<group>"; };
+		64DFA2B21684C2A600D4423C /* UIColor+DarkAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+DarkAddition.h"; sourceTree = "<group>"; };
+		64DFA2B31684C2A600D4423C /* UIColor+DarkAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DarkAddition.m"; sourceTree = "<group>"; };
 		64DFC65115F7469C00214188 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		64DFC65215F7469C00214188 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
@@ -453,6 +462,20 @@
 			path = "RP HD/appirater";
 			sourceTree = "<group>";
 		};
+		64DFA2AD1684C2A600D4423C /* CoverArt */ = {
+			isa = PBXGroup;
+			children = (
+				64DFA2AE1684C2A600D4423C /* CoverArt.h */,
+				64DFA2AF1684C2A600D4423C /* CoverArt.m */,
+				64DFA2B01684C2A600D4423C /* PCCountedColor.h */,
+				64DFA2B11684C2A600D4423C /* PCCountedColor.m */,
+				64DFA2B21684C2A600D4423C /* UIColor+DarkAddition.h */,
+				64DFA2B31684C2A600D4423C /* UIColor+DarkAddition.m */,
+			);
+			name = CoverArt;
+			path = "RP HD/CoverArt";
+			sourceTree = "<group>";
+		};
 		64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +510,7 @@
 				64D4812C154767A800BC1085 /* appirater */,
 				646ACA7215B46901001B5B73 /* STKeychain */,
 				64F802371512272E0080D442 /* Supporting Files */,
+				64DFA2AD1684C2A600D4423C /* CoverArt */,
 				64F802361512272E0080D442 /* RP HD */,
 				64F8022F1512272E0080D442 /* Frameworks */,
 				64F8022D1512272E0080D442 /* Products */,
@@ -781,6 +805,9 @@
 				640C3F9116020CF600631AAD /* LocalyticsDatabase.m in Sources */,
 				640C3F9216020CF600631AAD /* LocalyticsSession.m in Sources */,
 				640C3F9316020CF600631AAD /* LocalyticsUploader.m in Sources */,
+				64DFA2B41684C2A600D4423C /* CoverArt.m in Sources */,
+				64DFA2B51684C2A600D4423C /* PCCountedColor.m in Sources */,
+				64DFA2B61684C2A600D4423C /* UIColor+DarkAddition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
