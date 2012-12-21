@@ -1164,12 +1164,7 @@
     return UIInterfaceOrientationLandscapeLeft;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    DLog(@"View is rotating to %@.", UIInterfaceOrientationIsLandscape(toInterfaceOrientation) ? @"landscape" : @"portrait");
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewDidLayoutSubviews
 {
     if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
@@ -1181,7 +1176,7 @@
         self.viewIsLandscape = NO;
         [self interfaceToPortrait:0.5];
     }
-    DLog(@"View rotated to %@", (self.viewIsLandscape) ? @"landscape" : @"portrait");
+    DLog(@"didRotateFromInterfaceOrientation: called for %@", (self.viewIsLandscape) ? @"landscape" : @"portrait");
 }
 
 #pragma mark -
