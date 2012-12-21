@@ -225,14 +225,14 @@
 		64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		64F5AF7215EE5EAE0018B38A /* SDCloudUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCloudUserDefaults.h; sourceTree = "<group>"; };
 		64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCloudUserDefaults.m; sourceTree = "<group>"; };
-		64F8022C1512272E0080D442 /* RP HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RP HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		64F8022C1512272E0080D442 /* RadioParadise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RadioParadise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F802301512272E0080D442 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64F802321512272E0080D442 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		64F802341512272E0080D442 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		64F802381512272E0080D442 /* RP HD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RP HD-Info.plist"; sourceTree = "<group>"; };
+		64F802381512272E0080D442 /* RadioParadise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RadioParadise-Info.plist"; sourceTree = "<group>"; };
 		64F8023A1512272E0080D442 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		64F8023C1512272E0080D442 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		64F8023E1512272E0080D442 /* RP HD-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RP HD-Prefix.pch"; sourceTree = "<group>"; };
+		64F8023E1512272E0080D442 /* RadioParadise-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RadioParadise-Prefix.pch"; sourceTree = "<group>"; };
 		64F8023F1512272E0080D442 /* RPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RPAppDelegate.h; sourceTree = "<group>"; };
 		64F802401512272E0080D442 /* RPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RPAppDelegate.m; sourceTree = "<group>"; };
 		64F802461512272E0080D442 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~ipad.xib"; sourceTree = "<group>"; };
@@ -496,7 +496,7 @@
 		64F8022D1512272E0080D442 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				64F8022C1512272E0080D442 /* RP HD.app */,
+				64F8022C1512272E0080D442 /* RadioParadise.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -572,10 +572,10 @@
 				64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */,
 				64A0DCFB15F4FB710088F8D3 /* RP HD.entitlements */,
 				64468A0C152FA45200BCDEBF /* iTunesArtwork */,
-				64F802381512272E0080D442 /* RP HD-Info.plist */,
+				64F802381512272E0080D442 /* RadioParadise-Info.plist */,
 				64F802391512272E0080D442 /* InfoPlist.strings */,
 				64F8023C1512272E0080D442 /* main.m */,
-				64F8023E1512272E0080D442 /* RP HD-Prefix.pch */,
+				64F8023E1512272E0080D442 /* RadioParadise-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			path = "RP HD";
@@ -618,9 +618,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		64F8022B1512272E0080D442 /* RP HD */ = {
+		64F8022B1512272E0080D442 /* RadioParadise */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 64F8024A1512272E0080D442 /* Build configuration list for PBXNativeTarget "RP HD" */;
+			buildConfigurationList = 64F8024A1512272E0080D442 /* Build configuration list for PBXNativeTarget "RadioParadise" */;
 			buildPhases = (
 				64F802281512272E0080D442 /* Sources */,
 				64F802291512272E0080D442 /* Frameworks */,
@@ -630,9 +630,9 @@
 			);
 			dependencies = (
 			);
-			name = "RP HD";
+			name = RadioParadise;
 			productName = "RP HD";
-			productReference = 64F8022C1512272E0080D442 /* RP HD.app */;
+			productReference = 64F8022C1512272E0080D442 /* RadioParadise.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -644,7 +644,7 @@
 				CLASSPREFIX = RP;
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = 64F802261512272D0080D442 /* Build configuration list for PBXProject "RP HD" */;
+			buildConfigurationList = 64F802261512272D0080D442 /* Build configuration list for PBXProject "RadioParadise" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -671,7 +671,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				64F8022B1512272E0080D442 /* RP HD */,
+				64F8022B1512272E0080D442 /* RadioParadise */,
 			);
 		};
 /* End PBXProject section */
@@ -995,11 +995,11 @@
 				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Giacomo Tufano (68RHGP4K2S)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
-				INFOPLIST_FILE = "RP HD/RP HD-Info.plist";
+				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
+				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RadioParadise;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8BF757E7-3803-46F1-9293-5AA8CEF4D404";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1012,11 +1012,11 @@
 				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Giacomo Tufano";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RP HD/RP HD-Prefix.pch";
-				INFOPLIST_FILE = "RP HD/RP HD-Info.plist";
+				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
+				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RadioParadise;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "016B59A4-6E65-47C8-91D9-95D8BB282E60";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1026,7 +1026,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		64F802261512272D0080D442 /* Build configuration list for PBXProject "RP HD" */ = {
+		64F802261512272D0080D442 /* Build configuration list for PBXProject "RadioParadise" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				64F802481512272E0080D442 /* Debug */,
@@ -1035,7 +1035,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		64F8024A1512272E0080D442 /* Build configuration list for PBXNativeTarget "RP HD" */ = {
+		64F8024A1512272E0080D442 /* Build configuration list for PBXNativeTarget "RadioParadise" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				64F8024B1512272E0080D442 /* Debug */,
