@@ -137,14 +137,10 @@
     DLog(@"%@ color is %@", slideshowIsOn ? @"Background" : @"Text", [txtColor colorWithAlphaComponent:1.0]);
     [CoverArt findBackgroundColor:imageColors backgroundColor:&bckColor textColor:txtColor];
 	if (txtColor == nil)
-	{
-		NSLog(@"Setting default primary color");
-		if (darkText)
-			txtColor = [UIColor whiteColor];
-		else
-			txtColor = [UIColor blackColor];
-	}
-	
+        txtColor = (darkText) ? [UIColor whiteColor] : [UIColor blackColor];
+	if(bckColor == nil)
+        bckColor = (darkText) ? [UIColor blackColor] : [UIColor whiteColor];
+    
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     if(slideshowIsOn)
     {
@@ -154,9 +150,14 @@
     }
     else
     {
-        self.backgroundColor = bckColor;
         if(!self.viewIsLandscape)
-        self.backgroundImageView.image = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.0] centre:CGPointMake(0.5, 0.25) radius:1.5];
+        {
+            UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
+            if(temp == nil)
+                DLog(@"*** Image is nil! ***");
+            self.backgroundImageView.image = temp;
+        }
+        self.backgroundColor = bckColor;
         DLog(@"Set background color to %@", bckColor);
         self.metadataTextColor = txtColor;
         if([txtColor pc_isBlackOrWhite])
