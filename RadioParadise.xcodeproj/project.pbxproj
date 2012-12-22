@@ -96,6 +96,7 @@
 		64DFA2B61684C2A600D4423C /* UIColor+DarkAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFA2B31684C2A600D4423C /* UIColor+DarkAddition.m */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
+		64DFD37B1685B75800C33279 /* RPiPadTestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */; };
 		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
 		64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */; };
 		64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */; };
@@ -228,6 +229,7 @@
 		64DFC65215F7469C00214188 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPiPadTestsViewController.xib; sourceTree = "<group>"; };
 		64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
 		64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
 		64F5AF7015EE5EAE0018B38A /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				641709611515521C00F53185 /* RPTVViewController.xib */,
 				64AAFA04151391200061DD49 /* RPViewController.h */,
 				64AAFA05151391200061DD49 /* RPViewController.m */,
+				64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */,
 				64F802451512272E0080D442 /* RPViewController~ipad.xib */,
 				64D481211547577800BC1085 /* RPViewController~iphone.xib */,
 				64AAFA0A1513A6FF0061DD49 /* RPForumView.h */,
@@ -775,6 +778,7 @@
 				64308BE81624D411006CF9EB /* AppiraterLocalizable.strings in Resources */,
 				64308BE91624D411006CF9EB /* AppiraterLocalizable.strings in Resources */,
 				64308BEA1624D411006CF9EB /* AppiraterLocalizable.strings in Resources */,
+				64DFD37B1685B75800C33279 /* RPiPadTestsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

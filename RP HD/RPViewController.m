@@ -858,7 +858,7 @@
     self.hdImage.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && self.viewIsLandscape)
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
         [self scheduleImagesTimer];
     // Start metadata reading.
     DLog(@"Starting metadata handler...");
@@ -900,7 +900,7 @@
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && self.viewIsLandscape)
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive  && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
         [self scheduleImagesTimer];
     DLog(@"Getting PSD metadata...");
     [self metatadaHandler:nil];
@@ -1001,9 +1001,7 @@
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 0.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.hdImage.alpha = self.aboutButton.alpha = 1.0;
-                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                             self.psdButton.alpha = self.songListButton.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
@@ -1016,6 +1014,12 @@
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
                              self.psdButton.frame = CGRectMake(395, 686, 43, 43);
                              self.logoImage.frame = CGRectMake(20, 626, 300, 94);
+                             self.bitrateSelector.frame = CGRectMake(533, 646, 300, 30);
+                             self.spinner.frame = CGRectMake(932, 655, 37, 37);
+                             self.coverImageView.frame = CGRectMake(880, 604, 140, 140);
+                             self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
+                             self.backgroundImageView.frame = CGRectMake(0, 0, 1024, 768);
+                             self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
                          }
                          else
                          {
@@ -1046,17 +1050,22 @@
                              // in any case...
                              self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
-                             self.metadataInfo.numberOfLines = 1;
-                             self.metadataInfo.text = self.rawMetadataString;
-                             self.metadataInfo.textColor = [UIColor whiteColor];
-                             self.metadataInfo.textAlignment = NSTextAlignmentRight;
-                             self.view.backgroundColor = [UIColor blackColor];
-                             self.bitrateSelector.tintColor = [UIColor darkGrayColor];
+                             self.hdImage.alpha = 1.0;
+                             self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          }
+                         // Both iPad and iPhone
+                         self.metadataInfo.numberOfLines = 1;
+                         self.metadataInfo.text = self.rawMetadataString;
+                         self.metadataInfo.textColor = [UIColor whiteColor];
+                         self.metadataInfo.textAlignment = NSTextAlignmentRight;
+                         self.view.backgroundColor = [UIColor blackColor];
+                         self.bitrateSelector.tintColor = [UIColor darkGrayColor];
                      }
                      completion:^(BOOL finished) {
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                             self.coverImageView.hidden = YES;
                          self.interfaceState = kInterfaceNormal;
-                         self.coverImageView.hidden = self.backgroundImageView.hidden = YES;
+                         self.backgroundImageView.hidden = YES;
                      }];
 }
 
@@ -1088,23 +1097,27 @@
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
-                         self.hdImage.alpha = self.aboutButton.alpha = 0.0;
+                         self.aboutButton.alpha = 0.0;
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
-                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                             self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
-                             self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
-                             self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
-                             self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
-                             self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
-                             self.playOrStopButton.frame = CGRectMake(350, 634, 43, 43);
-                             self.addSongButton.frame = CGRectMake(440, 634, 43, 43);
-                             self.songListButton.frame = CGRectMake(485, 686, 43, 43);
-                             self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
-                             self.psdButton.frame = CGRectMake(395, 686, 43, 43);
-                             self.logoImage.frame = CGRectMake(20, 626, 300, 94);
+                             self.hdImage.frame = CGRectMake(2, 2, 764, 430);
+                             self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
+                             self.metadataInfo.frame = CGRectMake(20, 522, 728, 62);
+                             self.songNameButton.frame = CGRectMake(20, 660, 344, 344);
+                             self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
+                             self.addSongButton.frame = CGRectMake(423, 947, 43, 43);
+                             self.songListButton.frame = CGRectMake(517, 947, 43, 43);
+                             self.separatorImage.frame = CGRectMake(0, 434, 768, 23);
+                             self.psdButton.frame = CGRectMake(611, 947, 43, 43);
+                             self.logoImage.frame = CGRectMake(435, 650, 300, 94);
+                             self.bitrateSelector.frame = CGRectMake(418, 789, 330, 30);
+                             self.spinner.frame = CGRectMake(174, 813, 37, 37);
+                             self.coverImageView.frame = CGRectMake(20, 660, 344, 344);
+                             self.rpWebButton.frame = CGRectMake(20, 660, 344, 344);
+                             self.backgroundImageView.frame = CGRectMake(0, 0, 768, 1024);
+                             self.volumeViewContainer.frame = CGRectMake(423, 874, 325, 25);
                          }
                          else
                          {
@@ -1132,21 +1145,25 @@
                                  self.songListButton.frame = CGRectMake(22, 424, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(20, 396, 280, 25);
                              }
-                             // in any case...
+                             // in any iPhone...
+                             self.hdImage.alpha = 0.0;
                              self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
                              self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
-                             self.metadataInfo.numberOfLines = 2;
-                             self.metadataInfo.text = self.rawMetadataString;
-                             self.metadataInfo.textColor = self.metadataTextColor;
-                             self.metadataInfo.textAlignment = NSTextAlignmentCenter;
-                             self.view.backgroundColor = self.backgroundColor;
-                             self.bitrateSelector.tintColor = self.segmentedColor;
+                             self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          }
-                         
+                         // Both iPad and iPhone
+                         self.metadataInfo.numberOfLines = 2;
+                         self.metadataInfo.text = self.rawMetadataString;
+                         self.metadataInfo.textColor = self.metadataTextColor;
+                         self.metadataInfo.textAlignment = NSTextAlignmentCenter;
+                         self.view.backgroundColor = self.backgroundColor;
+                         self.bitrateSelector.tintColor = self.segmentedColor;                         
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
-                         self.hdImage.hidden = self.aboutButton.hidden = YES;
+                         self.aboutButton.hidden = YES;
+                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                             self.hdImage.hidden = YES;
                          if(self.theStreamMetadataTimer)
                              [self.theStreamMetadataTimer fire];
                      }];
@@ -1178,19 +1195,21 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        return YES;
     if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
         return YES;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && interfaceOrientation == UIInterfaceOrientationPortrait)
+    if(interfaceOrientation == UIInterfaceOrientationPortrait)
         return YES;
     return NO;
 }
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    NSUInteger retValue = UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        retValue |= UIInterfaceOrientationMaskPortrait;
-    return retValue;
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    else
+        return UIInterfaceOrientationMaskAll;
 }
 
 //- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
@@ -1221,7 +1240,7 @@
         else
         {
             // If the streamer for images is active, kill it
-            if(self.theImagesTimer)
+            if(self.theImagesTimer && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                 [self unscheduleImagesTimer];
             self.viewIsLandscape = NO;
             [self interfaceToPortrait:0.5];
@@ -1402,7 +1421,7 @@
                 [[LocalyticsSession sharedLocalyticsSession] upload];
             }
             // If we don't have a second screen...
-            if ([[UIScreen screens] count] == 1 && self.viewIsLandscape)
+            if ([[UIScreen screens] count] == 1 && self.viewIsLandscape && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
             {
                 DLog(@"No more images, please");
                 [self unscheduleImagesTimer];
@@ -1417,7 +1436,7 @@
             {
                 [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"In Foreground while Playing"];
                 // If we don't have a second screen (else the timer was not stopped
-                if ([[UIScreen screens] count] == 1 && self.viewIsLandscape)
+                if ([[UIScreen screens] count] == 1 && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
                 {
                     DLog(@"Images again, please");
                     [self scheduleImagesTimer];
