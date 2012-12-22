@@ -80,6 +80,17 @@
 								<reference key="IBUIToolbar" ref="385152502"/>
 								<int key="IBUISystemItemIdentifier">13</int>
 							</object>
+							<object class="IBUIBarButtonItem" id="798874062">
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<reference key="IBUIToolbar" ref="385152502"/>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="720871536">
+								<string key="IBUITitle">Lyrics</string>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<int key="IBUIStyle">1</int>
+								<reference key="IBUIToolbar" ref="385152502"/>
+							</object>
 							<object class="IBUIBarButtonItem" id="66203885">
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIStyle">1</int>
@@ -205,6 +216,14 @@
 					<int key="connectionID">32</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lyricsButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="720871536"/>
+					</object>
+					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">viewIsDone:</string>
 						<reference key="source" ref="673361976"/>
@@ -252,6 +271,14 @@
 					</object>
 					<int key="connectionID">30</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">loadLyrics:</string>
+						<reference key="source" ref="720871536"/>
+						<reference key="destination" ref="841351856"/>
+					</object>
+					<int key="connectionID">35</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -295,6 +322,8 @@
 							<reference ref="873862748"/>
 							<reference ref="448187791"/>
 							<reference ref="428994671"/>
+							<reference ref="720871536"/>
+							<reference ref="798874062"/>
 						</array>
 						<reference key="parent" ref="766721923"/>
 					</object>
@@ -353,6 +382,16 @@
 						<reference key="object" ref="948543821"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">33</int>
+						<reference key="object" ref="720871536"/>
+						<reference key="parent" ref="385152502"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">34</int>
+						<reference key="object" ref="798874062"/>
+						<reference key="parent" ref="385152502"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -370,6 +409,8 @@
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="34.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -378,7 +419,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">32</int>
+			<int key="maxID">36</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -389,6 +430,7 @@
 						<string key="actionClicked:">id</string>
 						<string key="goBackClicked:">id</string>
 						<string key="goForwardClicked:">id</string>
+						<string key="loadLyrics:">id</string>
 						<string key="refreshClicked:">id</string>
 						<string key="viewIsDone:">id</string>
 					</dictionary>
@@ -405,6 +447,10 @@
 							<string key="name">goForwardClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="loadLyrics:">
+							<string key="name">loadLyrics:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="refreshClicked:">
 							<string key="name">refreshClicked:</string>
 							<string key="candidateClassName">id</string>
@@ -418,6 +464,7 @@
 						<string key="actionButton">UIBarButtonItem</string>
 						<string key="goBackButton">UIBarButtonItem</string>
 						<string key="goForwardButton">UIBarButtonItem</string>
+						<string key="lyricsButton">UIBarButtonItem</string>
 						<string key="refreshButton">UIBarButtonItem</string>
 						<string key="theSpinner">UIActivityIndicatorView</string>
 						<string key="theWebView">UIWebView</string>
@@ -433,6 +480,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="goForwardButton">
 							<string key="name">goForwardButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lyricsButton">
+							<string key="name">lyricsButton</string>
 							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="refreshButton">
