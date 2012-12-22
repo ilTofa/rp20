@@ -102,8 +102,9 @@
                           {
                               // load image on the main thread
                               dispatch_async(dispatch_get_main_queue(), ^{
-                                  // set background, too...
-                                  [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
+                                  // set background, too (iPad only, only portrait)
+                                  if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !self.viewIsLandscape)
+                                      [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
                                   [self.hdImage setImage:temp];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
