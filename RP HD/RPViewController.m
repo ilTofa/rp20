@@ -1090,7 +1090,8 @@
 
 -(void)interfaceToPortrait:(NSTimeInterval)animationDuration
 {
-    self.minimizerButton.enabled = self.aboutButton.alpha = self.separatorImage.alpha = NO;
+    self.minimizerButton.enabled = NO;
+    self.aboutButton.alpha = self.separatorImage.alpha = 0.0;
     self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:animationDuration
@@ -1104,7 +1105,7 @@
                              self.hdImage.frame = CGRectMake(8, 8, 752, 418);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
                              self.metadataInfo.frame = CGRectMake(20, 522, 728, 62);
-                             self.songNameButton.frame = CGRectMake(20, 660, 344, 344);
+                             self.songNameButton.frame = CGRectMake(20, 522, 728, 62);
                              self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
                              self.addSongButton.frame = CGRectMake(423, 947, 43, 43);
                              self.songListButton.frame = CGRectMake(517, 947, 43, 43);
@@ -1161,11 +1162,16 @@
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
-                         self.aboutButton.hidden = self.separatorImage.hidden = YES;
+                         self.separatorImage.hidden = YES;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                         {
                              self.hdImage.hidden = YES;
+                             self.aboutButton.hidden = YES;
+                         }
                          if(self.theStreamMetadataTimer)
                              [self.theStreamMetadataTimer fire];
+                         if(self.theImagesTimer)
+                             [self.theImagesTimer fire];
                      }];
 }
 
@@ -1273,22 +1279,7 @@
         [self bitrateChanged:self.bitrateSelector];
     }
     // Detect iPhone 5
-    [self initializeIPhoneInterface];
-    // Add the volume (fake it on simulator)
-    self.volumeViewContainer.backgroundColor = [UIColor clearColor];
-    if (!TARGET_IPHONE_SIMULATOR)
-    {
-        MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
-        [self.volumeViewContainer addSubview: myVolumeView];
-        myVolumeView = nil;
-    }
-    else
-    {
-        UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
-        myVolumeView.value = 0.5;
-        [self.volumeViewContainer addSubview: myVolumeView];
-        myVolumeView = nil;
-    }
+//    [self initializeIPhoneInterface];
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive: YES error: nil];
@@ -1315,13 +1306,30 @@
         self.viewIsLandscape = NO;
         [self interfaceToPortrait:0.1];
     }
+    // Add the volume (fake it on simulator)
+    self.volumeViewContainer.backgroundColor = [UIColor clearColor];
+    if (!TARGET_IPHONE_SIMULATOR)
+    {
+        MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
+        myVolumeView.contentMode = UIViewContentModeScaleToFill;
+        [self.volumeViewContainer addSubview: myVolumeView];
+        myVolumeView = nil;
+    }
+    else
+    {
+        UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
+        myVolumeView.value = 0.5;
+        myVolumeView.contentMode = UIViewContentModeScaleToFill;
+        [self.volumeViewContainer addSubview: myVolumeView];
+        myVolumeView = nil;
+    }
     // Automagically start, as per bg request
     [self playMainStream];
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
-    // Give a touch to the UI after a while (only on iPhone 5). This is a terrible hack, I know.
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f)
+    // Give a touch to the UI after a while (only on iPhone 5, only when landscape). This is a terrible hack, I know.
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
             [self interfaceToNormal];
