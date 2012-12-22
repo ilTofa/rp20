@@ -152,22 +152,22 @@
     {
         if(!self.viewIsLandscape)
         {
-            UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:bckColor endColor:[bckColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
+            UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
             if(temp == nil)
                 DLog(@"*** Image is nil! ***");
             self.backgroundImageView.image = temp;
         }
-        self.backgroundColor = bckColor;
-        DLog(@"Set background color to %@", bckColor);
-        self.metadataTextColor = txtColor;
-        if([txtColor pc_isBlackOrWhite])
+        self.backgroundColor = txtColor;
+        DLog(@"Set background color to %@", txtColor);
+        self.metadataTextColor = bckColor;
+        if([bckColor pc_isBlackOrWhite])
             self.segmentedColor = [UIColor darkGrayColor];
         else
-            self.segmentedColor = txtColor;
+            self.segmentedColor = bckColor;
         if(!self.viewIsLandscape)
         {
-            [self.view setBackgroundColor:bckColor];
-            [self.metadataInfo setTextColor:txtColor];
+            [self.view setBackgroundColor:txtColor];
+            [self.metadataInfo setTextColor:bckColor];
             self.bitrateSelector.tintColor = self.segmentedColor;
         }
     }
