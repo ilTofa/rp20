@@ -102,6 +102,8 @@
                           {
                               // load image on the main thread
                               dispatch_async(dispatch_get_main_queue(), ^{
+                                  // set background, too...
+                                  [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
                                   [self.hdImage setImage:temp];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
@@ -142,34 +144,25 @@
         bckColor = (darkText) ? [UIColor blackColor] : [UIColor whiteColor];
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(slideshowIsOn)
+    if(!self.viewIsLandscape)
+    {
+        UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
+        if(temp == nil)
+            DLog(@"*** Image is nil! ***");
+        self.backgroundImageView.image = temp;
+    }
+    self.backgroundColor = txtColor;
+    DLog(@"Set background color to %@", txtColor);
+    self.metadataTextColor = bckColor;
+    if([bckColor pc_isBlackOrWhite])
+        self.segmentedColor = [UIColor darkGrayColor];
+    else
+        self.segmentedColor = bckColor;
+    if(!self.viewIsLandscape)
     {
         [self.view setBackgroundColor:txtColor];
-        DLog(@"Set text color to %@", bckColor);
-        [self.metadataInfo setTextColor:[bckColor colorWithAlphaComponent:1.0]];
-    }
-    else
-    {
-        if(!self.viewIsLandscape)
-        {
-            UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
-            if(temp == nil)
-                DLog(@"*** Image is nil! ***");
-            self.backgroundImageView.image = temp;
-        }
-        self.backgroundColor = txtColor;
-        DLog(@"Set background color to %@", txtColor);
-        self.metadataTextColor = bckColor;
-        if([bckColor pc_isBlackOrWhite])
-            self.segmentedColor = [UIColor darkGrayColor];
-        else
-            self.segmentedColor = bckColor;
-        if(!self.viewIsLandscape)
-        {
-            [self.view setBackgroundColor:txtColor];
-            [self.metadataInfo setTextColor:bckColor];
-            self.bitrateSelector.tintColor = self.segmentedColor;
-        }
+        [self.metadataInfo setTextColor:bckColor];
+        self.bitrateSelector.tintColor = self.segmentedColor;
     }
 	imageColors = nil;
 }
@@ -268,6 +261,7 @@
                           dispatch_async(dispatch_get_main_queue(), ^{
                               // Set image
                               self.coverImageView.image = self.coverImage;
+                              // Set background (not for iPad in landscape)
                               [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
@@ -997,11 +991,11 @@
 - (void) interfaceToNormal
 {
     self.minimizerButton.enabled = self.aboutButton.alpha = YES;
-    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = NO;
+    self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 0.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
@@ -1020,6 +1014,7 @@
                              self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
                              self.backgroundImageView.frame = CGRectMake(0, 0, 1024, 768);
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
+                             self.metadataInfo.font = [UIFont systemFontOfSize:15.0];
                          }
                          else
                          {
@@ -1092,17 +1087,18 @@
 
 -(void)interfaceToPortrait:(NSTimeInterval)animationDuration
 {
-    self.minimizerButton.enabled = self.aboutButton.alpha = NO;
+    self.minimizerButton.enabled = self.aboutButton.alpha = self.separatorImage.alpha = NO;
     self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
                          self.aboutButton.alpha = 0.0;
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
-                             self.hdImage.frame = CGRectMake(2, 2, 764, 430);
+                             self.separatorImage.alpha = 0.0;
+                             self.hdImage.frame = CGRectMake(8, 8, 752, 418);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
                              self.metadataInfo.frame = CGRectMake(20, 522, 728, 62);
                              self.songNameButton.frame = CGRectMake(20, 660, 344, 344);
@@ -1118,6 +1114,7 @@
                              self.rpWebButton.frame = CGRectMake(20, 660, 344, 344);
                              self.backgroundImageView.frame = CGRectMake(0, 0, 768, 1024);
                              self.volumeViewContainer.frame = CGRectMake(423, 874, 325, 25);
+                             self.metadataInfo.font = [UIFont systemFontOfSize:20.0];
                          }
                          else
                          {
@@ -1161,7 +1158,7 @@
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
-                         self.aboutButton.hidden = YES;
+                         self.aboutButton.hidden = self.separatorImage.hidden = YES;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.hdImage.hidden = YES;
                          if(self.theStreamMetadataTimer)
