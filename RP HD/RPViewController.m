@@ -261,8 +261,9 @@
                           dispatch_async(dispatch_get_main_queue(), ^{
                               // Set image
                               self.coverImageView.image = self.coverImage;
-                              // Set background (not for iPad in landscape)
-                              [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
+                              // Set background (not for iPad)
+                              if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                                  [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
@@ -1299,9 +1300,9 @@
     self.isPSDPlaying = NO;
     // set bounds and corners
     self.hdImage.layer.cornerRadius = 8.0;
-    self.hdImage.clipsToBounds = YES;
+    self.coverImageView.layer.cornerRadius = 6.0;
     self.rpWebButton.layer.cornerRadius = 4.0;
-    self.rpWebButton.clipsToBounds = YES;
+    self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
     if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
         self.viewIsLandscape = YES;
