@@ -1071,8 +1071,10 @@
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          // 574 : 768 = 1020 : x -> x = 1020 * 768 / 574
-                         self.hdImage.frame = CGRectMake(-170, 0, 1364, 768);
-                         self.minimizerButton.frame = CGRectMake(-170, 0, 1364, 768);
+//                         self.hdImage.frame = CGRectMake(-170, 0, 1364, 768);
+//                         self.minimizerButton.frame = CGRectMake(-170, 0, 1364, 768);
+                         self.hdImage.frame = CGRectMake(0, 0, 1024, 768);
+                         self.minimizerButton.frame = CGRectMake(0, 0, 1024, 768);
                          self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                          self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
