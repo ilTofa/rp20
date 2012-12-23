@@ -297,7 +297,7 @@
 					</object>
 					<object class="IBUIActivityIndicatorView" id="81882366">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">-2147483356</int>
+						<int key="NSvFlags">-2147483347</int>
 						<string key="NSFrame">{{222, 116}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -614,7 +614,6 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="625199466"/>
-							<reference ref="21147272"/>
 							<reference ref="51533518"/>
 							<reference ref="703732471"/>
 							<reference ref="615157162"/>
@@ -628,6 +627,7 @@
 							<reference ref="940739765"/>
 							<reference ref="547997394"/>
 							<reference ref="408105365"/>
+							<reference ref="21147272"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

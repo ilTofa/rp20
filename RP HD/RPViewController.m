@@ -1289,7 +1289,8 @@
     if (!TARGET_IPHONE_SIMULATOR)
     {
         MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
-        myVolumeView.contentMode = UIViewContentModeScaleToFill;
+        DLog(@"size of VolumeView is %@, %@", NSStringFromCGPoint(myVolumeView.frame.origin), NSStringFromCGSize(myVolumeView.frame.size));
+        myVolumeView.contentMode = UIViewContentModeRedraw;
         [self.volumeViewContainer addSubview: myVolumeView];
         myVolumeView = nil;
     }
@@ -1297,7 +1298,7 @@
     {
         UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
         myVolumeView.value = 0.5;
-        myVolumeView.contentMode = UIViewContentModeScaleToFill;
+        myVolumeView.contentMode = UIViewContentModeRedraw;
         [self.volumeViewContainer addSubview: myVolumeView];
         myVolumeView = nil;
     }
