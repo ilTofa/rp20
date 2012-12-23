@@ -1105,8 +1105,8 @@
                              self.separatorImage.alpha = 0.0;
                              self.hdImage.frame = CGRectMake(8, 8, 752, 418);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
-                             self.metadataInfo.frame = CGRectMake(20, 522, 728, 62);
-                             self.songNameButton.frame = CGRectMake(20, 522, 728, 62);
+                             self.metadataInfo.frame = CGRectMake(20, 509, 728, 62);
+                             self.songNameButton.frame = CGRectMake(20, 509, 728, 62);
                              self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
                              self.addSongButton.frame = CGRectMake(423, 947, 43, 43);
                              self.songListButton.frame = CGRectMake(517, 947, 43, 43);
@@ -1119,7 +1119,7 @@
                              self.rpWebButton.frame = CGRectMake(20, 660, 344, 344);
                              self.backgroundImageView.frame = CGRectMake(0, 0, 768, 1024);
                              self.volumeViewContainer.frame = CGRectMake(423, 874, 325, 25);
-                             self.metadataInfo.font = [UIFont systemFontOfSize:20.0];
+                             self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                          }
                          else
                          {
