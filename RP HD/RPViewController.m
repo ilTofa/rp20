@@ -916,30 +916,6 @@
     self.hdImage.hidden = NO;
 }
 
--(void)initializeIPhoneInterface
-{
-    // Nothing to do for iPads
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        return;
-    BOOL isTallerScreen = ([UIScreen mainScreen].bounds.size.height == 568.0f);
-    if(isTallerScreen)
-    {
-        DLog(@"This is an iPhone5 display, setup it!");
-        self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
-        self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
-        self.metadataInfo.frame = CGRectMake(98, 16, 450, 21);
-        self.songNameButton.frame = CGRectMake(98, 16, 450, 21);
-        self.minimizerButton.frame = CGRectMake(0, 0, 568, 320);
-        self.hdImage.frame = CGRectMake(0, 0, 568, 320);
-        self.playOrStopButton.frame = CGRectMake(512, 278, 36, 36);
-        self.volumeViewContainer.frame = CGRectMake(324, 283, 180, 25);
-        self.songListButton.frame = CGRectMake(280, 278, 36, 36);
-        self.psdButton.frame = CGRectMake(236, 278, 36, 36);
-        self.bitrateSelector.frame = CGRectMake(77, 281, 151, 30);
-        self.spinner.frame = CGRectMake(266, 116, 37, 37);
-    }
-}
-
 - (void) interfaceToMinimized
 {
     [UIView animateWithDuration:0.5 
@@ -992,6 +968,13 @@
 
 - (void) interfaceToNormal
 {
+    // Protect iPhone init
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
+    {
+        self.coverImageView.hidden = NO;
+        self.viewIsLandscape = NO;
+        return;
+    }
     self.minimizerButton.enabled = self.aboutButton.alpha = YES;
     self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = NO;
     [UIView animateWithDuration:0.5
@@ -1059,8 +1042,6 @@
                          self.bitrateSelector.tintColor = [UIColor darkGrayColor];
                      }
                      completion:^(BOOL finished) {
-                         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                             self.coverImageView.hidden = YES;
                          self.interfaceState = kInterfaceNormal;
                          self.backgroundImageView.hidden = YES;
                      }];
@@ -1201,7 +1182,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         return YES;
     if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
@@ -1267,7 +1247,6 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     // reset text
     self.metadataInfo.text = self.rawMetadataString = @"";
-    self.rpWebButton.hidden = YES;
     // Let's see if we already have a preferred bitrate
     int savedBitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"bitrate"];
     if(savedBitrate == 0)
@@ -1279,8 +1258,6 @@
         self.bitrateSelector.selectedSegmentIndex = savedBitrate - 1;
         [self bitrateChanged:self.bitrateSelector];
     }
-    // Detect iPhone 5
-//    [self initializeIPhoneInterface];
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive: YES error: nil];
@@ -1330,9 +1307,10 @@
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
     // Give a touch to the UI after a while (only on iPhone 5, only when landscape). This is a terrible hack, I know.
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
             [self interfaceToNormal];
         });
     }
