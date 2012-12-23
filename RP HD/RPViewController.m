@@ -846,7 +846,8 @@
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
-    self.minimizerButton.enabled = YES;
+    if(self.viewIsLandscape)
+        self.minimizerButton.enabled = YES;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     self.rpWebButton.hidden = NO;
     self.rpWebButton.enabled = YES;
@@ -891,7 +892,8 @@
     self.addSongButton.enabled = YES;
     self.rpWebButton.enabled = YES;
     self.rpWebButton.hidden = NO;
-    self.minimizerButton.enabled = YES;
+    if(self.viewIsLandscape)
+        self.minimizerButton.enabled = YES;
     self.hdImage.hidden = NO;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
@@ -1099,7 +1101,7 @@
                              self.coverImageView.frame = CGRectMake(20, 660, 344, 344);
                              self.rpWebButton.frame = CGRectMake(20, 660, 344, 344);
                              self.backgroundImageView.frame = CGRectMake(0, 0, 768, 1024);
-                             self.volumeViewContainer.frame = CGRectMake(423, 874, 325, 25);
+                             self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                          }
                          else
@@ -1114,7 +1116,7 @@
                                  self.bitrateSelector.frame = CGRectMake(79, 410, 221, 30);
                                  self.psdButton.frame = CGRectMake(181, 514, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 512, 36, 36);
-                                 self.volumeViewContainer.frame = CGRectMake(20, 468, 280, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(85, 468, 150, 25);
                              }
                              else
                              { // "normal" iPhone
@@ -1126,7 +1128,7 @@
                                  self.bitrateSelector.frame = CGRectMake(79, 354, 221, 30);
                                  self.psdButton.frame = CGRectMake(181, 426, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 424, 36, 36);
-                                 self.volumeViewContainer.frame = CGRectMake(20, 396, 280, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(85, 396, 150, 25);
                              }
                              // in any iPhone...
                              self.hdImage.alpha = 0.0;
