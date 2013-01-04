@@ -844,7 +844,7 @@
     {
         if(self.theSleepBox == nil)
             self.theSleepBox = [[UIPopoverController alloc] initWithContentViewController:theSleepSelectionController];
-        self.theSleepBox.popoverContentSize = CGSizeMake(400, 287);
+        self.theSleepBox.popoverContentSize = CGSizeMake(400, 336);
         [self.theSleepBox presentPopoverFromRect:self.sleepButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else
