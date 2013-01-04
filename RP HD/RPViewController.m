@@ -273,30 +273,27 @@
              DLog(@"Song id is %@.", self.currentSongId);
              // In any case, reset the "add song" button to enabled state (we have a new song, it seems).
              dispatch_async(dispatch_get_main_queue(), ^{ self.addSongButton.enabled = YES; });
-             // Set a timer to refresh ourselves if this is the standard stream.
-             if(!self.isPSDPlaying)
+             // Reschedule ourselves at the end of the song
+             if(self.theStreamMetadataTimer != nil)
              {
-                 if(self.theStreamMetadataTimer != nil)
-                 {
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         [self.theStreamMetadataTimer invalidate];
-                         self.theStreamMetadataTimer = nil;
-                     });
-                 }
-                 NSNumber *whenRefresh = [values objectAtIndex:2];
-                 if([whenRefresh intValue] <= 0)
-                 {
-                     whenRefresh = @([whenRefresh intValue] * -1);
-                     if([whenRefresh intValue] < 5 || [whenRefresh intValue] > 30)
-                         whenRefresh = @(5);
-                     DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
-                 }
-                 else
-                     DLog(@"This song will last for %.0f seconds, rescheduling ourselves for refresh", [whenRefresh doubleValue]);
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     self.theStreamMetadataTimer = [NSTimer scheduledTimerWithTimeInterval:[whenRefresh doubleValue] target:self selector:@selector(metatadaHandler:) userInfo:nil repeats:NO];
+                     [self.theStreamMetadataTimer invalidate];
+                     self.theStreamMetadataTimer = nil;
                  });
              }
+             NSNumber *whenRefresh = [values objectAtIndex:2];
+             if([whenRefresh intValue] <= 0)
+             {
+                 whenRefresh = @([whenRefresh intValue] * -1);
+                 if([whenRefresh intValue] < 5 || [whenRefresh intValue] > 30)
+                     whenRefresh = @(5);
+                 DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
+             }
+             else
+                 DLog(@"This song will last for %.0f seconds, rescheduling ourselves for refresh", [whenRefresh doubleValue]);
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 self.theStreamMetadataTimer = [NSTimer scheduledTimerWithTimeInterval:[whenRefresh doubleValue] target:self selector:@selector(metatadaHandler:) userInfo:nil repeats:NO];
+             });
              // Now get album artwork
              NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
              DLog(@"URL for Artwork: <%@>", temp);
