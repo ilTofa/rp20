@@ -1003,6 +1003,7 @@
                              self.backgroundImageView.frame = CGRectMake(0, 0, 1024, 768);
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
                              self.metadataInfo.font = [UIFont systemFontOfSize:15.0];
+                             self.metadataInfo.shadowColor = [UIColor clearColor];
                          }
                          else
                          {
@@ -1030,11 +1031,12 @@
                                  self.songListButton.frame = CGRectMake(235, 278, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(277, 283, 150, 25);
                              }
-                             // in any case...
+                             // in any iPhone...
                              self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
                              self.hdImage.alpha = 1.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
+                             self.metadataInfo.shadowColor = [UIColor blackColor];
                          }
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 1;
@@ -1055,9 +1057,6 @@
     [UIView animateWithDuration:0.5 
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
-                         // 574 : 768 = 1020 : x -> x = 1020 * 768 / 574
-//                         self.hdImage.frame = CGRectMake(-170, 0, 1364, 768);
-//                         self.minimizerButton.frame = CGRectMake(-170, 0, 1364, 768);
                          self.hdImage.frame = CGRectMake(0, 0, 1024, 768);
                          self.minimizerButton.frame = CGRectMake(0, 0, 1024, 768);
                          self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
@@ -1070,6 +1069,7 @@
                          self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.logoImage.frame = CGRectMake(20, 626, 300, 94);
                          self.interfaceState = kInterfaceZoomed;
+                         self.metadataInfo.shadowColor = [UIColor blackColor];
                      }];    
 }
 
@@ -1142,6 +1142,7 @@
                          self.metadataInfo.text = self.rawMetadataString;
                          self.metadataInfo.textColor = self.metadataTextColor;
                          self.metadataInfo.textAlignment = NSTextAlignmentCenter;
+                         self.metadataInfo.shadowColor = [UIColor clearColor];
                          self.view.backgroundColor = self.backgroundColor;
                          self.bitrateSelector.tintColor = self.segmentedColor;                         
                      }
