@@ -1359,11 +1359,6 @@
         return UIInterfaceOrientationMaskAll;
 }
 
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-//{
-//    return UIInterfaceOrientationLandscapeLeft;
-//}
-//
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     DLog(@"This is willRotateToInterfaceOrientation");
@@ -1397,6 +1392,18 @@
         DLog(@"This is viewDidLayoutSubviews called for a layout change");
     [super viewDidLayoutSubviews];
 }
+
+// We check returning from a modal controller if layout has changed while this controller was hidden.
+-(void)viewDidAppear:(BOOL)animated
+{
+    if((UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && !self.viewIsLandscape) || (UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && self.viewIsLandscape))
+    {
+        DLog(@"*** This is viewDidAppear: detecting a change in interface orientation");
+        self.viewIsRotating = YES;
+        [self viewDidLayoutSubviews];
+    }
+}
+
 
 #pragma mark -
 #pragma mark LoadUnload
