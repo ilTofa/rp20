@@ -132,29 +132,43 @@
 
 - (void)setViewBackgroundFromImage:(UIImage *)anImage withSlideShowOn:(BOOL)slideshowIsOn
 {
-	NSCountedSet *imageColors = nil;
-    // Don't count all the pixel on the big slideshow photo...
-	UIColor *txtColor = [CoverArt findTextColor:anImage imageColors:&imageColors lazy:slideshowIsOn];
-    if(!txtColor)
-        txtColor = [UIColor blackColor];
-	UIColor *bckColor = nil;
-	BOOL darkText = [txtColor pc_isDarkColor];
-    DLog(@"%@ color is %@", slideshowIsOn ? @"Background" : @"Text", [txtColor colorWithAlphaComponent:1.0]);
-    [CoverArt findBackgroundColor:imageColors backgroundColor:&bckColor textColor:txtColor];
-	if (txtColor == nil)
-        txtColor = (darkText) ? [UIColor whiteColor] : [UIColor blackColor];
-	if(bckColor == nil)
-        bckColor = (darkText) ? [UIColor blackColor] : [UIColor whiteColor];
-    
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(!self.viewIsLandscape)
+    UIColor *txtColor;
+    UIColor *bckColor = nil;
+    if(!self.interfaceIsTinted)
     {
-        UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
-        if(temp == nil)
-            DLog(@"*** Image is nil! ***");
-        dispatch_async(dispatch_get_main_queue(), ^{ self.backgroundImageView.image = temp; });
+        // Nothing to do here... simply set background to black and text to white :)
+        txtColor = [UIColor blackColor];
+        bckColor = [UIColor whiteColor];
+        if(!self.viewIsLandscape)
+            dispatch_async(dispatch_get_main_queue(), ^{ self.backgroundImageView.image = nil; });
     }
-    dispatch_async(dispatch_get_main_queue(), ^{        
+    else
+    {
+        NSCountedSet *imageColors = nil;
+        // Don't count all the pixel on the big slideshow photo...
+        txtColor = [CoverArt findTextColor:anImage imageColors:&imageColors lazy:slideshowIsOn];
+        if(!txtColor)
+            txtColor = [UIColor blackColor];
+        bckColor = nil;
+        BOOL darkText = [txtColor pc_isDarkColor];
+        DLog(@"%@ color is %@", slideshowIsOn ? @"Background" : @"Text", [txtColor colorWithAlphaComponent:1.0]);
+        [CoverArt findBackgroundColor:imageColors backgroundColor:&bckColor textColor:txtColor];
+        if (txtColor == nil)
+            txtColor = (darkText) ? [UIColor whiteColor] : [UIColor blackColor];
+        if(bckColor == nil)
+            bckColor = (darkText) ? [UIColor blackColor] : [UIColor whiteColor];
+        
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        if(!self.viewIsLandscape)
+        {
+            UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
+            if(temp == nil)
+                DLog(@"*** Image is nil! ***");
+            dispatch_async(dispatch_get_main_queue(), ^{ self.backgroundImageView.image = temp; });
+        }
+        imageColors = nil;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
         self.backgroundColor = txtColor;
         DLog(@"Set background color to %@", txtColor);
         self.metadataTextColor = bckColor;
@@ -169,7 +183,6 @@
             self.bitrateSelector.tintColor = self.segmentedColor;
         }
     });
-	imageColors = nil;
 }
 
 -(void)metatadaHandler:(NSTimer *)timer
@@ -722,6 +735,30 @@
     }
 }
 
+- (IBAction)changeBackgroundType:(id)sender
+{
+    DLog(@"This is changeBackgroundType:");
+    if(self.interfaceIsTinted)
+    {
+        self.interfaceIsTinted = NO;
+        [self.colorsButton setImage:[UIImage imageNamed:@"button-color"] forState:UIControlStateNormal];
+        [self.colorsButton setImage:[UIImage imageNamed:@"button-color"] forState:UIControlStateHighlighted];
+        [self.colorsButton setImage:[UIImage imageNamed:@"button-color"] forState:UIControlStateSelected];
+    }
+    else
+    {
+        self.interfaceIsTinted = YES;
+        [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateNormal];
+        [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateHighlighted];
+        [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateSelected];        
+    }
+}
+
+- (IBAction)sleepSetup:(id)sender
+{
+    DLog(@"This is sleepSetup:");
+}
+
 
 - (IBAction)presentAboutBox:(id)sender
 {
@@ -927,7 +964,8 @@
 
 - (void) interfaceToMinimized
 {
-    [UIView animateWithDuration:0.5 
+    DLog(@"interfaceToMinimized");
+    [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -977,6 +1015,7 @@
 
 - (void) interfaceToNormal
 {
+    DLog(@"interfaceToNormal");
     // Protect iPhone init
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
     {
@@ -984,11 +1023,12 @@
         self.viewIsLandscape = NO;
         return;
     }
-    self.minimizerButton.enabled = self.aboutButton.alpha = YES;
-    self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = NO;
+    self.minimizerButton.enabled = self.aboutButton.enabled = YES;
+    self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = self.sleepButton.hidden = self.colorsButton.hidden = NO;
+    self.sleepButton.enabled = self.colorsButton.enabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.coverImageView.alpha = self.backgroundImageView.alpha = 0.0;
+                         self.coverImageView.alpha = self.backgroundImageView.alpha = self.sleepButton.alpha = self.colorsButton.alpha = 0.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
@@ -1060,7 +1100,8 @@
 
 - (void)interfaceToZoomed
 {
-    [UIView animateWithDuration:0.5 
+    DLog(@"interfaceToZoomed");
+    [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          self.hdImage.frame = CGRectMake(0, 0, 1024, 768);
@@ -1081,15 +1122,17 @@
 
 -(void)interfaceToPortrait:(NSTimeInterval)animationDuration
 {
+    DLog(@"interfaceToPortrait");
     self.minimizerButton.enabled = NO;
     self.aboutButton.alpha = self.separatorImage.alpha = 0.0;
     self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    self.sleepButton.enabled = self.colorsButton.enabled = YES;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
                          self.aboutButton.alpha = 0.0;
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = self.colorsButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.separatorImage.alpha = 0.0;
@@ -1284,6 +1327,8 @@
     self.coverImageView.layer.cornerRadius = 6.0;
     self.rpWebButton.layer.cornerRadius = 4.0;
     self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
+    // Hide only portrait buttons
+    self.sleepButton.alpha = self.colorsButton.alpha = 0.0;
     if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
         self.viewIsLandscape = YES;
@@ -1312,6 +1357,7 @@
         [self.volumeViewContainer addSubview: myVolumeView];
         myVolumeView = nil;
     }
+    self.interfaceIsTinted = YES;
     // Automagically start, as per bg request
     [self playMainStream];
     // We would like to receive starts and stops
@@ -1352,6 +1398,8 @@
     [[AVAudioSession sharedInstance] setDelegate:nil];
     [self setAddSongButton:nil];
     [self setSongListButton:nil];
+    [self setSleepButton:nil];
+    [self setColorsButton:nil];
     [super viewDidUnload];
 }
 

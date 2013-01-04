@@ -67,7 +67,7 @@
 						<string key="NSFrame">{{2, 2}, {1022, 574}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="506782224"/>
+						<reference key="NSNextKeyView" ref="254191706"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -352,6 +352,58 @@
 						<int key="IBUIStyle">0</int>
 						<reference key="IBUIColor" ref="470669373"/>
 					</object>
+					<object class="IBUIButton" id="254191706">
+						<reference key="NSNextResponder" ref="766721923"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{20, 440}, {43, 43}}</string>
+						<reference key="NSSuperview" ref="766721923"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="182342530"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<bool key="IBUIEnabled">NO</bool>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIHighlightedTitleColor" ref="470669373"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="42168732"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">button-bw.png</string>
+						</object>
+						<reference key="IBUIFontDescription" ref="858193246"/>
+						<reference key="IBUIFont" ref="447768981"/>
+					</object>
+					<object class="IBUIButton" id="182342530">
+						<reference key="NSNextResponder" ref="766721923"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{705, 440}, {43, 43}}</string>
+						<reference key="NSSuperview" ref="766721923"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="506782224"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<bool key="IBUIEnabled">NO</bool>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIHighlightedTitleColor" ref="470669373"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="42168732"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">button-sleep.png</string>
+						</object>
+						<reference key="IBUIFontDescription" ref="858193246"/>
+						<reference key="IBUIFont" ref="447768981"/>
+					</object>
 					<object class="IBUIButton" id="339562729">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
@@ -577,6 +629,22 @@
 					<int key="connectionID">63</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">colorsButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="254191706"/>
+					</object>
+					<int key="connectionID">68</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">sleepButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="182342530"/>
+					</object>
+					<int key="connectionID">69</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">playOrStop:</string>
 						<reference key="source" ref="679528737"/>
@@ -657,6 +725,24 @@
 					</object>
 					<int key="connectionID">56</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">sleepSetup:</string>
+						<reference key="source" ref="182342530"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">67</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">changeBackgroundType:</string>
+						<reference key="source" ref="254191706"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">66</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -698,6 +784,8 @@
 							<reference ref="891085671"/>
 							<reference ref="995936547"/>
 							<reference ref="1031546937"/>
+							<reference ref="254191706"/>
+							<reference ref="182342530"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -796,6 +884,18 @@
 						<reference key="parent" ref="766721923"/>
 						<string key="objectName">Background Image View</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">64</int>
+						<reference key="object" ref="182342530"/>
+						<reference key="parent" ref="766721923"/>
+						<string key="objectName">Button - Sleep</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">65</int>
+						<reference key="object" ref="254191706"/>
+						<reference key="parent" ref="766721923"/>
+						<string key="objectName">Button - B&amp;W</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -819,6 +919,8 @@
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -828,7 +930,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">63</int>
+			<int key="maxID">69</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -838,6 +940,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addCurrentSong:">id</string>
 						<string key="bitrateChanged:">id</string>
+						<string key="changeBackgroundType:">id</string>
 						<string key="debugFadeIn:">id</string>
 						<string key="debugFadeOut:">id</string>
 						<string key="minimizer:">id</string>
@@ -845,6 +948,7 @@
 						<string key="presentAboutBox:">id</string>
 						<string key="presentRPWeb:">id</string>
 						<string key="showSongsList:">id</string>
+						<string key="sleepSetup:">id</string>
 						<string key="songNameOverlayButton:">id</string>
 						<string key="startPSD:">id</string>
 					</dictionary>
@@ -855,6 +959,10 @@
 						</object>
 						<object class="IBActionInfo" key="bitrateChanged:">
 							<string key="name">bitrateChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="changeBackgroundType:">
+							<string key="name">changeBackgroundType:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="debugFadeIn:">
@@ -885,6 +993,10 @@
 							<string key="name">showSongsList:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="sleepSetup:">
+							<string key="name">sleepSetup:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="songNameOverlayButton:">
 							<string key="name">songNameOverlayButton:</string>
 							<string key="candidateClassName">id</string>
@@ -899,6 +1011,7 @@
 						<string key="addSongButton">UIButton</string>
 						<string key="backgroundImageView">UIImageView</string>
 						<string key="bitrateSelector">UISegmentedControl</string>
+						<string key="colorsButton">UIButton</string>
 						<string key="coverImageView">UIImageView</string>
 						<string key="hdImage">UIImageView</string>
 						<string key="iPhoneLogoImage">UIImageView</string>
@@ -909,6 +1022,7 @@
 						<string key="psdButton">UIButton</string>
 						<string key="rpWebButton">UIButton</string>
 						<string key="separatorImage">UIImageView</string>
+						<string key="sleepButton">UIButton</string>
 						<string key="songListButton">UIButton</string>
 						<string key="songNameButton">UIButton</string>
 						<string key="spinner">UIActivityIndicatorView</string>
@@ -930,6 +1044,10 @@
 						<object class="IBToOneOutletInfo" key="bitrateSelector">
 							<string key="name">bitrateSelector</string>
 							<string key="candidateClassName">UISegmentedControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorsButton">
+							<string key="name">colorsButton</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="coverImageView">
 							<string key="name">coverImageView</string>
@@ -971,6 +1089,10 @@
 							<string key="name">separatorImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="sleepButton">
+							<string key="name">sleepButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="songListButton">
 							<string key="name">songListButton</string>
 							<string key="candidateClassName">UIButton</string>
@@ -1010,8 +1132,10 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="Screen-Down.png">{1024, 23}</string>
 			<string key="button-addsong.png">{43, 43}</string>
+			<string key="button-bw.png">{43, 43}</string>
 			<string key="button-play.png">{43, 43}</string>
 			<string key="button-psd.png">{43, 43}</string>
+			<string key="button-sleep.png">{43, 43}</string>
 			<string key="button-songlist.png">{43, 43}</string>
 			<string key="logo_2011_rphd.png">{300, 94}</string>
 		</dictionary>
