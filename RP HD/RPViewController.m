@@ -1260,13 +1260,14 @@
                              { // iPhone 5
                                  self.hdImage.frame = CGRectMake(0, 0, 568, 320); //
                                  self.addSongButton.frame = CGRectMake(98, 512, 36, 36); //
-                                 self.iPhoneLogoImage.frame = CGRectMake(22, 405, 40, 40); //
-                                 self.metadataInfo.frame = CGRectMake(20, 328, 280, 60); //
+//                                 self.iPhoneLogoImage.frame = CGRectMake(22, 405, 40, 40); //
+                                 self.iPhoneLogoImage.frame = CGRectMake(140, 305, 40, 40); //
+                                 self.metadataInfo.frame = CGRectMake(20, 340, 280, 60); //
                                  self.playOrStopButton.frame = CGRectMake(264, 514, 36, 36); //
                                  self.bitrateSelector.frame = CGRectMake(79, 410, 221, 30);
                                  self.psdButton.frame = CGRectMake(181, 514, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 512, 36, 36);
-                                 self.volumeViewContainer.frame = CGRectMake(85, 468, 150, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(100, 468, 150, 25);
                              }
                              else
                              { // "normal" iPhone
@@ -1278,7 +1279,7 @@
                                  self.bitrateSelector.frame = CGRectMake(79, 354, 221, 30);
                                  self.psdButton.frame = CGRectMake(181, 426, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 424, 36, 36);
-                                 self.volumeViewContainer.frame = CGRectMake(85, 396, 150, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(120, 396, 150, 25);
                              }
                              // in any iPhone...
                              self.hdImage.alpha = 0.0;
