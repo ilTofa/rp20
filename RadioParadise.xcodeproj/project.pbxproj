@@ -91,6 +91,7 @@
 		64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA161513F8D30061DD49 /* forward@2x.png */; };
 		64AD767D1548B9A7001910E9 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AD767B1548B9A7001910E9 /* Default-Portrait.png */; };
 		64AD767E1548B9A7001910E9 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AD767C1548B9A7001910E9 /* Default-Portrait@2x.png */; };
+		64C4892516977AF300724EE1 /* RPSleepSetup~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64C4892416977AF200724EE1 /* RPSleepSetup~iphone.xib */; };
 		64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D481211547577800BC1085 /* RPViewController~iphone.xib */; };
 		64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D4812215475C5300BC1085 /* RPForumView~iphone.xib */; };
 		64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D481241547607D00BC1085 /* SmallLogo_rphd.png */; };
@@ -229,6 +230,7 @@
 		64AAFA161513F8D30061DD49 /* forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward@2x.png"; path = "Images/forward@2x.png"; sourceTree = "<group>"; };
 		64AD767B1548B9A7001910E9 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "Images/Default-Portrait.png"; sourceTree = "<group>"; };
 		64AD767C1548B9A7001910E9 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x.png"; path = "Images/Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		64C4892416977AF200724EE1 /* RPSleepSetup~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPSleepSetup~iphone.xib"; sourceTree = "<group>"; };
 		64D481201547577800BC1085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~iphone.xib"; sourceTree = "<group>"; };
 		64D4812215475C5300BC1085 /* RPForumView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPForumView~iphone.xib"; sourceTree = "<group>"; };
 		64D481241547607D00BC1085 /* SmallLogo_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SmallLogo_rphd.png; path = Images/SmallLogo_rphd.png; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 				6460FC2B1697485E009CDAE5 /* RPSleepSetup.h */,
 				6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */,
 				6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */,
+				64C4892416977AF200724EE1 /* RPSleepSetup~iphone.xib */,
 			);
 			path = "RP HD";
 			sourceTree = "<group>";
@@ -820,6 +823,7 @@
 				6460FC2916973C30009CDAE5 /* button-sleep-active.png in Resources */,
 				6460FC2A16973C30009CDAE5 /* button-sleep-active@2x.png in Resources */,
 				6460FC2F16974889009CDAE5 /* RPSleepSetup~ipad.xib in Resources */,
+				64C4892516977AF300724EE1 /* RPSleepSetup~iphone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

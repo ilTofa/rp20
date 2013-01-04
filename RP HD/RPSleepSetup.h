@@ -22,5 +22,6 @@
 @property(weak, nonatomic) id<RPSleepSetupDelegate> delegate;
 
 - (IBAction)doIt:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end

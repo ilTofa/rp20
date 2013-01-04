@@ -46,4 +46,9 @@
     [self.delegate RPSleepSetupDidSelect:self withDelay:self.sleepAfter.countDownDuration];
 }
 
+- (IBAction)cancel:(id)sender
+{
+    [self.delegate RPSleepSetupDidCancel:self];
+}
+
 @end
