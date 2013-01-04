@@ -104,7 +104,9 @@
                               dispatch_async(dispatch_get_main_queue(), ^{
                                   // set background, too (iPad only, only portrait)
                                   if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !self.viewIsLandscape)
-                                      [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
+                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                          [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
+                                      });
                                   [self.hdImage setImage:temp];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
@@ -150,21 +152,23 @@
         UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
         if(temp == nil)
             DLog(@"*** Image is nil! ***");
-        self.backgroundImageView.image = temp;
+        dispatch_async(dispatch_get_main_queue(), ^{ self.backgroundImageView.image = temp; });
     }
-    self.backgroundColor = txtColor;
-    DLog(@"Set background color to %@", txtColor);
-    self.metadataTextColor = bckColor;
-    if([bckColor pc_isBlackOrWhite])
-        self.segmentedColor = [UIColor darkGrayColor];
-    else
-        self.segmentedColor = bckColor;
-    if(!self.viewIsLandscape)
-    {
-        [self.view setBackgroundColor:txtColor];
-        [self.metadataInfo setTextColor:bckColor];
-        self.bitrateSelector.tintColor = self.segmentedColor;
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        self.backgroundColor = txtColor;
+        DLog(@"Set background color to %@", txtColor);
+        self.metadataTextColor = bckColor;
+        if([bckColor pc_isBlackOrWhite])
+            self.segmentedColor = [UIColor darkGrayColor];
+        else
+            self.segmentedColor = bckColor;
+        if(!self.viewIsLandscape)
+        {
+            [self.view setBackgroundColor:txtColor];
+            [self.metadataInfo setTextColor:bckColor];
+            self.bitrateSelector.tintColor = self.segmentedColor;
+        }
+    });
 	imageColors = nil;
 }
 
@@ -265,7 +269,9 @@
                               self.coverImageView.image = self.coverImage;
                               // Set background (not for iPad)
                               if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                                  [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
+                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                      [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
+                                  });
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
