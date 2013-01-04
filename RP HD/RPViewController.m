@@ -785,6 +785,11 @@
         [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateHighlighted];
         [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateSelected];        
     }
+    // Refresh...
+    if(self.theStreamMetadataTimer)
+        [self.theStreamMetadataTimer fire];
+    if(self.theImagesTimer)
+        [self.theImagesTimer fire];
 }
 
 - (void)RPSleepSetupDidCancel:(RPSleepSetup *)controller
