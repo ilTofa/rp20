@@ -124,17 +124,7 @@
         [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"lyricsClicked"];
         if(self.theWebView.isLoading)
             [self.theWebView stopLoading];
-        DLog(@"Metadata info for lyrics is %@", self.currentSongName);
-        // URL-encode song and artist names
-        NSString *temp = self.currentSongName;
-        temp = [temp stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        temp = [temp stringByReplacingOccurrencesOfString:@"@" withString:@"%40"];
-        temp = [temp stringByReplacingOccurrencesOfString:@"?" withString:@"%3F"];
-        temp = [temp stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
-        temp = [temp stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-        NSString *baseDDGUrl;
-        baseDDGUrl = @"https://duckduckgo.com/?q=\\lyrics+%@";
-        NSString *searchURL = [NSString stringWithFormat:baseDDGUrl, temp];
+        NSString *searchURL = [NSString stringWithFormat:@"http://radioparadise.com/i-lyrics.php?id=%@", self.songId];
         searchURL = [searchURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         DLog(@"Loading lyrics from <%@>", searchURL);
         [self.lyricsButton setTitle:@"Forum"];

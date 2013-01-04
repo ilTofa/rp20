@@ -70,7 +70,7 @@ typedef enum {
 @property (strong, nonatomic) UIImage *coverImage;
 @property (nonatomic) InterfaceMode interfaceState;
 @property (nonatomic) BOOL isPSDPlaying;
-@property (copy, nonatomic) NSString *psdSongId;
+@property (copy, nonatomic) NSString *currentSongId;
 @property (nonatomic) NSNumber *psdDurationInSeconds;
 
 @property BOOL viewIsLandscape;

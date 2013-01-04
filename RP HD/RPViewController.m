@@ -219,7 +219,8 @@
                  }
              });
              // remembering songid for forum view
-             self.psdSongId = [values objectAtIndex:1];
+             self.currentSongId = [values objectAtIndex:1];
+             DLog(@"Song id is %@.", self.currentSongId);
              // In any case, reset the "add song" button to enabled state (we have a new song, it seems).
              dispatch_async(dispatch_get_main_queue(), ^{ self.addSongButton.enabled = YES; });
              // Set a timer to refresh ourselves if this is the standard stream.
@@ -750,10 +751,10 @@
         else
             self.theWebView.modalPresentationStyle = UIModalPresentationFullScreen;
     }
-    if(self.isPSDPlaying)
-        self.theWebView.songId = self.psdSongId;
-    else
-        self.theWebView.songId = @"now";
+//    if(self.isPSDPlaying)
+    self.theWebView.songId = self.currentSongId;
+//    else
+//        self.theWebView.songId = @"now";
     self.theWebView.currentSongName = self.rawMetadataString;
     [self presentViewController:self.theWebView animated:YES completion:nil];
     self.theWebView = nil;
