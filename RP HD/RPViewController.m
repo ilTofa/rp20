@@ -16,7 +16,7 @@
 #import "CoverArt.h"
 #import "UIColor+DarkAddition.h"
 
-@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate>
+@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, RPSleepSetupDelegate, AVAudioSessionDelegate>
 
 @end
 
@@ -24,6 +24,39 @@
 
 #pragma mark -
 #pragma mark HD images loading
+
+-(void)sleepTimerElapsed:(NSTimer *)timer
+{
+    DLog(@"This is sleepTimerElapsed: stopping the radio as per user request");
+    // If PSD is playing, fire the timer and return here...
+    if(self.isPSDPlaying)
+    {
+        // If PSD is running, simply get back to the main stream by firing the end timer...
+        DLog(@"Manually firing the PSD timer (starting fading now)");
+        [self fadeOutCurrentTrackNow:self.thePsdStreamer forSeconds:kPsdFadeOutTime];
+        [self.thePsdTimer fire];
+        // Reset the timer to recall us in 3 seconds to truly stop
+        if(self.theSleepTimer)
+        {
+            [self.theSleepTimer invalidate];
+            self.theSleepTimer = nil;
+        }
+        self.theSleepTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(sleepTimerElapsed:) userInfo:nil repeats:NO];
+    }
+    else
+    {
+        // Stop the radio
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateNormal];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateHighlighted];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateSelected];
+        if(self.theSleepTimer)
+        {
+            [self.theSleepTimer invalidate];
+            self.theSleepTimer = nil;
+        }
+        [self stopPressed:nil];
+    }
+}
 
 -(void)scheduleImagesTimer
 {
@@ -754,9 +787,68 @@
     }
 }
 
+- (void)RPSleepSetupDidCancel:(RPSleepSetup *)controller
+{
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        [controller dismissModalViewControllerAnimated:YES];
+}
+
+- (void)RPSleepSetupDidSelect:(RPSleepSetup *)controller withDelay:(NSTimeInterval)sleepDelay
+{
+    // dismiss the popover (if needed)
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        if([self.theSleepBox isPopoverVisible])
+            [self.theSleepBox dismissPopoverAnimated:YES];
+    }
+    else // iPhone
+        [controller dismissModalViewControllerAnimated:YES];
+    // Invalidate current timer.
+    if(self.theSleepTimer)
+    {
+        [self.theSleepTimer invalidate];
+        self.theSleepTimer = nil;
+    }
+    if(sleepDelay == 60.0)
+    {
+        // Do nothing.
+        DLog(@"Delete sleep timer requested");
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateNormal];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateHighlighted];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateSelected];
+    }
+    else
+    {
+        // Set the new timer
+        DLog(@"We should set the sleep timer to %.0f seconds.", sleepDelay);
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep-active"] forState:UIControlStateNormal];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep-active"] forState:UIControlStateHighlighted];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep-active"] forState:UIControlStateSelected];
+        self.theSleepTimer = [NSTimer scheduledTimerWithTimeInterval:sleepDelay target:self selector:@selector(sleepTimerElapsed:) userInfo:nil repeats:NO];
+    }
+}
+
 - (IBAction)sleepSetup:(id)sender
 {
     DLog(@"This is sleepSetup:");
+    // Init controller and set ourself for callback
+    RPSleepSetup * theSleepSelectionController = [[RPSleepSetup alloc] initWithNibName:@"RPSleepSetup" bundle:[NSBundle mainBundle]];
+    theSleepSelectionController.delegate = self;
+    // if iPad, embed in a popover, go modal for iPhone
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        if(self.theSleepBox == nil)
+            self.theSleepBox = [[UIPopoverController alloc] initWithContentViewController:theSleepSelectionController];
+        self.theSleepBox.popoverContentSize = CGSizeMake(400, 287);
+        [self.theSleepBox presentPopoverFromRect:self.sleepButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+    else
+    {
+        theSleepSelectionController.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:theSleepSelectionController animated:YES completion:nil];
+    }
+    // Release...
+    theSleepSelectionController = nil;
 }
 
 
@@ -774,7 +866,7 @@
     else
     {
         RPAboutBox *theAboutBox;
-        if(self.theAboutBox == nil)
+        if(theAboutBox == nil)
         {
             theAboutBox = [[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]];
             theAboutBox.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -855,6 +947,14 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.addSongButton.enabled = NO;
+    if(self.theSleepTimer)
+    {
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateNormal];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateHighlighted];
+        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateSelected];
+        [self.theSleepTimer invalidate];
+        self.theSleepTimer = nil;
+    }
     if(self.theStreamMetadataTimer != nil)
     {
         [self.theStreamMetadataTimer invalidate];

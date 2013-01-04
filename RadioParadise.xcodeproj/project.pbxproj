@@ -58,6 +58,8 @@
 		6460FC2516973B25009CDAE5 /* button-sleep@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC1F16973B25009CDAE5 /* button-sleep@2x.png */; };
 		6460FC2916973C30009CDAE5 /* button-sleep-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC2716973C30009CDAE5 /* button-sleep-active.png */; };
 		6460FC2A16973C30009CDAE5 /* button-sleep-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC2816973C30009CDAE5 /* button-sleep-active@2x.png */; };
+		6460FC2D1697485F009CDAE5 /* RPSleepSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */; };
+		6460FC2F16974889009CDAE5 /* RPSleepSetup~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */; };
 		646ACA7515B46901001B5B73 /* STKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7415B46901001B5B73 /* STKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		646ACA7815B46A12001B5B73 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646ACA7715B46A12001B5B73 /* Security.framework */; };
 		646ACA8815B46D6A001B5B73 /* RPLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA8615B46D6A001B5B73 /* RPLoginController.m */; };
@@ -186,6 +188,9 @@
 		6460FC1F16973B25009CDAE5 /* button-sleep@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-sleep@2x.png"; path = "Images/button-sleep@2x.png"; sourceTree = "<group>"; };
 		6460FC2716973C30009CDAE5 /* button-sleep-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-sleep-active.png"; path = "Images/button-sleep-active.png"; sourceTree = "<group>"; };
 		6460FC2816973C30009CDAE5 /* button-sleep-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-sleep-active@2x.png"; path = "Images/button-sleep-active@2x.png"; sourceTree = "<group>"; };
+		6460FC2B1697485E009CDAE5 /* RPSleepSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSleepSetup.h; sourceTree = "<group>"; };
+		6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSleepSetup.m; sourceTree = "<group>"; };
+		6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPSleepSetup~ipad.xib"; sourceTree = "<group>"; };
 		646ACA7315B46901001B5B73 /* STKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKeychain.h; sourceTree = "<group>"; };
 		646ACA7415B46901001B5B73 /* STKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKeychain.m; sourceTree = "<group>"; };
 		646ACA7715B46A12001B5B73 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -590,6 +595,9 @@
 				646ACA8615B46D6A001B5B73 /* RPLoginController.m */,
 				646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */,
 				646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */,
+				6460FC2B1697485E009CDAE5 /* RPSleepSetup.h */,
+				6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */,
+				6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */,
 			);
 			path = "RP HD";
 			sourceTree = "<group>";
@@ -811,6 +819,7 @@
 				6460FC2516973B25009CDAE5 /* button-sleep@2x.png in Resources */,
 				6460FC2916973C30009CDAE5 /* button-sleep-active.png in Resources */,
 				6460FC2A16973C30009CDAE5 /* button-sleep-active@2x.png in Resources */,
+				6460FC2F16974889009CDAE5 /* RPSleepSetup~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,6 +853,7 @@
 				64DFA2B41684C2A600D4423C /* CoverArt.m in Sources */,
 				64DFA2B51684C2A600D4423C /* PCCountedColor.m in Sources */,
 				64DFA2B61684C2A600D4423C /* UIColor+DarkAddition.m in Sources */,
+				6460FC2D1697485F009CDAE5 /* RPSleepSetup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

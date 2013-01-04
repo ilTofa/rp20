@@ -12,6 +12,7 @@
 #import "RPAboutBox.h"
 #import "RPForumView.h"
 #import "RPLoginController.h"
+#import "RPSleepSetup.h"
 #import "SongsViewController.h"
 
 // #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
@@ -63,9 +64,11 @@ typedef enum {
 @property (strong, nonatomic) NSTimer *theImagesTimer;
 @property (strong, nonatomic) NSTimer *theStreamMetadataTimer;
 @property (strong, nonatomic) NSTimer *thePsdTimer;
+@property (strong, nonatomic) NSTimer *theSleepTimer;
 @property (strong, nonatomic) AVPlayer *thePsdStreamer;
 @property (strong, nonatomic) AVPlayer *theOldPsdStreamer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
+@property (strong, nonatomic) UIPopoverController *theSleepBox;
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
 
