@@ -1268,23 +1268,27 @@
                                  self.psdButton.frame = CGRectMake(181, 514, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 512, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(100, 468, 150, 25);
+                                 self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
+                                 self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
                              }
                              else
                              { // "normal" iPhone
                                  self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.addSongButton.frame = CGRectMake(98, 424, 36, 36); //
-                                 self.iPhoneLogoImage.frame = CGRectMake(22, 349, 40, 40); //
-                                 self.metadataInfo.frame = CGRectMake(20, 298, 280, 60); //
+                                 self.iPhoneLogoImage.frame = CGRectMake(60, 305, 40, 40); //
+                                 self.colorsButton.frame = CGRectMake(140, 305, 36, 36);
+                                 self.sleepButton.frame = CGRectMake(220, 305, 36, 36);
+                                 self.metadataInfo.frame = CGRectMake(20, 250, 280, 60); //
                                  self.playOrStopButton.frame = CGRectMake(264, 426, 36, 36); //
-                                 self.bitrateSelector.frame = CGRectMake(79, 354, 221, 30);
+                                 self.bitrateSelector.frame = CGRectMake(50, 354, 220, 30);
                                  self.psdButton.frame = CGRectMake(181, 426, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 424, 36, 36);
-                                 self.volumeViewContainer.frame = CGRectMake(120, 396, 150, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(79, 396, 150, 25);
+                                 self.coverImageView.frame = CGRectMake(40, 20, 240, 240); //
+                                 self.songNameButton.frame = CGRectMake(40, 20, 240, 240); //
                              }
                              // in any iPhone...
                              self.hdImage.alpha = 0.0;
-                             self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
-                             self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          }
                          // Both iPad and iPhone
