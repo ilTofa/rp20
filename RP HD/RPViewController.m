@@ -365,6 +365,7 @@
                       }
                       dispatch_async(dispatch_get_main_queue(), ^{
                           self.lyricsText.text = lyrics;
+                          [self.lyricsText scrollRangeToVisible:NSMakeRange(0, 0)];
                       });
                   }
               }];

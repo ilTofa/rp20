@@ -96,7 +96,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUITextView" id="322764568">
+					<object class="IBUITextView" id="740783275">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{12, 12}, {352, 227}}</string>
@@ -107,6 +107,7 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
+						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
 						<string type="base64-UTF8" key="IBUIText">UmVjb2xsZWN0IG1lIGRhcmxpbmcgcmFpc2UgbWUgdG8geW91ciBsaXBzClR3byB1bmRlcm5vdXJpc2hl
 ZCBlZ29zIGZvdXIgcm90YXRpbmcgaGlwcwpIb2xkIG9uIHRvIG1lIHRpZ2h0bHkgSSdtIGEgc2xpZGlu
@@ -683,7 +684,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">lyricsText</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="322764568"/>
+						<reference key="destination" ref="740783275"/>
 					</object>
 					<int key="connectionID">71</int>
 				</object>
@@ -829,7 +830,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="1031546937"/>
 							<reference ref="254191706"/>
 							<reference ref="182342530"/>
-							<reference ref="322764568"/>
+							<reference ref="740783275"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -942,7 +943,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">70</int>
-						<reference key="object" ref="322764568"/>
+						<reference key="object" ref="740783275"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 				</array>
