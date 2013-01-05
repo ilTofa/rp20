@@ -213,6 +213,7 @@
         {
             [self.view setBackgroundColor:txtColor];
             [self.metadataInfo setTextColor:bckColor];
+            [self.lyricsText setTextColor:bckColor];
             self.bitrateSelector.tintColor = self.segmentedColor;
         }
     });
@@ -343,6 +344,29 @@
                           [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
                       });
                  }
+              }];
+             // Now get song text (iPad only)
+             temp = [NSString stringWithFormat:@"http://radioparadise.com/lyrics/%@.txt", self.currentSongId];
+             NSURLRequest *lyricsReq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
+             [NSURLConnection sendAsynchronousRequest:lyricsReq queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
+              {
+                  if(data)
+                  {
+                      NSString *lyrics;
+                      if(((NSHTTPURLResponse *)res).statusCode == 404)
+                      {
+                          DLog(@"No lyrics for the song");
+                          lyrics = @"\r\r\r\r\rNo Lyrics Found.";
+                      }
+                      else
+                      {
+                          DLog(@"Got lyrics for the song!");
+                          lyrics = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                      }
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          self.lyricsText.text = lyrics;
+                      });
+                  }
               }];
          }
      }];
@@ -1134,6 +1158,7 @@
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
+                             self.lyricsText.alpha = 0.0;
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
@@ -1237,23 +1262,28 @@
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = self.colorsButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
+                             self.lyricsText.alpha = 1.0;
                              self.separatorImage.alpha = 0.0;
                              self.hdImage.frame = CGRectMake(8, 8, 752, 418);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
-                             self.metadataInfo.frame = CGRectMake(20, 509, 728, 62);
-                             self.songNameButton.frame = CGRectMake(20, 509, 728, 62);
+                             self.lyricsText.frame = CGRectMake(20, 777, 352, 227);
+                             self.metadataInfo.frame = CGRectMake(20, 464, 728, 62);
+                             self.songNameButton.frame = CGRectMake(20, 470, 728, 62);
                              self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
                              self.addSongButton.frame = CGRectMake(423, 947, 43, 43);
                              self.songListButton.frame = CGRectMake(517, 947, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 434, 768, 23);
                              self.psdButton.frame = CGRectMake(611, 947, 43, 43);
-                             self.logoImage.frame = CGRectMake(435, 650, 300, 94);
+                             self.logoImage.frame = CGRectMake(433, 557, 300, 94);
                              self.bitrateSelector.frame = CGRectMake(418, 789, 330, 30);
-                             self.spinner.frame = CGRectMake(174, 813, 37, 37);
-                             self.coverImageView.frame = CGRectMake(20, 660, 344, 344);
-                             self.rpWebButton.frame = CGRectMake(20, 660, 344, 344);
+                             self.spinner.frame = CGRectMake(178, 638, 37, 37);
+                             self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
+                             self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
                              self.backgroundImageView.frame = CGRectMake(0, 0, 768, 1024);
                              self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
+                             self.aboutButton.frame = CGRectMake(465, 706, 18, 19);
+                             self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
+                             self.colorsButton.frame = CGRectMake(671, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                          }
                          else
@@ -1296,7 +1326,7 @@
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 2;
                          self.metadataInfo.text = self.rawMetadataString;
-                         self.metadataInfo.textColor = self.metadataTextColor;
+                         self.metadataInfo.textColor = self.lyricsText.textColor = self.metadataTextColor;
                          self.metadataInfo.textAlignment = NSTextAlignmentCenter;
                          self.metadataInfo.shadowColor = [UIColor clearColor];
                          self.view.backgroundColor = self.backgroundColor;
@@ -1443,6 +1473,12 @@
     self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
     // Hide only portrait buttons
     self.sleepButton.alpha = self.colorsButton.alpha = 0.0;
+    // Hide lyrics text on iPad
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        self.lyricsText.text = nil;
+        self.lyricsText.alpha = 0.0;
+    }
     if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
         self.viewIsLandscape = YES;
@@ -1514,6 +1550,7 @@
     [self setSongListButton:nil];
     [self setSleepButton:nil];
     [self setColorsButton:nil];
+    [self setLyricsText:nil];
     [super viewDidUnload];
 }
 

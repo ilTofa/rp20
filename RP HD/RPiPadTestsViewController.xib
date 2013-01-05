@@ -106,7 +106,6 @@
 						<string key="NSFrame">{{705, 947}, {43, 43}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -168,10 +167,10 @@
 					<object class="IBUILabel" id="990142690">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 470}, {728, 62}}</string>
+						<string key="NSFrame">{{20, 464}, {728, 62}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="792735799"/>
+						<reference key="NSNextKeyView" ref="50556571"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -428,9 +427,9 @@
 						<reference key="IBUIFontDescription" ref="910603280"/>
 						<reference key="IBUIFont" ref="15141340"/>
 					</object>
-					<object class="IBUITextView" id="792735799">
+					<object class="IBUITextView" id="50556571">
 						<reference key="NSNextResponder" ref="766721923"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{20, 777}, {352, 227}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
@@ -736,7 +735,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="325077729"/>
 							<reference ref="1031670042"/>
 							<reference ref="564226610"/>
-							<reference ref="792735799"/>
+							<reference ref="50556571"/>
 							<reference ref="922582085"/>
 							<reference ref="242194388"/>
 							<reference ref="270011630"/>
@@ -830,7 +829,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">64</int>
-						<reference key="object" ref="792735799"/>
+						<reference key="object" ref="50556571"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 				</array>
@@ -951,6 +950,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="hdImage">UIImageView</string>
 						<string key="iPhoneLogoImage">UIImageView</string>
 						<string key="logoImage">UIImageView</string>
+						<string key="lyricsText">UITextView</string>
 						<string key="metadataInfo">UILabel</string>
 						<string key="minimizerButton">UIButton</string>
 						<string key="playOrStopButton">UIButton</string>
@@ -999,6 +999,10 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<object class="IBToOneOutletInfo" key="logoImage">
 							<string key="name">logoImage</string>
 							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lyricsText">
+							<string key="name">lyricsText</string>
+							<string key="candidateClassName">UITextView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="metadataInfo">
 							<string key="name">metadataInfo</string>
