@@ -1076,6 +1076,7 @@
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.aboutButton.alpha = 1.0;
+                             self.lyricsText.hidden = self.isLyricsToBeShown ? NO : YES;
                              self.lyricsText.frame = CGRectMake(22, 22, 352, 534);
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
@@ -1182,6 +1183,7 @@
                              self.separatorImage.alpha = 0.0;
                              self.hdImage.frame = CGRectMake(8, 8, 752, 418);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
+                             self.lyricsText.hidden = NO;
                              self.lyricsText.frame = CGRectMake(20, 777, 352, 227);
                              self.metadataInfo.frame = CGRectMake(20, 464, 728, 62);
                              self.songNameButton.frame = CGRectMake(20, 470, 728, 62);

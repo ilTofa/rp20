@@ -42,7 +42,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *playOrStopButton;
 @property (weak, nonatomic) IBOutlet UIView *volumeViewContainer;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (weak, nonatomic) IBOutlet UIImageView *hdImage;
+@property (weak) IBOutlet UIImageView *hdImage;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 @property (weak, nonatomic) IBOutlet UIButton *rpWebButton;
 @property (weak, nonatomic) IBOutlet UIButton *minimizerButton;
@@ -54,7 +54,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
 @property (weak, nonatomic) IBOutlet UIButton *addSongButton;
 @property (weak, nonatomic) IBOutlet UIButton *songListButton;
-@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
+@property (weak) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UIButton *sleepButton;
 @property (weak, nonatomic) IBOutlet UITextView *lyricsText;
 
@@ -71,7 +71,7 @@ typedef enum {
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
 
-@property (strong, nonatomic) UIImage *coverImage;
+@property (strong) UIImage *coverImage;
 @property (nonatomic) InterfaceMode interfaceState;
 @property (nonatomic) BOOL isPSDPlaying;
 @property (copy, nonatomic) NSString *currentSongId;
