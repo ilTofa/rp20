@@ -46,11 +46,11 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 @property (weak, nonatomic) IBOutlet UIButton *rpWebButton;
 @property (weak, nonatomic) IBOutlet UIButton *minimizerButton;
-@property (weak, nonatomic) IBOutlet UIImageView *logoImage;
+@property (weak, nonatomic) IBOutlet UIButton *logoImage;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bitrateSelector;
 @property (weak, nonatomic) IBOutlet UIButton *songNameButton;
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImage;
-@property (weak, nonatomic) IBOutlet UIImageView *iPhoneLogoImage;
+@property (weak, nonatomic) IBOutlet UIButton *iPhoneLogoImage;
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
 @property (weak, nonatomic) IBOutlet UIButton *addSongButton;
 @property (weak, nonatomic) IBOutlet UIButton *songListButton;
@@ -76,6 +76,7 @@ typedef enum {
 @property (nonatomic) BOOL isPSDPlaying;
 @property (copy, nonatomic) NSString *currentSongId;
 @property (nonatomic) NSNumber *psdDurationInSeconds;
+@property BOOL isLyricsToBeShown;
 
 @property BOOL viewIsLandscape;
 @property BOOL viewIsRotating;
@@ -97,6 +98,7 @@ typedef enum {
 - (IBAction)showSongsList:(id)sender;
 - (IBAction)addCurrentSong:(id)sender;
 - (IBAction)sleepSetup:(id)sender;
+- (IBAction)showLyrics:(id)sender;
 
 - (IBAction)debugFadeIn:(id)sender;
 - (IBAction)debugFadeOut:(id)sender;

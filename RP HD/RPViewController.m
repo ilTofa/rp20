@@ -794,6 +794,12 @@
     theSleepSelectionController = nil;
 }
 
+- (IBAction)showLyrics:(id)sender
+{
+    self.isLyricsToBeShown = (self.isLyricsToBeShown) ? NO : YES;
+    self.lyricsText.hidden = !self.isLyricsToBeShown;
+}
+
 
 - (IBAction)presentAboutBox:(id)sender
 {
@@ -804,7 +810,7 @@
             self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
             self.theAboutBox.popoverContentSize = CGSizeMake(340, 383);
         }
-        [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [self.theAboutBox presentPopoverFromRect:self.logoImage.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else
     {
@@ -1015,6 +1021,7 @@
                              self.psdButton.alpha = self.songListButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
+                             self.lyricsText.frame = CGRectMake(22, 117, 352, 534);
                              self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
@@ -1068,7 +1075,8 @@
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
-                             self.lyricsText.alpha = 0.0;
+                             self.aboutButton.alpha = 1.0;
+                             self.lyricsText.frame = CGRectMake(22, 22, 352, 534);
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
@@ -1084,6 +1092,7 @@
                              self.coverImageView.frame = CGRectMake(880, 604, 140, 140);
                              self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
+                             self.aboutButton.frame = CGRectMake(23, 607, 29, 31);
                              self.metadataInfo.font = [UIFont systemFontOfSize:15.0];
                              self.metadataInfo.shadowColor = [UIColor clearColor];
                          }
@@ -1170,7 +1179,6 @@
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
-                             self.lyricsText.alpha = 1.0;
                              self.separatorImage.alpha = 0.0;
                              self.hdImage.frame = CGRectMake(8, 8, 752, 418);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
@@ -1188,7 +1196,8 @@
                              self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
                              self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
-                             self.aboutButton.frame = CGRectMake(465, 706, 18, 19);
+//                             self.aboutButton.frame = CGRectMake(465, 706, 18, 19);
+                             self.aboutButton.alpha = 0.0;
                              self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                          }
@@ -1371,6 +1380,8 @@
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
     self.interfaceState = kInterfaceNormal;
     self.minimizerButton.enabled = NO;
+    self.isLyricsToBeShown = NO;
+    self.lyricsText.hidden = YES;
     // Set PSD to not logged, not playing
     self.cookieString = nil;
     self.isPSDPlaying = NO;
@@ -1378,12 +1389,16 @@
     self.hdImage.layer.cornerRadius = 8.0;
     self.coverImageView.layer.cornerRadius = 6.0;
     self.rpWebButton.layer.cornerRadius = 4.0;
+    self.lyricsText.layer.cornerRadius = 6.0;
     self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
     // Hide only portrait buttons
     self.sleepButton.alpha = 0.0;
     // Hide lyrics text
-    self.lyricsText.text = nil;
-    self.lyricsText.alpha = 0.0;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        self.lyricsText.text = nil;
+        self.lyricsText.alpha = 0.0;
+    }
     // Add the volume (fake it on simulator)
     self.volumeViewContainer.backgroundColor = [UIColor clearColor];
     if (!TARGET_IPHONE_SIMULATOR)
