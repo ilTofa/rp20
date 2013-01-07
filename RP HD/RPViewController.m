@@ -697,7 +697,7 @@
 - (IBAction)addCurrentSong:(id)sender
 {
     // Recover song data...
-    NSArray *songPieces = [self.metadataInfo.text componentsSeparatedByString:@" - "];
+    NSArray *songPieces = [self.rawMetadataString componentsSeparatedByString:@" - "];
     if([songPieces count] == 2)
     {
         self.addSongButton.enabled = NO;
