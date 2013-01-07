@@ -57,7 +57,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIButton *sleepButton;
-@property (weak, nonatomic) IBOutlet UIButton *colorsButton;
 @property (weak, nonatomic) IBOutlet UITextView *lyricsText;
 
 @property (strong, nonatomic) AVPlayer *theStreamer;
@@ -86,9 +85,6 @@ typedef enum {
 @property (copy, nonatomic) NSString *theRedirector;
 @property (copy, nonatomic) NSString *currentSongForumURL;
 @property (copy, nonatomic) NSString *rawMetadataString;
-@property (strong, nonatomic) UIColor *metadataTextColor;
-@property (strong, nonatomic) UIColor *backgroundColor;
-@property (strong, nonatomic) UIColor *segmentedColor;
 @property (copy, nonatomic) NSString *cookieString;
 @property BOOL interfaceIsTinted;
 
@@ -101,7 +97,6 @@ typedef enum {
 - (IBAction)startPSD:(id)sender;
 - (IBAction)showSongsList:(id)sender;
 - (IBAction)addCurrentSong:(id)sender;
-- (IBAction)changeBackgroundType:(id)sender;
 - (IBAction)sleepSetup:(id)sender;
 
 - (IBAction)debugFadeIn:(id)sender;

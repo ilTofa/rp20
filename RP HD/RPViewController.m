@@ -13,8 +13,6 @@
 #import "STKeychain/STKeychain.h"
 #import "SongAdder.h"
 #import "Song.h"
-#import "CoverArt.h"
-#import "UIColor+DarkAddition.h"
 
 @interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, RPSleepSetupDelegate, AVAudioSessionDelegate>
 
@@ -135,11 +133,6 @@
                           {
                               // load image on the main thread
                               dispatch_async(dispatch_get_main_queue(), ^{
-                                  // set background, too (iPad only, only portrait)
-                                  if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !self.viewIsLandscape)
-                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                          [self setViewBackgroundFromImage:temp withSlideShowOn:YES];
-                                      });
                                   [self.hdImage setImage:temp];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
@@ -162,62 +155,6 @@
 
 #pragma mark -
 #pragma mark Metadata management
-
-- (void)setViewBackgroundFromImage:(UIImage *)anImage withSlideShowOn:(BOOL)slideshowIsOn
-{
-    UIColor *txtColor;
-    UIColor *bckColor = nil;
-    if(!self.interfaceIsTinted)
-    {
-        // Nothing to do here... simply set background to black and text to white :)
-        txtColor = [UIColor blackColor];
-        bckColor = [UIColor whiteColor];
-        if(!self.viewIsLandscape)
-            dispatch_async(dispatch_get_main_queue(), ^{ self.backgroundImageView.image = nil; });
-    }
-    else
-    {
-        NSCountedSet *imageColors = nil;
-        // Don't count all the pixel on the big slideshow photo...
-        txtColor = [CoverArt findTextColor:anImage imageColors:&imageColors lazy:slideshowIsOn];
-        if(!txtColor)
-            txtColor = [UIColor blackColor];
-        bckColor = nil;
-        BOOL darkText = [txtColor pc_isDarkColor];
-        DLog(@"%@ color is %@", slideshowIsOn ? @"Background" : @"Text", [txtColor colorWithAlphaComponent:1.0]);
-        [CoverArt findBackgroundColor:imageColors backgroundColor:&bckColor textColor:txtColor];
-        if (txtColor == nil)
-            txtColor = (darkText) ? [UIColor whiteColor] : [UIColor blackColor];
-        if(bckColor == nil)
-            bckColor = (darkText) ? [UIColor blackColor] : [UIColor whiteColor];
-        
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        if(!self.viewIsLandscape)
-        {
-            UIImage *temp = [CoverArt radialGradientImageOfSize:screenRect.size withStartColor:txtColor endColor:[txtColor colorWithAlphaComponent:0.75] centre:CGPointMake(0.5, 0.25) radius:1.5];
-            if(temp == nil)
-                DLog(@"*** Image is nil! ***");
-            dispatch_async(dispatch_get_main_queue(), ^{ self.backgroundImageView.image = temp; });
-        }
-        imageColors = nil;
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.backgroundColor = txtColor;
-        DLog(@"Set background color to %@", txtColor);
-        self.metadataTextColor = bckColor;
-        if([bckColor pc_isBlackOrWhite])
-            self.segmentedColor = [UIColor darkGrayColor];
-        else
-            self.segmentedColor = bckColor;
-        if(!self.viewIsLandscape)
-        {
-            [self.view setBackgroundColor:txtColor];
-            [self.metadataInfo setTextColor:bckColor];
-            [self.lyricsText setTextColor:bckColor];
-            self.bitrateSelector.tintColor = self.segmentedColor;
-        }
-    });
-}
 
 -(void)metatadaHandler:(NSTimer *)timer
 {
@@ -311,11 +248,6 @@
                           dispatch_async(dispatch_get_main_queue(), ^{
                               // Set image
                               self.coverImageView.image = self.coverImage;
-                              // Set background (not for iPad)
-                              if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                      [self setViewBackgroundFromImage:self.coverImage withSlideShowOn:NO];
-                                  });
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
@@ -790,30 +722,6 @@
     }
 }
 
-- (IBAction)changeBackgroundType:(id)sender
-{
-    DLog(@"This is changeBackgroundType:");
-    if(self.interfaceIsTinted)
-    {
-        self.interfaceIsTinted = NO;
-        [self.colorsButton setImage:[UIImage imageNamed:@"button-color"] forState:UIControlStateNormal];
-        [self.colorsButton setImage:[UIImage imageNamed:@"button-color"] forState:UIControlStateHighlighted];
-        [self.colorsButton setImage:[UIImage imageNamed:@"button-color"] forState:UIControlStateSelected];
-    }
-    else
-    {
-        self.interfaceIsTinted = YES;
-        [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateNormal];
-        [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateHighlighted];
-        [self.colorsButton setImage:[UIImage imageNamed:@"button-bw"] forState:UIControlStateSelected];        
-    }
-    // Refresh...
-    if(self.theStreamMetadataTimer)
-        [self.theStreamMetadataTimer fire];
-    if(self.theImagesTimer)
-        [self.theImagesTimer fire];
-}
-
 - (void)RPSleepSetupDidCancel:(RPSleepSetup *)controller
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -1151,11 +1059,11 @@
         return;
     }
     self.minimizerButton.enabled = self.aboutButton.enabled = YES;
-    self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = self.sleepButton.hidden = self.colorsButton.hidden = NO;
-    self.sleepButton.enabled = self.colorsButton.enabled = NO;
+    self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = self.sleepButton.hidden = NO;
+    self.sleepButton.enabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.coverImageView.alpha = self.backgroundImageView.alpha = self.sleepButton.alpha = self.colorsButton.alpha = 0.0;
+                         self.coverImageView.alpha = self.backgroundImageView.alpha = self.sleepButton.alpha = 0.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
@@ -1255,12 +1163,12 @@
     self.aboutButton.alpha = self.separatorImage.alpha = 0.0;
     self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
-    self.sleepButton.enabled = self.colorsButton.enabled = YES;
+    self.sleepButton.enabled = YES;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
                          self.aboutButton.alpha = 0.0;
                          self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = self.colorsButton.alpha = 1.0;
+                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.lyricsText.alpha = 1.0;
@@ -1284,7 +1192,6 @@
                              self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
                              self.aboutButton.frame = CGRectMake(465, 706, 18, 19);
                              self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
-                             self.colorsButton.frame = CGRectMake(671, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                          }
                          else
@@ -1309,7 +1216,6 @@
                                  self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.addSongButton.frame = CGRectMake(98, 424, 36, 36); //
                                  self.iPhoneLogoImage.frame = CGRectMake(60, 305, 40, 40); //
-                                 self.colorsButton.frame = CGRectMake(140, 305, 36, 36);
                                  self.sleepButton.frame = CGRectMake(220, 305, 36, 36);
                                  self.metadataInfo.frame = CGRectMake(20, 250, 280, 60); //
                                  self.playOrStopButton.frame = CGRectMake(264, 426, 36, 36); //
@@ -1327,11 +1233,8 @@
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 2;
                          self.metadataInfo.text = self.rawMetadataString;
-                         self.metadataInfo.textColor = self.lyricsText.textColor = self.metadataTextColor;
                          self.metadataInfo.textAlignment = NSTextAlignmentCenter;
                          self.metadataInfo.shadowColor = [UIColor clearColor];
-                         self.view.backgroundColor = self.backgroundColor;
-                         self.bitrateSelector.tintColor = self.segmentedColor;                         
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
@@ -1473,7 +1376,7 @@
     self.rpWebButton.layer.cornerRadius = 4.0;
     self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
     // Hide only portrait buttons
-    self.sleepButton.alpha = self.colorsButton.alpha = 0.0;
+    self.sleepButton.alpha = 0.0;
     // Hide lyrics text on iPad
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -1550,7 +1453,6 @@
     [self setAddSongButton:nil];
     [self setSongListButton:nil];
     [self setSleepButton:nil];
-    [self setColorsButton:nil];
     [self setLyricsText:nil];
     [super viewDidUnload];
 }
