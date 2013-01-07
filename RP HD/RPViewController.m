@@ -1159,6 +1159,7 @@
                              self.hdImage.alpha = 1.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                              self.metadataInfo.shadowColor = [UIColor blackColor];
+                             self.lyricsText.hidden = YES;
                          }
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 1;
@@ -1199,7 +1200,6 @@
 {
     DLog(@"interfaceToPortrait");
     self.minimizerButton.enabled = NO;
-    self.aboutButton.alpha = 0.0;
     self.coverImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     self.sleepButton.enabled = YES;
@@ -1229,7 +1229,6 @@
                              self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
                              self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
-//                             self.aboutButton.frame = CGRectMake(465, 706, 18, 19);
                              self.aboutButton.alpha = 0.0;
                              self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
@@ -1240,14 +1239,15 @@
                              { // iPhone 5
                                  self.hdImage.frame = CGRectMake(0, 0, 568, 320); //
                                  self.addSongButton.frame = CGRectMake(98, 512, 36, 36); //
-//                                 self.iPhoneLogoImage.frame = CGRectMake(22, 405, 40, 40); //
                                  self.iPhoneLogoImage.frame = CGRectMake(140, 305, 40, 40); //
                                  self.metadataInfo.frame = CGRectMake(20, 340, 280, 60); //
                                  self.playOrStopButton.frame = CGRectMake(264, 514, 36, 36); //
                                  self.bitrateSelector.frame = CGRectMake(79, 410, 221, 30);
+                                 self.aboutButton.frame = CGRectMake(20, 405, 36, 36);
                                  self.psdButton.frame = CGRectMake(181, 514, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 512, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(100, 468, 150, 25);
+                                 self.lyricsText.frame = CGRectMake(20, 20, 280, 280);
                                  self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
                                  self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
                              }
@@ -1256,6 +1256,7 @@
                                  self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.addSongButton.frame = CGRectMake(98, 424, 36, 36); //
                                  self.iPhoneLogoImage.frame = CGRectMake(60, 305, 40, 40); //
+                                 self.aboutButton.frame = CGRectMake(139, 305, 36, 36);
                                  self.sleepButton.frame = CGRectMake(220, 305, 36, 36);
                                  self.metadataInfo.frame = CGRectMake(20, 250, 280, 60); //
                                  self.playOrStopButton.frame = CGRectMake(264, 426, 36, 36); //
@@ -1263,10 +1264,26 @@
                                  self.psdButton.frame = CGRectMake(181, 426, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 424, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(79, 396, 150, 25);
+                                 self.lyricsText.frame = CGRectMake(40, 20, 240, 240);
                                  self.coverImageView.frame = CGRectMake(40, 20, 240, 240); //
                                  self.songNameButton.frame = CGRectMake(40, 20, 240, 240); //
                              }
                              // in any iPhone...
+                             self.aboutButton.alpha = 1.0;
+                             if(self.isLyricsToBeShown)
+                             {
+                                 self.lyricsText.hidden = NO;
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
+                             }
+                             else
+                             {
+                                 self.lyricsText.hidden = YES;
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+                             }
                              self.hdImage.alpha = 0.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                          }
@@ -1281,7 +1298,6 @@
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                          {
                              self.hdImage.hidden = YES;
-                             self.aboutButton.hidden = YES;
                          }
                          if(self.theStreamMetadataTimer)
                              [self.theStreamMetadataTimer fire];
@@ -1426,11 +1442,7 @@
     // Hide only portrait buttons
     self.sleepButton.alpha = 0.0;
     // Hide lyrics text
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        self.lyricsText.text = nil;
-        self.lyricsText.alpha = 0.0;
-    }
+    self.lyricsText.text = nil;
     // Add the volume (fake it on simulator)
     self.volumeViewContainer.backgroundColor = [UIColor clearColor];
     if (!TARGET_IPHONE_SIMULATOR)
