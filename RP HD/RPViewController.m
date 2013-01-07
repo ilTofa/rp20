@@ -1059,19 +1059,12 @@
 - (void) interfaceToNormal
 {
     DLog(@"interfaceToNormal");
-    // Protect iPhone init
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
-    {
-        self.coverImageView.hidden = NO;
-        self.viewIsLandscape = NO;
-        return;
-    }
     self.minimizerButton.enabled = self.aboutButton.enabled = YES;
     self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = self.sleepButton.hidden = NO;
     self.sleepButton.enabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.coverImageView.alpha = self.backgroundImageView.alpha = self.sleepButton.alpha = 0.0;
+                         self.coverImageView.alpha = self.sleepButton.alpha = 0.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
@@ -1090,7 +1083,6 @@
                              self.spinner.frame = CGRectMake(932, 655, 37, 37);
                              self.coverImageView.frame = CGRectMake(880, 604, 140, 140);
                              self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
-                             self.backgroundImageView.frame = CGRectMake(0, 0, 1024, 768);
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
                              self.metadataInfo.font = [UIFont systemFontOfSize:15.0];
                              self.metadataInfo.shadowColor = [UIColor clearColor];
@@ -1138,7 +1130,6 @@
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
-                         self.backgroundImageView.hidden = YES;
                      }];
 }
 
@@ -1169,13 +1160,13 @@
     DLog(@"interfaceToPortrait");
     self.minimizerButton.enabled = NO;
     self.aboutButton.alpha = self.separatorImage.alpha = 0.0;
-    self.coverImageView.hidden = self.backgroundImageView.hidden = NO;
+    self.coverImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     self.sleepButton.enabled = YES;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
                          self.aboutButton.alpha = 0.0;
-                         self.coverImageView.alpha = self.backgroundImageView.alpha = 1.0;
+                         self.coverImageView.alpha = 1.0;
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
@@ -1196,7 +1187,6 @@
                              self.spinner.frame = CGRectMake(178, 638, 37, 37);
                              self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
-                             self.backgroundImageView.frame = CGRectMake(0, 0, 768, 1024);
                              self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
                              self.aboutButton.frame = CGRectMake(465, 706, 18, 19);
                              self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
@@ -1338,11 +1328,17 @@
 // We check returning from a modal controller if layout has changed while this controller was hidden.
 -(void)viewDidAppear:(BOOL)animated
 {
-    if((UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && !self.viewIsLandscape) || (UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && self.viewIsLandscape))
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
-        DLog(@"*** This is viewDidAppear: detecting a change in interface orientation");
-        self.viewIsRotating = YES;
-        [self viewDidLayoutSubviews];
+        DLog(@"Main view appearing in landscape.");
+        self.viewIsLandscape = YES;
+        [self interfaceToNormal];
+    }
+    else
+    {
+        DLog(@"Main view appearing in portrait.");
+        self.viewIsLandscape = NO;
+        [self interfaceToPortrait:0.0];
     }
 }
 
@@ -1385,22 +1381,9 @@
     self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
     // Hide only portrait buttons
     self.sleepButton.alpha = 0.0;
-    // Hide lyrics text on iPad
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        self.lyricsText.text = nil;
-        self.lyricsText.alpha = 0.0;
-    }
-    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        self.viewIsLandscape = YES;
-        [self interfaceToNormal];
-    }
-    else
-    {
-        self.viewIsLandscape = NO;
-        [self interfaceToPortrait:0.1];
-    }
+    // Hide lyrics text
+    self.lyricsText.text = nil;
+    self.lyricsText.alpha = 0.0;
     // Add the volume (fake it on simulator)
     self.volumeViewContainer.backgroundColor = [UIColor clearColor];
     if (!TARGET_IPHONE_SIMULATOR)
@@ -1425,14 +1408,6 @@
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
-    // Give a touch to the UI after a while (only on iPhone 5, only when landscape). This is a terrible hack, I know.
-//    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568.0f && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-            [self interfaceToNormal];
-        });
-    }
 }
 
 - (void)viewDidUnload

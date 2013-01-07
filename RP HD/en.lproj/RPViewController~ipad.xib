@@ -40,17 +40,6 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIImageView" id="1031546937">
-						<reference key="NSNextResponder" ref="766721923"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{1024, 768}</string>
-						<reference key="NSSuperview" ref="766721923"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="969323428"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-					</object>
 					<object class="IBUIImageView" id="969323428">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
@@ -475,7 +464,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				<string key="NSFrameSize">{1024, 748}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="1031546937"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">6</int>
 					<string key="NSCatalogName">System</string>
@@ -632,14 +621,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">backgroundImageView</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="1031546937"/>
-					</object>
-					<int key="connectionID">63</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">sleepButton</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="182342530"/>
@@ -784,7 +765,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="339562729"/>
 							<reference ref="891085671"/>
 							<reference ref="995936547"/>
-							<reference ref="1031546937"/>
 							<reference ref="182342530"/>
 							<reference ref="740783275"/>
 						</array>
@@ -880,12 +860,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="objectName">Cover Image View</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">62</int>
-						<reference key="object" ref="1031546937"/>
-						<reference key="parent" ref="766721923"/>
-						<string key="objectName">Background Image View</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">64</int>
 						<reference key="object" ref="182342530"/>
 						<reference key="parent" ref="766721923"/>
@@ -918,7 +892,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				<string key="54.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="70.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -940,7 +913,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addCurrentSong:">id</string>
 						<string key="bitrateChanged:">id</string>
-						<string key="changeBackgroundType:">id</string>
 						<string key="debugFadeIn:">id</string>
 						<string key="debugFadeOut:">id</string>
 						<string key="minimizer:">id</string>
@@ -959,10 +931,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						</object>
 						<object class="IBActionInfo" key="bitrateChanged:">
 							<string key="name">bitrateChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="changeBackgroundType:">
-							<string key="name">changeBackgroundType:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="debugFadeIn:">
@@ -1011,7 +979,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="addSongButton">UIButton</string>
 						<string key="backgroundImageView">UIImageView</string>
 						<string key="bitrateSelector">UISegmentedControl</string>
-						<string key="colorsButton">UIButton</string>
 						<string key="coverImageView">UIImageView</string>
 						<string key="hdImage">UIImageView</string>
 						<string key="iPhoneLogoImage">UIImageView</string>
@@ -1045,10 +1012,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<object class="IBToOneOutletInfo" key="bitrateSelector">
 							<string key="name">bitrateSelector</string>
 							<string key="candidateClassName">UISegmentedControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="colorsButton">
-							<string key="name">colorsButton</string>
-							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="coverImageView">
 							<string key="name">coverImageView</string>

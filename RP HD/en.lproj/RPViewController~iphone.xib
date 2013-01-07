@@ -39,17 +39,6 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIImageView" id="547997394">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">310</int>
-						<string key="NSFrameSize">{480, 320}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="625199466"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-					</object>
 					<object class="IBUIImageView" id="408105365">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
@@ -63,7 +52,7 @@
 					</object>
 					<object class="IBUIImageView" id="625199466">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">303</int>
+						<int key="NSvFlags">294</int>
 						<string key="NSFrameSize">{480, 270}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -74,7 +63,7 @@
 					</object>
 					<object class="IBUIButton" id="21147272">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">306</int>
+						<int key="NSvFlags">294</int>
 						<string key="NSFrameSize">{480, 266}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -108,7 +97,7 @@
 					</object>
 					<object class="IBUIButton" id="703732471">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{98, 16}, {373, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -129,7 +118,7 @@
 					</object>
 					<object class="IBUILabel" id="615157162">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">291</int>
+						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{98, 16}, {373, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -405,7 +394,7 @@
 				<string key="NSFrameSize">{480, 320}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="547997394"/>
+				<reference key="NSNextKeyView"/>
 				<reference key="IBUIBackgroundColor" ref="1027091844"/>
 				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 					<int key="IBUIInterfaceOrientation">3</int>
@@ -547,14 +536,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">backgroundImageView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="547997394"/>
-					</object>
-					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">coverImageView</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="408105365"/>
@@ -675,7 +656,6 @@
 							<reference ref="980633254"/>
 							<reference ref="151120725"/>
 							<reference ref="940739765"/>
-							<reference ref="547997394"/>
 							<reference ref="408105365"/>
 							<reference ref="21147272"/>
 							<reference ref="422987346"/>
@@ -764,12 +744,6 @@
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">44</int>
-						<reference key="object" ref="547997394"/>
-						<reference key="parent" ref="191373211"/>
-						<string key="objectName">background Image View</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
 						<reference key="object" ref="408105365"/>
 						<reference key="parent" ref="191373211"/>
@@ -803,7 +777,6 @@
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="39.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="46.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="52.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -822,7 +795,6 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addCurrentSong:">id</string>
 						<string key="bitrateChanged:">id</string>
-						<string key="changeBackgroundType:">id</string>
 						<string key="debugFadeIn:">id</string>
 						<string key="debugFadeOut:">id</string>
 						<string key="minimizer:">id</string>
@@ -841,10 +813,6 @@
 						</object>
 						<object class="IBActionInfo" key="bitrateChanged:">
 							<string key="name">bitrateChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="changeBackgroundType:">
-							<string key="name">changeBackgroundType:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="debugFadeIn:">
@@ -893,7 +861,6 @@
 						<string key="addSongButton">UIButton</string>
 						<string key="backgroundImageView">UIImageView</string>
 						<string key="bitrateSelector">UISegmentedControl</string>
-						<string key="colorsButton">UIButton</string>
 						<string key="coverImageView">UIImageView</string>
 						<string key="hdImage">UIImageView</string>
 						<string key="iPhoneLogoImage">UIImageView</string>
@@ -927,10 +894,6 @@
 						<object class="IBToOneOutletInfo" key="bitrateSelector">
 							<string key="name">bitrateSelector</string>
 							<string key="candidateClassName">UISegmentedControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="colorsButton">
-							<string key="name">colorsButton</string>
-							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="coverImageView">
 							<string key="name">coverImageView</string>
