@@ -1160,6 +1160,7 @@
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                              self.metadataInfo.shadowColor = [UIColor blackColor];
                              self.lyricsText.hidden = YES;
+                             self.aboutButton.hidden = YES;
                          }
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 1;
