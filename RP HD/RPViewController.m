@@ -797,7 +797,20 @@
 - (IBAction)showLyrics:(id)sender
 {
     self.isLyricsToBeShown = (self.isLyricsToBeShown) ? NO : YES;
-    self.lyricsText.hidden = !self.isLyricsToBeShown;
+    if(self.isLyricsToBeShown)
+    {
+        self.lyricsText.hidden = NO;
+        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
+    }
+    else
+    {
+        self.lyricsText.hidden = YES;
+        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+    }
 }
 
 
@@ -896,6 +909,8 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.addSongButton.enabled = NO;
+    if(self.isLyricsToBeShown)
+        [self showLyrics:nil];
     if(self.theSleepTimer)
     {
         [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateNormal];
@@ -924,6 +939,8 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.addSongButton.enabled = NO;
+    if(self.isLyricsToBeShown)
+        [self showLyrics:nil];
 }
 
 -(void)interfacePlay
@@ -1076,24 +1093,37 @@
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.aboutButton.alpha = 1.0;
-                             self.lyricsText.hidden = self.isLyricsToBeShown ? NO : YES;
                              self.lyricsText.frame = CGRectMake(22, 22, 352, 534);
+                             self.aboutButton.frame = CGRectMake(331, 686, 43, 43);
+                             if(self.isLyricsToBeShown)
+                             {
+                                 self.lyricsText.hidden = NO;
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];                                 
+                             }
+                             else
+                             {
+                                 self.lyricsText.hidden = YES;
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+                             }
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                              self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
-                             self.playOrStopButton.frame = CGRectMake(350, 634, 43, 43);
-                             self.addSongButton.frame = CGRectMake(440, 634, 43, 43);
+                             self.playOrStopButton.frame = CGRectMake(368, 634, 43, 43);
+                             self.addSongButton.frame = CGRectMake(446, 634, 43, 43);
                              self.songListButton.frame = CGRectMake(485, 686, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
-                             self.psdButton.frame = CGRectMake(395, 686, 43, 43);
+                             self.psdButton.frame = CGRectMake(407, 686, 43, 43);
                              self.logoImage.frame = CGRectMake(20, 626, 300, 94);
                              self.bitrateSelector.frame = CGRectMake(533, 646, 300, 30);
                              self.spinner.frame = CGRectMake(932, 655, 37, 37);
                              self.coverImageView.frame = CGRectMake(880, 604, 140, 140);
                              self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
-                             self.aboutButton.frame = CGRectMake(23, 607, 29, 31);
                              self.metadataInfo.font = [UIFont systemFontOfSize:15.0];
                              self.metadataInfo.shadowColor = [UIColor clearColor];
                          }
@@ -1169,7 +1199,7 @@
 {
     DLog(@"interfaceToPortrait");
     self.minimizerButton.enabled = NO;
-    self.aboutButton.alpha = self.separatorImage.alpha = 0.0;
+    self.aboutButton.alpha = 0.0;
     self.coverImageView.hidden = NO;
     self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     self.sleepButton.enabled = YES;
@@ -1180,17 +1210,18 @@
                          self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
-                             self.separatorImage.alpha = 0.0;
-                             self.hdImage.frame = CGRectMake(8, 8, 752, 418);
+                             self.separatorImage.alpha = 1.0;
+                             self.separatorImage.hidden = NO;
+                             self.separatorImage.frame = CGRectMake(0, 428, 768, 23);
+                             self.hdImage.frame = CGRectMake(2, 2, 764, 425);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
                              self.lyricsText.hidden = NO;
                              self.lyricsText.frame = CGRectMake(20, 777, 352, 227);
-                             self.metadataInfo.frame = CGRectMake(20, 464, 728, 62);
-                             self.songNameButton.frame = CGRectMake(20, 470, 728, 62);
+                             self.metadataInfo.frame = CGRectMake(20, 466, 728, 62);
+                             self.songNameButton.frame = CGRectMake(20, 466, 728, 62);
                              self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
                              self.addSongButton.frame = CGRectMake(423, 947, 43, 43);
                              self.songListButton.frame = CGRectMake(517, 947, 43, 43);
-                             self.separatorImage.frame = CGRectMake(0, 434, 768, 23);
                              self.psdButton.frame = CGRectMake(611, 947, 43, 43);
                              self.logoImage.frame = CGRectMake(433, 557, 300, 94);
                              self.bitrateSelector.frame = CGRectMake(418, 789, 330, 30);
@@ -1247,7 +1278,6 @@
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
-                         self.separatorImage.hidden = YES;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                          {
                              self.hdImage.hidden = YES;
