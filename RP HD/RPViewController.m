@@ -228,7 +228,15 @@
                  DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
              }
              else
+             {
+                 DLog(@"Given value for song duration is: %@. Now calculating encode skew.", whenRefresh);
+                 // Manually compensate for skew in encoder on lower bitrates.
+                 if(self.bitrateSelector.selectedSegmentIndex == 0 && !self.isPSDPlaying)
+                     whenRefresh = @([whenRefresh intValue] + 70);
+                 else if(self.bitrateSelector.selectedSegmentIndex == 1 && !self.isPSDPlaying)
+                     whenRefresh = @([whenRefresh intValue] + 25);
                  DLog(@"This song will last for %.0f seconds, rescheduling ourselves for refresh", [whenRefresh doubleValue]);
+             }
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.theStreamMetadataTimer = [NSTimer scheduledTimerWithTimeInterval:[whenRefresh doubleValue] target:self selector:@selector(metatadaHandler:) userInfo:nil repeats:NO];
              });
