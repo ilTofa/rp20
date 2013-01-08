@@ -133,7 +133,12 @@
                           {
                               // load image on the main thread
                               dispatch_async(dispatch_get_main_queue(), ^{
-                                  [self.hdImage setImage:temp];
+                                  self.dissolveHdImage.image = temp;
+                                  [UIView transitionFromView:self.hdImage toView:self.dissolveHdImage duration:1.5 options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished){
+                                      self.hdImage.image = temp;
+                                      self.hdImage.hidden = NO;
+                                      self.dissolveHdImage.hidden = YES;
+                                  }];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
                                       [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
@@ -904,7 +909,7 @@
     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
-    self.hdImage.hidden = YES;
+    self.hdImage.hidden = self.dissolveHdImage.hidden = YES;
     self.rpWebButton.hidden = YES;
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
@@ -983,7 +988,7 @@
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = NO;
     self.addSongButton.enabled = NO;
-    self.hdImage.hidden = NO;
+    self.hdImage.hidden  = NO;
 }
 
 -(void)interfacePsd
@@ -1040,6 +1045,7 @@
                          {
                              self.lyricsText.frame = CGRectMake(22, 117, 352, 534);
                              self.hdImage.frame = CGRectMake(2, 97, 1020, 574);
+                             self.dissolveHdImage.frame = CGRectMake(2, 97, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                              self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
@@ -1056,6 +1062,7 @@
                              if([UIScreen mainScreen].bounds.size.height == 568.0f)
                              { // iPhone 5
                                  self.hdImage.frame = CGRectMake(0, 0, 568, 320);
+                                 self.dissolveHdImage.frame = CGRectMake(0, 0, 568, 320);
                                  self.minimizerButton.frame = CGRectMake(0, 0, 568, 320);
                                  self.metadataInfo.frame = CGRectMake(109, 3, 450, 21);
                                  self.songNameButton.frame = CGRectMake(98, 2, 450, 21);
@@ -1066,6 +1073,7 @@
                              else
                              { // "normal" iPhone
                                  self.hdImage.frame = CGRectMake(0, 25, 480, 270);
+                                 self.dissolveHdImage.frame = CGRectMake(0, 25, 480, 270);
                                  self.minimizerButton.frame = CGRectMake(0, 25, 480, 270);
                                  self.metadataInfo.frame = CGRectMake(98, 2, 373, 21);
                                  self.songNameButton.frame = CGRectMake(98, 2, 373, 21);
@@ -1111,6 +1119,7 @@
                                  [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
                              }
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
+                             self.dissolveHdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                              self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
@@ -1132,7 +1141,8 @@
                          {
                              if([UIScreen mainScreen].bounds.size.height == 568.0f)
                              { // iPhone 5
-                                 self.hdImage.frame = CGRectMake(0, 0, 568, 320);
+                                 self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
+                                 self.dissolveHdImage.frame = CGRectMake(2, 2, 1020, 574);
                                  self.minimizerButton.frame = CGRectMake(0, 0, 568, 320);
                                  self.metadataInfo.frame = CGRectMake(98, 16, 450, 21);
                                  self.songNameButton.frame = CGRectMake(98, 16, 450, 21);
@@ -1145,6 +1155,7 @@
                              else
                              { // "normal" iPhone
                                  self.hdImage.frame = CGRectMake(0, 0, 480, 270);
+                                 self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270);
                                  self.minimizerButton.frame = CGRectMake(0, 0, 480, 270);
                                  self.metadataInfo.frame = CGRectMake(98, 16, 373, 21);
                                  self.songNameButton.frame = CGRectMake(98, 16, 373, 21);
@@ -1183,6 +1194,7 @@
                      animations:^(void) {
                          self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          self.hdImage.frame = CGRectMake(0, 0, 1024, 768);
+                         self.dissolveHdImage.frame = CGRectMake(0, 0, 1024, 768);
                          self.minimizerButton.frame = CGRectMake(0, 0, 1024, 768);
                          self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                          self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
@@ -1219,6 +1231,7 @@
                              self.separatorImage.hidden = NO;
                              self.separatorImage.frame = CGRectMake(0, 428, 768, 23);
                              self.hdImage.frame = CGRectMake(2, 2, 764, 425);
+                             self.dissolveHdImage.frame = CGRectMake(2, 2, 764, 425);
                              self.minimizerButton.frame = CGRectMake(2, 2, 764, 430);
                              self.lyricsText.hidden = NO;
                              self.lyricsText.frame = CGRectMake(20, 777, 352, 227);
@@ -1242,7 +1255,8 @@
                          {
                              if([UIScreen mainScreen].bounds.size.height == 568.0f)
                              { // iPhone 5
-                                 self.hdImage.frame = CGRectMake(0, 0, 568, 320); //
+                                 self.hdImage.frame = CGRectMake(2, 2, 764, 425);
+                                 self.dissolveHdImage.frame = CGRectMake(2, 2, 764, 425);
                                  self.addSongButton.frame = CGRectMake(98, 512, 36, 36); //
                                  self.iPhoneLogoImage.frame = CGRectMake(140, 305, 40, 40); //
                                  self.metadataInfo.frame = CGRectMake(20, 340, 280, 60); //
@@ -1259,6 +1273,7 @@
                              else
                              { // "normal" iPhone
                                  self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
+                                 self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.addSongButton.frame = CGRectMake(98, 424, 36, 36); //
                                  self.iPhoneLogoImage.frame = CGRectMake(60, 305, 40, 40); //
                                  self.aboutButton.frame = CGRectMake(139, 305, 36, 36);
@@ -1440,10 +1455,11 @@
     self.isPSDPlaying = NO;
     // set bounds and corners
     self.hdImage.layer.cornerRadius = 8.0;
+    self.dissolveHdImage.layer.cornerRadius = 8.0;
     self.coverImageView.layer.cornerRadius = 6.0;
     self.rpWebButton.layer.cornerRadius = 4.0;
     self.lyricsText.layer.cornerRadius = 6.0;
-    self.hdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
+    self.hdImage.clipsToBounds = self.dissolveHdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
     // Hide only portrait buttons
     self.sleepButton.alpha = 0.0;
     // Hide lyrics text
@@ -1501,6 +1517,7 @@
     [self setSongListButton:nil];
     [self setSleepButton:nil];
     [self setLyricsText:nil];
+    [self setDissolveHdImage:nil];
     [super viewDidUnload];
 }
 
