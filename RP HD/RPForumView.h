@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 // #define kRPCurrentSongForum @"http://www.radioparadise.com/m-content.php?name=Music&file=songinfo&song_id=%@"
-#define kRPCurrentSongForum @"http://www.radioparadise.com/i-content.php?name=Music&file=songinfo&song_id=%@"
+#define kRPCurrentSongForum @"http://www.radioparadise.com/ios-content.php?name=Music&file=songinfo&song_id=%@"
 
 @interface RPForumView : UIViewController
 
