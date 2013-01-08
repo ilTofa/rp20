@@ -11,6 +11,7 @@
 @interface RPTVViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *TVImage;
+@property (weak, nonatomic) IBOutlet UIImageView *dissolveTVImage;
 @property (weak, nonatomic) IBOutlet UILabel *songNameOnTV;
 
 @end

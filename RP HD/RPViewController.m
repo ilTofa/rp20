@@ -70,10 +70,10 @@
                 howMuchTimeBetweenImages = 60.0;
                 break;
             case 1:
-                howMuchTimeBetweenImages = 40.0;
+                howMuchTimeBetweenImages = 20.0;
                 break;
             case 2:
-                howMuchTimeBetweenImages = 20.0;
+                howMuchTimeBetweenImages = 15.0;
                 break;
             default:
                 break;
@@ -131,7 +131,7 @@
                           // Protect from 404's
                           if(temp)
                           {
-                              // load image on the main thread
+                              // load images on the main thread (cross-dissolve them)
                               dispatch_async(dispatch_get_main_queue(), ^{
                                   self.dissolveHdImage.image = temp;
                                   [UIView transitionFromView:self.hdImage toView:self.dissolveHdImage duration:1.5 options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished){
@@ -141,7 +141,18 @@
                                   }];
                                   // If we have a second screen, update also there
                                   if ([[UIScreen screens] count] > 1)
-                                      [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
+                                  {
+                                      // [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
+                                      [UIView transitionFromView:((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage
+                                                          toView:((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.dissolveTVImage
+                                                        duration:1.5
+                                                         options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve
+                                                      completion:^(BOOL finished){
+                                                          ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage.image = temp;
+                                                          ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage.hidden = NO;
+                                                          ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.dissolveTVImage.hidden = YES;
+                                      }];
+                                  }
                               });
                           }
                       }
