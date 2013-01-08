@@ -1124,7 +1124,7 @@
                              self.coverImageView.frame = CGRectMake(880, 604, 140, 140);
                              self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
-                             self.metadataInfo.font = [UIFont systemFontOfSize:15.0];
+                             self.metadataInfo.font = [UIFont systemFontOfSize:18.0];
                              self.metadataInfo.shadowColor = [UIColor clearColor];
                          }
                          else
