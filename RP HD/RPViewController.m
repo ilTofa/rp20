@@ -1033,7 +1033,7 @@
     DLog(@"interfaceToMinimized");
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.aboutButton.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = self.songListButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -1044,10 +1044,11 @@
                              self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                              self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                              self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
-                             self.addSongButton.frame = CGRectMake(150, 695, 43, 43);
-                             self.songListButton.frame = CGRectMake(220, 695, 43, 43);
+                             self.psdButton.frame = CGRectMake(70, 695, 43, 43);
+                             self.addSongButton.frame = CGRectMake(130, 695, 43, 43);
+                             self.songListButton.frame = CGRectMake(190, 695, 43, 43);
+                             self.aboutButton.frame = CGRectMake(250, 695, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
-                             self.psdButton.frame = CGRectMake(80, 695, 43, 43);
                              self.logoImage.frame = CGRectMake(20, 2, 300, 94);
                          }
                          else
@@ -1075,7 +1076,7 @@
                          }
                      }
                      completion:^(BOOL finished) {
-                         self.aboutButton.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.interfaceState = kInterfaceMinimized;
                      }];
 }
@@ -1180,17 +1181,20 @@
     DLog(@"interfaceToZoomed");
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
                          self.hdImage.frame = CGRectMake(0, 0, 1024, 768);
                          self.minimizerButton.frame = CGRectMake(0, 0, 1024, 768);
                          self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                          self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
+                         self.psdButton.frame = CGRectMake(70, 695, 43, 43);
+                         self.addSongButton.frame = CGRectMake(130, 695, 43, 43);
+                         self.songListButton.frame = CGRectMake(190, 695, 43, 43);
+                         self.aboutButton.frame = CGRectMake(250, 695, 43, 43);
                          self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
-                         self.psdButton.frame = CGRectMake(80, 695, 43, 43);
                     }
                      completion:^(BOOL finished) {
-                         self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
+                         self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
                          self.logoImage.frame = CGRectMake(20, 626, 300, 94);
                          self.interfaceState = kInterfaceZoomed;
                          self.metadataInfo.shadowColor = [UIColor blackColor];
