@@ -23,6 +23,10 @@
 		64208F6C15F6AA3900205CB9 /* button-addsong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64208F6815F6AA3900205CB9 /* button-addsong@2x.png */; };
 		64208F6D15F6AA3900205CB9 /* button-songlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 64208F6915F6AA3900205CB9 /* button-songlist.png */; };
 		64208F6E15F6AA3900205CB9 /* button-songlist@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64208F6A15F6AA3900205CB9 /* button-songlist@2x.png */; };
+		64275774169CD6E7009DF7F0 /* RPiPhone4TestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64275773169CD6E7009DF7F0 /* RPiPhone4TestController.xib */; };
+		64275778169CDA51009DF7F0 /* logo_2011_horiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 64275776169CDA51009DF7F0 /* logo_2011_horiz.png */; };
+		64275779169CDA51009DF7F0 /* logo_2011_horiz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64275777169CDA51009DF7F0 /* logo_2011_horiz@2x.png */; };
+		6427577B169CDBB1009DF7F0 /* RPiPhone5TestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6427577A169CDBB1009DF7F0 /* RPiPhone5TestController.xib */; };
 		64308BDB1624D411006CF9EB /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64308BAC1624D411006CF9EB /* AppiraterLocalizable.strings */; };
 		64308BDC1624D411006CF9EB /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64308BAF1624D411006CF9EB /* AppiraterLocalizable.strings */; };
 		64308BDD1624D411006CF9EB /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64308BB21624D411006CF9EB /* AppiraterLocalizable.strings */; };
@@ -152,6 +156,10 @@
 		64208F6815F6AA3900205CB9 /* button-addsong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-addsong@2x.png"; path = "Images/button-addsong@2x.png"; sourceTree = "<group>"; };
 		64208F6915F6AA3900205CB9 /* button-songlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-songlist.png"; path = "Images/button-songlist.png"; sourceTree = "<group>"; };
 		64208F6A15F6AA3900205CB9 /* button-songlist@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-songlist@2x.png"; path = "Images/button-songlist@2x.png"; sourceTree = "<group>"; };
+		64275773169CD6E7009DF7F0 /* RPiPhone4TestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPiPhone4TestController.xib; sourceTree = "<group>"; };
+		64275776169CDA51009DF7F0 /* logo_2011_horiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_2011_horiz.png; path = Images/logo_2011_horiz.png; sourceTree = "<group>"; };
+		64275777169CDA51009DF7F0 /* logo_2011_horiz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_horiz@2x.png"; path = "Images/logo_2011_horiz@2x.png"; sourceTree = "<group>"; };
+		6427577A169CDBB1009DF7F0 /* RPiPhone5TestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPiPhone5TestController.xib; sourceTree = "<group>"; };
 		64308BAA1624D411006CF9EB /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
 		64308BAD1624D411006CF9EB /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		64308BB01624D411006CF9EB /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = AppiraterLocalizable.strings; sourceTree = "<group>"; };
@@ -569,6 +577,8 @@
 				64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */,
 				64F802451512272E0080D442 /* RPViewController~ipad.xib */,
 				64D481211547577800BC1085 /* RPViewController~iphone.xib */,
+				64275773169CD6E7009DF7F0 /* RPiPhone4TestController.xib */,
+				6427577A169CDBB1009DF7F0 /* RPiPhone5TestController.xib */,
 				64AAFA0A1513A6FF0061DD49 /* RPForumView.h */,
 				64AAFA0B1513A6FF0061DD49 /* RPForumView.m */,
 				64AAFA0C1513A6FF0061DD49 /* RPForumView~ipad.xib */,
@@ -660,6 +670,8 @@
 				64606A9E15B85E5C00CA0FC6 /* button-psd-active@2x.png */,
 				64F80252151228950080D442 /* logo_2011_rphd.png */,
 				6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */,
+				64275776169CDA51009DF7F0 /* logo_2011_horiz.png */,
+				64275777169CDA51009DF7F0 /* logo_2011_horiz@2x.png */,
 			);
 			name = Images;
 			path = "RP HD";
@@ -816,6 +828,10 @@
 				64B12696169B2328007C96B7 /* button-lyrics@2x.png in Resources */,
 				64B12699169B2470007C96B7 /* button-lyrics-active.png in Resources */,
 				64B1269A169B2470007C96B7 /* button-lyrics-active@2x.png in Resources */,
+				64275774169CD6E7009DF7F0 /* RPiPhone4TestController.xib in Resources */,
+				64275778169CDA51009DF7F0 /* logo_2011_horiz.png in Resources */,
+				64275779169CDA51009DF7F0 /* logo_2011_horiz@2x.png in Resources */,
+				6427577B169CDBB1009DF7F0 /* RPiPhone5TestController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

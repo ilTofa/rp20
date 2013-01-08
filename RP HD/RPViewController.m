@@ -1290,9 +1290,9 @@
                                  self.aboutButton.frame = CGRectMake(139, 305, 36, 36);
                                  self.sleepButton.frame = CGRectMake(220, 305, 36, 36);
                                  self.metadataInfo.frame = CGRectMake(20, 250, 280, 60); //
-                                 self.playOrStopButton.frame = CGRectMake(264, 426, 36, 36); //
+                                 self.playOrStopButton.frame = CGRectMake(264, 424, 36, 36); //
                                  self.bitrateSelector.frame = CGRectMake(50, 354, 220, 30);
-                                 self.psdButton.frame = CGRectMake(181, 426, 36, 36);
+                                 self.psdButton.frame = CGRectMake(181, 424	, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 424, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(79, 396, 150, 25);
                                  self.lyricsText.frame = CGRectMake(40, 20, 240, 240);
