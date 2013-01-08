@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *goForwardButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *lyricsButton;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *theSpinner;
 
@@ -31,6 +30,5 @@
 - (IBAction)goForwardClicked:(id)sender;
 - (IBAction)refreshClicked:(id)sender;
 - (IBAction)actionClicked:(id)sender;
-- (IBAction)loadLyrics:(id)sender;
 
 @end

@@ -83,7 +83,6 @@
     [self setRefreshButton:nil];
     [self setActionButton:nil];
     [self setTheSpinner:nil];
-    [self setLyricsButton:nil];
     [super viewDidUnload];
 }
 
@@ -115,30 +114,6 @@
 - (IBAction)actionClicked:(id)sender 
 {
     [self.pageActionSheet showFromBarButtonItem:self.actionButton animated:YES];
-}
-
-- (IBAction)loadLyrics:(id)sender
-{
-    if(self.isForumShown)
-    {
-        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"lyricsClicked"];
-        if(self.theWebView.isLoading)
-            [self.theWebView stopLoading];
-        NSString *searchURL = [NSString stringWithFormat:@"http://radioparadise.com/i-lyrics.php?id=%@", self.songId];
-        searchURL = [searchURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        DLog(@"Loading lyrics from <%@>", searchURL);
-        [self.lyricsButton setTitle:@"Forum"];
-        self.isForumShown = NO;
-        [self.theWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:searchURL]]];
-    }
-    else
-    {
-        DLog(@"Get back to forum view");
-        [self.lyricsButton setTitle:@"Lyrics"];
-        self.isForumShown = YES;
-        NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
-        [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
-    }
 }
 
 #pragma mark -

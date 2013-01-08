@@ -85,18 +85,6 @@
 								<reference key="IBUIToolbar" ref="385152502"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="720871536">
-								<string key="IBUITitle">Lyrics</string>
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="385152502"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="66203885">
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="385152502"/>
-								<int key="IBUISystemItemIdentifier">5</int>
-							</object>
 							<object class="IBUIBarButtonItem" id="873862748">
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIStyle">1</int>
@@ -216,14 +204,6 @@
 					<int key="connectionID">32</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">lyricsButton</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="720871536"/>
-					</object>
-					<int key="connectionID">36</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">viewIsDone:</string>
 						<reference key="source" ref="673361976"/>
@@ -271,14 +251,6 @@
 					</object>
 					<int key="connectionID">30</int>
 				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">loadLyrics:</string>
-						<reference key="source" ref="720871536"/>
-						<reference key="destination" ref="841351856"/>
-					</object>
-					<int key="connectionID">35</int>
-				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -314,7 +286,6 @@
 						<reference key="object" ref="385152502"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="673361976"/>
-							<reference ref="66203885"/>
 							<reference ref="397363545"/>
 							<reference ref="141063627"/>
 							<reference ref="954337337"/>
@@ -322,7 +293,6 @@
 							<reference ref="873862748"/>
 							<reference ref="448187791"/>
 							<reference ref="428994671"/>
-							<reference ref="720871536"/>
 							<reference ref="798874062"/>
 						</array>
 						<reference key="parent" ref="766721923"/>
@@ -330,11 +300,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">7</int>
 						<reference key="object" ref="673361976"/>
-						<reference key="parent" ref="385152502"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">8</int>
-						<reference key="object" ref="66203885"/>
 						<reference key="parent" ref="385152502"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -383,11 +348,6 @@
 						<reference key="parent" ref="766721923"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">33</int>
-						<reference key="object" ref="720871536"/>
-						<reference key="parent" ref="385152502"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">34</int>
 						<reference key="object" ref="798874062"/>
 						<reference key="parent" ref="385152502"/>
@@ -409,11 +369,9 @@
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="34.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
