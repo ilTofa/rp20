@@ -10,7 +10,11 @@
 
 @interface RPAboutBox : UIViewController
 
+@property (strong, nonatomic) NSString *username;
+
 @property (weak, nonatomic) IBOutlet UILabel *lVersion;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UILabel *loggedUser;
 
 - (IBAction)OKPressed:(id)sender;
 - (IBAction)Logout:(id)sender;
