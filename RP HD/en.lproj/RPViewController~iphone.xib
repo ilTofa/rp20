@@ -51,6 +51,17 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
+					<object class="IBUIImageView" id="1000133779">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">294</int>
+						<string key="NSFrameSize">{480, 270}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="95428084"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+					</object>
 					<object class="IBUIImageView" id="625199466">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">294</int>
@@ -68,7 +79,7 @@
 						<string key="NSFrameSize">{480, 266}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="95428084"/>
+						<reference key="NSNextKeyView" ref="1000133779"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -621,6 +632,14 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 					<int key="connectionID">66</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">dissolveHdImage</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1000133779"/>
+					</object>
+					<int key="connectionID">68</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">minimizer:</string>
 						<reference key="source" ref="21147272"/>
@@ -739,6 +758,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="95428084"/>
 							<reference ref="104135590"/>
 							<reference ref="605012914"/>
+							<reference ref="1000133779"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -841,6 +861,12 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<reference key="object" ref="605012914"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">67</int>
+						<reference key="object" ref="1000133779"/>
+						<reference key="parent" ref="191373211"/>
+						<string key="objectName">Dissolve Image View</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -866,13 +892,14 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="67.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">66</int>
+			<int key="maxID">68</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -953,6 +980,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="addSongButton">UIButton</string>
 						<string key="bitrateSelector">UISegmentedControl</string>
 						<string key="coverImageView">UIImageView</string>
+						<string key="dissolveHdImage">UIImageView</string>
 						<string key="hdImage">UIImageView</string>
 						<string key="iPhoneLogoImage">UIButton</string>
 						<string key="logoImage">UIButton</string>
@@ -984,6 +1012,10 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="coverImageView">
 							<string key="name">coverImageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="dissolveHdImage">
+							<string key="name">dissolveHdImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="hdImage">

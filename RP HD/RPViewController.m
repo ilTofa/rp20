@@ -1141,8 +1141,8 @@
                          {
                              if([UIScreen mainScreen].bounds.size.height == 568.0f)
                              { // iPhone 5
-                                 self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
-                                 self.dissolveHdImage.frame = CGRectMake(2, 2, 1020, 574);
+                                 self.hdImage.frame = CGRectMake(0, 0, 568, 320);
+                                 self.dissolveHdImage.frame = CGRectMake(0, 0, 568, 320);
                                  self.minimizerButton.frame = CGRectMake(0, 0, 568, 320);
                                  self.metadataInfo.frame = CGRectMake(98, 16, 450, 21);
                                  self.songNameButton.frame = CGRectMake(98, 16, 450, 21);
