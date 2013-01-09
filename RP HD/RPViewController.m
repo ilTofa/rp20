@@ -1290,11 +1290,11 @@
                              { // iPhone 5
                                  self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
                                  self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
-                                 self.lyricsText.frame = CGRectMake(20, 20, 280, 280);
+                                 self.lyricsText.frame = CGRectMake(22, 22, 276, 276);
                                  self.hdImage.frame = CGRectMake(2, 2, 764, 425);
                                  self.dissolveHdImage.frame = CGRectMake(2, 2, 764, 425);
-                                 self.iPhoneLogoImage.frame = CGRectMake(20, 308, 280, 42); //
-                                 self.metadataInfo.frame = CGRectMake(20, 362, 280, 40); //
+                                 self.metadataInfo.frame = CGRectMake(20, 310, 280, 40); //
+                                 self.iPhoneLogoImage.frame = CGRectMake(20, 359, 280, 42); //
                                  self.aboutButton.frame = CGRectMake(29, 422, 18, 19);
                                  self.volumeViewContainer.frame = CGRectMake(85, 419, 219, 25);
                                  self.lyricsButton.frame = CGRectMake(20, 462, 36, 36);
@@ -1309,7 +1309,7 @@
                              { // "normal" iPhone
                                  self.coverImageView.frame = CGRectMake(40, 20, 240, 240); //
                                  self.songNameButton.frame = CGRectMake(40, 20, 240, 240); //
-                                 self.lyricsText.frame = CGRectMake(40, 20, 240, 240);
+                                 self.lyricsText.frame = CGRectMake(42, 22, 236, 236);
                                  self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40); //
