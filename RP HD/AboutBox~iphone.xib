@@ -203,7 +203,7 @@ dHA6Ly93d3cuaWxUb2ZhLmNvbSk</string>
 					</object>
 					<object class="IBUILabel" id="440475086">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">271</int>
 						<string key="NSFrame">{{20, 299}, {440, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -214,7 +214,7 @@ dHA6Ly93d3cuaWxUb2ZhLmNvbSk</string>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Logged in as whateveruserisloggedin</string>
+						<string key="IBUIText">Logged in as ...</string>
 						<reference key="IBUITextColor" ref="655608861"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>

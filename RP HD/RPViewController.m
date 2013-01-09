@@ -1292,6 +1292,7 @@
                                  self.metadataInfo.frame = CGRectMake(20, 303, 280, 40); //
                                  self.volumeViewContainer.frame = CGRectMake(85, 348, 150, 25);
                                  self.lyricsButton.frame = CGRectMake(21, 378, 36, 36);
+                                 self.aboutButton.frame = CGRectMake(30, 351, 18, 19);
                                  self.bitrateSelector.frame = CGRectMake(81, 381, 219, 30);
                                  self.addSongButton.frame = CGRectMake(20, 424, 36, 36); //
                                  self.songListButton.frame = CGRectMake(81, 424, 36, 36);
@@ -1530,6 +1531,7 @@
     [self setSleepButton:nil];
     [self setLyricsText:nil];
     [self setDissolveHdImage:nil];
+    [self setAboutButton:nil];
     [super viewDidUnload];
 }
 
