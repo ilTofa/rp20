@@ -68,10 +68,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
-        return YES;
-    else
-        return NO;
+    return YES;
 }
 
 - (IBAction)OKPressed:(id)sender 
