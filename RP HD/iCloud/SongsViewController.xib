@@ -41,7 +41,7 @@
 					<object class="IBUIToolbar" id="889532388">
 						<reference key="NSNextResponder" ref="376507115"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrameSize">{480, 44}</string>
+						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="376507115"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="873029372"/>
@@ -77,7 +77,7 @@
 							<object class="IBUISearchBar" id="494407031">
 								<reference key="NSNextResponder" ref="873029372"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrameSize">{480, 88}</string>
+								<string key="NSFrameSize">{320, 88}</string>
 								<reference key="NSSuperview" ref="873029372"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -95,7 +95,7 @@
 								<bool key="IBShowsScopeBar">YES</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 44}, {480, 276}}</string>
+						<string key="NSFrame">{{0, 44}, {320, 436}}</string>
 						<reference key="NSSuperview" ref="376507115"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="494407031"/>
@@ -142,7 +142,7 @@
 						<reference key="IBUITableHeaderView" ref="494407031"/>
 					</object>
 				</array>
-				<string key="NSFrameSize">{480, 320}</string>
+				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="889532388"/>
@@ -153,10 +153,6 @@
 					<object class="NSColorSpace" key="NSCustomColorSpace">
 						<int key="NSID">2</int>
 					</object>
-				</object>
-				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
-					<int key="IBUIInterfaceOrientation">3</int>
-					<int key="interfaceOrientation">3</int>
 				</object>
 				<reference key="IBUISimulatedDestinationMetrics" ref="567309656"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

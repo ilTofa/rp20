@@ -110,11 +110,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    DLog(@"shouldAutorotateToInterfaceOrientation called for mainController");
-    if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
-        return YES;
-    else
-        return NO;
+    return YES;
 }
 
 #pragma mark - Action buttons
