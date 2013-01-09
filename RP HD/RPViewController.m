@@ -816,16 +816,16 @@
     if(self.isLyricsToBeShown)
     {
         self.lyricsText.hidden = NO;
-        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
-        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
-        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
     }
     else
     {
         self.lyricsText.hidden = YES;
-        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
-        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
-        [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
     }
 }
 
@@ -1064,7 +1064,7 @@
                              self.psdButton.frame = CGRectMake(70, 695, 43, 43);
                              self.addSongButton.frame = CGRectMake(130, 695, 43, 43);
                              self.songListButton.frame = CGRectMake(190, 695, 43, 43);
-                             self.aboutButton.frame = CGRectMake(250, 695, 43, 43);
+                             self.lyricsButton.frame = CGRectMake(250, 695, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                              self.logoImage.frame = CGRectMake(20, 2, 300, 94);
                          }
@@ -1103,31 +1103,31 @@
 - (void) interfaceToNormal
 {
     DLog(@"interfaceToNormal");
-    self.minimizerButton.enabled = self.aboutButton.enabled = YES;
-    self.aboutButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.aboutButton.hidden = self.sleepButton.hidden = NO;
+    self.minimizerButton.enabled = self.lyricsButton.enabled = YES;
+    self.lyricsButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.lyricsButton.hidden = self.sleepButton.hidden = NO;
     self.sleepButton.enabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.coverImageView.alpha = self.sleepButton.alpha = 0.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = self.separatorImage.alpha = 1.0;
+                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.lyricsButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
-                             self.aboutButton.alpha = 1.0;
+                             self.lyricsButton.alpha = 1.0;
                              self.lyricsText.frame = CGRectMake(22, 22, 352, 534);
-                             self.aboutButton.frame = CGRectMake(331, 686, 43, 43);
+                             self.lyricsButton.frame = CGRectMake(331, 686, 43, 43);
                              if(self.isLyricsToBeShown)
                              {
                                  self.lyricsText.hidden = NO;
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];                                 
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];                                 
                              }
                              else
                              {
                                  self.lyricsText.hidden = YES;
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
                              }
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.dissolveHdImage.frame = CGRectMake(2, 2, 1020, 574);
@@ -1183,7 +1183,7 @@
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                              self.metadataInfo.shadowColor = [UIColor blackColor];
                              self.lyricsText.hidden = YES;
-                             self.aboutButton.hidden = YES;
+                             self.lyricsButton.hidden = YES;
                          }
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 1;
@@ -1213,7 +1213,7 @@
                          self.psdButton.frame = CGRectMake(70, 695, 43, 43);
                          self.addSongButton.frame = CGRectMake(130, 695, 43, 43);
                          self.songListButton.frame = CGRectMake(190, 695, 43, 43);
-                         self.aboutButton.frame = CGRectMake(250, 695, 43, 43);
+                         self.lyricsButton.frame = CGRectMake(250, 695, 43, 43);
                          self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                     }
                      completion:^(BOOL finished) {
@@ -1229,13 +1229,13 @@
     DLog(@"interfaceToPortrait");
     self.minimizerButton.enabled = NO;
     self.coverImageView.hidden = NO;
-    self.aboutButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
+    self.lyricsButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
     self.sleepButton.enabled = YES;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
-                         self.aboutButton.alpha = 0.0;
+                         self.lyricsButton.alpha = 0.0;
                          self.coverImageView.alpha = 1.0;
-                         self.aboutButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
+                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.separatorImage.alpha = 1.0;
@@ -1258,7 +1258,7 @@
                              self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
                              self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
-                             self.aboutButton.alpha = 0.0;
+                             self.lyricsButton.alpha = 0.0;
                              self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                          }
@@ -1273,7 +1273,7 @@
                                  self.metadataInfo.frame = CGRectMake(20, 340, 280, 60); //
                                  self.playOrStopButton.frame = CGRectMake(264, 514, 36, 36); //
                                  self.bitrateSelector.frame = CGRectMake(79, 410, 221, 30);
-                                 self.aboutButton.frame = CGRectMake(20, 405, 36, 36);
+                                 self.lyricsButton.frame = CGRectMake(20, 405, 36, 36);
                                  self.psdButton.frame = CGRectMake(181, 514, 36, 36);
                                  self.songListButton.frame = CGRectMake(22, 512, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(100, 468, 150, 25);
@@ -1291,7 +1291,7 @@
                                  self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40); //
                                  self.metadataInfo.frame = CGRectMake(20, 303, 280, 40); //
                                  self.volumeViewContainer.frame = CGRectMake(85, 348, 150, 25);
-                                 self.aboutButton.frame = CGRectMake(21, 378, 36, 36);
+                                 self.lyricsButton.frame = CGRectMake(21, 378, 36, 36);
                                  self.bitrateSelector.frame = CGRectMake(81, 381, 219, 30);
                                  self.addSongButton.frame = CGRectMake(20, 424, 36, 36); //
                                  self.songListButton.frame = CGRectMake(81, 424, 36, 36);
@@ -1300,21 +1300,21 @@
                                  self.playOrStopButton.frame = CGRectMake(264, 424, 36, 36); //
                              }
                              // in any iPhone...
-                             self.aboutButton.alpha = 1.0;
+                             self.lyricsButton.alpha = 1.0;
                              self.iPhoneLogoImage.image = [UIImage imageNamed:@"logo_2011_horiz"];
                              if(self.isLyricsToBeShown)
                              {
                                  self.lyricsText.hidden = NO;
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
                              }
                              else
                              {
                                  self.lyricsText.hidden = YES;
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
-                                 [self.aboutButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
                              }
                              self.hdImage.alpha = 0.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
@@ -1511,7 +1511,7 @@
     [self setImageLoadQueue:nil];
     [self setPlayOrStopButton:nil];
     [self setHdImage:nil];
-    [self setAboutButton:nil];
+    [self setLyricsButton:nil];
     [self setRpWebButton:nil];
     [self setMinimizerButton:nil];
     [self setLogoImage:nil];

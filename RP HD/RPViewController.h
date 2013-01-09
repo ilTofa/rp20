@@ -44,7 +44,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak) IBOutlet UIImageView *hdImage;
 @property (weak) IBOutlet UIImageView *dissolveHdImage;
-@property (weak, nonatomic) IBOutlet UIButton *aboutButton;
+@property (weak, nonatomic) IBOutlet UIButton *lyricsButton;
 @property (weak, nonatomic) IBOutlet UIButton *rpWebButton;
 @property (weak, nonatomic) IBOutlet UIButton *minimizerButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoImage;
