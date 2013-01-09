@@ -337,7 +337,10 @@
     [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"playMainStream"];
     [self interfacePlayPending];
     self.theStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
-    self.theStreamer.allowsExternalPlayback = NO;
+    if([self.theStreamer respondsToSelector:@selector(setAllowsExternalPlayback:)])
+        self.theStreamer.allowsExternalPlayback = NO;
+    else
+        self.theStreamer.allowsAirPlayVideo = NO;
     [self activateNotifications];
     [self.theStreamer play];
 }
@@ -553,7 +556,10 @@
                  }
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
-                 self.thePsdStreamer.allowsExternalPlayback = NO;
+                 if([self.thePsdStreamer respondsToSelector:@selector(setAllowsExternalPlayback:)])
+                     self.thePsdStreamer.allowsExternalPlayback = NO;
+                 else
+                     self.theStreamer.allowsAirPlayVideo = NO;
                  // Add observer for real start and stop.
                  self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0));
                  [self.thePsdStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
