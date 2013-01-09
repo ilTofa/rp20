@@ -1200,6 +1200,23 @@
                      }
                      completion:^(BOOL finished) {
                          self.interfaceState = kInterfaceNormal;
+                         self.volumeViewContainer.backgroundColor = [UIColor clearColor];
+                         for (UIView *view in [self.volumeViewContainer subviews])
+                             [view removeFromSuperview];
+                         if (!TARGET_IPHONE_SIMULATOR)
+                         {
+                             MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
+                             DLog(@"size of VolumeView is %@, %@", NSStringFromCGPoint(myVolumeView.frame.origin), NSStringFromCGSize(myVolumeView.frame.size));
+                             [self.volumeViewContainer addSubview: myVolumeView];
+                             myVolumeView = nil;
+                         }
+                         else
+                         {
+                             UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
+                             myVolumeView.value = 0.5;
+                             [self.volumeViewContainer addSubview: myVolumeView];
+                             myVolumeView = nil;
+                         }
                      }];
 }
 
@@ -1262,7 +1279,7 @@
                              self.spinner.frame = CGRectMake(178, 638, 37, 37);
                              self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
-                             self.volumeViewContainer.frame = CGRectMake(433, 874, 300, 25);
+                             self.volumeViewContainer.frame = CGRectMake(418, 874, 330, 25);
                              self.lyricsButton.alpha = 0.0;
                              self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
@@ -1279,7 +1296,7 @@
                                  self.iPhoneLogoImage.frame = CGRectMake(20, 308, 280, 42); //
                                  self.metadataInfo.frame = CGRectMake(20, 362, 280, 40); //
                                  self.aboutButton.frame = CGRectMake(29, 422, 18, 19);
-                                 self.volumeViewContainer.frame = CGRectMake(85, 419, 150, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(85, 419, 219, 25);
                                  self.lyricsButton.frame = CGRectMake(20, 462, 36, 36);
                                  self.bitrateSelector.frame = CGRectMake(81, 465, 219, 30);
                                  self.addSongButton.frame = CGRectMake(20, 512, 36, 36); //
@@ -1297,7 +1314,7 @@
                                  self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270); //
                                  self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40); //
                                  self.metadataInfo.frame = CGRectMake(20, 303, 280, 40); //
-                                 self.volumeViewContainer.frame = CGRectMake(85, 348, 150, 25);
+                                 self.volumeViewContainer.frame = CGRectMake(81, 348, 219, 25);
                                  self.lyricsButton.frame = CGRectMake(21, 378, 36, 36);
                                  self.aboutButton.frame = CGRectMake(30, 351, 18, 19);
                                  self.bitrateSelector.frame = CGRectMake(81, 381, 219, 30);
@@ -1339,6 +1356,23 @@
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                          {
                              self.hdImage.hidden = YES;
+                         }
+                         self.volumeViewContainer.backgroundColor = [UIColor clearColor];
+                         for (UIView *view in [self.volumeViewContainer subviews])
+                             [view removeFromSuperview];
+                         if (!TARGET_IPHONE_SIMULATOR)
+                         {
+                             MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
+                             DLog(@"size of VolumeView is %@, %@", NSStringFromCGPoint(myVolumeView.frame.origin), NSStringFromCGSize(myVolumeView.frame.size));
+                             [self.volumeViewContainer addSubview: myVolumeView];
+                             myVolumeView = nil;
+                         }
+                         else
+                         {
+                             UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
+                             myVolumeView.value = 0.5;
+                             [self.volumeViewContainer addSubview: myVolumeView];
+                             myVolumeView = nil;
                          }
                          if(self.theStreamMetadataTimer)
                              [self.theStreamMetadataTimer fire];
@@ -1485,24 +1519,22 @@
     self.sleepButton.alpha = 0.0;
     // Hide lyrics text
     self.lyricsText.text = nil;
-    // Add the volume (fake it on simulator)
-    self.volumeViewContainer.backgroundColor = [UIColor clearColor];
-    if (!TARGET_IPHONE_SIMULATOR)
-    {
-        MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
-        DLog(@"size of VolumeView is %@, %@", NSStringFromCGPoint(myVolumeView.frame.origin), NSStringFromCGSize(myVolumeView.frame.size));
-        myVolumeView.contentMode = UIViewContentModeRedraw;
-        [self.volumeViewContainer addSubview: myVolumeView];
-        myVolumeView = nil;
-    }
-    else
-    {
-        UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
-        myVolumeView.value = 0.5;
-        myVolumeView.contentMode = UIViewContentModeRedraw;
-        [self.volumeViewContainer addSubview: myVolumeView];
-        myVolumeView = nil;
-    }
+//    // Add the volume (fake it on simulator)
+//    self.volumeViewContainer.backgroundColor = [UIColor clearColor];
+//    if (!TARGET_IPHONE_SIMULATOR)
+//    {
+//        MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.volumeViewContainer.bounds];
+//        DLog(@"size of VolumeView is %@, %@", NSStringFromCGPoint(myVolumeView.frame.origin), NSStringFromCGSize(myVolumeView.frame.size));
+//        [self.volumeViewContainer addSubview: myVolumeView];
+//        myVolumeView = nil;
+//    }
+//    else
+//    {
+//        UISlider *myVolumeView = [[UISlider alloc] initWithFrame:self.volumeViewContainer.bounds];
+//        myVolumeView.value = 0.5;
+//        [self.volumeViewContainer addSubview: myVolumeView];
+//        myVolumeView = nil;
+//    }
     self.interfaceIsTinted = YES;
     // Automagically start, as per bg request
     [self playMainStream];
