@@ -35,7 +35,6 @@
 {
     [self setTVImage:nil];
     [self setSongNameOnTV:nil];
-    [self setDissolveTVImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

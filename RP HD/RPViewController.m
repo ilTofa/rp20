@@ -60,7 +60,7 @@
 {
     if(self.theImagesTimer)
     {
-        DLog(@"*** WARNING: scheduleImagesTimer called with a valid timer already active!");
+        NSLog(@"*** WARNING: scheduleImagesTimer called with a valid timer already active!");
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -90,7 +90,7 @@
     DLog(@"Unscheduling images timer (%@)", self.theImagesTimer);
     if(self.theImagesTimer == nil)
     {
-        DLog(@"*** WARNING: unscheduleImagesTimer called with no valid timer around!");
+        NSLog(@"*** WARNING: unscheduleImagesTimer called with no valid timer around!");
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -139,20 +139,9 @@
                                       self.hdImage.hidden = NO;
                                       self.dissolveHdImage.hidden = YES;
                                   }];
-                                  // If we have a second screen, update also there
+                                  // If we have a second screen, update also there (faster animations)
                                   if ([[UIScreen screens] count] > 1)
-                                  {
-                                      // [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
-                                      [UIView transitionFromView:((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage
-                                                          toView:((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.dissolveTVImage
-                                                        duration:1.5
-                                                         options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve
-                                                      completion:^(BOOL finished){
-                                                          ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage.image = temp;
-                                                          ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage.hidden = NO;
-                                                          ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.dissolveTVImage.hidden = YES;
-                                      }];
-                                  }
+                                      [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
                               });
                           }
                       }
@@ -980,8 +969,8 @@
     self.addSongButton.enabled = YES;
     self.hdImage.hidden = NO;
     [self.spinner stopAnimating];
-    // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+    // Only if the app is active and is landscape or iPad or remote screen active. otherwise there's no need to load images
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
         [self scheduleImagesTimer];
     // Start metadata reading.
     DLog(@"Starting metadata handler...");
@@ -1024,7 +1013,7 @@
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active, if this is called via events there's no need to load images
-    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive  && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+    if([UIApplication sharedApplication].applicationState == UIApplicationStateActive  && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
         [self scheduleImagesTimer];
     DLog(@"Getting PSD metadata...");
     [self metatadaHandler:nil];
@@ -1183,7 +1172,7 @@
                              self.iPhoneLogoImage.image = [UIImage imageNamed:@"SmallLogo_rphd"];
                              self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
-                             self.hdImage.alpha = 1.0;
+                             self.hdImage.alpha = self.dissolveHdImage.alpha = 1.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                              self.metadataInfo.shadowColor = [UIColor blackColor];
                              self.lyricsText.hidden = YES;
@@ -1341,7 +1330,7 @@
                                  [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
                                  [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
                              }
-                             self.hdImage.alpha = 0.0;
+                             self.hdImage.alpha = self.dissolveHdImage.alpha = 0.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
                              self.aboutButton.alpha = 1.0;
                          }
@@ -1446,7 +1435,7 @@
         else
         {
             // If the streamer for images is active, kill it
-            if(self.theImagesTimer && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            if(self.theImagesTimer && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [[UIScreen screens] count] == 1))
                 [self unscheduleImagesTimer];
             self.viewIsLandscape = NO;
             [self interfaceToPortrait:0.5];
@@ -1653,8 +1642,8 @@
             if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
             {
                 [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"In Foreground while Playing"];
-                // If we don't have a second screen (else the timer was not stopped
-                if ([[UIScreen screens] count] == 1 && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+                // If we don't have a second screen (else the timer was not stopped)
+                if ([[UIScreen screens] count] == 1 && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
                 {
                     DLog(@"Images again, please");
                     [self scheduleImagesTimer];

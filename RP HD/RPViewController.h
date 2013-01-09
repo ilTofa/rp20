@@ -50,8 +50,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *logoImage;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *bitrateSelector;
 @property (weak, nonatomic) IBOutlet UIButton *songNameButton;
-@property (weak, nonatomic) IBOutlet UIImageView *separatorImage;
-@property (weak, nonatomic) IBOutlet UIImageView *iPhoneLogoImage;
+@property (weak) IBOutlet UIImageView *separatorImage;
+@property (weak) IBOutlet UIImageView *iPhoneLogoImage;
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
 @property (weak, nonatomic) IBOutlet UIButton *addSongButton;
 @property (weak, nonatomic) IBOutlet UIButton *songListButton;
@@ -62,10 +62,10 @@ typedef enum {
 
 @property (strong, nonatomic) AVPlayer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
-@property (strong, nonatomic) NSTimer *theImagesTimer;
-@property (strong, nonatomic) NSTimer *theStreamMetadataTimer;
-@property (strong, nonatomic) NSTimer *thePsdTimer;
-@property (strong, nonatomic) NSTimer *theSleepTimer;
+@property (strong) NSTimer *theImagesTimer;
+@property (strong) NSTimer *theStreamMetadataTimer;
+@property (strong) NSTimer *thePsdTimer;
+@property (strong) NSTimer *theSleepTimer;
 @property (strong, nonatomic) AVPlayer *thePsdStreamer;
 @property (strong, nonatomic) AVPlayer *theOldPsdStreamer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
