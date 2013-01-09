@@ -836,7 +836,7 @@
             self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
             self.theAboutBox.popoverContentSize = CGSizeMake(340, 383);
         }
-        [self.theAboutBox presentPopoverFromRect:self.logoImage.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else
     {
@@ -1090,8 +1090,8 @@
                                  self.iPhoneLogoImage.frame = CGRectMake(9, 0, 25, 25);
                              }
                              // All iPhones
-                             self.aboutButton.alpha = 0.0;
                          }
+                         self.aboutButton.alpha = 0.0;
                      }
                      completion:^(BOOL finished) {
                          self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = YES;
@@ -1146,6 +1146,7 @@
                              self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
                              self.metadataInfo.font = [UIFont systemFontOfSize:18.0];
                              self.metadataInfo.shadowColor = [UIColor clearColor];
+                             self.aboutButton.frame = CGRectMake(23, 607, 18, 19);
                          }
                          else
                          {
@@ -1185,9 +1186,9 @@
                              self.metadataInfo.shadowColor = [UIColor blackColor];
                              self.lyricsText.hidden = YES;
                              self.lyricsButton.hidden = YES;
-                             self.aboutButton.alpha = 1.0;
                          }
                          // Both iPad and iPhone
+                         self.aboutButton.alpha = 1.0;
                          self.metadataInfo.numberOfLines = 1;
                          self.metadataInfo.text = self.rawMetadataString;
                          self.metadataInfo.textColor = [UIColor whiteColor];
@@ -1222,7 +1223,7 @@
     DLog(@"interfaceToZoomed");
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.logoImage.alpha = self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.aboutButton.alpha = 0.0;
                          self.hdImage.frame = CGRectMake(0, 0, 1024, 768);
                          self.dissolveHdImage.frame = CGRectMake(0, 0, 1024, 768);
                          self.minimizerButton.frame = CGRectMake(0, 0, 1024, 768);
@@ -1278,8 +1279,9 @@
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
                              self.volumeViewContainer.frame = CGRectMake(418, 874, 330, 25);
                              self.lyricsButton.alpha = 0.0;
-                             self.sleepButton.frame = CGRectMake(562, 694, 43, 43);
+                             self.sleepButton.frame = CGRectMake(611, 694, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
+                             self.aboutButton.frame = CGRectMake(529, 706, 18, 19);
                          }
                          else
                          {
@@ -1340,9 +1342,9 @@
                              }
                              self.hdImage.alpha = self.dissolveHdImage.alpha = 0.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
-                             self.aboutButton.alpha = 1.0;
                          }
                          // Both iPad and iPhone
+                         self.aboutButton.alpha = 1.0;
                          self.metadataInfo.numberOfLines = 2;
                          self.metadataInfo.text = self.rawMetadataString;
                          self.metadataInfo.textAlignment = NSTextAlignmentCenter;
