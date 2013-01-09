@@ -947,7 +947,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="coverImageView">UIImageView</string>
 						<string key="dissolveHdImage">UIImageView</string>
 						<string key="hdImage">UIImageView</string>
-						<string key="iPhoneLogoImage">UIButton</string>
+						<string key="iPhoneLogoImage">UIImageView</string>
 						<string key="logoImage">UIButton</string>
 						<string key="lyricsText">UITextView</string>
 						<string key="metadataInfo">UILabel</string>
@@ -989,7 +989,7 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="iPhoneLogoImage">
 							<string key="name">iPhoneLogoImage</string>
-							<string key="candidateClassName">UIButton</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="logoImage">
 							<string key="name">logoImage</string>
@@ -1056,10 +1056,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
 			<real value="1296" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1536" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
