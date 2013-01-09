@@ -1092,6 +1092,8 @@
                                  self.addSongButton.frame = CGRectMake(9, 295, 25, 25);
                                  self.iPhoneLogoImage.frame = CGRectMake(9, 0, 25, 25);
                              }
+                             // All iPhones
+                             self.aboutButton.alpha = 0.0;
                          }
                      }
                      completion:^(BOOL finished) {
@@ -1175,8 +1177,9 @@
                                  self.psdButton.frame = CGRectMake(193, 278, 36, 36);
                                  self.songListButton.frame = CGRectMake(235, 278, 36, 36);
                                  self.volumeViewContainer.frame = CGRectMake(277, 283, 150, 25);
-                             }
+                                 self.aboutButton.frame = CGRectMake(9, 286, 18, 19);                             }
                              // in any iPhone...
+                             self.iPhoneLogoImage.image = [UIImage imageNamed:@"SmallLogo_rphd"];
                              self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
                              self.hdImage.alpha = 1.0;
@@ -1184,6 +1187,7 @@
                              self.metadataInfo.shadowColor = [UIColor blackColor];
                              self.lyricsText.hidden = YES;
                              self.lyricsButton.hidden = YES;
+                             self.aboutButton.alpha = 1.0;
                          }
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 1;
@@ -1319,6 +1323,7 @@
                              }
                              self.hdImage.alpha = 0.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
+                             self.aboutButton.alpha = 1.0;
                          }
                          // Both iPad and iPhone
                          self.metadataInfo.numberOfLines = 2;
