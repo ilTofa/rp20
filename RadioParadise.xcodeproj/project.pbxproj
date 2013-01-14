@@ -109,6 +109,8 @@
 		64D60D9D15B6BADA0099A168 /* button-psd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9B15B6BADA0099A168 /* button-psd.png */; };
 		64D60D9E15B6BADA0099A168 /* button-psd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D60D9C15B6BADA0099A168 /* button-psd@2x.png */; };
 		64DBD37616A403C600A8E962 /* RPViewController+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DBD37516A403C600A8E962 /* RPViewController+UI.m */; };
+		64DBD37A16A40EA400A8E962 /* button-songinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DBD37816A40EA400A8E962 /* button-songinfo.png */; };
+		64DBD37B16A40EA400A8E962 /* button-songinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DBD37916A40EA400A8E962 /* button-songinfo@2x.png */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
 		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
@@ -255,6 +257,8 @@
 		64D60D9C15B6BADA0099A168 /* button-psd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-psd@2x.png"; path = "Images/button-psd@2x.png"; sourceTree = "<group>"; };
 		64DBD37416A403C600A8E962 /* RPViewController+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RPViewController+UI.h"; sourceTree = "<group>"; };
 		64DBD37516A403C600A8E962 /* RPViewController+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RPViewController+UI.m"; sourceTree = "<group>"; };
+		64DBD37816A40EA400A8E962 /* button-songinfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-songinfo.png"; path = "Images/button-songinfo.png"; sourceTree = "<group>"; };
+		64DBD37916A40EA400A8E962 /* button-songinfo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-songinfo@2x.png"; path = "Images/button-songinfo@2x.png"; sourceTree = "<group>"; };
 		64DFC65115F7469C00214188 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		64DFC65215F7469C00214188 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
@@ -634,6 +638,8 @@
 		64F8024D151228870080D442 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64DBD37816A40EA400A8E962 /* button-songinfo.png */,
+				64DBD37916A40EA400A8E962 /* button-songinfo@2x.png */,
 				64B12693169B2328007C96B7 /* button-lyrics.png */,
 				64B12694169B2328007C96B7 /* button-lyrics@2x.png */,
 				64B12697169B2470007C96B7 /* button-lyrics-active.png */,
@@ -831,6 +837,8 @@
 				64B1269A169B2470007C96B7 /* button-lyrics-active@2x.png in Resources */,
 				64275778169CDA51009DF7F0 /* logo_2011_horiz.png in Resources */,
 				64275779169CDA51009DF7F0 /* logo_2011_horiz@2x.png in Resources */,
+				64DBD37A16A40EA400A8E962 /* button-songinfo.png in Resources */,
+				64DBD37B16A40EA400A8E962 /* button-songinfo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
