@@ -90,6 +90,10 @@ typedef enum {
 @property (copy, nonatomic) NSString *cookieString;
 @property BOOL interfaceIsTinted;
 
+// Called from UI category
+-(void)scheduleImagesTimer;
+-(void)metatadaHandler:(NSTimer *)timer;
+
 - (IBAction)playOrStop:(id)sender;
 - (IBAction)bitrateChanged:(id)sender;
 - (IBAction)presentAboutBox:(id)sender;
