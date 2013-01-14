@@ -863,13 +863,11 @@
             [self interfaceToMinimized];
             break;
         case kInterfaceMinimized:
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-                [self interfaceToZoomed];
-            else
-                [self interfaceToNormal];
+            [self interfaceToNormal];
             break;
         case kInterfaceZoomed:
             [self interfaceToNormal];
+            break;
         default:
             DLog(@"minimizer called with self.interfaceState to %d", self.interfaceState);
             break;
