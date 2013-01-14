@@ -84,4 +84,16 @@
     self.logoutButton.enabled = NO;
 }
 
+- (IBAction)moreInfo:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/ios-content.php?name=AppHelp"]];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)support:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/rp2s-content.php?name=Content&file=settings"]];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

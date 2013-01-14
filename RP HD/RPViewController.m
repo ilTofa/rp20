@@ -883,7 +883,7 @@
         if(self.theAboutBox == nil)
         {
             self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
-            self.theAboutBox.popoverContentSize = CGSizeMake(340, 383);
+            self.theAboutBox.popoverContentSize = CGSizeMake(388, 403);
         }
         [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }

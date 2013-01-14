@@ -18,5 +18,7 @@
 
 - (IBAction)OKPressed:(id)sender;
 - (IBAction)Logout:(id)sender;
+- (IBAction)moreInfo:(id)sender;
+- (IBAction)support:(id)sender;
 
 @end
