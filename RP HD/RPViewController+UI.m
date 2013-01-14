@@ -39,7 +39,7 @@
     self.rpWebButton.hidden = YES;
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
-    self.addSongButton.enabled = NO;
+    self.songInfoButton.enabled = NO;
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
     if(self.theSleepTimer)
@@ -69,7 +69,7 @@
     self.psdButton.enabled = NO;
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
-    self.addSongButton.enabled = NO;
+    self.songInfoButton.enabled = NO;
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
 }
@@ -92,7 +92,7 @@
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     self.rpWebButton.hidden = NO;
     self.rpWebButton.enabled = YES;
-    self.addSongButton.enabled = YES;
+    self.songInfoButton.enabled = YES;
     self.hdImage.hidden = NO;
     [self.spinner stopAnimating];
     // Only if the app is active and is landscape or iPad or remote screen active. otherwise there's no need to load images
@@ -113,7 +113,7 @@
     self.rpWebButton.enabled = NO;
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = NO;
-    self.addSongButton.enabled = NO;
+    self.songInfoButton.enabled = NO;
     self.hdImage.hidden  = NO;
 }
 
@@ -130,7 +130,7 @@
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
     [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
-    self.addSongButton.enabled = YES;
+    self.songInfoButton.enabled = YES;
     self.rpWebButton.enabled = YES;
     self.rpWebButton.hidden = NO;
     if(self.viewIsLandscape)
@@ -155,7 +155,7 @@
     self.rpWebButton.enabled = NO;
     self.rpWebButton.hidden = NO;
     self.minimizerButton.enabled = NO;
-    self.addSongButton.enabled = NO;
+    self.songInfoButton.enabled = NO;
     self.hdImage.hidden = NO;
 }
 
@@ -177,7 +177,7 @@
                              self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                              self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
                              self.psdButton.frame = CGRectMake(70, 695, 43, 43);
-                             self.addSongButton.frame = CGRectMake(130, 695, 43, 43);
+                             self.songInfoButton.frame = CGRectMake(130, 695, 43, 43);
                              self.songListButton.frame = CGRectMake(190, 695, 43, 43);
                              self.lyricsButton.frame = CGRectMake(250, 695, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
@@ -193,7 +193,7 @@
                                  self.metadataInfo.frame = CGRectMake(109, 3, 450, 21);
                                  self.songNameButton.frame = CGRectMake(98, 2, 450, 21);
                                  self.playOrStopButton.frame = CGRectMake(539, 290, 25, 25);
-                                 self.addSongButton.frame = CGRectMake(5, 290, 25, 25);
+                                 self.songInfoButton.frame = CGRectMake(5, 290, 25, 25);
                                  self.iPhoneLogoImage.frame = CGRectMake(4, 1, 25, 25);
                              }
                              else
@@ -204,7 +204,7 @@
                                  self.metadataInfo.frame = CGRectMake(98, 2, 373, 21);
                                  self.songNameButton.frame = CGRectMake(98, 2, 373, 21);
                                  self.playOrStopButton.frame = CGRectMake(446, 295, 25, 25);
-                                 self.addSongButton.frame = CGRectMake(9, 295, 25, 25);
+                                 self.songInfoButton.frame = CGRectMake(9, 295, 25, 25);
                                  self.iPhoneLogoImage.frame = CGRectMake(9, 0, 25, 25);
                              }
                              // All iPhones
@@ -252,7 +252,7 @@
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                              self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
                              self.playOrStopButton.frame = CGRectMake(368, 634, 43, 43);
-                             self.addSongButton.frame = CGRectMake(446, 634, 43, 43);
+                             self.songInfoButton.frame = CGRectMake(446, 634, 43, 43);
                              self.songListButton.frame = CGRectMake(485, 686, 43, 43);
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
                              self.psdButton.frame = CGRectMake(407, 686, 43, 43);
@@ -297,7 +297,7 @@
                              // in any iPhone...
                              self.aboutButton.frame = CGRectMake(9, 286, 18, 19);
                              self.iPhoneLogoImage.image = [UIImage imageNamed:@"SmallLogo_rphd"];
-                             self.addSongButton.frame = CGRectMake(34, 278, 36, 36);
+                             self.songInfoButton.frame = CGRectMake(34, 278, 36, 36);
                              self.iPhoneLogoImage.frame = CGRectMake(9, 9, 40, 40);
                              self.hdImage.alpha = self.dissolveHdImage.alpha = 1.0;
                              self.psdButton.alpha = self.songListButton.alpha = 1.0;
@@ -349,7 +349,7 @@
                          self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
                          self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
                          self.psdButton.frame = CGRectMake(70, 695, 43, 43);
-                         self.addSongButton.frame = CGRectMake(130, 695, 43, 43);
+                         self.songInfoButton.frame = CGRectMake(130, 695, 43, 43);
                          self.songListButton.frame = CGRectMake(190, 695, 43, 43);
                          self.lyricsButton.frame = CGRectMake(250, 695, 43, 43);
                          self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
@@ -387,7 +387,7 @@
                              self.metadataInfo.frame = CGRectMake(20, 466, 728, 62);
                              self.songNameButton.frame = CGRectMake(20, 466, 728, 62);
                              self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
-                             self.addSongButton.frame = CGRectMake(423, 947, 43, 43);
+                             self.songInfoButton.frame = CGRectMake(423, 947, 43, 43);
                              self.songListButton.frame = CGRectMake(517, 947, 43, 43);
                              self.psdButton.frame = CGRectMake(611, 947, 43, 43);
                              self.logoImage.frame = CGRectMake(433, 557, 300, 94);
@@ -416,7 +416,7 @@
                                  self.volumeViewContainer.frame = CGRectMake(85, 419, 219, 25);
                                  self.lyricsButton.frame = CGRectMake(20, 462, 36, 36);
                                  self.bitrateSelector.frame = CGRectMake(81, 465, 219, 30);
-                                 self.addSongButton.frame = CGRectMake(20, 512, 36, 36); //
+                                 self.songInfoButton.frame = CGRectMake(20, 512, 36, 36); //
                                  self.songListButton.frame = CGRectMake(81, 512, 36, 36);
                                  self.sleepButton.frame = CGRectMake(142, 512, 36, 36);
                                  self.psdButton.frame = CGRectMake(203, 512, 36, 36);
@@ -435,7 +435,7 @@
                                  self.lyricsButton.frame = CGRectMake(21, 378, 36, 36);
                                  self.aboutButton.frame = CGRectMake(30, 351, 18, 19);
                                  self.bitrateSelector.frame = CGRectMake(81, 381, 219, 30);
-                                 self.addSongButton.frame = CGRectMake(20, 424, 36, 36); //
+                                 self.songInfoButton.frame = CGRectMake(20, 424, 36, 36); //
                                  self.songListButton.frame = CGRectMake(81, 424, 36, 36);
                                  self.sleepButton.frame = CGRectMake(142, 424, 36, 36);
                                  self.psdButton.frame = CGRectMake(203, 424	, 36, 36);

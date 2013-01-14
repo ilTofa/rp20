@@ -53,7 +53,7 @@ typedef enum {
 @property (weak) IBOutlet UIImageView *separatorImage;
 @property (weak) IBOutlet UIImageView *iPhoneLogoImage;
 @property (weak, nonatomic) IBOutlet UIButton *psdButton;
-@property (weak, nonatomic) IBOutlet UIButton *addSongButton;
+@property (weak, nonatomic) IBOutlet UIButton *songInfoButton;
 @property (weak, nonatomic) IBOutlet UIButton *songListButton;
 @property (weak) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UIButton *sleepButton;
@@ -79,6 +79,7 @@ typedef enum {
 @property (copy, nonatomic) NSString *currentSongId;
 @property (nonatomic) NSNumber *psdDurationInSeconds;
 @property BOOL isLyricsToBeShown;
+@property BOOL songIsAlreadySaved;
 
 @property BOOL viewIsLandscape;
 @property BOOL viewIsRotating;
@@ -98,7 +99,6 @@ typedef enum {
 - (IBAction)bitrateChanged:(id)sender;
 - (IBAction)presentAboutBox:(id)sender;
 - (IBAction)presentRPWeb:(id)sender;
-- (IBAction)songNameOverlayButton:(id)sender;
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
 - (IBAction)showSongsList:(id)sender;

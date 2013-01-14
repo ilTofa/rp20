@@ -215,8 +215,8 @@
              // remembering songid for forum view
              self.currentSongId = [values objectAtIndex:1];
              DLog(@"Song id is %@.", self.currentSongId);
-             // In any case, reset the "add song" button to enabled state (we have a new song, it seems).
-             dispatch_async(dispatch_get_main_queue(), ^{ self.addSongButton.enabled = YES; });
+             // In any case, reset the "add song" capability (we have a new song, it seems).
+             self.songIsAlreadySaved = NO;
              // Reschedule ourselves at the end of the song
              if(self.theStreamMetadataTimer != nil)
              {
@@ -722,7 +722,7 @@
     NSArray *songPieces = [self.rawMetadataString componentsSeparatedByString:@" - "];
     if([songPieces count] == 2)
     {
-        self.addSongButton.enabled = NO;
+        self.songIsAlreadySaved = YES;
         // No save for RP metadata filler
         if([[songPieces objectAtIndex:0] isEqualToString:@"Commercial-free"])
             return;
@@ -734,7 +734,7 @@
             NSString *temp = [NSString stringWithFormat:@"While saving the song got the error %@, %@", err, [err userInfo]];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:temp delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
             [alert show];
-            self.addSongButton.enabled = YES;
+            self.songIsAlreadySaved = NO;
         }
     }
     else
@@ -888,11 +888,6 @@
     self.theWebView.currentSongName = self.rawMetadataString;
     [self presentViewController:self.theWebView animated:YES completion:nil];
     self.theWebView = nil;
-}
-
-- (IBAction)songNameOverlayButton:(id)sender 
-{
-    [self presentRPWeb:sender];
 }
 
 #pragma mark -
@@ -1081,7 +1076,7 @@
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     [self resignFirstResponder];
     [[AVAudioSession sharedInstance] setDelegate:nil];
-    [self setAddSongButton:nil];
+    [self setSongInfoButton:nil];
     [self setSongListButton:nil];
     [self setSleepButton:nil];
     [self setLyricsText:nil];
