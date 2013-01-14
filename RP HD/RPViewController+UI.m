@@ -40,8 +40,15 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.songInfoButton.enabled = NO;
+    self.sleepButton.enabled = NO;
+    self.lyricsButton.enabled = NO;
+    self.songIsAlreadySaved = YES;
+    [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateNormal];
+    [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateHighlighted];
+    [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateSelected];
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
+    self.coverImageView.image = nil;
     if(self.theSleepTimer)
     {
         [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateNormal];
@@ -70,6 +77,8 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.songInfoButton.enabled = NO;
+    self.sleepButton.enabled = NO;
+    self.lyricsButton.enabled = NO;
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
 }
@@ -94,6 +103,12 @@
     self.rpWebButton.enabled = YES;
     self.songInfoButton.enabled = YES;
     self.hdImage.hidden = NO;
+    self.sleepButton.enabled = YES;
+    self.lyricsButton.enabled = YES;
+    self.songIsAlreadySaved = NO;
+    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
+    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
+    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
     [self.spinner stopAnimating];
     // Only if the app is active and is landscape or iPad or remote screen active. otherwise there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
@@ -133,8 +148,14 @@
     self.songInfoButton.enabled = YES;
     self.rpWebButton.enabled = YES;
     self.rpWebButton.hidden = NO;
+    self.sleepButton.enabled = YES;
+    self.lyricsButton.enabled = YES;
     if(self.viewIsLandscape)
         self.minimizerButton.enabled = YES;
+    self.songIsAlreadySaved = NO;
+    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
+    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
+    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
     self.hdImage.hidden = NO;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
