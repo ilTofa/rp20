@@ -101,8 +101,7 @@ typedef enum {
 - (IBAction)presentRPWeb:(id)sender;
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
-- (IBAction)showSongsList:(id)sender;
-- (IBAction)addCurrentSong:(id)sender;
+- (IBAction)songListAction:(id)sender;
 - (IBAction)sleepSetup:(id)sender;
 - (IBAction)showLyrics:(id)sender;
 

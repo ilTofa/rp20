@@ -15,7 +15,7 @@
 #import "Song.h"
 #import "RPViewController+UI.h"
 
-@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, RPSleepSetupDelegate, AVAudioSessionDelegate>
+@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, RPSleepSetupDelegate, AVAudioSessionDelegate, UIActionSheetDelegate>
 
 @end
 
@@ -217,6 +217,9 @@
              DLog(@"Song id is %@.", self.currentSongId);
              // In any case, reset the "add song" capability (we have a new song, it seems).
              self.songIsAlreadySaved = NO;
+             [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
+             [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
+             [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
              // Reschedule ourselves at the end of the song
              if(self.theStreamMetadataTimer != nil)
              {
@@ -705,7 +708,30 @@
     [self playPSDNow];
 }
 
-- (IBAction)showSongsList:(id)sender
+- (IBAction)songListAction:(id)sender
+{
+    if(self.songIsAlreadySaved)
+    {
+        [self showSongList];
+        return;
+    }
+    UIActionSheet *theChoices = [[UIActionSheet alloc] initWithTitle:@"What do you want do to?" delegate:self cancelButtonTitle:@"Nothing" destructiveButtonTitle:nil otherButtonTitles:@"Show Song List", @"Save Song", nil];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        [theChoices showFromRect:self.songListButton.frame inView:self.view animated:YES];
+    else
+        [theChoices showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    DLog(@"User choose: %d", buttonIndex);
+    if(buttonIndex == 0)
+        [self showSongList];
+    else if(buttonIndex == 1)
+        [self addCurrentSong];
+}
+
+- (void)showSongList
 {
     SongsViewController *theSongsBox = [[SongsViewController alloc] initWithNibName:@"SongsViewController" bundle:[NSBundle mainBundle]];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -713,16 +739,15 @@
     else
         theSongsBox.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:theSongsBox animated:YES completion:nil];
-    theSongsBox = nil;
+    theSongsBox = nil;    
 }
 
-- (IBAction)addCurrentSong:(id)sender
+- (void)addCurrentSong
 {
     // Recover song data...
     NSArray *songPieces = [self.rawMetadataString componentsSeparatedByString:@" - "];
     if([songPieces count] == 2)
     {
-        self.songIsAlreadySaved = YES;
         // No save for RP metadata filler
         if([[songPieces objectAtIndex:0] isEqualToString:@"Commercial-free"])
             return;
@@ -734,8 +759,12 @@
             NSString *temp = [NSString stringWithFormat:@"While saving the song got the error %@, %@", err, [err userInfo]];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:temp delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
             [alert show];
-            self.songIsAlreadySaved = NO;
+            return;
         }
+        self.songIsAlreadySaved = YES;
+        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateSelected];
     }
     else
     {
