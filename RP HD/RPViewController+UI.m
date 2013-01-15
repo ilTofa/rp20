@@ -449,22 +449,23 @@
                              }
                              else
                              { // "normal" iPhone
-                                 self.coverImageView.frame = CGRectMake(40, 20, 240, 240); //
-                                 self.songNameButton.frame = CGRectMake(40, 20, 240, 240); //
+                                 self.coverImageView.frame = CGRectMake(40, 20, 240, 240);
+                                 self.songNameButton.frame = CGRectMake(40, 20, 240, 240);
                                  self.lyricsText.frame = CGRectMake(42, 22, 236, 236);
-                                 self.hdImage.frame = CGRectMake(0, 0, 480, 270); //
-                                 self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270); //
-                                 self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40); //
-                                 self.metadataInfo.frame = CGRectMake(20, 303, 280, 40); //
-                                 self.volumeViewContainer.frame = CGRectMake(81, 348, 219, 25);
-                                 self.lyricsButton.frame = CGRectMake(21, 378, 36, 36);
-                                 self.aboutButton.frame = CGRectMake(30, 351, 18, 19);
-                                 self.bitrateSelector.frame = CGRectMake(81, 381, 219, 30);
-                                 self.songInfoButton.frame = CGRectMake(20, 424, 36, 36); //
+                                 self.hdImage.frame = CGRectMake(0, 0, 480, 270);
+                                 self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270);
+                                 self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40);
+                                 self.metadataInfo.frame = CGRectMake(20, 303, 280, 40);
+                                 self.volumeViewContainer.frame = CGRectMake(20, 348, 197, 25);
+                                 self.supportRPButton.frame = CGRectMake(225, 346, 75, 30); //
+                                 self.lyricsButton.frame = CGRectMake(20, 424, 36, 36);
+                                 self.aboutButton.frame = CGRectMake(273, 388, 18, 19);
+                                 self.bitrateSelector.frame = CGRectMake(109, 383, 151, 30);
+                                 self.songInfoButton.frame = CGRectMake(20, 383, 75, 30);
                                  self.songListButton.frame = CGRectMake(81, 424, 36, 36);
                                  self.sleepButton.frame = CGRectMake(142, 424, 36, 36);
                                  self.psdButton.frame = CGRectMake(203, 424	, 36, 36);
-                                 self.playOrStopButton.frame = CGRectMake(264, 424, 36, 36); //
+                                 self.playOrStopButton.frame = CGRectMake(264, 424, 36, 36);
                              }
                              // in any iPhone...
                              [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateNormal];
