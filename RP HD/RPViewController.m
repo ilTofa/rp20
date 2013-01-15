@@ -715,7 +715,7 @@
         [self showSongList];
         return;
     }
-    UIActionSheet *theChoices = [[UIActionSheet alloc] initWithTitle:@"What do you want do to?" delegate:self cancelButtonTitle:@"Nothing" destructiveButtonTitle:nil otherButtonTitles:@"Show Song List", @"Save Song", nil];
+    UIActionSheet *theChoices = [[UIActionSheet alloc] initWithTitle:@"What do you want do to?" delegate:self cancelButtonTitle:@"Nothing" destructiveButtonTitle:nil otherButtonTitles:@"Tunemark List", @"Mark Song", nil];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         [theChoices showFromRect:self.songListButton.frame inView:self.view animated:YES];
     else
