@@ -856,6 +856,11 @@
     }
 }
 
+- (IBAction)supportRP:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/rp2s-content.php?name=Content&file=settings"]];
+}
+
 - (IBAction)minimizer:(id)sender
 {
     switch (self.interfaceState) {
@@ -1109,6 +1114,7 @@
     [self setLyricsText:nil];
     [self setDissolveHdImage:nil];
     [self setAboutButton:nil];
+    [self setSupportRPButton:nil];
     [super viewDidUnload];
 }
 

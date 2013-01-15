@@ -59,6 +59,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *sleepButton;
 @property (weak, nonatomic) IBOutlet UITextView *lyricsText;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
+@property (weak, nonatomic) IBOutlet UIButton *supportRPButton;
 
 @property (strong, nonatomic) AVPlayer *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
@@ -104,6 +105,7 @@ typedef enum {
 - (IBAction)songListAction:(id)sender;
 - (IBAction)sleepSetup:(id)sender;
 - (IBAction)showLyrics:(id)sender;
+- (IBAction)supportRP:(id)sender;
 
 - (IBAction)debugFadeIn:(id)sender;
 - (IBAction)debugFadeOut:(id)sender;

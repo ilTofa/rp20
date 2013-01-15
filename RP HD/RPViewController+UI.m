@@ -246,7 +246,7 @@
     self.sleepButton.enabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.coverImageView.alpha = self.sleepButton.alpha = 0.0;
+                         self.coverImageView.alpha = self.sleepButton.alpha = self.supportRPButton.alpha = 0.0;
                          self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.lyricsButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
@@ -316,6 +316,9 @@
                                  self.volumeViewContainer.frame = CGRectMake(277, 283, 150, 25);
                              }
                              // in any iPhone...
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateNormal];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateHighlighted];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateSelected];
                              self.aboutButton.frame = CGRectMake(9, 286, 18, 19);
                              self.iPhoneLogoImage.image = [UIImage imageNamed:@"SmallLogo_rphd"];
                              self.songInfoButton.frame = CGRectMake(34, 278, 36, 36);
@@ -394,7 +397,7 @@
                      animations:^(void) {
                          self.lyricsButton.alpha = 0.0;
                          self.coverImageView.alpha = 1.0;
-                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = 1.0;
+                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = self.supportRPButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.separatorImage.alpha = 1.0;
@@ -426,22 +429,23 @@
                          {
                              if([UIScreen mainScreen].bounds.size.height == 568.0f)
                              { // iPhone 5
-                                 self.coverImageView.frame = CGRectMake(20, 20, 280, 280); //
-                                 self.songNameButton.frame = CGRectMake(20, 20, 280, 280); //
+                                 self.coverImageView.frame = CGRectMake(20, 20, 280, 280);
+                                 self.songNameButton.frame = CGRectMake(20, 20, 280, 280);
                                  self.lyricsText.frame = CGRectMake(22, 22, 276, 276);
                                  self.hdImage.frame = CGRectMake(2, 2, 764, 425);
                                  self.dissolveHdImage.frame = CGRectMake(2, 2, 764, 425);
-                                 self.metadataInfo.frame = CGRectMake(20, 310, 280, 40); //
-                                 self.iPhoneLogoImage.frame = CGRectMake(20, 359, 280, 42); //
-                                 self.aboutButton.frame = CGRectMake(29, 422, 18, 19);
-                                 self.volumeViewContainer.frame = CGRectMake(85, 419, 219, 25);
-                                 self.lyricsButton.frame = CGRectMake(20, 462, 36, 36);
-                                 self.bitrateSelector.frame = CGRectMake(81, 465, 219, 30);
-                                 self.songInfoButton.frame = CGRectMake(20, 512, 36, 36); //
+                                 self.metadataInfo.frame = CGRectMake(20, 310, 280, 40);
+                                 self.iPhoneLogoImage.frame = CGRectMake(20, 359, 280, 42);
+                                 self.aboutButton.frame = CGRectMake(273, 469, 18, 19); //
+                                 self.volumeViewContainer.frame = CGRectMake(20, 419, 197, 25); //
+                                 self.supportRPButton.frame = CGRectMake(225, 417, 75, 30); //
+                                 self.lyricsButton.frame = CGRectMake(20, 512, 36, 36); //
+                                 self.bitrateSelector.frame = CGRectMake(109, 464, 151, 30); //
+                                 self.songInfoButton.frame = CGRectMake(20, 464, 75, 30); //
                                  self.songListButton.frame = CGRectMake(81, 512, 36, 36);
                                  self.sleepButton.frame = CGRectMake(142, 512, 36, 36);
                                  self.psdButton.frame = CGRectMake(203, 512, 36, 36);
-                                 self.playOrStopButton.frame = CGRectMake(264, 512, 36, 36); //
+                                 self.playOrStopButton.frame = CGRectMake(264, 512, 36, 36);
                              }
                              else
                              { // "normal" iPhone
@@ -463,6 +467,9 @@
                                  self.playOrStopButton.frame = CGRectMake(264, 424, 36, 36); //
                              }
                              // in any iPhone...
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateNormal];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateHighlighted];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateSelected];
                              self.lyricsButton.alpha = 1.0;
                              self.iPhoneLogoImage.image = [UIImage imageNamed:@"logo_2011_horiz"];
                              if(self.isLyricsToBeShown)
