@@ -858,7 +858,7 @@
 
 - (IBAction)supportRP:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/rp2s-content.php?name=Content&file=settings"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.radioparadise.com/rp2s-content.php?name=Support&file=settings"]];
 }
 
 - (IBAction)minimizer:(id)sender
