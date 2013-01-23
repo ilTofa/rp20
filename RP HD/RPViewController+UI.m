@@ -438,10 +438,10 @@
                                  self.iPhoneLogoImage.frame = CGRectMake(20, 359, 280, 42);
                                  self.aboutButton.frame = CGRectMake(273, 469, 18, 19); //
                                  self.volumeViewContainer.frame = CGRectMake(20, 419, 197, 25); //
-                                 self.supportRPButton.frame = CGRectMake(225, 417, 75, 30); //
+                                 self.songInfoButton.frame = CGRectMake(225, 417, 75, 30); //
                                  self.lyricsButton.frame = CGRectMake(20, 512, 36, 36); //
                                  self.bitrateSelector.frame = CGRectMake(109, 464, 151, 30); //
-                                 self.songInfoButton.frame = CGRectMake(20, 464, 75, 30); //
+                                 self.supportRPButton.frame = CGRectMake(20, 464, 75, 30); //
                                  self.songListButton.frame = CGRectMake(81, 512, 36, 36);
                                  self.sleepButton.frame = CGRectMake(142, 512, 36, 36);
                                  self.psdButton.frame = CGRectMake(203, 512, 36, 36);
@@ -457,11 +457,11 @@
                                  self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40);
                                  self.metadataInfo.frame = CGRectMake(20, 303, 280, 40);
                                  self.volumeViewContainer.frame = CGRectMake(20, 348, 197, 25);
-                                 self.supportRPButton.frame = CGRectMake(225, 346, 75, 30); //
+                                 self.songInfoButton.frame = CGRectMake(225, 346, 75, 30); //
                                  self.lyricsButton.frame = CGRectMake(20, 424, 36, 36);
                                  self.aboutButton.frame = CGRectMake(273, 388, 18, 19);
                                  self.bitrateSelector.frame = CGRectMake(109, 383, 151, 30);
-                                 self.songInfoButton.frame = CGRectMake(20, 383, 75, 30);
+                                 self.supportRPButton.frame = CGRectMake(20, 383, 75, 30);
                                  self.songListButton.frame = CGRectMake(81, 424, 36, 36);
                                  self.sleepButton.frame = CGRectMake(142, 424, 36, 36);
                                  self.psdButton.frame = CGRectMake(203, 424	, 36, 36);
