@@ -430,11 +430,11 @@
                              if([UIScreen mainScreen].bounds.size.height == 568.0f)
                              { // iPhone 5
                                  self.coverImageView.frame = CGRectMake(20, 20, 280, 280);
-                                 self.songNameButton.frame = CGRectMake(20, 20, 280, 280);
                                  self.lyricsText.frame = CGRectMake(22, 22, 276, 276);
                                  self.hdImage.frame = CGRectMake(2, 2, 764, 425);
                                  self.dissolveHdImage.frame = CGRectMake(2, 2, 764, 425);
                                  self.metadataInfo.frame = CGRectMake(20, 310, 280, 40);
+                                 self.songNameButton.frame = CGRectMake(20, 310, 280, 40);
                                  self.iPhoneLogoImage.frame = CGRectMake(20, 359, 280, 42);
                                  self.aboutButton.frame = CGRectMake(273, 469, 18, 19); //
                                  self.volumeViewContainer.frame = CGRectMake(20, 419, 197, 25); //
@@ -456,6 +456,7 @@
                                  self.dissolveHdImage.frame = CGRectMake(0, 0, 480, 270);
                                  self.iPhoneLogoImage.frame = CGRectMake(21, 263, 267, 40);
                                  self.metadataInfo.frame = CGRectMake(20, 303, 280, 40);
+                                 self.songNameButton.frame = CGRectMake(20, 303, 280, 40);
                                  self.volumeViewContainer.frame = CGRectMake(20, 348, 197, 25);
                                  self.songInfoButton.frame = CGRectMake(225, 346, 75, 30); //
                                  self.lyricsButton.frame = CGRectMake(20, 424, 36, 36);
