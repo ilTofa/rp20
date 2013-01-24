@@ -8,6 +8,7 @@
 
 #import "RPForumView.h"
 
+#import "STKeychain.h"
 #import "LocalyticsSession.h"
 
 @interface RPForumView () <UIWebViewDelegate, UIActionSheetDelegate>
@@ -70,6 +71,44 @@
     // Don't show the ugly white window... :)
     self.theWebView.hidden = YES;
     self.isForumShown = YES;
+    NSError *err;
+    NSString *cookieString = [STKeychain getPasswordForUsername:@"cookies" andServiceName:@"RP" error:&err];
+    if(cookieString != nil)
+    {   // already logged in. Get details
+        NSString *username = nil;
+        NSString *passwd = nil;
+        DLog(@"User is logged. Cookie string is: '%@'", cookieString); // C_username=gtufano; C_passwd=04cbb4d0ba0130b7b398dcd286a47087
+        NSRange endUserName = [cookieString rangeOfString:@";"];
+        if(endUserName.location != NSNotFound)
+        {
+            DLog(@"DEBUG: endUSername.location %d, .length %d", endUserName.location, endUserName.length);
+            username = [cookieString substringWithRange:NSMakeRange(11, endUserName.location - 11)];
+            DLog(@"Logged user is %@", username);
+            passwd = [cookieString substringWithRange:NSMakeRange(endUserName.location + 11, 32)];
+            DLog(@"Logged user encoded password is %@", passwd);
+        }
+        if(username && passwd)
+        {
+            // Set cookies before loading the view...
+            NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+            [cookieProperties setObject:@"testCookie" forKey:NSHTTPCookieName];
+            [cookieProperties setObject:@"someValue123456" forKey:NSHTTPCookieValue];
+            [cookieProperties setObject:@"www.radioparadise.com" forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:@"www.radioparadise.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+            [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+            [cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+            [cookieProperties setObject:@"C_username" forKey:NSHTTPCookieName];
+            [cookieProperties setObject:username forKey:NSHTTPCookieValue];
+            NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+            [cookieProperties setObject:@"C_passwd" forKey:NSHTTPCookieName];
+            [cookieProperties setObject:passwd forKey:NSHTTPCookieValue];
+            cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
+    // Now load the starting url...
     NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
     [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
     [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"ForumOpened"];
