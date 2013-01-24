@@ -58,20 +58,11 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.songInfoButton.enabled = NO;
-    self.sleepButton.enabled = NO;
     self.lyricsButton.enabled = NO;
     self.songIsAlreadySaved = YES;
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
     self.coverImageView.image = nil;
-    if(self.theSleepTimer)
-    {
-        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateNormal];
-        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateHighlighted];
-        [self.sleepButton setImage:[UIImage imageNamed:@"button-sleep"] forState:UIControlStateSelected];
-        [self.theSleepTimer invalidate];
-        self.theSleepTimer = nil;
-    }
     if(self.theStreamMetadataTimer != nil)
     {
         [self.theStreamMetadataTimer invalidate];
@@ -92,7 +83,6 @@
     self.rpWebButton.enabled = NO;
     self.minimizerButton.enabled = NO;
     self.songInfoButton.enabled = NO;
-    self.sleepButton.enabled = NO;
     self.lyricsButton.enabled = NO;
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
@@ -136,7 +126,6 @@
     self.rpWebButton.enabled = YES;
     self.songInfoButton.enabled = YES;
     self.hdImage.hidden = NO;
-    self.sleepButton.enabled = YES;
     self.lyricsButton.enabled = YES;
     self.songIsAlreadySaved = NO;
     [self.spinner stopAnimating];
@@ -196,7 +185,6 @@
     self.songInfoButton.enabled = YES;
     self.rpWebButton.enabled = YES;
     self.rpWebButton.hidden = NO;
-    self.sleepButton.enabled = YES;
     self.lyricsButton.enabled = YES;
     if(self.viewIsLandscape)
         self.minimizerButton.enabled = YES;
@@ -287,11 +275,10 @@
 {
     DLog(@"interfaceToNormal");
     self.minimizerButton.enabled = self.lyricsButton.enabled = YES;
-    self.lyricsButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.lyricsButton.hidden = self.sleepButton.hidden = NO;
-    self.sleepButton.enabled = NO;
+    self.lyricsButton.hidden = self.separatorImage.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = self.hdImage.hidden = self.lyricsButton.hidden = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.coverImageView.alpha = self.sleepButton.alpha = 0.0;
+                         self.coverImageView.alpha = 0.0;
                          self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.lyricsButton.alpha = self.separatorImage.alpha = self.supportRPButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
@@ -442,12 +429,11 @@
     self.minimizerButton.enabled = NO;
     self.coverImageView.hidden = NO;
     self.lyricsButton.hidden = self.logoImage.hidden = self.bitrateSelector.hidden = self.rpWebButton.hidden = self.volumeViewContainer.hidden = self.separatorImage.hidden = NO;
-    self.sleepButton.enabled = YES;
     [UIView animateWithDuration:animationDuration
                      animations:^(void) {
                          self.lyricsButton.alpha = 0.0;
                          self.coverImageView.alpha = 1.0;
-                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.sleepButton.alpha = self.supportRPButton.alpha = 1.0;
+                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.supportRPButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.separatorImage.alpha = 1.0;
@@ -471,7 +457,6 @@
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
                              self.volumeViewContainer.frame = CGRectMake(418, 874, 330, 25);
                              self.lyricsButton.alpha = 0.0;
-                             self.sleepButton.frame = CGRectMake(418, 947, 43, 43);
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
                              self.aboutButton.frame = CGRectMake(574, 704, 18, 19);
                              self.songInfoButton.frame = CGRectMake(673, 699, 75, 30);
@@ -493,9 +478,8 @@
                                  self.lyricsButton.frame = CGRectMake(20, 512, 36, 36); //
                                  self.bitrateSelector.frame = CGRectMake(109, 464, 151, 30); //
                                  self.supportRPButton.frame = CGRectMake(20, 464, 75, 30); //
-                                 self.songListButton.frame = CGRectMake(81, 512, 36, 36);
-                                 self.sleepButton.frame = CGRectMake(142, 512, 36, 36);
-                                 self.psdButton.frame = CGRectMake(203, 512, 36, 36);
+                                 self.songListButton.frame = CGRectMake(101, 512, 36, 36);
+                                 self.psdButton.frame = CGRectMake(183, 512, 36, 36);
                                  self.playOrStopButton.frame = CGRectMake(264, 512, 36, 36);
                              }
                              else
@@ -514,9 +498,8 @@
                                  self.aboutButton.frame = CGRectMake(273, 388, 18, 19);
                                  self.bitrateSelector.frame = CGRectMake(109, 383, 151, 30);
                                  self.supportRPButton.frame = CGRectMake(20, 383, 75, 30);
-                                 self.songListButton.frame = CGRectMake(81, 424, 36, 36);
-                                 self.sleepButton.frame = CGRectMake(142, 424, 36, 36);
-                                 self.psdButton.frame = CGRectMake(203, 424	, 36, 36);
+                                 self.songListButton.frame = CGRectMake(101, 424, 36, 36);
+                                 self.psdButton.frame = CGRectMake(183, 424	, 36, 36);
                                  self.playOrStopButton.frame = CGRectMake(264, 424, 36, 36);
                              }
                              // in any iPhone...

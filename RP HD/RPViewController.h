@@ -12,7 +12,6 @@
 #import "RPAboutBox.h"
 #import "RPForumView.h"
 #import "RPLoginController.h"
-#import "RPSleepSetup.h"
 #import "SongsViewController.h"
 
 // #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
@@ -56,7 +55,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *songInfoButton;
 @property (weak, nonatomic) IBOutlet UIButton *songListButton;
 @property (weak) IBOutlet UIImageView *coverImageView;
-@property (weak, nonatomic) IBOutlet UIButton *sleepButton;
 @property (weak, nonatomic) IBOutlet UITextView *lyricsText;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 @property (weak, nonatomic) IBOutlet UIButton *supportRPButton;
@@ -66,11 +64,9 @@ typedef enum {
 @property (strong) NSTimer *theImagesTimer;
 @property (strong) NSTimer *theStreamMetadataTimer;
 @property (strong) NSTimer *thePsdTimer;
-@property (strong) NSTimer *theSleepTimer;
 @property (strong, nonatomic) AVPlayer *thePsdStreamer;
 @property (strong, nonatomic) AVPlayer *theOldPsdStreamer;
 @property (strong, nonatomic) UIPopoverController *theAboutBox;
-@property (strong, nonatomic) UIPopoverController *theSleepBox;
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
 
@@ -103,7 +99,6 @@ typedef enum {
 - (IBAction)minimizer:(id)sender;
 - (IBAction)startPSD:(id)sender;
 - (IBAction)songListAction:(id)sender;
-- (IBAction)sleepSetup:(id)sender;
 - (IBAction)showLyrics:(id)sender;
 - (IBAction)supportRP:(id)sender;
 

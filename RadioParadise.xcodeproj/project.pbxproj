@@ -78,8 +78,6 @@
 		6460FC2516973B25009CDAE5 /* button-sleep@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC1F16973B25009CDAE5 /* button-sleep@2x.png */; };
 		6460FC2916973C30009CDAE5 /* button-sleep-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC2716973C30009CDAE5 /* button-sleep-active.png */; };
 		6460FC2A16973C30009CDAE5 /* button-sleep-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC2816973C30009CDAE5 /* button-sleep-active@2x.png */; };
-		6460FC2D1697485F009CDAE5 /* RPSleepSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */; };
-		6460FC2F16974889009CDAE5 /* RPSleepSetup~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */; };
 		646ACA7515B46901001B5B73 /* STKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7415B46901001B5B73 /* STKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		646ACA7815B46A12001B5B73 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646ACA7715B46A12001B5B73 /* Security.framework */; };
 		646ACA8815B46D6A001B5B73 /* RPLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA8615B46D6A001B5B73 /* RPLoginController.m */; };
@@ -115,7 +113,6 @@
 		64B12696169B2328007C96B7 /* button-lyrics@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B12694169B2328007C96B7 /* button-lyrics@2x.png */; };
 		64B12699169B2470007C96B7 /* button-lyrics-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B12697169B2470007C96B7 /* button-lyrics-active.png */; };
 		64B1269A169B2470007C96B7 /* button-lyrics-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64B12698169B2470007C96B7 /* button-lyrics-active@2x.png */; };
-		64C4892516977AF300724EE1 /* RPSleepSetup~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64C4892416977AF200724EE1 /* RPSleepSetup~iphone.xib */; };
 		64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D481211547577800BC1085 /* RPViewController~iphone.xib */; };
 		64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D4812215475C5300BC1085 /* RPForumView~iphone.xib */; };
 		64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D481241547607D00BC1085 /* SmallLogo_rphd.png */; };
@@ -234,9 +231,6 @@
 		6460FC1F16973B25009CDAE5 /* button-sleep@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-sleep@2x.png"; path = "Images/button-sleep@2x.png"; sourceTree = "<group>"; };
 		6460FC2716973C30009CDAE5 /* button-sleep-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-sleep-active.png"; path = "Images/button-sleep-active.png"; sourceTree = "<group>"; };
 		6460FC2816973C30009CDAE5 /* button-sleep-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-sleep-active@2x.png"; path = "Images/button-sleep-active@2x.png"; sourceTree = "<group>"; };
-		6460FC2B1697485E009CDAE5 /* RPSleepSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSleepSetup.h; sourceTree = "<group>"; };
-		6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSleepSetup.m; sourceTree = "<group>"; };
-		6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPSleepSetup~ipad.xib"; sourceTree = "<group>"; };
 		646ACA7315B46901001B5B73 /* STKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKeychain.h; sourceTree = "<group>"; };
 		646ACA7415B46901001B5B73 /* STKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKeychain.m; sourceTree = "<group>"; };
 		646ACA7715B46A12001B5B73 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -279,7 +273,6 @@
 		64B12694169B2328007C96B7 /* button-lyrics@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-lyrics@2x.png"; path = "Images/button-lyrics@2x.png"; sourceTree = "<group>"; };
 		64B12697169B2470007C96B7 /* button-lyrics-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-lyrics-active.png"; path = "Images/button-lyrics-active.png"; sourceTree = "<group>"; };
 		64B12698169B2470007C96B7 /* button-lyrics-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-lyrics-active@2x.png"; path = "Images/button-lyrics-active@2x.png"; sourceTree = "<group>"; };
-		64C4892416977AF200724EE1 /* RPSleepSetup~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPSleepSetup~iphone.xib"; sourceTree = "<group>"; };
 		64D481201547577800BC1085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~iphone.xib"; sourceTree = "<group>"; };
 		64D4812215475C5300BC1085 /* RPForumView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPForumView~iphone.xib"; sourceTree = "<group>"; };
 		64D481241547607D00BC1085 /* SmallLogo_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SmallLogo_rphd.png; path = Images/SmallLogo_rphd.png; sourceTree = "<group>"; };
@@ -693,10 +686,6 @@
 				646ACA8615B46D6A001B5B73 /* RPLoginController.m */,
 				646ACA8715B46D6A001B5B73 /* RPLoginController~ipad.xib */,
 				646ACA8A15B47699001B5B73 /* RPLoginController~iphone.xib */,
-				6460FC2B1697485E009CDAE5 /* RPSleepSetup.h */,
-				6460FC2C1697485F009CDAE5 /* RPSleepSetup.m */,
-				6460FC2E16974888009CDAE5 /* RPSleepSetup~ipad.xib */,
-				64C4892416977AF200724EE1 /* RPSleepSetup~iphone.xib */,
 			);
 			path = "RP HD";
 			sourceTree = "<group>";
@@ -895,8 +884,6 @@
 				6460FC2516973B25009CDAE5 /* button-sleep@2x.png in Resources */,
 				6460FC2916973C30009CDAE5 /* button-sleep-active.png in Resources */,
 				6460FC2A16973C30009CDAE5 /* button-sleep-active@2x.png in Resources */,
-				6460FC2F16974889009CDAE5 /* RPSleepSetup~ipad.xib in Resources */,
-				64C4892516977AF300724EE1 /* RPSleepSetup~iphone.xib in Resources */,
 				64B12695169B2328007C96B7 /* button-lyrics.png in Resources */,
 				64B12696169B2328007C96B7 /* button-lyrics@2x.png in Resources */,
 				64B12699169B2470007C96B7 /* button-lyrics-active.png in Resources */,
@@ -957,7 +944,6 @@
 				640C3F9116020CF600631AAD /* LocalyticsDatabase.m in Sources */,
 				640C3F9216020CF600631AAD /* LocalyticsSession.m in Sources */,
 				640C3F9316020CF600631AAD /* LocalyticsUploader.m in Sources */,
-				6460FC2D1697485F009CDAE5 /* RPSleepSetup.m in Sources */,
 				64DBD37616A403C600A8E962 /* RPViewController+UI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

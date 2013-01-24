@@ -204,7 +204,7 @@
 					<object class="IBUIButton" id="764848928">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{203, 512}, {36, 36}}</string>
+						<string key="NSFrame">{{183, 512}, {36, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="109510731"/>
@@ -227,31 +227,6 @@
 						<reference key="IBUIFontDescription" ref="755692884"/>
 						<reference key="IBUIFont" ref="770753492"/>
 					</object>
-					<object class="IBUIButton" id="422987346">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{142, 512}, {36, 36}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="764848928"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="21445055"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="283259759"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-sleep.png</string>
-						</object>
-						<reference key="IBUIFontDescription" ref="755692884"/>
-						<reference key="IBUIFont" ref="770753492"/>
-					</object>
 					<object class="IBUIActivityIndicatorView" id="81882366">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483347</int>
@@ -268,10 +243,10 @@
 					<object class="IBUIButton" id="980633254">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{81, 512}, {36, 36}}</string>
+						<string key="NSFrame">{{101, 512}, {36, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="422987346"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -602,14 +577,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">sleepButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="422987346"/>
-					</object>
-					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">iPhoneLogoImage</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="95428084"/>
@@ -670,15 +637,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">sleepSetup:</string>
-						<reference key="source" ref="422987346"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">58</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">presentAboutBox:</string>
 						<reference key="source" ref="95428084"/>
 						<reference key="destination" ref="372490531"/>
@@ -715,7 +673,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="605012914"/>
 							<reference ref="764848928"/>
 							<reference ref="980633254"/>
-							<reference ref="422987346"/>
 							<reference ref="580006728"/>
 							<reference ref="615157162"/>
 							<reference ref="95428084"/>
@@ -792,12 +749,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="objectName">Cover Image View</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">52</int>
-						<reference key="object" ref="422987346"/>
-						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Button - Sleep</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">59</int>
 						<reference key="object" ref="95428084"/>
 						<reference key="parent" ref="191373211"/>
@@ -845,7 +796,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="39.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="46.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="52.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1061,7 +1011,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 			<string key="button-lyrics.png">{43, 43}</string>
 			<string key="button-play.png">{43, 43}</string>
 			<string key="button-psd.png">{43, 43}</string>
-			<string key="button-sleep.png">{43, 43}</string>
 			<string key="button-songlist.png">{43, 43}</string>
 			<string key="logo_2011_horiz.png">{267, 40}</string>
 			<string key="pbutton-songinfo.png">{75, 30}</string>
