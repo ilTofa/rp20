@@ -74,7 +74,9 @@
     NSError *err;
     NSString *cookieString = [STKeychain getPasswordForUsername:@"cookies" andServiceName:@"RP" error:&err];
     if(cookieString != nil)
-    {   // already logged in. Get details
+    {
+        // already logged in. Get details
+        DLog(@"User is logged in.");
         NSString *username = nil;
         NSString *passwd = nil;
         DLog(@"User is logged. Cookie string is: '%@'", cookieString); // C_username=gtufano; C_passwd=04cbb4d0ba0130b7b398dcd286a47087
@@ -108,9 +110,20 @@
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
-    // Now load the starting url...
+    else
+    {
+        // Not logged in, delete cookies...
+        DLog(@"Deleting cookies in webview");
+        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        for (NSHTTPCookie *each in cookieStorage.cookies)
+            [cookieStorage deleteCookie:each];
+    }
+    // Now load the starting url... Disable caching because it interacts badly with login cookies... 
     NSString *url = [NSString stringWithFormat:kRPCurrentSongForum, self.songId];
-    [self.theWebView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]];
+    NSMutableURLRequest *req;
+    req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10.0];
+    [req addValue:@"no-cache" forHTTPHeaderField:@"Cache-Control"];
+    [self.theWebView loadRequest:req];
     [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"ForumOpened"];
 }
 
