@@ -230,7 +230,7 @@
     DLog(@"interfaceToMinimized");
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = 0.0;
+                         self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.supportRPButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = self.songListButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -241,11 +241,11 @@
                              self.minimizerButton.frame = CGRectMake(2, 97, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(174, 707, 830, 21);
                              self.songNameButton.frame = CGRectMake(504, 707, 500, 21);
-                             self.playOrStopButton.frame = CGRectMake(10, 695, 43, 43);
-                             self.psdButton.frame = CGRectMake(70, 695, 43, 43);
-                             self.songInfoButton.frame = CGRectMake(130, 695, 43, 43);
-                             self.songListButton.frame = CGRectMake(190, 695, 43, 43);
-                             self.lyricsButton.frame = CGRectMake(250, 695, 43, 43);
+                             self.playOrStopButton.frame = CGRectMake(10, 695, 75, 30);
+                             self.psdButton.frame = CGRectMake(95, 695, 75, 30);
+                             self.songInfoButton.frame = CGRectMake(180, 695, 75, 30);
+                             self.lyricsButton.frame = CGRectMake(265, 695, 75, 30);
+                             self.songListButton.frame = CGRectMake(350, 695, 75, 30);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                              self.logoImage.frame = CGRectMake(20, 2, 300, 94);
                          }
@@ -292,7 +292,7 @@
     [UIView animateWithDuration:0.5
                      animations:^(void) {
                          self.coverImageView.alpha = self.sleepButton.alpha = 0.0;
-                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.lyricsButton.alpha = self.separatorImage.alpha = 1.0;
+                         self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.lyricsButton.alpha = self.separatorImage.alpha = self.supportRPButton.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.lyricsButton.alpha = 1.0;
