@@ -66,7 +66,6 @@ typedef enum {
 @property (strong) NSTimer *thePsdTimer;
 @property (strong, nonatomic) AVPlayer *thePsdStreamer;
 @property (strong, nonatomic) AVPlayer *theOldPsdStreamer;
-@property (strong, nonatomic) UIPopoverController *theAboutBox;
 @property (strong, nonatomic) RPForumView *theWebView;
 @property (strong, nonatomic) UIPopoverController *theLoginBox;
 

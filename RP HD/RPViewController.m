@@ -820,29 +820,20 @@
 
 - (IBAction)presentAboutBox:(id)sender
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    RPAboutBox *theAboutBox;
+    if(theAboutBox == nil)
     {
-        if(self.theAboutBox == nil)
-        {
-            self.theAboutBox = [[UIPopoverController alloc] initWithContentViewController:[[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]]];
-            self.theAboutBox.popoverContentSize = CGSizeMake(388, 403);
-        }
-        [self.theAboutBox presentPopoverFromRect:self.aboutButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    }
-    else
-    {
-        RPAboutBox *theAboutBox;
-        if(theAboutBox == nil)
-        {
-            theAboutBox = [[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]];
+        theAboutBox = [[RPAboutBox alloc] initWithNibName:@"AboutBox" bundle:[NSBundle mainBundle]];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            theAboutBox.modalPresentationStyle = UIModalPresentationFormSheet;
+        else
             theAboutBox.modalPresentationStyle = UIModalPresentationFullScreen;
-        }
-        [self presentViewController:theAboutBox animated:YES completion:nil];
-        theAboutBox = nil;
     }
+    [self presentViewController:theAboutBox animated:YES completion:nil];
+    theAboutBox = nil;
 }
 
-- (IBAction)presentRPWeb:(id)sender 
+- (IBAction)presentRPWeb:(id)sender
 {
     if(self.theWebView == nil)
     {

@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lVersion;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *loggedUser;
+@property BOOL loggedIn;
 
 - (IBAction)OKPressed:(id)sender;
 - (IBAction)Logout:(id)sender;
