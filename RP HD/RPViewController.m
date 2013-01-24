@@ -217,9 +217,18 @@
              DLog(@"Song id is %@.", self.currentSongId);
              // In any case, reset the "add song" capability (we have a new song, it seems).
              self.songIsAlreadySaved = NO;
-             [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
-             [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
-             [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
+             if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+             {
+                 [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateNormal];
+                 [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateHighlighted];
+                 [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateSelected];
+             }
+             else
+             {
+                 [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
+                 [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
+                 [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];                 
+             }
              // Reschedule ourselves at the end of the song
              if(self.theStreamMetadataTimer != nil)
              {
@@ -762,9 +771,18 @@
             return;
         }
         self.songIsAlreadySaved = YES;
-        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateNormal];
-        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateHighlighted];
-        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateSelected];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateNormal];
+            [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateHighlighted];
+            [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateSelected];
+        }
+        else
+        {
+            [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateNormal];
+            [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateHighlighted];
+            [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateSelected];            
+        }
     }
     else
     {
@@ -843,16 +861,34 @@
     if(self.isLyricsToBeShown)
     {
         self.lyricsText.hidden = NO;
-        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
-        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
-        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateNormal];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateHighlighted];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateSelected];
+        }
+        else
+        {
+            [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];            
+        }
     }
     else
     {
         self.lyricsText.hidden = YES;
-        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
-        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
-        [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateNormal];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateHighlighted];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateSelected];
+        }
+        else
+        {
+            [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
+            [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+        }
     }
 }
 

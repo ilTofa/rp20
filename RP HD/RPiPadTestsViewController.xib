@@ -91,7 +91,7 @@
 						<string key="NSFrame">{{433, 557}, {300, 94}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="564226610"/>
+						<reference key="NSNextKeyView" ref="339562729"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -103,9 +103,10 @@
 					<object class="IBUIButton" id="679528737">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{705, 947}, {43, 43}}</string>
+						<string key="NSFrame">{{673, 954}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -119,7 +120,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="42168732"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-play.png</string>
+							<string key="NSResourceName">pbutton-play.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="858193246"/>
 						<reference key="IBUIFont" ref="447768981"/>
@@ -127,7 +128,7 @@
 					<object class="IBUIButton" id="159189844">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{611, 947}, {43, 43}}</string>
+						<string key="NSFrame">{{546, 954}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="679528737"/>
@@ -145,7 +146,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="42168732"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-psd.png</string>
+							<string key="NSResourceName">pbutton-psd.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="858193246"/>
 						<reference key="IBUIFont" ref="447768981"/>
@@ -156,7 +157,7 @@
 						<string key="NSFrame">{{418, 874}, {330, 25}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="339562729"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -269,7 +270,7 @@
 						<string key="NSFrame">{{574, 704}, {18, 19}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1031670042"/>
+						<reference key="NSNextKeyView" ref="762112383"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -320,37 +321,13 @@
 						<int key="IBUIStyle">0</int>
 						<reference key="IBUIColor" ref="470669373"/>
 					</object>
-					<object class="IBUIButton" id="1031670042">
-						<reference key="NSNextResponder" ref="766721923"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{418, 947}, {43, 43}}</string>
-						<reference key="NSSuperview" ref="766721923"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="50556571"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="470669373"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="42168732"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-sleep.png</string>
-						</object>
-						<reference key="IBUIFontDescription" ref="858193246"/>
-						<reference key="IBUIFont" ref="447768981"/>
-					</object>
 					<object class="IBUIButton" id="762112383">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{673, 699}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="50556571"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -375,7 +352,7 @@
 						<string key="NSFrame">{{418, 699}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="891085671"/>
+						<reference key="NSNextKeyView" ref="564226610"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -404,7 +381,7 @@
 					<object class="IBUIButton" id="891085671">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{517, 947}, {43, 43}}</string>
+						<string key="NSFrame">{{418, 954}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="159189844"/>
@@ -421,7 +398,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="42168732"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-songlist.png</string>
+							<string key="NSResourceName">pbutton-songlist.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="910603280"/>
 						<reference key="IBUIFont" ref="15141340"/>
@@ -705,9 +682,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<array class="NSMutableArray" key="children">
 							<reference ref="969323428"/>
 							<reference ref="915922397"/>
-							<reference ref="679528737"/>
-							<reference ref="891085671"/>
-							<reference ref="159189844"/>
 							<reference ref="64766396"/>
 							<reference ref="236072193"/>
 							<reference ref="990142690"/>
@@ -717,9 +691,11 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="242194388"/>
 							<reference ref="270011630"/>
 							<reference ref="339562729"/>
-							<reference ref="1031670042"/>
 							<reference ref="762112383"/>
 							<reference ref="564226610"/>
+							<reference ref="891085671"/>
+							<reference ref="159189844"/>
+							<reference ref="679528737"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -797,12 +773,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<reference key="parent" ref="766721923"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">63</int>
-						<reference key="object" ref="1031670042"/>
-						<reference key="parent" ref="766721923"/>
-						<string key="objectName">Button - Sleep</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">64</int>
 						<reference key="object" ref="50556571"/>
 						<reference key="parent" ref="766721923"/>
@@ -833,7 +803,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 				<real value="0.0" key="53.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="54.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="63.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1047,12 +1016,11 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="RP-meta.png">{140, 140}</string>
-			<string key="button-play.png">{43, 43}</string>
-			<string key="button-psd.png">{43, 43}</string>
-			<string key="button-sleep.png">{43, 43}</string>
-			<string key="button-songlist.png">{43, 43}</string>
 			<string key="logo_2011_rphd.png">{300, 94}</string>
+			<string key="pbutton-play.png">{75, 30}</string>
+			<string key="pbutton-psd.png">{75, 30}</string>
 			<string key="pbutton-songinfo.png">{75, 30}</string>
+			<string key="pbutton-songlist.png">{75, 30}</string>
 			<string key="pbutton-supportrp.png">{75, 30}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>

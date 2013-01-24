@@ -23,13 +23,31 @@
     self.metadataInfo.text = self.rawMetadataString = @"";
     self.psdButton.enabled = YES;
     self.bitrateSelector.enabled = YES;
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-play"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-play"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-play"] forState:UIControlStateSelected];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd"] forState:UIControlStateNormal];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd"] forState:UIControlStateHighlighted];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd"] forState:UIControlStateSelected];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateSelected];
+    }
+    else
+    {
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-play"] forState:UIControlStateSelected];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateNormal];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateSelected];
+    }
     self.playOrStopButton.enabled = YES;
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateNormal];
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
     [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
@@ -43,9 +61,6 @@
     self.sleepButton.enabled = NO;
     self.lyricsButton.enabled = NO;
     self.songIsAlreadySaved = YES;
-    [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateNormal];
-    [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateHighlighted];
-    [self.songListButton setImage:[UIImage imageNamed:@"button-songlist"] forState:UIControlStateSelected];
     if(self.isLyricsToBeShown)
         [self showLyrics:nil];
     self.coverImageView.image = nil;
@@ -88,13 +103,31 @@
     DLog(@"*** interfacePlay");
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     self.bitrateSelector.enabled = YES;
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-stop"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-stop"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-stop"] forState:UIControlStateSelected];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd"] forState:UIControlStateNormal];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd"] forState:UIControlStateHighlighted];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd"] forState:UIControlStateSelected];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateSelected];
+    }
+    else
+    {
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-stop"] forState:UIControlStateSelected];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateNormal];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
+    }
     self.playOrStopButton.enabled = YES;
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateNormal];
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateHighlighted];
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
     if(self.viewIsLandscape)
         self.minimizerButton.enabled = YES;
@@ -106,9 +139,6 @@
     self.sleepButton.enabled = YES;
     self.lyricsButton.enabled = YES;
     self.songIsAlreadySaved = NO;
-    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
-    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
-    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
     [self.spinner stopAnimating];
     // Only if the app is active and is landscape or iPad or remote screen active. otherwise there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
@@ -137,13 +167,31 @@
     DLog(@"*** interfacePsd");
     self.psdButton.enabled = YES;
     self.bitrateSelector.enabled = NO;
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateNormal];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateHighlighted];
-    [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateSelected];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-left"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-left"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"pbutton-left"] forState:UIControlStateSelected];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd-active"] forState:UIControlStateNormal];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd-active"] forState:UIControlStateHighlighted];
+        [self.psdButton setImage:[UIImage imageNamed:@"pbutton-psd-active"] forState:UIControlStateSelected];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateSelected];
+    }
+    else
+    {
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateNormal];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateHighlighted];
+        [self.playOrStopButton setImage:[UIImage imageNamed:@"button-left"] forState:UIControlStateSelected];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateNormal];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
+        [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateSelected];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
+        [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
+    }
     self.playOrStopButton.enabled = YES;
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateNormal];
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateHighlighted];
-    [self.psdButton setImage:[UIImage imageNamed:@"button-psd-active"] forState:UIControlStateSelected];
     self.psdButton.enabled = YES;
     self.songInfoButton.enabled = YES;
     self.rpWebButton.enabled = YES;
@@ -153,9 +201,6 @@
     if(self.viewIsLandscape)
         self.minimizerButton.enabled = YES;
     self.songIsAlreadySaved = NO;
-    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateNormal];
-    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateHighlighted];
-    [self.songListButton setImage:[UIImage imageNamed:@"button-addsong"] forState:UIControlStateSelected];
     self.hdImage.hidden = NO;
     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
     [self.spinner stopAnimating];
@@ -410,10 +455,10 @@
                              self.lyricsText.frame = CGRectMake(20, 777, 352, 227);
                              self.metadataInfo.frame = CGRectMake(20, 466, 728, 62);
                              self.songNameButton.frame = CGRectMake(20, 466, 728, 62);
-                             self.playOrStopButton.frame = CGRectMake(705, 947, 43, 43);
+                             self.playOrStopButton.frame = CGRectMake(673, 954, 75, 30);
                              self.supportRPButton.frame = CGRectMake(418, 699, 75, 30);
-                             self.songListButton.frame = CGRectMake(517, 947, 43, 43);
-                             self.psdButton.frame = CGRectMake(611, 947, 43, 43);
+                             self.songListButton.frame = CGRectMake(418, 954, 75, 30);
+                             self.psdButton.frame = CGRectMake(546, 954, 75, 30);
                              self.logoImage.frame = CGRectMake(433, 557, 300, 94);
                              self.bitrateSelector.frame = CGRectMake(418, 789, 330, 30);
                              self.spinner.frame = CGRectMake(178, 638, 37, 37);
