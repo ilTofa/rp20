@@ -291,46 +291,50 @@
     self.sleepButton.enabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.coverImageView.alpha = self.sleepButton.alpha = self.supportRPButton.alpha = 0.0;
+                         self.coverImageView.alpha = self.sleepButton.alpha = 0.0;
                          self.lyricsButton.alpha = self.logoImage.alpha = self.bitrateSelector.alpha = self.songListButton.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.lyricsButton.alpha = self.separatorImage.alpha = 1.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                          {
                              self.lyricsButton.alpha = 1.0;
                              self.lyricsText.frame = CGRectMake(22, 22, 352, 534);
-                             self.lyricsButton.frame = CGRectMake(331, 686, 43, 43);
+                             self.lyricsButton.frame = CGRectMake(598, 646, 75, 30);
                              if(self.isLyricsToBeShown)
                              {
                                  self.lyricsText.hidden = NO;
-                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateNormal];
-                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateHighlighted];
-                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics-active"] forState:UIControlStateSelected];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateNormal];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateHighlighted];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateSelected];
                              }
                              else
                              {
                                  self.lyricsText.hidden = YES;
-                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateNormal];
-                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateHighlighted];
-                                 [self.lyricsButton setImage:[UIImage imageNamed:@"button-lyrics"] forState:UIControlStateSelected];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateNormal];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateHighlighted];
+                                 [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateSelected];
                              }
                              self.hdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.dissolveHdImage.frame = CGRectMake(2, 2, 1020, 574);
                              self.minimizerButton.frame = CGRectMake(2, 2, 1020, 574);
                              self.metadataInfo.frame = CGRectMake(23, 605, 830, 21);
                              self.songNameButton.frame = CGRectMake(353, 605, 500, 21);
-                             self.playOrStopButton.frame = CGRectMake(368, 634, 43, 43);
-                             self.songInfoButton.frame = CGRectMake(446, 634, 43, 43);
-                             self.songListButton.frame = CGRectMake(485, 686, 43, 43);
+                             self.playOrStopButton.frame = CGRectMake(328, 646, 75, 30);
+                             self.songInfoButton.frame = CGRectMake(508, 646, 75, 30);
+                             self.songListButton.frame = CGRectMake(778, 646, 75, 30);
                              self.separatorImage.frame = CGRectMake(0, 577, 1024, 23);
-                             self.psdButton.frame = CGRectMake(407, 686, 43, 43);
+                             self.psdButton.frame = CGRectMake(418, 646, 75, 30);
+                             self.supportRPButton.frame = CGRectMake(688, 646, 75, 30);
                              self.logoImage.frame = CGRectMake(20, 626, 300, 94);
-                             self.bitrateSelector.frame = CGRectMake(533, 646, 300, 30);
+                             self.bitrateSelector.frame = CGRectMake(328, 699, 255, 30);
                              self.spinner.frame = CGRectMake(932, 655, 37, 37);
                              self.coverImageView.frame = CGRectMake(880, 604, 140, 140);
                              self.rpWebButton.frame = CGRectMake(880, 604, 140, 140);
-                             self.volumeViewContainer.frame = CGRectMake(553, 695, 300, 25);
+                             self.volumeViewContainer.frame = CGRectMake(598, 699, 255, 29);
                              self.metadataInfo.font = [UIFont systemFontOfSize:18.0];
                              self.metadataInfo.shadowColor = [UIColor clearColor];
                              self.aboutButton.frame = CGRectMake(23, 607, 18, 19);
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateNormal];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateHighlighted];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"pbutton-songinfo"] forState:UIControlStateSelected];
                          }
                          else
                          {
@@ -361,6 +365,10 @@
                                  self.volumeViewContainer.frame = CGRectMake(277, 283, 150, 25);
                              }
                              // in any iPhone...
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateNormal];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateHighlighted];
+                             [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateSelected];
+                             self.supportRPButton.alpha = 0.0;
                              self.aboutButton.frame = CGRectMake(9, 286, 18, 19);
                              self.iPhoneLogoImage.image = [UIImage imageNamed:@"SmallLogo_rphd"];
                              self.songInfoButton.frame = CGRectMake(34, 278, 36, 36);
@@ -372,9 +380,6 @@
                              self.lyricsButton.hidden = YES;
                          }
                          // Both iPad and iPhone
-                         [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateNormal];
-                         [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateHighlighted];
-                         [self.songInfoButton setImage:[UIImage imageNamed:@"button-songinfo"] forState:UIControlStateSelected];
                          self.aboutButton.alpha = 1.0;
                          self.metadataInfo.numberOfLines = 1;
                          self.metadataInfo.text = self.rawMetadataString;
