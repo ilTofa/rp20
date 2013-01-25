@@ -446,10 +446,10 @@
                              self.lyricsText.frame = CGRectMake(20, 777, 352, 227);
                              self.metadataInfo.frame = CGRectMake(20, 466, 728, 62);
                              self.songNameButton.frame = CGRectMake(20, 466, 728, 62);
-                             self.playOrStopButton.frame = CGRectMake(673, 954, 75, 30);
-                             self.supportRPButton.frame = CGRectMake(418, 699, 75, 30);
-                             self.songListButton.frame = CGRectMake(418, 954, 75, 30);
-                             self.psdButton.frame = CGRectMake(546, 954, 75, 30);
+                             self.playOrStopButton.frame = CGRectMake(418, 699, 75, 30);
+                             self.supportRPButton.frame = CGRectMake(418, 954, 75, 30);
+                             self.songListButton.frame = CGRectMake(546, 954, 75, 30);
+                             self.psdButton.frame = CGRectMake(546, 699, 75, 30);
                              self.logoImage.frame = CGRectMake(433, 557, 300, 94);
                              self.bitrateSelector.frame = CGRectMake(418, 789, 330, 30);
                              self.spinner.frame = CGRectMake(178, 638, 37, 37);
@@ -458,7 +458,7 @@
                              self.volumeViewContainer.frame = CGRectMake(418, 874, 330, 25);
                              self.lyricsButton.alpha = 0.0;
                              self.metadataInfo.font = [UIFont systemFontOfSize:22.0];
-                             self.aboutButton.frame = CGRectMake(574, 704, 18, 19);
+                             self.aboutButton.frame = CGRectMake(701, 959, 18, 19);
                              self.songInfoButton.frame = CGRectMake(673, 699, 75, 30);
                          }
                          else

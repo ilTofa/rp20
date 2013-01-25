@@ -128,6 +128,8 @@
 		64DBD37B16A40EA400A8E962 /* button-songinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DBD37916A40EA400A8E962 /* button-songinfo@2x.png */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
+		64EBBD4F16B2890400F6C077 /* pbutton-appinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */; };
+		64EBBD5016B2890400F6C077 /* pbutton-appinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */; };
 		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
 		64F5AF7515EE5EAE0018B38A /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7115EE5EAE0018B38A /* NSString+UUID.m */; };
 		64F5AF7615EE5EAE0018B38A /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF7315EE5EAE0018B38A /* SDCloudUserDefaults.m */; };
@@ -293,6 +295,8 @@
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPiPadTestsViewController.xib; sourceTree = "<group>"; };
+		64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pbutton-appinfo.png"; path = "Images/pbutton-appinfo.png"; sourceTree = "<group>"; };
+		64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pbutton-appinfo@2x.png"; path = "Images/pbutton-appinfo@2x.png"; sourceTree = "<group>"; };
 		64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
 		64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
 		64F5AF7015EE5EAE0018B38A /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
@@ -350,6 +354,8 @@
 		640AA58516B06F770024D1E4 /* Grey Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */,
+				64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */,
 				640AA56016B06F470024D1E4 /* pbutton-addsong.png */,
 				640AA56116B06F470024D1E4 /* pbutton-addsong@2x.png */,
 				640AA56216B06F470024D1E4 /* pbutton-left.png */,
@@ -914,6 +920,8 @@
 				640AA58116B06F470024D1E4 /* pbutton-songlist@2x.png in Resources */,
 				640AA58216B06F470024D1E4 /* pbutton-stop.png in Resources */,
 				640AA58316B06F470024D1E4 /* pbutton-stop@2x.png in Resources */,
+				64EBBD4F16B2890400F6C077 /* pbutton-appinfo.png in Resources */,
+				64EBBD5016B2890400F6C077 /* pbutton-appinfo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
