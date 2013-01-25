@@ -66,11 +66,11 @@
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
-							<double key="pointSize">14</double>
+							<double key="pointSize">16</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
-							<double key="NSSize">14</double>
+							<double key="NSSize">16</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -149,7 +149,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 					<object class="IBUIButton" id="479611997">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{220, 435}, {100, 37}}</string>
+						<string key="NSFrame">{{220, 449}, {100, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1008695416"/>
@@ -182,7 +182,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 					<object class="IBUILabel" id="527593817">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 521}, {500, 21}}</string>
+						<string key="NSFrame">{{20, 493}, {500, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -380,11 +380,11 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 							<reference ref="732089515"/>
 							<reference ref="1008695416"/>
 							<reference ref="223221222"/>
-							<reference ref="527593817"/>
-							<reference ref="479611997"/>
 							<reference ref="565618122"/>
 							<reference ref="871735705"/>
 							<reference ref="813189064"/>
+							<reference ref="479611997"/>
+							<reference ref="527593817"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
