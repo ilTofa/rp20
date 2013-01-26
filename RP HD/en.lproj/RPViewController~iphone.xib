@@ -180,7 +180,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="283259759"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-play.png</string>
+							<string key="NSResourceName">pbutton-play.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="755692884"/>
 						<reference key="IBUIFont" ref="787197724"/>
@@ -264,7 +264,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="283259759"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-psd.png</string>
+							<string key="NSResourceName">pbutton-psd.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="755692884"/>
 						<reference key="IBUIFont" ref="787197724"/>
@@ -275,7 +275,7 @@
 						<string key="NSFrame">{{222, 116}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="688885621"/>
+						<reference key="NSNextKeyView" ref="552950206"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -302,7 +302,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="283259759"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-addsong.png</string>
+							<string key="NSResourceName">pbutton-addsong.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="1000612883">
 							<int key="type">2</int>
@@ -334,7 +334,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="283259759"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-songinfo.png</string>
+							<string key="NSResourceName">pbutton-songinfo.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="1000612883"/>
 						<reference key="IBUIFont" ref="377328371"/>
@@ -345,7 +345,7 @@
 						<string key="NSFrame">{{225, 417}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="552950206"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -385,6 +385,7 @@
 						<string key="NSFrame">{{20, 405}, {36, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="688885621"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -1118,11 +1119,11 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="SmallLogo_rphd.png">{40, 40}</string>
-			<string key="button-addsong.png">{43, 43}</string>
 			<string key="button-lyrics.png">{43, 43}</string>
-			<string key="button-play.png">{43, 43}</string>
-			<string key="button-psd.png">{43, 43}</string>
-			<string key="button-songinfo.png">{43, 43}</string>
+			<string key="pbutton-addsong.png">{75, 30}</string>
+			<string key="pbutton-play.png">{75, 30}</string>
+			<string key="pbutton-psd.png">{75, 30}</string>
+			<string key="pbutton-songinfo.png">{75, 30}</string>
 			<string key="pbutton-supportrp.png">{75, 30}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>

@@ -1007,7 +1007,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="presentAboutBox:">id</string>
 						<string key="presentRPWeb:">id</string>
 						<string key="showLyrics:">id</string>
-						<string key="sleepSetup:">id</string>
 						<string key="songListAction:">id</string>
 						<string key="startPSD:">id</string>
 						<string key="supportRP:">id</string>
@@ -1045,10 +1044,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<string key="name">showLyrics:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="sleepSetup:">
-							<string key="name">sleepSetup:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="songListAction:">
 							<string key="name">songListAction:</string>
 							<string key="candidateClassName">id</string>
@@ -1078,7 +1073,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<string key="psdButton">UIButton</string>
 						<string key="rpWebButton">UIButton</string>
 						<string key="separatorImage">UIImageView</string>
-						<string key="sleepButton">UIButton</string>
 						<string key="songInfoButton">UIButton</string>
 						<string key="songListButton">UIButton</string>
 						<string key="songNameButton">UIButton</string>
@@ -1146,10 +1140,6 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 						<object class="IBToOneOutletInfo" key="separatorImage">
 							<string key="name">separatorImage</string>
 							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sleepButton">
-							<string key="name">sleepButton</string>
-							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="songInfoButton">
 							<string key="name">songInfoButton</string>

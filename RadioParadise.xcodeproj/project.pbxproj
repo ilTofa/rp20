@@ -126,6 +126,7 @@
 		64DBD37616A403C600A8E962 /* RPViewController+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DBD37516A403C600A8E962 /* RPViewController+UI.m */; };
 		64DBD37A16A40EA400A8E962 /* button-songinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DBD37816A40EA400A8E962 /* button-songinfo.png */; };
 		64DBD37B16A40EA400A8E962 /* button-songinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DBD37916A40EA400A8E962 /* button-songinfo@2x.png */; };
+		64DF349216B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64DF349116B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
 		64EBBD4F16B2890400F6C077 /* pbutton-appinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */; };
@@ -290,6 +291,8 @@
 		64DBD37516A403C600A8E962 /* RPViewController+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RPViewController+UI.m"; sourceTree = "<group>"; };
 		64DBD37816A40EA400A8E962 /* button-songinfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-songinfo.png"; path = "Images/button-songinfo.png"; sourceTree = "<group>"; };
 		64DBD37916A40EA400A8E962 /* button-songinfo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-songinfo@2x.png"; path = "Images/button-songinfo@2x.png"; sourceTree = "<group>"; };
+		64DF348E16B495A900237D40 /* RPViewControllerLandscapeTest-iphone5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPViewControllerLandscapeTest-iphone5.xib"; sourceTree = "<group>"; };
+		64DF349116B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPViewControllerLandscapeTest-iphone4.xib"; sourceTree = "<group>"; };
 		64DFC65115F7469C00214188 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		64DFC65215F7469C00214188 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
@@ -680,6 +683,8 @@
 				64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */,
 				64275773169CD6E7009DF7F0 /* RPiPhone4TestController.xib */,
 				6427577A169CDBB1009DF7F0 /* RPiPhone5TestController.xib */,
+				64DF348E16B495A900237D40 /* RPViewControllerLandscapeTest-iphone5.xib */,
+				64DF349116B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib */,
 				64AAFA0A1513A6FF0061DD49 /* RPForumView.h */,
 				64AAFA0B1513A6FF0061DD49 /* RPForumView.m */,
 				64AAFA0C1513A6FF0061DD49 /* RPForumView~ipad.xib */,
@@ -922,6 +927,7 @@
 				640AA58316B06F470024D1E4 /* pbutton-stop@2x.png in Resources */,
 				64EBBD4F16B2890400F6C077 /* pbutton-appinfo.png in Resources */,
 				64EBBD5016B2890400F6C077 /* pbutton-appinfo@2x.png in Resources */,
+				64DF349216B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
