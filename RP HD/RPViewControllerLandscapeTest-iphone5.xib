@@ -362,7 +362,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="283259759"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">button-lyrics.png</string>
+							<string key="NSResourceName">pbutton-lyrics.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
@@ -986,7 +986,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="SmallLogo_rphd.png">{40, 40}</string>
-			<string key="button-lyrics.png">{43, 43}</string>
+			<string key="pbutton-lyrics.png">{75, 30}</string>
 			<string key="pbutton-play.png">{75, 30}</string>
 			<string key="pbutton-psd.png">{75, 30}</string>
 			<string key="pbutton-songinfo.png">{75, 30}</string>

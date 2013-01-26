@@ -288,7 +288,7 @@
                                  self.songInfoButton.frame = CGRectMake(34, 281, 75, 30);
                                  self.bitrateSelector.frame = CGRectMake(117, 281, 110, 30);
                                  self.psdButton.frame = CGRectMake(235, 281, 75, 30);
-                                 self.volumeViewContainer.frame = CGRectMake(318, 281, 158, 30);
+                                 self.volumeViewContainer.frame = CGRectMake(318, 285, 158, 26);
                                  self.playOrStopButton.frame = CGRectMake(484, 281, 75, 30);
                              }
                              else
@@ -304,7 +304,7 @@
                                  self.bitrateSelector.frame = CGRectMake(35, 281, 110, 30);
                                  self.psdButton.frame = CGRectMake(153, 281, 75, 30);
                                  self.songListButton.frame = CGRectMake(235, 278, 36, 36);
-                                 self.volumeViewContainer.frame = CGRectMake(236, 281, 152, 30);
+                                 self.volumeViewContainer.frame = CGRectMake(236, 285, 152, 26);
                              }
                              // in any iPhone...
                              self.supportRPButton.alpha = self.songListButton.alpha = 0.0;
@@ -424,7 +424,7 @@
                                  self.songNameButton.frame = CGRectMake(20, 310, 280, 40);
                                  self.iPhoneLogoImage.frame = CGRectMake(20, 359, 280, 42);
                                  self.aboutButton.frame = CGRectMake(297, 371, 18, 19); //
-                                 self.volumeViewContainer.frame = CGRectMake(20, 419, 197, 25); //
+                                 self.volumeViewContainer.frame = CGRectMake(20, 421, 197, 26); //
                                  self.songInfoButton.frame = CGRectMake(20, 470, 75, 30); //
                                  self.lyricsButton.frame = CGRectMake(20, 524, 75, 30); //
                                  self.bitrateSelector.frame = CGRectMake(103, 470, 114, 30); //
@@ -445,7 +445,7 @@
                                  self.metadataInfo.frame = CGRectMake(20, 303, 280, 40);
                                  self.songNameButton.frame = CGRectMake(20, 303, 280, 40);
                                  self.aboutButton.frame = CGRectMake(296, 276, 18, 19);
-                                 self.volumeViewContainer.frame = CGRectMake(20, 350, 197, 30);
+                                 self.volumeViewContainer.frame = CGRectMake(20, 352, 197, 26);
                                  self.playOrStopButton.frame = CGRectMake(225, 350, 75, 30);
                                  self.songInfoButton.frame = CGRectMake(20, 390, 75, 30); //
                                  self.bitrateSelector.frame = CGRectMake(103, 390, 114, 30);
