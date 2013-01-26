@@ -122,10 +122,10 @@
 					<object class="IBUIButton" id="109510731">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{225, 524}, {75, 30}}</string>
+						<string key="NSFrame">{{225, 417}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="940739765"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -151,7 +151,7 @@
 						<string key="NSFrame">{{20, 419}, {197, 25}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="401154544"/>
+						<reference key="NSNextKeyView" ref="109510731"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -165,7 +165,7 @@
 						<string key="NSFrame">{{103, 470}, {114, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="980633254"/>
+						<reference key="NSNextKeyView" ref="764848928"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -205,10 +205,10 @@
 					<object class="IBUIButton" id="764848928">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{123, 524}, {75, 30}}</string>
+						<string key="NSFrame">{{225, 470}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="109510731"/>
+						<reference key="NSNextKeyView" ref="104135590"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -244,10 +244,10 @@
 					<object class="IBUIButton" id="980633254">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{225, 470}, {75, 30}}</string>
+						<string key="NSFrame">{{123, 524}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="104135590"/>
+						<reference key="NSNextKeyView" ref="401154544"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -329,7 +329,7 @@
 						<string key="NSFrame">{{20, 524}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="764848928"/>
+						<reference key="NSNextKeyView" ref="980633254"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -438,10 +438,10 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 					<object class="IBUIButton" id="401154544">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{225, 417}, {75, 30}}</string>
+						<string key="NSFrame">{{225, 524}, {75, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="940739765"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -674,14 +674,14 @@ cnRpYSBrZWVwcwpTaGUncyBtb3ZpbmcgdXAgc2xvd2x5ClNsb3dseQ</string>
 							<reference ref="580006728"/>
 							<reference ref="615157162"/>
 							<reference ref="95428084"/>
-							<reference ref="401154544"/>
 							<reference ref="940739765"/>
 							<reference ref="104135590"/>
-							<reference ref="764848928"/>
-							<reference ref="109510731"/>
 							<reference ref="725484998"/>
 							<reference ref="151120725"/>
 							<reference ref="980633254"/>
+							<reference ref="401154544"/>
+							<reference ref="764848928"/>
+							<reference ref="109510731"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

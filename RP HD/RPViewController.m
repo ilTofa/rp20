@@ -184,7 +184,7 @@
              DLog(@"Song id is %@.", self.currentSongId);
              // In any case, reset the "add song" capability (we have a new song, it seems).
              self.songIsAlreadySaved = NO;
-             if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+             if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || !self.viewIsLandscape)
              {
                  [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateNormal];
                  [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateHighlighted];
@@ -738,7 +738,7 @@
             return;
         }
         self.songIsAlreadySaved = YES;
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || !self.viewIsLandscape)
         {
             [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateNormal];
             [self.songListButton setImage:[UIImage imageNamed:@"pbutton-songlist"] forState:UIControlStateHighlighted];
@@ -764,7 +764,7 @@
     if(self.isLyricsToBeShown)
     {
         self.lyricsText.hidden = NO;
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || !self.viewIsLandscape)
         {
             [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateNormal];
             [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateHighlighted];
@@ -780,7 +780,7 @@
     else
     {
         self.lyricsText.hidden = YES;
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || !self.viewIsLandscape)
         {
             [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateNormal];
             [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateHighlighted];
