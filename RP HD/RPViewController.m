@@ -32,7 +32,7 @@
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSTimeInterval howMuchTimeBetweenImages;
+        NSTimeInterval howMuchTimeBetweenImages = 60.0;
         switch (self.bitrateSelector.selectedSegmentIndex) {
             case 0:
                 howMuchTimeBetweenImages = 60.0;
