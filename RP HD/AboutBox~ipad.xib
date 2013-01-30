@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<int key="IBDocument.SystemTarget">1552</int>
+		<string key="IBDocument.SystemVersion">12C2034</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -41,7 +41,7 @@
 					<object class="IBUITextView" id="813189064">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 143}, {500, 115}}</string>
+						<string key="NSFrame">{{20, 122}, {500, 258}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="433281350"/>
@@ -55,7 +55,15 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string key="IBUIText">RP is a blend of many styles and genres of music, carefully selected and mixed by two real human beings. You'll hear modern and classic rock, world music, electronica, even a bit of classical and jazz. What you won't hear are random computer-generated playlists or mind-numbing commercials.</string>
+						<string type="base64-UTF8" key="IBUIText">UlAgaXMgYSBibGVuZCBvZiBtYW55IHN0eWxlcyBhbmQgZ2VucmVzIG9mIG11c2ljLCBjYXJlZnVsbHkg
+c2VsZWN0ZWQgYW5kIG1peGVkIGJ5IHR3byByZWFsIGh1bWFuIGJlaW5ncyDigJTCoHdpdGggdGhlIGFz
+c2lzdGFuY2Ugb2YgdGhlIGZlZWRiYWNrIHdlIHJlY2VpdmUgZnJvbSBsaXN0ZW5lcnMgbGlrZSB5b3Ug
+KGNsaWNrICJTb25nIEluZm8iKS4KCkNsaWNrICJQU0QiIChQbGF5IFNvbWV0aGluZyBEaWZmZXJlbnQp
+IGlmIHdoYXQgd2UncmUgcGxheWluZyBkb2Vzbid0IHN1aXQgeW91ciBtb29kIG9yIHRhc3RlLiBXZSds
+bCBzZWxlY3QgYW4gYWx0ZXJuYXRlIHNvbmcsIHRoZW4gcmV0dXJuIHlvdSB0byB0aGUgbWFpbiBtdXNp
+YyBtaXggYWZ0ZXJ3YXJkLgoKUmFkaW8gUGFyYWRpc2UgaXMgbGlzdGVuZXIgc3VwcG9ydGVkLiBXZSBk
+ZXBlbmQgZW50aXJlbHkgb24gdGhlIGdlbmVyb3VzIHN1cHBvcnQgdGhhdCB3ZSBnZXQgZnJvbSBsaXN0
+ZW5lcnMgbGlrZSB5b3UuIFRoYW5rcyE</string>
 						<object class="NSColor" key="IBUITextColor" id="100162034">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -66,18 +74,18 @@
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
-							<double key="pointSize">16</double>
+							<double key="pointSize">17</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
-							<double key="NSSize">16</double>
+							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
 					<object class="IBUITextView" id="433281350">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 295}, {500, 67}}</string>
+						<string key="NSFrame">{{20, 403}, {500, 48}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="565618122"/>
@@ -88,8 +96,8 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string type="base64-UTF8" key="IBUIText">VGhpcyBSYWRpbyBQYXJhZGlzZSBhcHAgaXMgdGhlIHdvcmsgb2YKR2lhY29tbyBUdWZhbm8gKGh0dHA6
-Ly93d3cuaWxUb2ZhLmNvbSk</string>
+						<string type="base64-UTF8" key="IBUIText">VGhlIFJhZGlvIFBhcmFkaXNlIGFwcCBpcyB0aGUgd29yayBvZgpHaWFjb21vIFR1ZmFubyAoaHR0cDov
+L3d3dy5pbFRvZmEuY29tKQ</string>
 						<object class="NSColor" key="IBUITextColor" id="241203443">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
@@ -127,10 +135,10 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 					<object class="IBUILabel" id="565618122">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 370}, {500, 24}}</string>
+						<string key="NSFrame">{{20, 459}, {500, 24}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="223221222"/>
+						<reference key="NSNextKeyView" ref="479611997"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -149,10 +157,10 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 					<object class="IBUIButton" id="479611997">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{220, 449}, {100, 37}}</string>
+						<string key="NSFrame">{{220, 491}, {100, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1008695416"/>
+						<reference key="NSNextKeyView" ref="527593817"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -182,9 +190,10 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 					<object class="IBUILabel" id="527593817">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 493}, {500, 21}}</string>
+						<string key="NSFrame">{{20, 535}, {500, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="223221222"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -206,7 +215,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 						<string key="NSFrame">{{220, 564}, {100, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="527593817"/>
+						<reference key="NSNextKeyView" ref="732089515"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -229,7 +238,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 						<string key="NSFrame">{{20, 564}, {100, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="479611997"/>
+						<reference key="NSNextKeyView" ref="1008695416"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -252,6 +261,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 						<string key="NSFrame">{{420, 564}, {100, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -376,7 +386,6 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="433281350"/>
 							<reference ref="732089515"/>
 							<reference ref="1008695416"/>
 							<reference ref="223221222"/>
@@ -385,6 +394,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 							<reference ref="813189064"/>
 							<reference ref="479611997"/>
 							<reference ref="527593817"/>
+							<reference ref="433281350"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -527,7 +537,7 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1536" key="NS.object.0"/>
+			<real value="1552" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
@@ -535,6 +545,6 @@ Ly93d3cuaWxUb2ZhLmNvbSk</string>
 			<string key="NS.key.0">logo_2011_rphd.png</string>
 			<string key="NS.object.0">{300, 94}</string>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

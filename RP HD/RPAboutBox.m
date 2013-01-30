@@ -62,7 +62,7 @@
     if(cookieString != nil)
     {   // already logged in. Get username
         self.loggedIn = YES;
-        DLog(@"User is logged. Cookie string is: '%@'", cookieString); // C_username=gtufano; C_passwd=04cbb4d0ba0130b7b398dcd286a47087
+        DLog(@"User is logged. Cookie string is: '%@'", cookieString);
         NSRange endUserName = [cookieString rangeOfString:@";"];
         if(endUserName.location != NSNotFound)
         {
@@ -79,6 +79,7 @@
     [self setLVersion:nil];
     [self setLogoutButton:nil];
     [self setLoggedUser:nil];
+    [self setTheText:nil];
     [super viewDidUnload];
 }
 
@@ -87,7 +88,19 @@
     return YES;
 }
 
-- (IBAction)OKPressed:(id)sender 
+-(void)viewDidLayoutSubviews
+{
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+            [self.theText setFont:[UIFont systemFontOfSize:11.0]];
+        else
+            [self.theText setFont:[UIFont systemFontOfSize:14.0]];
+    }
+    [super viewDidLayoutSubviews];
+}
+
+- (IBAction)OKPressed:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -152,7 +165,7 @@
 
 - (IBAction)support:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/ios-content.php?name=FAQ"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.radioparadise.com/ios-content.php?name=FAQ&id_cat=203#203"]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
