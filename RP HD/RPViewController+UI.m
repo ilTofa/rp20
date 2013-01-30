@@ -173,7 +173,7 @@
     DLog(@"interfaceToMinimized");
     [UIView animateWithDuration:0.5
                      animations:^(void) {
-                         self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.supportRPButton.alpha = 0.0;
+                         self.bitrateSelector.alpha = self.rpWebButton.alpha = self.volumeViewContainer.alpha = self.separatorImage.alpha = self.songListButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                              self.psdButton.alpha = self.songListButton.alpha = 0.0;
                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -188,7 +188,7 @@
                              self.psdButton.frame = CGRectMake(95, 701, 75, 30);
                              self.songInfoButton.frame = CGRectMake(180, 701, 75, 30);
                              self.lyricsButton.frame = CGRectMake(265, 701, 75, 30);
-                             self.songListButton.frame = CGRectMake(350, 701, 75, 30);
+                             self.supportRPButton.frame = CGRectMake(350, 701, 75, 30);
                              self.separatorImage.frame = CGRectMake(0, 672, 1024, 23);
                              self.logoImage.frame = CGRectMake(20, 2, 300, 94);
                          }
