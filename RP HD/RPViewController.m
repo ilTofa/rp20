@@ -746,6 +746,9 @@
     if(self.isLyricsToBeShown)
     {
         self.lyricsText.hidden = NO;
+        [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateNormal];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateHighlighted];
+        [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateSelected];
     }
     else
     {
