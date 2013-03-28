@@ -657,6 +657,16 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     [self fadeOutCurrentTrackNow:(self.isPSDPlaying) ? self.thePsdStreamer : self.theStreamer forSeconds:3];
 }
 
+- (IBAction)showStatusBar:(id)sender {
+    DLog(@"Now show the status bar");
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+}
+
+- (IBAction)hideStatusBar:(id)sender {
+    DLog(@"Now Hide the status bar");
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+}
+
 - (void)RPLoginControllerDidCancel:(RPLoginController *)controller
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)

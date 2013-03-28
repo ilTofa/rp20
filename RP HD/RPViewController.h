@@ -104,4 +104,7 @@ typedef enum {
 - (IBAction)debugFadeIn:(id)sender;
 - (IBAction)debugFadeOut:(id)sender;
 
+- (IBAction)showStatusBar:(id)sender;
+- (IBAction)hideStatusBar:(id)sender;
+
 @end
