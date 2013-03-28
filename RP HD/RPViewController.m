@@ -15,6 +15,8 @@
 #import "Song.h"
 #import "RPViewController+UI.h"
 
+void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID inPropertyID, UInt32 inPropertyValueSize, const void *inPropertyValue);
+
 @interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate, UIActionSheetDelegate>
 
 @end
@@ -933,9 +935,10 @@
     }
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [[AVAudioSession sharedInstance] setActive: YES error: nil];
     [[AVAudioSession sharedInstance] setDelegate:self];
-
+    // Listen to route change events
+    AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, audioRouteChangeListenerCallback, (__bridge void *)(self));
+    [[AVAudioSession sharedInstance] setActive: YES error: nil];
     self.imageLoadQueue = [[NSOperationQueue alloc] init];
     self.interfaceState = kInterfaceNormal;
     self.minimizerButton.enabled = NO;
@@ -1003,13 +1006,9 @@
     {
         DLog(@"AudioSession is ready to be resumed, doing it.");
         if(self.isPSDPlaying)
-        {
             [self.thePsdStreamer play];
-        }
         else
-        {
             [self.theStreamer play];
-        }
     }
     else
     {
@@ -1117,3 +1116,24 @@
 }
 
 @end
+
+#pragma mark - Audio Re-routing detection
+
+void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID inPropertyID, UInt32 inPropertyValueSize, const void *inPropertyValue)
+{
+    if (inPropertyID != kAudioSessionProperty_AudioRouteChange)
+        return;
+    RPViewController *controller = (__bridge RPViewController *) inUserData;
+    CFDictionaryRef routeChangeDictionary = inPropertyValue;
+    CFNumberRef routeChangeReasonRef = CFDictionaryGetValue (routeChangeDictionary,CFSTR (kAudioSession_AudioRouteChangeKey_Reason));
+    SInt32 routeChangeReason;
+    CFNumberGetValue (routeChangeReasonRef, kCFNumberSInt32Type, &routeChangeReason);
+    if (routeChangeReason ==  kAudioSessionRouteChangeReason_OldDeviceUnavailable) {
+        // Stop audio, remember that when PSD is streaming this will not properly stop but simply start normal stream (should be on the new device, though)
+        DLog(@"We just lost the audio devices. Stopping stream.");
+        [controller stopPressed:nil];
+    } else if (routeChangeReason == kAudioSessionRouteChangeReason_NewDeviceAvailable) {
+        DLog(@"New audio device plugged in");
+    }
+
+}
