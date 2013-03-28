@@ -97,6 +97,7 @@
 		64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAFA161513F8D30061DD49 /* forward@2x.png */; };
 		64AD767D1548B9A7001910E9 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AD767B1548B9A7001910E9 /* Default-Portrait.png */; };
 		64AD767E1548B9A7001910E9 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AD767C1548B9A7001910E9 /* Default-Portrait@2x.png */; };
+		64B839211704A55B0097868E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B839201704A55B0097868E /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D481211547577800BC1085 /* RPViewController~iphone.xib */; };
 		64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D4812215475C5300BC1085 /* RPForumView~iphone.xib */; };
 		64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D481241547607D00BC1085 /* SmallLogo_rphd.png */; };
@@ -236,6 +237,8 @@
 		64AAFA161513F8D30061DD49 /* forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward@2x.png"; path = "Images/forward@2x.png"; sourceTree = "<group>"; };
 		64AD767B1548B9A7001910E9 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "Images/Default-Portrait.png"; sourceTree = "<group>"; };
 		64AD767C1548B9A7001910E9 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x.png"; path = "Images/Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		64B8391F1704A55B0097868E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		64B839201704A55B0097868E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		64D481201547577800BC1085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~iphone.xib"; sourceTree = "<group>"; };
 		64D4812215475C5300BC1085 /* RPForumView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPForumView~iphone.xib"; sourceTree = "<group>"; };
 		64D481241547607D00BC1085 /* SmallLogo_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SmallLogo_rphd.png; path = Images/SmallLogo_rphd.png; sourceTree = "<group>"; };
@@ -490,6 +493,16 @@
 			path = "RP HD/STKeychain";
 			sourceTree = "<group>";
 		};
+		64B8391E1704A55B0097868E /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				64B8391F1704A55B0097868E /* Reachability.h */,
+				64B839201704A55B0097868E /* Reachability.m */,
+			);
+			name = Reachability;
+			path = "RP HD/Reachability";
+			sourceTree = "<group>";
+		};
 		64D4812C154767A800BC1085 /* appirater */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,6 +558,7 @@
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
+				64B8391E1704A55B0097868E /* Reachability */,
 				640C3F8916020CF600631AAD /* Localytics */,
 				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
 				64F8024D151228870080D442 /* Images */,
@@ -855,6 +869,7 @@
 				640C3F9216020CF600631AAD /* LocalyticsSession.m in Sources */,
 				640C3F9316020CF600631AAD /* LocalyticsUploader.m in Sources */,
 				64DBD37616A403C600A8E962 /* RPViewController+UI.m in Sources */,
+				64B839211704A55B0097868E /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

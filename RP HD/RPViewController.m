@@ -14,10 +14,14 @@
 #import "SongAdder.h"
 #import "Song.h"
 #import "RPViewController+UI.h"
+#import "Reachability.h"
 
 void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID inPropertyID, UInt32 inPropertyValueSize, const void *inPropertyValue);
 
 @interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate, UIActionSheetDelegate>
+
+@property (strong, nonatomic) Reachability *internetReachability;
+@property (strong, nonatomic) NSTimer *networkTimer;
 
 @end
 
@@ -934,12 +938,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     self.metadataInfo.text = self.rawMetadataString = @"";
     // Let's see if we already have a preferred bitrate
     int savedBitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"bitrate"];
-    if(savedBitrate == 0)
-    {
+    if(savedBitrate == 0) {
         self.theRedirector = kRPURL64K;
-    }
-    else
-    {
+    } else {
         self.bitrateSelector.selectedSegmentIndex = savedBitrate - 1;
         [self bitrateChanged:self.bitrateSelector];
     }
@@ -967,8 +968,13 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     // Hide lyrics text
     self.lyricsText.text = nil;
     self.interfaceIsTinted = YES;
+    // Check network reachability
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+	[self.internetReachability startNotifier];
     // Automagically start, as per bg request
-    [self playMainStream];
+    if([self.internetReachability currentReachabilityStatus] != NotReachable)
+        [self playMainStream];
     // We would like to receive starts and stops
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
@@ -1007,7 +1013,62 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 }
 
 #pragma mark -
-#pragma mark Multimedia and Remote Control
+#pragma mark Multimedia, Remote Control and Network availability management
+
+- (void) reachabilityChanged: (NSNotification* )note
+{
+    // if streams are stopped, return
+    if(self.theStreamer.rate == 0.0 && self.thePsdStreamer.rate == 0.0)
+        return;
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    NSString* statusString= @"";
+    switch (netStatus) {
+        case NotReachable: {
+            statusString = @"Internet Access Not Available";
+            break;
+        }
+        case ReachableViaWWAN: {
+            statusString = @"Internet Reachable via WWAN";
+            break;
+        }
+        case ReachableViaWiFi: {
+            statusString= @"Internet Reachable via WiFi";
+            break;
+        }
+    }
+    DLog(@"Network status changed: %@", statusString);
+    if(self.theStreamer.rate != 0.0 || self.thePsdStreamer.rate != 0.0) {
+        if(self.networkTimer) {
+            [self.networkTimer invalidate];
+            self.networkTimer = nil;
+        }
+        DLog(@"starting a timer to check if stream is not timed out...");
+        self.networkTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(checkIfAStreamRestartIsNeeded:) userInfo:nil repeats:NO];
+    }
+}
+
+-(void)checkIfAStreamRestartIsNeeded:(NSTimer *)timer {
+    self.networkTimer = nil;
+    // If psdstreamer is out of buffers
+    if(self.thePsdStreamer.rate == 1.0 && self.thePsdStreamer.currentItem.isPlaybackBufferEmpty) {
+        DLog(@"PSD stream is STOPPED.");
+        [self stopPressed:nil];
+    }
+    if(self.theStreamer.rate == 1.0 && self.theStreamer.currentItem.isPlaybackBufferEmpty) {
+        if([self.internetReachability currentReachabilityStatus] == NotReachable) {
+            // Give up... still no network.
+            DLog(@"Base stream is STOPPED, still no network... Giving up and stopping the interface.");
+            [self stopPressed:nil];
+        } else {
+            DLog(@"Base stream is STOPPED, but network is now on. Retrying.");
+            [self stopPressed:self];
+        }
+    }
+    // All is working (or stopped) nothing to do...
+}
+
 
 - (void)endInterruptionWithFlags:(NSUInteger)flags
 {
