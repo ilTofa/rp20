@@ -1104,7 +1104,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Giacomo Tufano";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
@@ -1115,7 +1115,7 @@
 					"\"$(SRCROOT)/RP HD/Localytics\"",
 				);
 				PRODUCT_NAME = RadioParadise;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "016B59A4-6E65-47C8-91D9-95D8BB282E60";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
