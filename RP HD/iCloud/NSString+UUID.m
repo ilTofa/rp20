@@ -29,7 +29,7 @@
     // build the password using SHA-256
 	unsigned char hashedChars[32];
 	CC_SHA256([self UTF8String],
-			  [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+			  (CC_LONG)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
 			  hashedChars);
 	NSString *hashedData = [[NSData dataWithBytes:hashedChars length:32] description];
     hashedData = [hashedData stringByReplacingOccurrencesOfString:@" " withString:@""];
