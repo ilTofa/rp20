@@ -10,3 +10,5 @@ RP HD.xcodeproj/project.xcworkspace/xcuserdata/gt.xcuserdatad/UserInterfaceState
 >>>>>>> xcuserstate not to be synced (again)
 
 .DS_Store
+
+*.xcuserstate

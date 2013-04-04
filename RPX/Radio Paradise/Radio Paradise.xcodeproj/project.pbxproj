@@ -127,6 +127,7 @@
 		64054684170DBC07008A0B43 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				648EB8E0170DB945000185C6 /* Buttons */,
 				64054685170DBC17008A0B43 /* logo_2011_horiz.png */,
 				64054686170DBC17008A0B43 /* logo_2011_horiz@2x.png */,
 			);
@@ -170,7 +171,6 @@
 				648EB8C9170DB873000185C6 /* Supporting Files */,
 				64054689170DBCFB008A0B43 /* iCloud */,
 				64054684170DBC07008A0B43 /* Images */,
-				648EB8E0170DB945000185C6 /* Buttons */,
 				648EB8C8170DB873000185C6 /* Radio Paradise */,
 				648EB8C1170DB873000185C6 /* Frameworks */,
 				648EB8C0170DB873000185C6 /* Products */,
