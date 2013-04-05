@@ -46,9 +46,15 @@
 @property (weak) IBOutlet NSImageView *hdImage;
 @property (weak) IBOutlet NSButton *songInfoButton;
 @property (unsafe_unretained) IBOutlet NSTextView *lyricsText;
+@property (unsafe_unretained) IBOutlet NSWindow *slideshowWindow;
+@property (unsafe_unretained) IBOutlet NSWindow *lyricsWindow;
+@property (weak) IBOutlet NSButton *lyricsWindowButton;
+@property (weak) IBOutlet NSButton *slideshowWindowButton;
 
 - (IBAction)bitrateChanged:(id)sender;
 - (IBAction)playOrStop:(id)sender;
+- (IBAction)toggleLyrics:(id)sender;
+- (IBAction)toggleSlideshow:(id)sender;
 
 @end
 
@@ -67,6 +73,12 @@
 -(void)awakeFromNib {
     DLog(@"Initing UI");
     self.window.backgroundColor = [NSColor blackColor];
+    NSMutableAttributedString *attributedButtonTitle = [[NSMutableAttributedString alloc] initWithString:@"Lyrics"];
+    [attributedButtonTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:NSMakeRange(0,[@"Lyrics" length] )];
+    [self.lyricsWindowButton setAttributedTitle:attributedButtonTitle];
+    attributedButtonTitle = [[NSMutableAttributedString alloc] initWithString:@"Slideshow"];
+    [attributedButtonTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:NSMakeRange(0,[@"Slideshow" length] )];
+    [self.slideshowWindowButton setAttributedTitle:attributedButtonTitle];
     // reset text
     self.metadataInfo.stringValue = self.rawMetadataString = @"";
     // Let's see if we already have a preferred bitrate
@@ -637,5 +649,19 @@
         [self stopPressed:nil];
     else
         [self playMainStream];
+}
+
+- (IBAction)toggleLyrics:(id)sender {
+    if(self.lyricsWindowButton.state == 0)
+        [self.lyricsWindow orderOut:self];
+    else
+        [self.lyricsWindow makeKeyAndOrderFront:self];
+}
+
+- (IBAction)toggleSlideshow:(id)sender {
+    if(self.slideshowWindowButton.state == 0)
+        [self.slideshowWindow orderOut:self];
+    else
+        [self.slideshowWindow makeKeyAndOrderFront:self];
 }
 @end
