@@ -19,6 +19,7 @@
 		640546AE170DC09D008A0B43 /* SongListWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 640546AB170DC09D008A0B43 /* SongListWindowController.xib */; };
 		640546B1170DC2DD008A0B43 /* RPWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 640546B0170DC2DC008A0B43 /* RPWindowController.m */; };
 		640546B3170DC6B5008A0B43 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 640546B2170DC6B5008A0B43 /* AVFoundation.framework */; };
+		64510446170ECE660060C2FB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64510445170ECE660060C2FB /* CoreMedia.framework */; };
 		648EB8C3170DB873000185C6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648EB8C2170DB873000185C6 /* Cocoa.framework */; };
 		648EB8CD170DB873000185C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 648EB8CB170DB873000185C6 /* InfoPlist.strings */; };
 		648EB8CF170DB873000185C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 648EB8CE170DB873000185C6 /* main.m */; };
@@ -71,6 +72,7 @@
 		640546AF170DC2DC008A0B43 /* RPWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPWindowController.h; sourceTree = "<group>"; };
 		640546B0170DC2DC008A0B43 /* RPWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPWindowController.m; sourceTree = "<group>"; };
 		640546B2170DC6B5008A0B43 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		64510445170ECE660060C2FB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		648EB8BF170DB873000185C6 /* Radio Paradise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Radio Paradise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		648EB8C2170DB873000185C6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		648EB8C5170DB873000185C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -116,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64510446170ECE660060C2FB /* CoreMedia.framework in Frameworks */,
 				640546B3170DC6B5008A0B43 /* AVFoundation.framework in Frameworks */,
 				648EB8C3170DB873000185C6 /* Cocoa.framework in Frameworks */,
 			);
@@ -188,6 +191,7 @@
 		648EB8C1170DB873000185C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64510445170ECE660060C2FB /* CoreMedia.framework */,
 				640546B2170DC6B5008A0B43 /* AVFoundation.framework */,
 				648EB8C2170DB873000185C6 /* Cocoa.framework */,
 				648EB8C4170DB873000185C6 /* Other Frameworks */,
