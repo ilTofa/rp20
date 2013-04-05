@@ -67,6 +67,7 @@
 
 -(void)awakeFromNib {
     DLog(@"Initing UI");
+    self.window.backgroundColor = [NSColor blackColor];
     // reset text
     self.metadataInfo.stringValue = self.rawMetadataString = @"";
     // Let's see if we already have a preferred bitrate
