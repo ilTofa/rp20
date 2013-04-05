@@ -9,14 +9,6 @@
 /* Begin PBXBuildFile section */
 		64054687170DBC17008A0B43 /* logo_2011_horiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 64054685170DBC17008A0B43 /* logo_2011_horiz.png */; };
 		64054688170DBC17008A0B43 /* logo_2011_horiz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64054686170DBC17008A0B43 /* logo_2011_horiz@2x.png */; };
-		6405469C170DBCFB008A0B43 /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6405468B170DBCFB008A0B43 /* CoreDataController.m */; };
-		6405469D170DBCFB008A0B43 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 6405468D170DBCFB008A0B43 /* NSString+UUID.m */; };
-		6405469E170DBCFB008A0B43 /* rphd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6405468E170DBCFB008A0B43 /* rphd.xcdatamodeld */; };
-		6405469F170DBCFB008A0B43 /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 64054691170DBCFB008A0B43 /* SDCloudUserDefaults.m */; };
-		640546A0170DBCFB008A0B43 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64054693170DBCFB008A0B43 /* Song.m */; };
-		640546AC170DC09D008A0B43 /* SongAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 640546A8170DC09D008A0B43 /* SongAdder.m */; };
-		640546AD170DC09D008A0B43 /* SongListWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 640546AA170DC09D008A0B43 /* SongListWindowController.m */; };
-		640546AE170DC09D008A0B43 /* SongListWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 640546AB170DC09D008A0B43 /* SongListWindowController.xib */; };
 		640546B1170DC2DD008A0B43 /* RPWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 640546B0170DC2DC008A0B43 /* RPWindowController.m */; };
 		640546B3170DC6B5008A0B43 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 640546B2170DC6B5008A0B43 /* AVFoundation.framework */; };
 		64510446170ECE660060C2FB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64510445170ECE660060C2FB /* CoreMedia.framework */; };
@@ -55,20 +47,6 @@
 /* Begin PBXFileReference section */
 		64054685170DBC17008A0B43 /* logo_2011_horiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_2011_horiz.png; path = "../../RP HD/Images/logo_2011_horiz.png"; sourceTree = "<group>"; };
 		64054686170DBC17008A0B43 /* logo_2011_horiz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_horiz@2x.png"; path = "../../RP HD/Images/logo_2011_horiz@2x.png"; sourceTree = "<group>"; };
-		6405468A170DBCFB008A0B43 /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
-		6405468B170DBCFB008A0B43 /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
-		6405468C170DBCFB008A0B43 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
-		6405468D170DBCFB008A0B43 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
-		6405468F170DBCFB008A0B43 /* rphd.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = rphd.xcdatamodel; sourceTree = "<group>"; };
-		64054690170DBCFB008A0B43 /* SDCloudUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCloudUserDefaults.h; sourceTree = "<group>"; };
-		64054691170DBCFB008A0B43 /* SDCloudUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCloudUserDefaults.m; sourceTree = "<group>"; };
-		64054692170DBCFB008A0B43 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		64054693170DBCFB008A0B43 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
-		640546A7170DC09D008A0B43 /* SongAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongAdder.h; sourceTree = "<group>"; };
-		640546A8170DC09D008A0B43 /* SongAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongAdder.m; sourceTree = "<group>"; };
-		640546A9170DC09D008A0B43 /* SongListWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongListWindowController.h; sourceTree = "<group>"; };
-		640546AA170DC09D008A0B43 /* SongListWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongListWindowController.m; sourceTree = "<group>"; };
-		640546AB170DC09D008A0B43 /* SongListWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongListWindowController.xib; sourceTree = "<group>"; };
 		640546AF170DC2DC008A0B43 /* RPWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPWindowController.h; sourceTree = "<group>"; };
 		640546B0170DC2DC008A0B43 /* RPWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPWindowController.m; sourceTree = "<group>"; };
 		640546B2170DC6B5008A0B43 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -137,42 +115,10 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		64054689170DBCFB008A0B43 /* iCloud */ = {
-			isa = PBXGroup;
-			children = (
-				640546A6170DC09D008A0B43 /* Songs */,
-				6405468A170DBCFB008A0B43 /* CoreDataController.h */,
-				6405468B170DBCFB008A0B43 /* CoreDataController.m */,
-				6405468C170DBCFB008A0B43 /* NSString+UUID.h */,
-				6405468D170DBCFB008A0B43 /* NSString+UUID.m */,
-				6405468E170DBCFB008A0B43 /* rphd.xcdatamodeld */,
-				64054690170DBCFB008A0B43 /* SDCloudUserDefaults.h */,
-				64054691170DBCFB008A0B43 /* SDCloudUserDefaults.m */,
-				64054692170DBCFB008A0B43 /* Song.h */,
-				64054693170DBCFB008A0B43 /* Song.m */,
-			);
-			name = iCloud;
-			path = "../../RP HD/iCloud";
-			sourceTree = "<group>";
-		};
-		640546A6170DC09D008A0B43 /* Songs */ = {
-			isa = PBXGroup;
-			children = (
-				640546A7170DC09D008A0B43 /* SongAdder.h */,
-				640546A8170DC09D008A0B43 /* SongAdder.m */,
-				640546A9170DC09D008A0B43 /* SongListWindowController.h */,
-				640546AA170DC09D008A0B43 /* SongListWindowController.m */,
-				640546AB170DC09D008A0B43 /* SongListWindowController.xib */,
-			);
-			name = Songs;
-			path = "Radio Paradise/Songs";
-			sourceTree = SOURCE_ROOT;
-		};
 		648EB8B6170DB873000185C6 = {
 			isa = PBXGroup;
 			children = (
 				648EB8C9170DB873000185C6 /* Supporting Files */,
-				64054689170DBCFB008A0B43 /* iCloud */,
 				64054684170DBC07008A0B43 /* Images */,
 				648EB8C8170DB873000185C6 /* Radio Paradise */,
 				648EB8C1170DB873000185C6 /* Frameworks */,
@@ -347,7 +293,6 @@
 				648EB910170DB965000185C6 /* pbutton-supportrp@2x.png in Resources */,
 				64054687170DBC17008A0B43 /* logo_2011_horiz.png in Resources */,
 				64054688170DBC17008A0B43 /* logo_2011_horiz@2x.png in Resources */,
-				640546AE170DC09D008A0B43 /* SongListWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,13 +305,6 @@
 			files = (
 				648EB8CF170DB873000185C6 /* main.m in Sources */,
 				648EB8D6170DB873000185C6 /* RPAppDelegate.m in Sources */,
-				6405469C170DBCFB008A0B43 /* CoreDataController.m in Sources */,
-				6405469D170DBCFB008A0B43 /* NSString+UUID.m in Sources */,
-				6405469E170DBCFB008A0B43 /* rphd.xcdatamodeld in Sources */,
-				6405469F170DBCFB008A0B43 /* SDCloudUserDefaults.m in Sources */,
-				640546A0170DBCFB008A0B43 /* Song.m in Sources */,
-				640546AC170DC09D008A0B43 /* SongAdder.m in Sources */,
-				640546AD170DC09D008A0B43 /* SongListWindowController.m in Sources */,
 				640546B1170DC2DD008A0B43 /* RPWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,19 +450,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		6405468E170DBCFB008A0B43 /* rphd.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6405468F170DBCFB008A0B43 /* rphd.xcdatamodel */,
-			);
-			currentVersion = 6405468F170DBCFB008A0B43 /* rphd.xcdatamodel */;
-			path = rphd.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 648EB8B7170DB873000185C6 /* Project object */;
 }

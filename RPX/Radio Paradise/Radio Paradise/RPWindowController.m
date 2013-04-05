@@ -39,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet NSTextField *metadataInfo;
 @property (weak) IBOutlet NSButton *psdButton;
 @property (weak) IBOutlet NSButton *playOrStopButton;
-@property (weak) IBOutlet NSButton *songListButton;
 @property (weak) IBOutlet NSPopUpButton *bitrateSelector;
 @property (weak) IBOutlet NSButton *lyricsButton;
 @property (weak) IBOutlet NSButton *supportRPButton;
@@ -236,7 +235,6 @@
              DLog(@"Song id is %@.", self.currentSongId);
              // In any case, reset the "add song" capability (we have a new song, it seems).
              self.songIsAlreadySaved = NO;
-             [self.songListButton setImage:[NSImage imageNamed:@"pbutton-addsong"]];
              // Reschedule ourselves at the end of the song
              if(self.theStreamMetadataTimer != nil)
              {
@@ -323,7 +321,6 @@
     self.bitrateSelector.enabled = YES;
     [self.playOrStopButton setImage:[NSImage imageNamed:@"pbutton-play"]];
     [self.psdButton setImage:[NSImage imageNamed:@"pbutton-psd"]];
-    [self.songListButton setImage:[NSImage imageNamed:@"pbutton-songlist"]];
     self.playOrStopButton.enabled = YES;
     self.psdButton.enabled = YES;
 //    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = YES;
@@ -359,7 +356,6 @@
     self.bitrateSelector.enabled = YES;
     [self.playOrStopButton setImage:[NSImage imageNamed:@"pbutton-stop"]];
     [self.psdButton setImage:[NSImage imageNamed:@"pbutton-psd"]];
-    [self.songListButton setImage:[NSImage imageNamed:@"pbutton-addsong"]];
     self.playOrStopButton.enabled = YES;
     self.psdButton.enabled = YES;
 //    ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).windowTV.hidden = NO;
@@ -390,7 +386,6 @@
     self.bitrateSelector.enabled = NO;
     [self.playOrStopButton setImage:[NSImage imageNamed:@"pbutton-left"]];
     [self.psdButton setImage:[NSImage imageNamed:@"pbutton-psd-active"]];
-    [self.songListButton setImage:[NSImage imageNamed:@"pbutton-addsong"]];
     self.playOrStopButton.enabled = YES;
     self.psdButton.enabled = YES;
     self.songInfoButton.enabled = YES;

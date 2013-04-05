@@ -8,16 +8,9 @@
 
 #import "RPAppDelegate.h"
 
-#import "CoreDataController.h"
-
 @implementation RPAppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    // Init core data
-    _coreDataController = [[CoreDataController alloc] init];
-    //    [_coreDataController nukeAndPave];
-    [_coreDataController loadPersistentStores];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 }
 
 @end

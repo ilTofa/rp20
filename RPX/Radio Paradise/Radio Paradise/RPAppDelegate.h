@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class CoreDataController;
-
 // global notifications
 #define kMainUIBusy     @"Action Pending On Main UI"
 #define kMainUIReady    @"Main UI pending"
@@ -17,7 +15,5 @@
 @interface RPAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-
-@property (nonatomic, strong, readonly) CoreDataController *coreDataController;
 
 @end
