@@ -11,6 +11,7 @@
 		64054688170DBC17008A0B43 /* logo_2011_horiz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64054686170DBC17008A0B43 /* logo_2011_horiz@2x.png */; };
 		640546B1170DC2DD008A0B43 /* RPWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 640546B0170DC2DC008A0B43 /* RPWindowController.m */; };
 		640546B3170DC6B5008A0B43 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 640546B2170DC6B5008A0B43 /* AVFoundation.framework */; };
+		643499A517122E5C00012413 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 643499A417122E5C00012413 /* icon.icns */; };
 		64510446170ECE660060C2FB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64510445170ECE660060C2FB /* CoreMedia.framework */; };
 		648EB8C3170DB873000185C6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648EB8C2170DB873000185C6 /* Cocoa.framework */; };
 		648EB8CD170DB873000185C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 648EB8CB170DB873000185C6 /* InfoPlist.strings */; };
@@ -50,6 +51,7 @@
 		640546AF170DC2DC008A0B43 /* RPWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPWindowController.h; sourceTree = "<group>"; };
 		640546B0170DC2DC008A0B43 /* RPWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPWindowController.m; sourceTree = "<group>"; };
 		640546B2170DC6B5008A0B43 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		643499A417122E5C00012413 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = ../icon.icns; sourceTree = "<group>"; };
 		64510445170ECE660060C2FB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		648EB8BF170DB873000185C6 /* Radio Paradise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Radio Paradise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		648EB8C2170DB873000185C6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -170,6 +172,7 @@
 		648EB8C9170DB873000185C6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				643499A417122E5C00012413 /* icon.icns */,
 				648EB8DF170DB88A000185C6 /* Radio Paradise.entitlements */,
 				648EB8CA170DB873000185C6 /* Radio Paradise-Info.plist */,
 				648EB8CB170DB873000185C6 /* InfoPlist.strings */,
@@ -293,6 +296,7 @@
 				648EB910170DB965000185C6 /* pbutton-supportrp@2x.png in Resources */,
 				64054687170DBC17008A0B43 /* logo_2011_horiz.png in Resources */,
 				64054688170DBC17008A0B43 /* logo_2011_horiz@2x.png in Resources */,
+				643499A517122E5C00012413 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,13 +406,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Radio Paradise/Radio Paradise.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Radio Paradise/Radio Paradise-Prefix.pch";
 				INFOPLIST_FILE = "Radio Paradise/Radio Paradise-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -417,13 +422,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Radio Paradise/Radio Paradise.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Radio Paradise/Radio Paradise-Prefix.pch";
 				INFOPLIST_FILE = "Radio Paradise/Radio Paradise-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
