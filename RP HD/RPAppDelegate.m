@@ -59,7 +59,7 @@
     _coreDataController = [[CoreDataController alloc] init];
     [_coreDataController loadPersistentStores];
 
-    // Init Localytics & appirater
+    // Init appirater
     [Appirater setAppId:@"517818306"];
     [Appirater setDaysUntilPrompt:3];
     [Appirater setUsesUntilPrompt:10];
