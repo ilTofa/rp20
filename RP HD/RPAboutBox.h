@@ -2,8 +2,9 @@
 //  RPAboutBox.h
 //  RP HD
 //
-//  Created by Giacomo Tufano on 16/03/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Giacomo Tufano on 15/03/12.
+//  ©2013 Giacomo Tufano.
+//  Licensed under MIT license. See LICENSE file or http://www.opensource.org/licenses/mit-license.php
 //
 
 #import <UIKit/UIKit.h>

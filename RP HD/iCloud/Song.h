@@ -2,8 +2,9 @@
 //  Song.h
 //  RP HD
 //
-//  Created by Giacomo Tufano on 05/09/12.
-//
+//  Created by Giacomo Tufano on 15/03/12.
+//  ©2013 Giacomo Tufano.
+//  Licensed under MIT license. See LICENSE file or http://www.opensource.org/licenses/mit-license.php
 //
 
 #import <Foundation/Foundation.h>
