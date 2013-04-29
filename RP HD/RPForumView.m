@@ -9,7 +9,6 @@
 #import "RPForumView.h"
 
 #import "STKeychain.h"
-#import "LocalyticsSession.h"
 
 @interface RPForumView () <UIWebViewDelegate, UIActionSheetDelegate>
 
@@ -124,7 +123,6 @@
     req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10.0];
     [req addValue:@"no-cache" forHTTPHeaderField:@"Cache-Control"];
     [self.theWebView loadRequest:req];
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"ForumOpened"];
 }
 
 - (void)viewDidUnload

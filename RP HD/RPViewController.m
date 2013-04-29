@@ -9,7 +9,6 @@
 #import "RPViewController.h"
 #import "RPAppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "LocalyticsSession.h"
 #import "STKeychain/STKeychain.h"
 #import "SongAdder.h"
 #import "Song.h"
@@ -311,7 +310,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (void)playMainStream
 {
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"playMainStream"];
     [self interfacePlayPending];
     self.theStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
     if([self.theStreamer respondsToSelector:@selector(setAllowsExternalPlayback:)])
@@ -522,7 +520,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
              NSNumber * __unused psdSongFadeIn = [values objectAtIndex:2];
              NSNumber * __unused psdSongFadeOut = [values objectAtIndex:3];
              DLog(@"Got PSD song information: <%@>, should run for %@ ms, with fade-in, fade-out for %@ and %@", psdSongUrl, psdSongLenght, psdSongFadeIn, psdSongFadeOut);
-             [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"PSD triggered"];
              // reset stream on main thread
              dispatch_async(dispatch_get_main_queue(), ^{
                  // If PSD is already running...
@@ -561,7 +558,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     else
     {
         [self interfaceStopPending];
-        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Stop"];
         // Process stop request.
         [self.theStreamer pause];
         // Let's give the stream a couple seconds to really stop itself
@@ -594,15 +590,12 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     {
         case 0:
             self.theRedirector = kRPURL24K;
-            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"24K selected"];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
-            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"64K selected"];
             break;
         case 2:
             self.theRedirector = kRPURL128K;
-            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"128K selected"];
             break;
         default:
             break;
@@ -1097,16 +1090,10 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         }
         else
         {
-            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Stop"];
             [self removeNotifications];
             self.theStreamer = nil;
             [self interfaceStop];
         }
-        if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
-            [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Play interrupted by call or event"];
-        // In any case (also if not playing stop localytics
-        [[LocalyticsSession sharedLocalyticsSession] close];
-        [[LocalyticsSession sharedLocalyticsSession] upload];
     }
 }
 
@@ -1115,17 +1102,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     DLog(@"applicationChangedState: %@", note.name);
     if([note.name isEqualToString:UIApplicationDidEnterBackgroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
-            // If backgrounding during play, don't quit Localytics session
-            if(self.theStreamer.rate != 0.0 || self.isPSDPlaying)
-            {
-                [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Backgrounding while playing"];
-                [[LocalyticsSession sharedLocalyticsSession] upload];
-            }
-            else
-            {
-                [[LocalyticsSession sharedLocalyticsSession] close];
-                [[LocalyticsSession sharedLocalyticsSession] upload];
-            }
             // If we don't have a second screen...
             if ([[UIScreen screens] count] == 1 && self.viewIsLandscape && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
             {
@@ -1140,18 +1116,12 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         dispatch_async(dispatch_get_main_queue(), ^{
             if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
             {
-                [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"In Foreground while Playing"];
                 // If we don't have a second screen (else the timer was not stopped)
                 if ([[UIScreen screens] count] == 1 && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
                 {
                     DLog(@"Images again, please");
                     [self scheduleImagesTimer];
                 }
-            }
-            else
-            {
-                [[LocalyticsSession sharedLocalyticsSession] resume];
-                [[LocalyticsSession sharedLocalyticsSession] upload];                
             }
             [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
             [self resignFirstResponder];
@@ -1165,8 +1135,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         switch (receivedEvent.subtype) 
         {
             case UIEventSubtypeRemoteControlTogglePlayPause:
-                [[LocalyticsSession sharedLocalyticsSession] close];
-                [[LocalyticsSession sharedLocalyticsSession] upload];
                 [self playOrStop: nil];
                 break;
             case UIEventSubtypeRemoteControlPreviousTrack:

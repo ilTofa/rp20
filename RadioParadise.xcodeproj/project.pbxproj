@@ -62,7 +62,6 @@
 		64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A03152FA20E00BCDEBF /* Icon-Small@2x.png */; };
 		64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */; };
 		6447824115318E5A000ACC0B /* logo_2011_rphd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */; };
-		644C9836170509B50005A603 /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 644C9833170509B50005A603 /* libLocalyticsAMP.a */; };
 		644C9838170509E90005A603 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644C9837170509E90005A603 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		64563B5815F65EF300664C74 /* SongAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 64563B5715F65EF300664C74 /* SongAdder.m */; };
 		646ACA7515B46901001B5B73 /* STKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7415B46901001B5B73 /* STKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -189,9 +188,6 @@
 		64468A0A152FA35600BCDEBF /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Images/Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		64468A0C152FA45200BCDEBF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		6447824015318E5A000ACC0B /* logo_2011_rphd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_2011_rphd@2x.png"; path = "Images/logo_2011_rphd@2x.png"; sourceTree = "<group>"; };
-		644C9833170509B50005A603 /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLocalyticsAMP.a; sourceTree = "<group>"; };
-		644C9834170509B50005A603 /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsAmpSession.h; sourceTree = "<group>"; };
-		644C9835170509B50005A603 /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
 		644C9837170509E90005A603 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		64563B5615F65EF300664C74 /* SongAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongAdder.h; sourceTree = "<group>"; };
 		64563B5715F65EF300664C74 /* SongAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongAdder.m; sourceTree = "<group>"; };
@@ -300,7 +296,6 @@
 				64F802311512272E0080D442 /* UIKit.framework in Frameworks */,
 				64F802331512272E0080D442 /* Foundation.framework in Frameworks */,
 				64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */,
-				644C9836170509B50005A603 /* libLocalyticsAMP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,17 +331,6 @@
 				641D0FE716A5994500E65D94 /* pbutton-supportrp@2x.png */,
 			);
 			name = Buttons;
-			sourceTree = "<group>";
-		};
-		640C3F8916020CF600631AAD /* Localytics */ = {
-			isa = PBXGroup;
-			children = (
-				644C9833170509B50005A603 /* libLocalyticsAMP.a */,
-				644C9834170509B50005A603 /* LocalyticsAmpSession.h */,
-				644C9835170509B50005A603 /* LocalyticsSession.h */,
-			);
-			name = Localytics;
-			path = "RP HD/Localytics";
 			sourceTree = "<group>";
 		};
 		64308BAB1624D411006CF9EB /* cs.lproj */ = {
@@ -553,7 +537,6 @@
 			isa = PBXGroup;
 			children = (
 				64B8391E1704A55B0097868E /* Reachability */,
-				640C3F8916020CF600631AAD /* Localytics */,
 				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
 				64F8024D151228870080D442 /* Images */,
 				64D4812C154767A800BC1085 /* appirater */,
@@ -712,6 +695,7 @@
 			attributes = {
 				CLASSPREFIX = RP;
 				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Giacomo Tufano";
 			};
 			buildConfigurationList = 64F802261512272D0080D442 /* Build configuration list for PBXProject "RadioParadise" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1082,18 +1066,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Giacomo Tufano (68RHGP4K2S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/RP HD/Localytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RadioParadise;
-				PROVISIONING_PROFILE = "80F3AC90-B040-45DB-8182-A29AE89C0584";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1110,10 +1091,7 @@
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/RP HD/Localytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RadioParadise;
 				PROVISIONING_PROFILE = "016B59A4-6E65-47C8-91D9-95D8BB282E60";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

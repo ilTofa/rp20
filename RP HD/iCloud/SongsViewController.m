@@ -14,7 +14,6 @@
 #import <MessageUI/MessageUI.h>
 #import <Twitter/Twitter.h>
 #import "Song.h"
-#import "LocalyticsSession.h"
 
 @interface SongsViewController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
@@ -274,11 +273,9 @@
         switch (result) {
             case TWTweetComposeViewControllerResultCancelled:
                 DLog(@"Tweet cancelled.");
-                [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Tweet cancelled"];
                 break;
             case TWTweetComposeViewControllerResultDone:
                 DLog(@"Tweet done.");
-                [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Tweet sent"];
                 break;
             default:
                 break;
@@ -306,10 +303,7 @@
 {
     if (result == MFMailComposeResultSent) {
         DLog(@"e-mail Sent!");
-        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"email sent"];
     }
-    else
-        [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"email canceled"];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -370,7 +364,6 @@
     }
     returnUrl = [returnUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     DLog(@"Affiliate link is: <%@>", returnUrl);
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"Sent to iTunes Store" attributes:@{@"countryCode" : storeCode}];
     return returnUrl;
 }
 

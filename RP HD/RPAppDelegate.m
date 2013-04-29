@@ -9,7 +9,6 @@
 #import "RPAppDelegate.h"
 
 #import "RPViewController.h"
-#import "LocalyticsSession.h"
 #import "Appirater.h"
 #import "CoreDataController.h"
 
@@ -23,7 +22,6 @@
 
 - (void) myScreenInit:(UIScreen *)connectedScreen
 {
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"TV Screen inited"];
     DLog(@"Init TV screen");
     //Intitialise TV Screen
     if(!self.windowTV)
@@ -61,7 +59,6 @@
     [_coreDataController loadPersistentStores];
 
     // Init Localytics & appirater
-    [[LocalyticsSession sharedLocalyticsSession] startSession:@"e11cda37f7203321df08793-aeb86da4-fda0-11e1-53d7-00ef75f32667"];
     [Appirater setAppId:@"517818306"];
     [Appirater setDaysUntilPrompt:3];
     [Appirater setUsesUntilPrompt:10];
@@ -84,15 +81,11 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [[LocalyticsSession sharedLocalyticsSession] close];
-    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [Appirater appEnteredForeground:YES];
-    [[LocalyticsSession sharedLocalyticsSession] resume];
-    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -102,8 +95,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [[LocalyticsSession sharedLocalyticsSession] close];
-    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 @end
