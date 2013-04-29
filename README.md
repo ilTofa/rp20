@@ -10,7 +10,7 @@ The radio specialty is taking a diverse assortment of songs and making them flow
 The Application
 ---------------
 
-The application has been coded by myself, [Giacomo Tufano](http://www.ilTofa.com), and it's source is released with the MIT license. The project started initially as a personal (and unofficial) *"itch to scratch"* and currently it is the official iOS client for Radio Paradise, directly distributed (as a free application) on the [App Store](http://itunes.apple.com/app/id517818306). The app main website is @[ilTofa.com](http://www.iltofa.com/rphd/index.html). An OS X version is also open sourced and in the works in its github repository. Fixes, code and forks are warmly welcomed. Just ask me if you need help or hints.
+The application has been coded by myself, [Giacomo Tufano](http://www.ilTofa.com), and it's source is released with the MIT license. The project started initially as a personal (and unofficial) *"itch to scratch"* and currently it is the official iOS client for Radio Paradise, directly distributed (as a free application) on the [App Store](http://itunes.apple.com/app/id517818306). The app main website is @[ilTofa.com](http://www.iltofa.com/rphd/index.html). An OS X version is also open sourced and in the works in [its github repository](https://github.com/ilTofa/rposx). Fixes, code and forks are warmly welcomed. Just ask me if you need help or hints.
 
 The code
 --------
