@@ -10,8 +10,8 @@
 #import "RPAppDelegate.h"
 
 #import "RPViewController.h"
-#import "Appirater.h"
 #import "CoreDataController.h"
+#import "iRate.h"
 
 @implementation RPAppDelegate
 
@@ -20,6 +20,13 @@
 
 @synthesize windowTV = _windowTV;
 @synthesize TVviewController = _TVviewController;
+
++ (void)initialize {
+    // Init iRate
+    [iRate sharedInstance].daysUntilPrompt = 5;
+    [iRate sharedInstance].usesUntilPrompt = 10;
+}
+
 
 - (void) myScreenInit:(UIScreen *)connectedScreen
 {
@@ -59,13 +66,6 @@
     _coreDataController = [[CoreDataController alloc] init];
     [_coreDataController loadPersistentStores];
 
-    // Init appirater
-    [Appirater setAppId:@"517818306"];
-    [Appirater setDaysUntilPrompt:3];
-    [Appirater setUsesUntilPrompt:10];
-    [Appirater setSignificantEventsUntilPrompt:-1];
-    [Appirater setTimeBeforeReminding:2];
-    [Appirater appLaunched:YES];
     // Now go for the second screen thing.
     if ([[UIScreen screens] count] > 1)
         [self myScreenInit:[[UIScreen screens] objectAtIndex:1]];
@@ -86,7 +86,6 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
