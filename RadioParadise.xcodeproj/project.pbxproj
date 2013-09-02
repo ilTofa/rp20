@@ -82,6 +82,15 @@
 		64B839211704A55B0097868E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B839201704A55B0097868E /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64D298D417D4E36F00AD5D78 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298D317D4E36F00AD5D78 /* iRate.m */; };
 		64D298D617D4E41B00AD5D78 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D298D517D4E41B00AD5D78 /* StoreKit.framework */; };
+		64D2990317D4E5C200AD5D78 /* GTPiwikAddOn.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298F217D4E5C200AD5D78 /* GTPiwikAddOn.m */; };
+		64D2990417D4E5C200AD5D78 /* PiwikTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298F417D4E5C200AD5D78 /* PiwikTracker.m */; };
+		64D2990517D4E5C200AD5D78 /* PiwikTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 64D298F517D4E5C200AD5D78 /* PiwikTracker.xcdatamodeld */; };
+		64D2990617D4E5C200AD5D78 /* PTCounterDispatchStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298F817D4E5C200AD5D78 /* PTCounterDispatchStrategy.m */; };
+		64D2990717D4E5C200AD5D78 /* PTEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298FA17D4E5C200AD5D78 /* PTEvent.m */; };
+		64D2990817D4E5C200AD5D78 /* PTRetryDispatchStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298FC17D4E5C200AD5D78 /* PTRetryDispatchStrategy.m */; };
+		64D2990917D4E5C200AD5D78 /* PTTimerDispatchStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D298FE17D4E5C200AD5D78 /* PTTimerDispatchStrategy.m */; };
+		64D2990A17D4E5C200AD5D78 /* PTTrackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D2990017D4E5C200AD5D78 /* PTTrackedViewController.m */; };
+		64D2990B17D4E5C200AD5D78 /* PTUserAgentReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D2990217D4E5C200AD5D78 /* PTUserAgentReader.m */; };
 		64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D481211547577800BC1085 /* RPViewController~iphone.xib */; };
 		64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D4812215475C5300BC1085 /* RPForumView~iphone.xib */; };
 		64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */ = {isa = PBXBuildFile; fileRef = 64D481241547607D00BC1085 /* SmallLogo_rphd.png */; };
@@ -202,6 +211,23 @@
 		64D298D217D4E36F00AD5D78 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		64D298D317D4E36F00AD5D78 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
 		64D298D517D4E41B00AD5D78 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		64D298F117D4E5C200AD5D78 /* GTPiwikAddOn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTPiwikAddOn.h; sourceTree = "<group>"; };
+		64D298F217D4E5C200AD5D78 /* GTPiwikAddOn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTPiwikAddOn.m; sourceTree = "<group>"; };
+		64D298F317D4E5C200AD5D78 /* PiwikTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiwikTracker.h; sourceTree = "<group>"; };
+		64D298F417D4E5C200AD5D78 /* PiwikTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiwikTracker.m; sourceTree = "<group>"; };
+		64D298F617D4E5C200AD5D78 /* PiwikTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PiwikTracker.xcdatamodel; sourceTree = "<group>"; };
+		64D298F717D4E5C200AD5D78 /* PTCounterDispatchStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTCounterDispatchStrategy.h; sourceTree = "<group>"; };
+		64D298F817D4E5C200AD5D78 /* PTCounterDispatchStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTCounterDispatchStrategy.m; sourceTree = "<group>"; };
+		64D298F917D4E5C200AD5D78 /* PTEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTEvent.h; sourceTree = "<group>"; };
+		64D298FA17D4E5C200AD5D78 /* PTEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTEvent.m; sourceTree = "<group>"; };
+		64D298FB17D4E5C200AD5D78 /* PTRetryDispatchStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTRetryDispatchStrategy.h; sourceTree = "<group>"; };
+		64D298FC17D4E5C200AD5D78 /* PTRetryDispatchStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTRetryDispatchStrategy.m; sourceTree = "<group>"; };
+		64D298FD17D4E5C200AD5D78 /* PTTimerDispatchStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTTimerDispatchStrategy.h; sourceTree = "<group>"; };
+		64D298FE17D4E5C200AD5D78 /* PTTimerDispatchStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTTimerDispatchStrategy.m; sourceTree = "<group>"; };
+		64D298FF17D4E5C200AD5D78 /* PTTrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTTrackedViewController.h; sourceTree = "<group>"; };
+		64D2990017D4E5C200AD5D78 /* PTTrackedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTTrackedViewController.m; sourceTree = "<group>"; };
+		64D2990117D4E5C200AD5D78 /* PTUserAgentReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTUserAgentReader.h; sourceTree = "<group>"; };
+		64D2990217D4E5C200AD5D78 /* PTUserAgentReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTUserAgentReader.m; sourceTree = "<group>"; };
 		64D481201547577800BC1085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/RPViewController~iphone.xib"; sourceTree = "<group>"; };
 		64D4812215475C5300BC1085 /* RPForumView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RPForumView~iphone.xib"; sourceTree = "<group>"; };
 		64D481241547607D00BC1085 /* SmallLogo_rphd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SmallLogo_rphd.png; path = Images/SmallLogo_rphd.png; sourceTree = "<group>"; };
@@ -333,6 +359,31 @@
 			path = "RP HD/iRate";
 			sourceTree = "<group>";
 		};
+		64D298F017D4E5C200AD5D78 /* PiwikTracker */ = {
+			isa = PBXGroup;
+			children = (
+				64D298F117D4E5C200AD5D78 /* GTPiwikAddOn.h */,
+				64D298F217D4E5C200AD5D78 /* GTPiwikAddOn.m */,
+				64D298F317D4E5C200AD5D78 /* PiwikTracker.h */,
+				64D298F417D4E5C200AD5D78 /* PiwikTracker.m */,
+				64D298F517D4E5C200AD5D78 /* PiwikTracker.xcdatamodeld */,
+				64D298F717D4E5C200AD5D78 /* PTCounterDispatchStrategy.h */,
+				64D298F817D4E5C200AD5D78 /* PTCounterDispatchStrategy.m */,
+				64D298F917D4E5C200AD5D78 /* PTEvent.h */,
+				64D298FA17D4E5C200AD5D78 /* PTEvent.m */,
+				64D298FB17D4E5C200AD5D78 /* PTRetryDispatchStrategy.h */,
+				64D298FC17D4E5C200AD5D78 /* PTRetryDispatchStrategy.m */,
+				64D298FD17D4E5C200AD5D78 /* PTTimerDispatchStrategy.h */,
+				64D298FE17D4E5C200AD5D78 /* PTTimerDispatchStrategy.m */,
+				64D298FF17D4E5C200AD5D78 /* PTTrackedViewController.h */,
+				64D2990017D4E5C200AD5D78 /* PTTrackedViewController.m */,
+				64D2990117D4E5C200AD5D78 /* PTUserAgentReader.h */,
+				64D2990217D4E5C200AD5D78 /* PTUserAgentReader.m */,
+			);
+			name = PiwikTracker;
+			path = "RP HD/PiwikTracker";
+			sourceTree = "<group>";
+		};
 		64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +412,7 @@
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
+				64D298F017D4E5C200AD5D78 /* PiwikTracker */,
 				64D298D117D4E36F00AD5D78 /* iRate */,
 				64B8391E1704A55B0097868E /* Reachability */,
 				64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */,
@@ -656,6 +708,15 @@
 				64DBD37616A403C600A8E962 /* RPViewController+UI.m in Sources */,
 				64B839211704A55B0097868E /* Reachability.m in Sources */,
 				64D298D417D4E36F00AD5D78 /* iRate.m in Sources */,
+				64D2990317D4E5C200AD5D78 /* GTPiwikAddOn.m in Sources */,
+				64D2990417D4E5C200AD5D78 /* PiwikTracker.m in Sources */,
+				64D2990517D4E5C200AD5D78 /* PiwikTracker.xcdatamodeld in Sources */,
+				64D2990617D4E5C200AD5D78 /* PTCounterDispatchStrategy.m in Sources */,
+				64D2990717D4E5C200AD5D78 /* PTEvent.m in Sources */,
+				64D2990817D4E5C200AD5D78 /* PTRetryDispatchStrategy.m in Sources */,
+				64D2990917D4E5C200AD5D78 /* PTTimerDispatchStrategy.m in Sources */,
+				64D2990A17D4E5C200AD5D78 /* PTTrackedViewController.m in Sources */,
+				64D2990B17D4E5C200AD5D78 /* PTUserAgentReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,7 +835,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "RP HD/RP HD.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Giacomo Tufano";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Giacomo Tufano (6483W56522)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
@@ -782,7 +843,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RadioParadise;
-				PROVISIONING_PROFILE = "016B59A4-6E65-47C8-91D9-95D8BB282E60";
+				PROVISIONING_PROFILE = "BED07B64-01E3-437A-ADCD-4D34396973D2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -820,6 +881,16 @@
 			);
 			currentVersion = 64A0DCC715EF667D0088F8D3 /* rphd.xcdatamodel */;
 			path = rphd.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		64D298F517D4E5C200AD5D78 /* PiwikTracker.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				64D298F617D4E5C200AD5D78 /* PiwikTracker.xcdatamodel */,
+			);
+			currentVersion = 64D298F617D4E5C200AD5D78 /* PiwikTracker.xcdatamodel */;
+			path = PiwikTracker.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

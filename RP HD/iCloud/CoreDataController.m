@@ -267,12 +267,12 @@ static NSOperationQueue *_presentedItemOperationQueue;
     }
     
     NSURL *storeURL = [[self applicationSandboxStoresDirectory] URLByAppendingPathComponent:kLocalStoreFilename];
-    
+    NSDictionary *storeOptions = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
     //add the store, use the "LocalConfiguration" to make sure state entities all end up in this store and that no iCloud entities end up in it
     _localStore = [_psc addPersistentStoreWithType:NSSQLiteStoreType
                                      configuration:@"LocalConfig"
                                                URL:storeURL
-                                           options:nil
+                                           options:storeOptions
                                              error:&localError];
     success = (_localStore != nil);
     if (success == NO) {
@@ -293,10 +293,11 @@ static NSOperationQueue *_presentedItemOperationQueue;
         return YES;
     }
     NSURL *storeURL = [self fallbackStoreURL];
+    NSDictionary *storeOptions = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
     _fallbackStore = [_psc addPersistentStoreWithType:NSSQLiteStoreType
                                         configuration:@"CloudConfig"
                                                   URL:storeURL
-                                              options:nil
+                                              options:storeOptions
                                                 error:&localError];
     success = (_fallbackStore != nil);
     if (NO == success) {
@@ -318,7 +319,9 @@ static NSOperationQueue *_presentedItemOperationQueue;
     NSURL *iCloudStoreURL = [self iCloudStoreURL];
     NSURL *iCloudDataURL = [self.ubiquityURL URLByAppendingPathComponent:@"iCloudData"];
     NSDictionary *options = @{ NSPersistentStoreUbiquitousContentNameKey : @"iCloudStore",
-                                NSPersistentStoreUbiquitousContentURLKey : iCloudDataURL };
+                               NSPersistentStoreUbiquitousContentURLKey : iCloudDataURL,
+                               NSMigratePersistentStoresAutomaticallyOption: @(YES),
+                               NSInferMappingModelAutomaticallyOption: @(YES) };
     _iCloudStore = [self.psc addPersistentStoreWithType:NSSQLiteStoreType
                                           configuration:@"CloudConfig"
                                                     URL:iCloudStoreURL
