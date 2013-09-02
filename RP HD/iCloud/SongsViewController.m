@@ -328,41 +328,8 @@
 {
     NSString *returnUrl;
     NSRange rangeForQuestionMark = [iTunesUrl rangeOfString:@"?" options:NSCaseInsensitiveSearch];
-    if([storeCode caseInsensitiveCompare:@"us"] == NSOrderedSame)
-    {
-        // Generate a linkshare URL (use '?' o '&' a seconda se ci sia già un '?' o no)
-        returnUrl = [NSString stringWithFormat:@"%@%@partnerId=30&siteID=pXVJV/M7i5Q", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
-    }
-    else if([storeCode caseInsensitiveCompare:@"ca"] == NSOrderedSame)
-    {
-        // Generate a linkshare URL (use '?' o '&' a seconda se ci sia già un '?' o no)
-        returnUrl = [NSString stringWithFormat:@"%@%@partnerId=30&siteID=pXVJV/M7i5Q", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
-    }
-    else if ([storeCode caseInsensitiveCompare:@"gb"] == NSOrderedSame || [storeCode caseInsensitiveCompare:@"uk"] == NSOrderedSame)
-    {
-        // Generate a Tradedoubler link
-        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23708&a=2141801&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
-    }
-    else if ([storeCode caseInsensitiveCompare:@"it"] == NSOrderedSame)
-    {
-        // Generate a Tradedoubler link
-        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=24373&a=2165395&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
-    }
-    else if ([storeCode caseInsensitiveCompare:@"de"] == NSOrderedSame)
-    {
-        // Generate a Tradedoubler link
-        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23761&a=2141800&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
-    }
-    else if ([storeCode caseInsensitiveCompare:@"fr"] == NSOrderedSame)
-    {
-        // Generate a Tradedoubler link
-        returnUrl = [NSString stringWithFormat:@"http://clkuk.tradedoubler.com/click?p=23753&a=2141803&url=%@%@partnerId=2003", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
-    }
-    else
-    {
-        // Simply send the user to "plain" store (without affiliate links)
-        returnUrl = iTunesUrl;
-    }
+    // Generate a PHG link and ignore any EU store (no tradedoubler links available)
+    returnUrl = [NSString stringWithFormat:@"%@%@at=10l7mg", iTunesUrl, (rangeForQuestionMark.location != NSNotFound) ? @"&" : @"?"];
     returnUrl = [returnUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     DLog(@"Affiliate link is: <%@>", returnUrl);
     return returnUrl;
