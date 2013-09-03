@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "RPTVViewController.h"
 #import "PiwikTracker.h"
-#import "PTTimerDispatchStrategy.h"
 
 #define kTVInited @"tvWindowsInited"
 
@@ -28,6 +27,5 @@
 @property (strong, nonatomic) RPTVViewController *TVviewController;
 
 @property (nonatomic, strong) PiwikTracker *tracker;
-@property (nonatomic, strong) PTTimerDispatchStrategy *timerStrategy;
 
 @end

@@ -13,11 +13,7 @@
 @implementation GTPiwikAddOn
 
 + (void)trackEvent:(NSString *)event {
-    [[PiwikTracker sharedTracker] trackPageview:event completionBlock:^(NSError *error) {
-        if (error != nil) {
-            NSLog(@"Track event %@ failed with error message %@", event, [error description]);
-        }
-    }];
+    [[PiwikTracker sharedInstance] sendView:event];
 }
 
 @end
