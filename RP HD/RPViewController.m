@@ -15,7 +15,7 @@
 #import "Song.h"
 #import "RPViewController+UI.h"
 #import "Reachability.h"
-#import "GTPiwikAddOn.h"
+#import "PiwikTracker.h"
 
 void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID inPropertyID, UInt32 inPropertyValueSize, const void *inPropertyValue);
 
@@ -318,7 +318,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         self.theStreamer.allowsExternalPlayback = NO;
     else
         self.theStreamer.allowsAirPlayVideo = NO;
-    [GTPiwikAddOn trackEvent:@"play"];
+    [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"play" label:@""];
     [self activateNotifications];
     [self.theStreamer play];
 }
@@ -537,7 +537,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                      self.thePsdStreamer.allowsExternalPlayback = NO;
                  else
                      self.theStreamer.allowsAirPlayVideo = NO;
-                 [GTPiwikAddOn trackEvent:@"playPSD"];
+                 [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"playPSD" label:@""];
                  // Add observer for real start and stop.
                  self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0));
                  [self.thePsdStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
@@ -556,7 +556,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     {
         // If PSD is running, simply get back to the main stream by firing the end timer...
         DLog(@"Manually firing the PSD timer (starting fading now)");
-        [GTPiwikAddOn trackEvent:@"stopPSD"];
+        [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"stopPSD" label:@""];
         [self fadeOutCurrentTrackNow:self.thePsdStreamer forSeconds:kPsdFadeOutTime];
         [self.thePsdTimer fire];
     }
@@ -564,7 +564,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     {
         [self interfaceStopPending];
         // Process stop request.
-        [GTPiwikAddOn trackEvent:@"stop"];
+        [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"stop" label:@""];
         [self.theStreamer pause];
         // Let's give the stream a couple seconds to really stop itself
         double delayInSeconds = 1.0;    //was 2.0: MONITOR!
@@ -596,14 +596,14 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     {
         case 0:
             self.theRedirector = kRPURL24K;
-            [GTPiwikAddOn trackEvent:@"24Kselected"];
+            [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"24Kselected" label:@""];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
-            [GTPiwikAddOn trackEvent:@"64Kselected"];
+            [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"64Kselected" label:@""];
             break;
         case 2:
-            [GTPiwikAddOn trackEvent:@"128Kselected"];
+            [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"128Kselected" label:@""];
             self.theRedirector = kRPURL128K;
             break;
         default:
@@ -763,7 +763,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     self.isLyricsToBeShown = (self.isLyricsToBeShown) ? NO : YES;
     if(self.isLyricsToBeShown)
     {
-        [GTPiwikAddOn trackEvent:@"showLyricsON"];
+        [[PiwikTracker sharedInstance] sendView:@"showLyrics"];
         self.lyricsText.hidden = NO;
         [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateNormal];
         [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics-active"] forState:UIControlStateHighlighted];
@@ -771,7 +771,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     }
     else
     {
-        [GTPiwikAddOn trackEvent:@"showLyricsOFF"];
+        [[PiwikTracker sharedInstance] sendView:@"hideLyrics"];
         self.lyricsText.hidden = YES;
         [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateNormal];
         [self.lyricsButton setImage:[UIImage imageNamed:@"pbutton-lyrics"] forState:UIControlStateHighlighted];
@@ -781,7 +781,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (IBAction)supportRP:(id)sender
 {
-    [GTPiwikAddOn trackEvent:@"sentToSupportPage"];
+    [[PiwikTracker sharedInstance] sendView:@"supportPage"];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.radioparadise.com/rp2s-content.php?name=Support&file=settings"]];
 }
 
@@ -820,7 +820,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (IBAction)presentRPWeb:(id)sender
 {
-    [GTPiwikAddOn trackEvent:@"forumView"];
+    [[PiwikTracker sharedInstance] sendView:@"forumView"];
     if(self.theWebView == nil)
     {
         self.theWebView = [[RPForumView alloc] initWithNibName:@"RPForumView" bundle:[NSBundle mainBundle]];
@@ -940,7 +940,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 {
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    [GTPiwikAddOn trackEvent:@"mainUILoaded"];
+    [[PiwikTracker sharedInstance] sendView:@"mainUI"];
     // reset text
     self.metadataInfo.text = self.rawMetadataString = @"";
     // Let's see if we already have a preferred bitrate

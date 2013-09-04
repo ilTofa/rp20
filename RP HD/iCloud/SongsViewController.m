@@ -79,6 +79,7 @@
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFetchedResults:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:appDelegate.coreDataController.psc];
     self.searchString = @"";
     self.searchScope = 0;
+    [[PiwikTracker sharedInstance] sendView:@"favoritesView"];
     [self setupFetchExecAndReload];
 }
 
@@ -274,9 +275,11 @@
         switch (result) {
             case TWTweetComposeViewControllerResultCancelled:
                 DLog(@"Tweet cancelled.");
+                [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"tweetCancelled" label:@""];
                 break;
             case TWTweetComposeViewControllerResultDone:
                 DLog(@"Tweet done.");
+                [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"tweetDone" label:@""];
                 break;
             default:
                 break;
@@ -304,6 +307,7 @@
 {
     if (result == MFMailComposeResultSent) {
         DLog(@"e-mail Sent!");
+        [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"emailSent" label:@""];
     }
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -321,6 +325,7 @@
     DLog(@"Device is configured for %@", storeCode);
     // Now search for the song and quit.
     [self sendUserToStoreFor:[NSString stringWithFormat:@"%@ %@", self.theSelectedArtist, self.theSelectedTitle] onStoreCode:storeCode];
+    [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"sentToStore" label:storeCode];
     [self userDone:nil];
 }
 
