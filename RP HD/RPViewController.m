@@ -174,16 +174,27 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                  NSArray *songPieces = [metaText componentsSeparatedByString:@" - "];
                  if([songPieces count] == 2)
                  {
-                     NSDictionary *mpInfo;
-                     self.coverImage = nil;
-                     MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
-                     mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
-                               MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
-                               MPMediaItemPropertyArtwork: albumArt};
-                     [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                     if(!self.viewIsLandscape)
-                         self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", songPieces[0], songPieces[1]];
-                     DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         NSDictionary *mpInfo;
+                         self.coverImage = nil;
+                         UIImage *placeholder = [UIImage imageNamed:@"RP-meta"];
+                         MPMediaItemArtwork *albumArt;
+                         if (placeholder) {
+                             albumArt = [[MPMediaItemArtwork alloc] initWithImage:placeholder];
+                         }
+                         if (albumArt) {
+                             mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
+                                        MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
+                                        MPMediaItemPropertyArtwork: albumArt};
+                         } else {
+                             mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
+                                        MPMediaItemPropertyTitle: [songPieces objectAtIndex:1]};
+                         }
+                         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
+                         if(!self.viewIsLandscape)
+                             self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", songPieces[0], songPieces[1]];
+                         DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
+                     });
                  }
              });
              // remembering songid for forum view
@@ -241,6 +252,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                               self.coverImageView.image = self.coverImage;
                               // Update cover art cache
                               MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
+                              if(!albumArt) {
+                                  albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
+                              }
                               NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
                               if(!artist)
                                   artist = @"";
@@ -248,9 +262,15 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                               if(!title)
                                   title = @"";
                               NSDictionary *mpInfo;
-                              mpInfo = @{MPMediaItemPropertyArtist: artist,
-                                        MPMediaItemPropertyTitle: title,
-                                        MPMediaItemPropertyArtwork: albumArt};
+                              if (albumArt) {
+                                  mpInfo = @{MPMediaItemPropertyArtist: artist,
+                                             MPMediaItemPropertyTitle: title,
+                                             MPMediaItemPropertyArtwork: albumArt};
+                              } else {
+                                  mpInfo = @{MPMediaItemPropertyArtist: artist,
+                                             MPMediaItemPropertyTitle: title};
+                              }
+
                               [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
                               DLog(@"set MPNowPlayingInfoCenter (with album) to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateNormal];
