@@ -1169,6 +1169,8 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         switch (receivedEvent.subtype) 
         {
             case UIEventSubtypeRemoteControlTogglePlayPause:
+            case UIEventSubtypeRemoteControlPause:
+            case UIEventSubtypeRemoteControlPlay:
                 [self playOrStop: nil];
                 break;
             case UIEventSubtypeRemoteControlPreviousTrack:
