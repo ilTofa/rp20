@@ -79,6 +79,7 @@
 		64A0DCDF15EF72560088F8D3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64A0DCDE15EF72560088F8D3 /* CoreData.framework */; };
 		64A0DCFF15F503810088F8D3 /* SongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0DCFD15F503810088F8D3 /* SongsViewController.m */; };
 		64A0DD0015F503810088F8D3 /* SongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64A0DCFE15F503810088F8D3 /* SongsViewController.xib */; };
+		64A68AE71804465A00BE0B88 /* libRadioKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64A68AE41804465A00BE0B88 /* libRadioKit.a */; };
 		64AAF9FA151383220061DD49 /* Screen-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F8151383220061DD49 /* Screen-Down.png */; };
 		64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9F9151383220061DD49 /* Screen-Down@2x.png */; };
 		64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 64AAF9FD151388860061DD49 /* Default-Landscape.png */; };
@@ -224,6 +225,9 @@
 		64A0DCFC15F503800088F8D3 /* SongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongsViewController.h; sourceTree = "<group>"; };
 		64A0DCFD15F503810088F8D3 /* SongsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongsViewController.m; sourceTree = "<group>"; };
 		64A0DCFE15F503810088F8D3 /* SongsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongsViewController.xib; sourceTree = "<group>"; };
+		64A68AE31804465A00BE0B88 /* BufferView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferView.h; sourceTree = "<group>"; };
+		64A68AE41804465A00BE0B88 /* libRadioKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRadioKit.a; sourceTree = "<group>"; };
+		64A68AE51804465A00BE0B88 /* RadioKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioKit.h; sourceTree = "<group>"; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
 		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
 		64AAF9FD151388860061DD49 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/Default-Landscape.png"; sourceTree = "<group>"; };
@@ -315,6 +319,7 @@
 				64F802311512272E0080D442 /* UIKit.framework in Frameworks */,
 				64F802331512272E0080D442 /* Foundation.framework in Frameworks */,
 				64F802351512272E0080D442 /* CoreGraphics.framework in Frameworks */,
+				64A68AE71804465A00BE0B88 /* libRadioKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +407,17 @@
 			path = "RP HD/PiwikTracker2";
 			sourceTree = "<group>";
 		};
+		64A68AE21804465A00BE0B88 /* RadioKitLib */ = {
+			isa = PBXGroup;
+			children = (
+				64A68AE31804465A00BE0B88 /* BufferView.h */,
+				64A68AE41804465A00BE0B88 /* libRadioKit.a */,
+				64A68AE51804465A00BE0B88 /* RadioKit.h */,
+			);
+			name = RadioKitLib;
+			path = "RP HD/RadioKitLib";
+			sourceTree = "<group>";
+		};
 		64B8391E1704A55B0097868E /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +466,7 @@
 		64F802211512272D0080D442 = {
 			isa = PBXGroup;
 			children = (
+				64A68AE21804465A00BE0B88 /* RadioKitLib */,
 				64971B9817D6A671002CA180 /* PiwikTracker2 */,
 				64971B7B17D6A639002CA180 /* AFNetworking */,
 				64D298D117D4E36F00AD5D78 /* iRate */,
@@ -873,7 +890,10 @@
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/RP HD/RadioKitLib\"",
+				);
 				PRODUCT_NAME = RadioParadise;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -892,7 +912,10 @@
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/RP HD/RadioKitLib\"",
+				);
 				PRODUCT_NAME = RadioParadise;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
