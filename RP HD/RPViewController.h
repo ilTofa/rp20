@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #include <QuartzCore/QuartzCore.h>
 #include <AVFoundation/AVFoundation.h>
+#import "RadioKit.h"
 #import "RPAboutBox.h"
 #import "RPForumView.h"
 #import "RPLoginController.h"
@@ -60,7 +61,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 @property (weak, nonatomic) IBOutlet UIButton *supportRPButton;
 
-@property (strong, nonatomic) AVPlayer *theStreamer;
+@property (strong, nonatomic) RadioKit *theStreamer;
 @property (strong, nonatomic) NSOperationQueue *imageLoadQueue;
 @property (strong) NSTimer *theImagesTimer;
 @property (strong) NSTimer *theStreamMetadataTimer;
@@ -101,9 +102,6 @@ typedef enum {
 - (IBAction)songListAction:(id)sender;
 - (IBAction)showLyrics:(id)sender;
 - (IBAction)supportRP:(id)sender;
-
-- (IBAction)debugFadeIn:(id)sender;
-- (IBAction)debugFadeOut:(id)sender;
 
 - (IBAction)showStatusBar:(id)sender;
 - (IBAction)hideStatusBar:(id)sender;

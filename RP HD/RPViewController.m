@@ -35,7 +35,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 {
     if(self.theImagesTimer)
     {
-        NSLog(@"*** WARNING: scheduleImagesTimer called with a valid timer already active!");
+        NSLog(@"*** WARNING: scheduleImagesTimer called with a valid timer (%@) already active!", self.theImagesTimer);
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -68,10 +68,8 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         NSLog(@"*** WARNING: unscheduleImagesTimer called with no valid timer around!");
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.theImagesTimer invalidate];
-        self.theImagesTimer = nil;
-    });
+    [self.theImagesTimer invalidate];
+    self.theImagesTimer = nil;
 }
 
 -(void)loadNewImage:(NSTimer *)timer
@@ -333,14 +331,10 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 - (void)playMainStream
 {
     [self interfacePlayPending];
-    self.theStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.theRedirector]];
-    if([self.theStreamer respondsToSelector:@selector(setAllowsExternalPlayback:)])
-        self.theStreamer.allowsExternalPlayback = NO;
-    else
-        self.theStreamer.allowsAirPlayVideo = NO;
     [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"play" label:@""];
     [self activateNotifications];
-    [self.theStreamer play];
+    [self.theStreamer setStreamUrl:self.theRedirector isFile:NO];
+    [self.theStreamer startStream];
 }
 
 -(void)setupFading:(AVPlayer *)stream fadeOut:(BOOL)isFadingOut startingAt:(CMTime)start ending:(CMTime)end
@@ -411,14 +405,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
             [self unscheduleImagesTimer];
         // restart main stream...
         [self playMainStream];
-        // ...while giving the delay to the fading
-        [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            DLog(@"PSD stream now stopped!");
-            [self.thePsdStreamer pause];
-            self.thePsdStreamer = nil;
-        });
     }
 }
 
@@ -466,9 +452,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                 self.isPSDPlaying = YES;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kFadeInTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
                     DLog(@"Main stream now stopped!");
-                    [self.theStreamer pause];
-                    [self.theStreamer removeObserver:self forKeyPath:@"status"];
-                    self.theStreamer = nil;
+                    [self.theStreamer stopStream];
                 });
             }
             [self interfacePsd];
@@ -490,32 +474,53 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
             DLog(@"Unknown status received: %d", self.thePsdStreamer.status);
         }
     }
-    else if(object == self.theStreamer && [keyPath isEqualToString:@"status"])
-    {
-        if (self.theStreamer.status == AVPlayerStatusFailed)
-        {
-            // something went wrong. player.error should contain some information
-            DLog(@"Error starting the main streamer: %@", self.thePsdStreamer.error);
-            self.theStreamer = nil;
-            [self playMainStream];
-        }
-        else if (self.theStreamer.status == AVPlayerStatusReadyToPlay)
-
-        {
-            DLog(@"Stream is connected.");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self interfacePlay];
-            });
-        }
-        else
-        {
-            DLog(@"Unknown status received: %d", self.thePsdStreamer.status);
-        }
-    }
     else
     {
         DLog(@"Something else called observeValueForKeyPath. KeyPath is %@", keyPath);
     }
+}
+
+- (void)mainStreamerError:(NSString *)streamError {
+    // something went wrong. player.error should contain some information
+    DLog(@"Error starting the main streamer: %d", [self.theStreamer getStreamStatus]);
+    [self playMainStream];
+}
+
+- (void)SRKPlayStarted {
+    DLog(@"Stream is connected.");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self interfacePlay];
+        // If PSD is still streaming (that means we're returning from PSD) fade out PSD.
+        if(self.thePsdStreamer.rate == 1.0) {
+            [self fadeOutCurrentTrackNow:self.thePsdStreamer forSeconds:kPsdFadeOutTime];
+            // ...while giving the delay to the fading
+            [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kPsdFadeOutTime * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                DLog(@"PSD stream now stopped!");
+                [self.thePsdStreamer pause];
+                self.thePsdStreamer = nil;
+            });
+        }
+    });
+}
+
+- (void) SRKURLNotFound {
+    [self mainStreamerError:@"Unknown error when attempting to connect to the server."];
+}
+
+- (void) SRKHttpError: (CFIndex)errorCode {
+    [self mainStreamerError:[NSString stringWithFormat:@"HTTP error: %ld", errorCode]];
+}
+
+- (void) SRKConnecting {
+    DLog(@"Stream connecting");
+    self.metadataInfo.text = @"Connecting.";
+}
+
+- (void) SRKIsBuffering {
+    DLog(@"Stream Buffering");
+    self.metadataInfo.text = @"Buffering.";
 }
 
 - (void)playPSDNow
@@ -556,7 +561,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                  if([self.thePsdStreamer respondsToSelector:@selector(setAllowsExternalPlayback:)])
                      self.thePsdStreamer.allowsExternalPlayback = NO;
                  else
-                     self.theStreamer.allowsAirPlayVideo = NO;
+                     self.thePsdStreamer.allowsAirPlayVideo = NO;
                  [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"playPSD" label:@""];
                  // Add observer for real start and stop.
                  self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0));
@@ -577,7 +582,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         // If PSD is running, simply get back to the main stream by firing the end timer...
         DLog(@"Manually firing the PSD timer (starting fading now)");
         [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"stopPSD" label:@""];
-        [self fadeOutCurrentTrackNow:self.thePsdStreamer forSeconds:kPsdFadeOutTime];
         [self.thePsdTimer fire];
     }
     else
@@ -585,7 +589,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         [self interfaceStopPending];
         // Process stop request.
         [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"stop" label:@""];
-        [self.theStreamer pause];
+        [self.theStreamer stopStream];
         // Let's give the stream a couple seconds to really stop itself
         double delayInSeconds = 1.0;    //was 2.0: MONITOR!
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
@@ -593,7 +597,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
             [self removeNotifications];
             if(self.theImagesTimer)
                 [self unscheduleImagesTimer];
-            self.theStreamer = nil;
             [self interfaceStop];
             // if called from bitrateChanged, restart
             if(sender == self)
@@ -604,7 +607,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (IBAction)playOrStop:(id)sender
 {
-    if(self.theStreamer.rate != 0.0 || self.isPSDPlaying)
+    if([self.theStreamer getStreamStatus] != SRK_STATUS_STOPPED || self.isPSDPlaying)
         [self stopPressed:nil];
     else
         [self playMainStream];
@@ -632,7 +635,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     // Save it for next time (+1 to use 0 as "not saved")
     [[NSUserDefaults standardUserDefaults] setInteger:1 + ((UISegmentedControl *)sender).selectedSegmentIndex forKey:@"bitrate"];
     // If needed, stop the stream
-    if(self.theStreamer.rate != 0.0)
+    if([self.theStreamer getStreamStatus] != SRK_STATUS_STOPPED)
         [self stopPressed:self];
 }
 
@@ -671,16 +674,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         // Release...
         theLoginBox = nil;
     }
-}
-
-- (IBAction)debugFadeIn:(id)sender
-{
-    [self fadeInCurrentTrackNow:(self.isPSDPlaying) ? self.thePsdStreamer : self.theStreamer forSeconds:3];
-}
-
-- (IBAction)debugFadeOut:(id)sender
-{
-    [self fadeOutCurrentTrackNow:(self.isPSDPlaying) ? self.thePsdStreamer : self.theStreamer forSeconds:3];
 }
 
 - (IBAction)showStatusBar:(id)sender {
@@ -867,7 +860,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tvExternalScreenInited:) name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationChangedState:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [self.theStreamer addObserver:self forKeyPath:@"status" options:0 context:nil];
 }
 
 -(void)removeNotifications
@@ -876,7 +868,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTVInited object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [self.theStreamer removeObserver:self forKeyPath:@"status"];
 }
 
 #pragma mark -
@@ -916,7 +907,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
         {
             // if no image timer but systems is playing, schedule timers...
-            if(self.theImagesTimer == nil && (self.theStreamer.rate != 0.0  || self.isPSDPlaying))
+            if(self.theImagesTimer == nil && ([self.theStreamer getStreamStatus] != SRK_STATUS_STOPPED  || self.isPSDPlaying))
                 [self scheduleImagesTimer];
             self.viewIsLandscape = YES;
             [self interfaceToNormal];
@@ -971,6 +962,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         self.bitrateSelector.selectedSegmentIndex = savedBitrate - 1;
         [self bitrateChanged:self.bitrateSelector];
     }
+    // RadioKit init
+    self.theStreamer = [[RadioKit alloc] init];
+    self.theStreamer.delegate = self;
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setDelegate:self];
@@ -1045,7 +1039,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 - (void) reachabilityChanged: (NSNotification* )note
 {
     // if streams are stopped, return
-    if(self.theStreamer.rate == 0.0 && self.thePsdStreamer.rate == 0.0)
+    if([self.theStreamer getStreamStatus] == SRK_STATUS_STOPPED && self.thePsdStreamer.rate == 0.0)
         return;
 	Reachability* curReach = [note object];
 	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
@@ -1066,7 +1060,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         }
     }
     DLog(@"Network status changed: %@", statusString);
-    if(self.theStreamer.rate != 0.0 || self.thePsdStreamer.rate != 0.0) {
+    if([self.theStreamer getStreamStatus] != SRK_STATUS_STOPPED || self.thePsdStreamer.rate != 0.0) {
         if(self.networkTimer) {
             [self.networkTimer invalidate];
             self.networkTimer = nil;
@@ -1083,36 +1077,24 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         DLog(@"PSD stream is STOPPED.");
         [self stopPressed:nil];
     }
-    if(self.theStreamer.rate == 1.0 && self.theStreamer.currentItem.isPlaybackBufferEmpty) {
-        if([self.internetReachability currentReachabilityStatus] == NotReachable) {
-            // Give up... still no network.
-            DLog(@"Base stream is STOPPED, still no network... Giving up and stopping the interface.");
-            [self stopPressed:nil];
-        } else {
-            DLog(@"Base stream is STOPPED, but network is now on. Retrying.");
-            [self stopPressed:self];
-        }
-    }
-    // All is working (or stopped) nothing to do...
 }
 
 
 - (void)endInterruptionWithFlags:(NSUInteger)flags
 {
     DLog(@"This is the endInterruptionWithFlags: handler");
+    // Manage it only on PSD, Radio Kit will take care of it on main stream
     if(flags == AVAudioSessionInterruptionFlags_ShouldResume)
     {
         DLog(@"AudioSession is ready to be resumed, doing it.");
         if(self.isPSDPlaying)
             [self.thePsdStreamer play];
-        else
-            [self.theStreamer play];
     }
     else
     {
-        DLog(@"Audiosession is lost. Resetting interface and application status.");
         if(self.isPSDPlaying)
         {
+            DLog(@"Audiosession is lost. Resetting interface and application status.");
             self.isPSDPlaying = NO;
             if(self.thePsdTimer)
             {
@@ -1121,12 +1103,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
             }
             [self.thePsdStreamer removeObserver:self forKeyPath:@"status"];
             self.thePsdStreamer = nil;
-        }
-        else
-        {
-            [self removeNotifications];
-            self.theStreamer = nil;
-            [self interfaceStop];
         }
     }
 }
@@ -1148,7 +1124,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         });
     if([note.name isEqualToString:UIApplicationWillEnterForegroundNotification])
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.theStreamer.rate != 0.0  || self.isPSDPlaying)
+            if([self.theStreamer getStreamStatus] != SRK_STATUS_STOPPED  || self.isPSDPlaying)
             {
                 // If we don't have a second screen (else the timer was not stopped)
                 if ([[UIScreen screens] count] == 1 && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
