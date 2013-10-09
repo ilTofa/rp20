@@ -23,6 +23,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 @property (strong, nonatomic) Reachability *internetReachability;
 @property (strong, nonatomic) NSTimer *networkTimer;
+@property NSUInteger bufferSizeInSeconds;
 
 @end
 
@@ -520,7 +521,20 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (void) SRKIsBuffering {
     DLog(@"Stream Buffering");
-    self.metadataInfo.text = @"Buffering...";
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.metadataInfo.text = @"Buffering...";
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(bufferingTextManager:) userInfo:nil repeats:YES];
+    });
+}
+
+- (void)bufferingTextManager:(NSTimer *)theTimer {
+    if ([self.theStreamer getStreamStatus] == SRK_STATUS_BUFFERING) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.metadataInfo.text = [NSString stringWithFormat:@"Buffering (%.0f%%)", [self.theStreamer currBufferUsageInSeconds] * 100.0 / self.bufferSizeInSeconds];
+        });
+    } else {
+        [theTimer invalidate];
+    }
 }
 
 - (void)playPSDNow
@@ -842,10 +856,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         else
             self.theWebView.modalPresentationStyle = UIModalPresentationFullScreen;
     }
-//    if(self.isPSDPlaying)
     self.theWebView.songId = self.currentSongId;
-//    else
-//        self.theWebView.songId = @"now";
     self.theWebView.currentSongName = self.rawMetadataString;
     [self presentViewController:self.theWebView animated:YES completion:nil];
     self.theWebView = nil;
@@ -963,8 +974,10 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         [self bitrateChanged:self.bitrateSelector];
     }
     // RadioKit init
+    self.bufferSizeInSeconds = 15;
     self.theStreamer = [[RadioKit alloc] init];
     [self.theStreamer authenticateLibraryWithKey1:RADIO_KIT_KEY1 andKey2:RADIO_KIT_KEY2];
+    [self.theStreamer setBufferWaitTime:self.bufferSizeInSeconds];
     self.theStreamer.delegate = self;
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
