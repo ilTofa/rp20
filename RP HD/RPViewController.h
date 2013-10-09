@@ -16,6 +16,11 @@
 #import "RPLoginController.h"
 #import "SongsViewController.h"
 
+// RadioKit keys (the header with the keys is not in the public repository)
+#define RADIO_KIT_KEY1 0x0
+#define RADIO_KIT_KEY2 0x0
+#import "radiokitkeys.h"
+
 // #define kRPURL24K @"http://stream-tx1.radioparadise.com:8022"
 // #define kRPURL64K @"http://207.200.96.231:8004"
 // #define kRPURL128K @"http://scfire-mtc-aa03.stream.aol.com:80/stream/1048"

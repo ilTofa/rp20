@@ -515,12 +515,12 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (void) SRKConnecting {
     DLog(@"Stream connecting");
-    self.metadataInfo.text = @"Connecting.";
+    self.metadataInfo.text = @"Connecting...";
 }
 
 - (void) SRKIsBuffering {
     DLog(@"Stream Buffering");
-    self.metadataInfo.text = @"Buffering.";
+    self.metadataInfo.text = @"Buffering...";
 }
 
 - (void)playPSDNow
@@ -964,6 +964,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     }
     // RadioKit init
     self.theStreamer = [[RadioKit alloc] init];
+    [self.theStreamer authenticateLibraryWithKey1:RADIO_KIT_KEY1 andKey2:RADIO_KIT_KEY2];
     self.theStreamer.delegate = self;
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];

@@ -228,6 +228,7 @@
 		64A68AE31804465A00BE0B88 /* BufferView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferView.h; sourceTree = "<group>"; };
 		64A68AE41804465A00BE0B88 /* libRadioKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRadioKit.a; sourceTree = "<group>"; };
 		64A68AE51804465A00BE0B88 /* RadioKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioKit.h; sourceTree = "<group>"; };
+		64A68AE8180541EB00BE0B88 /* radiokitkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = radiokitkeys.h; sourceTree = "<group>"; };
 		64AAF9F8151383220061DD49 /* Screen-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down.png"; path = "Images/Screen-Down.png"; sourceTree = "<group>"; };
 		64AAF9F9151383220061DD49 /* Screen-Down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screen-Down@2x.png"; path = "Images/Screen-Down@2x.png"; sourceTree = "<group>"; };
 		64AAF9FD151388860061DD49 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Images/Default-Landscape.png"; sourceTree = "<group>"; };
@@ -413,6 +414,7 @@
 				64A68AE31804465A00BE0B88 /* BufferView.h */,
 				64A68AE41804465A00BE0B88 /* libRadioKit.a */,
 				64A68AE51804465A00BE0B88 /* RadioKit.h */,
+				64A68AE8180541EB00BE0B88 /* radiokitkeys.h */,
 			);
 			name = RadioKitLib;
 			path = "RP HD/RadioKitLib";
