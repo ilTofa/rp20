@@ -25,6 +25,8 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 @property (strong, nonatomic) NSTimer *networkTimer;
 @property NSUInteger bufferSizeInSeconds;
 
+@property BOOL isStatusBarHidden;
+
 @end
 
 @implementation RPViewController
@@ -630,9 +632,15 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 - (IBAction)bitrateChanged:(id)sender 
 {
     // Set custom images
-    NSArray *imageNames = @[@"24k", @"64k", @"128k"];
+    NSArray *imageNamesPhone = @[@"24k", @"64k", @"128k"];
+    NSArray *imageNamesPad = @[@"24kp", @"64kp", @"128kp"];
     for (int i = 0; i < 3; i++) {
-        NSString *imageName = imageNames[i];
+        NSString *imageName;
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            imageName = imageNamesPhone[i];
+        } else {
+            imageName = imageNamesPad[i];
+        }
         UIImage *theImage;
         if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
             theImage = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -641,37 +649,43 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         }
         [sender setImage:theImage forSegmentAtIndex:i];
     }
+    NSString *imageToBeSet;
     switch (((UISegmentedControl *)sender).selectedSegmentIndex)
     {
         case 0:
             self.theRedirector = kRPURL24K;
-            if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
-                [sender setImage:[[UIImage imageNamed:@"24ks"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:0];
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+                imageToBeSet = @"24ks";
             } else {
-                [sender setImage:[UIImage imageNamed:@"24ks"] forSegmentAtIndex:0];
+                imageToBeSet = @"24ksp";
             }
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"24Kselected" label:@""];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
-            if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
-                [sender setImage:[[UIImage imageNamed:@"64ks"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:1];
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+                imageToBeSet = @"64ks";
             } else {
-                [sender setImage:[UIImage imageNamed:@"64ks"] forSegmentAtIndex:1];
+                imageToBeSet = @"64ksp";
             }
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"64Kselected" label:@""];
             break;
         case 2:
-            [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"128Kselected" label:@""];
-            if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
-                [sender setImage:[[UIImage imageNamed:@"128ks"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:2];
-            } else {
-                [sender setImage:[UIImage imageNamed:@"128ks"] forSegmentAtIndex:2];
-            }
             self.theRedirector = kRPURL128K;
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+                imageToBeSet = @"128ks";
+            } else {
+                imageToBeSet = @"128ksp";
+            }
+            [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"128Kselected" label:@""];
             break;
         default:
             break;
+    }
+    if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
+        [sender setImage:[[UIImage imageNamed:imageToBeSet] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:((UISegmentedControl *)sender).selectedSegmentIndex];
+    } else {
+        [sender setImage:[UIImage imageNamed:imageToBeSet] forSegmentAtIndex:((UISegmentedControl *)sender).selectedSegmentIndex];
     }
     // Save it for next time (+1 to use 0 as "not saved")
     [[NSUserDefaults standardUserDefaults] setInteger:1 + ((UISegmentedControl *)sender).selectedSegmentIndex forKey:@"bitrate"];
@@ -719,11 +733,13 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (IBAction)showStatusBar:(id)sender {
     DLog(@"Now show the status bar");
+    self.isStatusBarHidden = NO;
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (IBAction)hideStatusBar:(id)sender {
     DLog(@"Now Hide the status bar");
+    self.isStatusBarHidden = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 }
 
@@ -981,6 +997,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     }
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return self.isStatusBarHidden;
+}
 
 #pragma mark -
 #pragma mark LoadUnload
@@ -991,6 +1010,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [[PiwikTracker sharedInstance] sendView:@"mainUI"];
     // reset text
+    self.isStatusBarHidden = YES;
     self.metadataInfo.text = self.rawMetadataString = @"";
     // Let's see if we already have a preferred bitrate
     int savedBitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"bitrate"];

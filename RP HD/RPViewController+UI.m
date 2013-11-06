@@ -423,7 +423,7 @@
                              self.songListButton.frame = CGRectMake(546, 954, 75, 30);
                              self.psdButton.frame = CGRectMake(546, 699, 75, 30);
                              self.logoImage.frame = CGRectMake(433, 557, 300, 94);
-                             self.bitrateSelector.frame = CGRectMake(418, 789, 330, 30);
+                             self.bitrateSelector.frame = CGRectMake(456, 789, 255, 30);
                              self.spinner.frame = CGRectMake(178, 638, 37, 37);
                              self.coverImageView.frame = CGRectMake(96, 557, 200, 200);
                              self.rpWebButton.frame = CGRectMake(96, 557, 200, 200);
