@@ -15,6 +15,26 @@
 
 @implementation RPViewController (UI)
 
+- (void)fixSegmentedControlForiOS7
+{
+    NSInteger deviceVersion = [[UIDevice currentDevice] systemVersion].integerValue;
+    if(deviceVersion < 7) // If this is not an iOS 7 device, we do not need to perform these customizations.
+        return;
+    NSDictionary *attributes = @{UITextAttributeFont: [UIFont boldSystemFontOfSize:12], UITextAttributeTextColor: [UIColor whiteColor]};
+    [self.bitrateSelector setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [self.bitrateSelector setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
+    self.bitrateSelector.segmentedControlStyle = UISegmentedControlStyleBezeled;
+    self.bitrateSelector.tintColor = [UIColor darkGrayColor];
+    for(int i = 0; i < self.bitrateSelector.numberOfSegments; i++)
+    {
+        UIImage* img = [self.bitrateSelector imageForSegmentAtIndex:i];
+        UIImage* goodImg = [img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        // clone image with different rendering mode
+        [self.bitrateSelector setImage:goodImg forSegmentAtIndex:i];
+    }
+}
+
 -(void)interfaceStop
 {
     DLog(@"*** interfaceStop");

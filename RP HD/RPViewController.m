@@ -250,7 +250,10 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                               // Set image
                               self.coverImageView.image = self.coverImage;
                               // Update cover art cache
-                              MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
+                              MPMediaItemArtwork *albumArt;
+                              if(self.coverImage) {
+                                  albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
+                              }
                               if(!albumArt) {
                                   albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
                               }
@@ -572,10 +575,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                  }
                  // Begin buffering...
                  self.thePsdStreamer = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:psdSongUrl]];
-                 if([self.thePsdStreamer respondsToSelector:@selector(setAllowsExternalPlayback:)])
-                     self.thePsdStreamer.allowsExternalPlayback = NO;
-                 else
-                     self.thePsdStreamer.allowsAirPlayVideo = NO;
+                 self.thePsdStreamer.allowsExternalPlayback = NO;
                  [[PiwikTracker sharedInstance] sendEventWithCategory:@"action" action:@"playPSD" label:@""];
                  // Add observer for real start and stop.
                  self.psdDurationInSeconds = @(([psdSongLenght doubleValue] / 1000.0));
@@ -629,18 +629,45 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (IBAction)bitrateChanged:(id)sender 
 {
-    switch (((UISegmentedControl *)sender).selectedSegmentIndex) 
+    // Set custom images
+    NSArray *imageNames = @[@"24k", @"64k", @"128k"];
+    for (int i = 0; i < 3; i++) {
+        NSString *imageName = imageNames[i];
+        UIImage *theImage;
+        if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
+            theImage = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        } else {
+            theImage = [UIImage imageNamed:imageName];
+        }
+        [sender setImage:theImage forSegmentAtIndex:i];
+    }
+    switch (((UISegmentedControl *)sender).selectedSegmentIndex)
     {
         case 0:
             self.theRedirector = kRPURL24K;
+            if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
+                [sender setImage:[[UIImage imageNamed:@"24ks"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:0];
+            } else {
+                [sender setImage:[UIImage imageNamed:@"24ks"] forSegmentAtIndex:0];
+            }
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"24Kselected" label:@""];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
+            if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
+                [sender setImage:[[UIImage imageNamed:@"64ks"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:1];
+            } else {
+                [sender setImage:[UIImage imageNamed:@"64ks"] forSegmentAtIndex:1];
+            }
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"64Kselected" label:@""];
             break;
         case 2:
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"128Kselected" label:@""];
+            if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
+                [sender setImage:[[UIImage imageNamed:@"128ks"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:2];
+            } else {
+                [sender setImage:[UIImage imageNamed:@"128ks"] forSegmentAtIndex:2];
+            }
             self.theRedirector = kRPURL128K;
             break;
         default:
@@ -703,7 +730,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 - (void)RPLoginControllerDidCancel:(RPLoginController *)controller
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        [controller dismissModalViewControllerAnimated:YES];
+        [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)RPLoginControllerDidSelect:(RPLoginController *)controller withCookies:(NSString *)cookiesString
@@ -715,7 +742,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
             [self.theLoginBox dismissPopoverAnimated:YES];
     }
     else // iPhone
-        [controller dismissModalViewControllerAnimated:YES];
+        [controller dismissViewControllerAnimated:YES completion:nil];
     self.cookieString = cookiesString;
     [self playPSDNow];
 }
@@ -979,6 +1006,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     [self.theStreamer authenticateLibraryWithKey1:RADIO_KIT_KEY1 andKey2:RADIO_KIT_KEY2];
     [self.theStreamer setBufferWaitTime:self.bufferSizeInSeconds];
     self.theStreamer.delegate = self;
+    NSLog(@"RadioKit version: %@", [self.theStreamer version]);
     // Prepare for background audio
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setDelegate:self];
@@ -1000,6 +1028,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     self.rpWebButton.layer.cornerRadius = 4.0;
     self.lyricsText.layer.cornerRadius = 6.0;
     self.hdImage.clipsToBounds = self.dissolveHdImage.clipsToBounds = self.coverImageView.clipsToBounds = self.rpWebButton.clipsToBounds = YES;
+    [self fixSegmentedControlForiOS7];
     // Hide lyrics text
     self.lyricsText.text = nil;
     self.interfaceIsTinted = YES;
@@ -1098,7 +1127,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 {
     DLog(@"This is the endInterruptionWithFlags: handler");
     // Manage it only on PSD, Radio Kit will take care of it on main stream
-    if(flags == AVAudioSessionInterruptionFlags_ShouldResume)
+    if(flags == AVAudioSessionInterruptionOptionShouldResume)
     {
         DLog(@"AudioSession is ready to be resumed, doing it.");
         if(self.isPSDPlaying)

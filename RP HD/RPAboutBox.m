@@ -141,7 +141,7 @@
 - (void)RPLoginControllerDidCancel:(RPLoginController *)controller
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        [controller dismissModalViewControllerAnimated:YES];
+        [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)RPLoginControllerDidSelect:(RPLoginController *)controller withCookies:(NSString *)cookiesString
@@ -153,7 +153,7 @@
             [self.theLoginBox dismissPopoverAnimated:YES];
     }
     else // iPhone
-        [controller dismissModalViewControllerAnimated:YES];
+        [controller dismissViewControllerAnimated:YES completion:nil];
     self.loggedIn = YES;
     [self setupUI];
 }

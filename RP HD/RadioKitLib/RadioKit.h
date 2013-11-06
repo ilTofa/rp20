@@ -38,6 +38,7 @@ enum SRK_URL_TYPE {
 - (void) SRKHttpError:(CFIndex)errorCode;
 - (void) SRKFileComplete;   // sent when a downloadable file has finished playing
 - (void) SRKURLNotFound;
+- (void) SRKTimeoutExceeded;
 - (void) SRKQueueExhausted;
 - (void) SRKAudioWillBeSuspended;
 - (void) SRKAudioSuspended;
@@ -111,6 +112,8 @@ enum SRK_URL_TYPE {
 - (NSString *) version;
 - (void) setDataTimeout: (NSUInteger) time;
 - (void) setPauseTimeout: (NSUInteger) time;
+
+-(void) setMetaEncoding: (NSStringEncoding) encoding;
 
 // Audio level metering
 - (void) enableLevelMetering;

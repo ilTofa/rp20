@@ -10,7 +10,6 @@
 		64047A571548B65B00DF6B8F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 64047A551548B65B00DF6B8F /* Default.png */; };
 		64047A581548B65B00DF6B8F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64047A561548B65B00DF6B8F /* Default@2x.png */; };
 		6407D27515F8EB3800E80E24 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6407D27415F8EB3800E80E24 /* MessageUI.framework */; };
-		6407D27815F8F2B700E80E24 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6407D27715F8F2B700E80E24 /* Twitter.framework */; };
 		640AA57216B06F470024D1E4 /* pbutton-addsong.png in Resources */ = {isa = PBXBuildFile; fileRef = 640AA56016B06F470024D1E4 /* pbutton-addsong.png */; };
 		640AA57316B06F470024D1E4 /* pbutton-addsong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 640AA56116B06F470024D1E4 /* pbutton-addsong@2x.png */; };
 		640AA57416B06F470024D1E4 /* pbutton-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 640AA56216B06F470024D1E4 /* pbutton-left.png */; };
@@ -59,6 +58,19 @@
 		646B5EAA154755D100A2544C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EA9154755D100A2544C /* Icon.png */; };
 		646B5EAC154755D600A2544C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 646B5EAB154755D600A2544C /* Icon@2x.png */; };
 		64701A2415F6B31900282502 /* SongsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64701A2315F6B31900282502 /* SongsViewController~ipad.xib */; };
+		64757168182A345100BC5B0A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64757167182A345100BC5B0A /* Social.framework */; };
+		64757173182A3BC800BC5B0A /* 24k.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475716D182A3BC800BC5B0A /* 24k.png */; };
+		64757174182A3BC800BC5B0A /* 24k@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475716E182A3BC800BC5B0A /* 24k@2x.png */; };
+		64757175182A3BC800BC5B0A /* 64k.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475716F182A3BC800BC5B0A /* 64k.png */; };
+		64757176182A3BC800BC5B0A /* 64k@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64757170182A3BC800BC5B0A /* 64k@2x.png */; };
+		64757177182A3BC800BC5B0A /* 128k.png in Resources */ = {isa = PBXBuildFile; fileRef = 64757171182A3BC800BC5B0A /* 128k.png */; };
+		64757178182A3BC800BC5B0A /* 128k@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64757172182A3BC800BC5B0A /* 128k@2x.png */; };
+		6475717F182A3E3A00BC5B0A /* 24ks.png in Resources */ = {isa = PBXBuildFile; fileRef = 64757179182A3E3A00BC5B0A /* 24ks.png */; };
+		64757180182A3E3A00BC5B0A /* 24ks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475717A182A3E3A00BC5B0A /* 24ks@2x.png */; };
+		64757181182A3E3A00BC5B0A /* 64ks.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475717B182A3E3A00BC5B0A /* 64ks.png */; };
+		64757182182A3E3A00BC5B0A /* 64ks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475717C182A3E3A00BC5B0A /* 64ks@2x.png */; };
+		64757183182A3E3A00BC5B0A /* 128ks.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475717D182A3E3A00BC5B0A /* 128ks.png */; };
+		64757184182A3E3A00BC5B0A /* 128ks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6475717E182A3E3A00BC5B0A /* 128ks@2x.png */; };
 		648C68C615C823600065043D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648C68C515C823600065043D /* CoreMedia.framework */; };
 		64971B8F17D6A639002CA180 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 64971B7D17D6A639002CA180 /* AFHTTPClient.m */; };
 		64971B9017D6A639002CA180 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 64971B7F17D6A639002CA180 /* AFHTTPRequestOperation.m */; };
@@ -190,6 +202,19 @@
 		646B5EA9154755D100A2544C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		646B5EAB154755D600A2544C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		64701A2315F6B31900282502 /* SongsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SongsViewController~ipad.xib"; sourceTree = "<group>"; };
+		64757167182A345100BC5B0A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		6475716D182A3BC800BC5B0A /* 24k.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 24k.png; path = Images/24k.png; sourceTree = "<group>"; };
+		6475716E182A3BC800BC5B0A /* 24k@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "24k@2x.png"; path = "Images/24k@2x.png"; sourceTree = "<group>"; };
+		6475716F182A3BC800BC5B0A /* 64k.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 64k.png; path = Images/64k.png; sourceTree = "<group>"; };
+		64757170182A3BC800BC5B0A /* 64k@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "64k@2x.png"; path = "Images/64k@2x.png"; sourceTree = "<group>"; };
+		64757171182A3BC800BC5B0A /* 128k.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 128k.png; path = Images/128k.png; sourceTree = "<group>"; };
+		64757172182A3BC800BC5B0A /* 128k@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "128k@2x.png"; path = "Images/128k@2x.png"; sourceTree = "<group>"; };
+		64757179182A3E3A00BC5B0A /* 24ks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 24ks.png; path = Images/24ks.png; sourceTree = "<group>"; };
+		6475717A182A3E3A00BC5B0A /* 24ks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "24ks@2x.png"; path = "Images/24ks@2x.png"; sourceTree = "<group>"; };
+		6475717B182A3E3A00BC5B0A /* 64ks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 64ks.png; path = Images/64ks.png; sourceTree = "<group>"; };
+		6475717C182A3E3A00BC5B0A /* 64ks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "64ks@2x.png"; path = "Images/64ks@2x.png"; sourceTree = "<group>"; };
+		6475717D182A3E3A00BC5B0A /* 128ks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 128ks.png; path = Images/128ks.png; sourceTree = "<group>"; };
+		6475717E182A3E3A00BC5B0A /* 128ks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "128ks@2x.png"; path = "Images/128ks@2x.png"; sourceTree = "<group>"; };
 		648C68C515C823600065043D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		64971B7C17D6A639002CA180 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		64971B7D17D6A639002CA180 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -301,13 +326,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64757168182A345100BC5B0A /* Social.framework in Frameworks */,
 				64971BAA17D6A7B7002CA180 /* CoreLocation.framework in Frameworks */,
 				64971BA817D6A7B0002CA180 /* MobileCoreServices.framework in Frameworks */,
 				64D298D617D4E41B00AD5D78 /* StoreKit.framework in Frameworks */,
 				644C9838170509E90005A603 /* AdSupport.framework in Frameworks */,
 				640C3F971602140E00631AAD /* libz.dylib in Frameworks */,
 				640C3F95160213E300631AAD /* libsqlite3.dylib in Frameworks */,
-				6407D27815F8F2B700E80E24 /* Twitter.framework in Frameworks */,
 				6407D27515F8EB3800E80E24 /* MessageUI.framework in Frameworks */,
 				64A0DCDF15EF72560088F8D3 /* CoreData.framework in Frameworks */,
 				648C68C615C823600065043D /* CoreMedia.framework in Frameworks */,
@@ -354,6 +379,18 @@
 				641D0FEC16A599C000E65D94 /* pbutton-songinfo@2x.png */,
 				641D0FE616A5994500E65D94 /* pbutton-supportrp.png */,
 				641D0FE716A5994500E65D94 /* pbutton-supportrp@2x.png */,
+				6475716D182A3BC800BC5B0A /* 24k.png */,
+				6475716E182A3BC800BC5B0A /* 24k@2x.png */,
+				6475716F182A3BC800BC5B0A /* 64k.png */,
+				64757170182A3BC800BC5B0A /* 64k@2x.png */,
+				64757171182A3BC800BC5B0A /* 128k.png */,
+				64757172182A3BC800BC5B0A /* 128k@2x.png */,
+				64757179182A3E3A00BC5B0A /* 24ks.png */,
+				6475717A182A3E3A00BC5B0A /* 24ks@2x.png */,
+				6475717B182A3E3A00BC5B0A /* 64ks.png */,
+				6475717C182A3E3A00BC5B0A /* 64ks@2x.png */,
+				6475717D182A3E3A00BC5B0A /* 128ks.png */,
+				6475717E182A3E3A00BC5B0A /* 128ks@2x.png */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -494,6 +531,7 @@
 		64F8022F1512272E0080D442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64757167182A345100BC5B0A /* Social.framework */,
 				64971BA917D6A7B7002CA180 /* CoreLocation.framework */,
 				64971BA717D6A7B0002CA180 /* MobileCoreServices.framework */,
 				64D298D517D4E41B00AD5D78 /* StoreKit.framework */,
@@ -684,16 +722,20 @@
 				64AAF9FB151383220061DD49 /* Screen-Down@2x.png in Resources */,
 				64AAF9FE151388860061DD49 /* Default-Landscape.png in Resources */,
 				64AAFA00151389820061DD49 /* AboutBox~ipad.xib in Resources */,
+				64757176182A3BC800BC5B0A /* 64k@2x.png in Resources */,
 				64AAFA0E1513A7000061DD49 /* RPForumView~ipad.xib in Resources */,
 				64AAFA111513F41A0061DD49 /* RP-meta.png in Resources */,
 				64AAFA121513F41A0061DD49 /* RP-meta@2x.png in Resources */,
 				64AAFA171513F8D30061DD49 /* back.png in Resources */,
 				64AAFA181513F8D30061DD49 /* back@2x.png in Resources */,
+				64757184182A3E3A00BC5B0A /* 128ks@2x.png in Resources */,
+				64757175182A3BC800BC5B0A /* 64k.png in Resources */,
 				64AAFA191513F8D30061DD49 /* forward.png in Resources */,
 				64AAFA1A1513F8D30061DD49 /* forward@2x.png in Resources */,
 				641709631515521C00F53185 /* RPTVViewController.xib in Resources */,
 				64468A05152FA20E00BCDEBF /* Icon-Small-50.png in Resources */,
 				64468A06152FA20E00BCDEBF /* Icon-Small-50@2x.png in Resources */,
+				64757180182A3E3A00BC5B0A /* 24ks@2x.png in Resources */,
 				64468A07152FA20E00BCDEBF /* Icon-Small.png in Resources */,
 				64468A08152FA20E00BCDEBF /* Icon-Small@2x.png in Resources */,
 				64468A0B152FA35600BCDEBF /* Default-Landscape@2x.png in Resources */,
@@ -701,9 +743,11 @@
 				646B5EAA154755D100A2544C /* Icon.png in Resources */,
 				646B5EAC154755D600A2544C /* Icon@2x.png in Resources */,
 				64D4811F1547577800BC1085 /* RPViewController~iphone.xib in Resources */,
+				6475717F182A3E3A00BC5B0A /* 24ks.png in Resources */,
 				64D4812315475C5300BC1085 /* RPForumView~iphone.xib in Resources */,
 				64D481261547607D00BC1085 /* SmallLogo_rphd.png in Resources */,
 				64D481271547607D00BC1085 /* SmallLogo_rphd@2x.png in Resources */,
+				64757178182A3BC800BC5B0A /* 128k@2x.png in Resources */,
 				64D48129154762E100BC1085 /* AboutBox~iphone.xib in Resources */,
 				64D4812B1547678E00BC1085 /* Localizable.strings in Resources */,
 				64047A571548B65B00DF6B8F /* Default.png in Resources */,
@@ -716,8 +760,10 @@
 				64A0DD0015F503810088F8D3 /* SongsViewController.xib in Resources */,
 				64701A2415F6B31900282502 /* SongsViewController~ipad.xib in Resources */,
 				640C3F871601D20300631AAD /* Default-568h@2x.png in Resources */,
+				64757177182A3BC800BC5B0A /* 128k.png in Resources */,
 				64275778169CDA51009DF7F0 /* logo_2011_horiz.png in Resources */,
 				64275779169CDA51009DF7F0 /* logo_2011_horiz@2x.png in Resources */,
+				64757181182A3E3A00BC5B0A /* 64ks.png in Resources */,
 				641D0FE816A5994500E65D94 /* pbutton-supportrp.png in Resources */,
 				641D0FE916A5994500E65D94 /* pbutton-supportrp@2x.png in Resources */,
 				641D0FED16A599C000E65D94 /* pbutton-songinfo.png in Resources */,
@@ -730,9 +776,13 @@
 				640AA57716B06F470024D1E4 /* pbutton-lyrics-active@2x.png in Resources */,
 				640AA57816B06F470024D1E4 /* pbutton-lyrics.png in Resources */,
 				640AA57916B06F470024D1E4 /* pbutton-lyrics@2x.png in Resources */,
+				64757173182A3BC800BC5B0A /* 24k.png in Resources */,
 				640AA57A16B06F470024D1E4 /* pbutton-play.png in Resources */,
+				64757174182A3BC800BC5B0A /* 24k@2x.png in Resources */,
+				64757182182A3E3A00BC5B0A /* 64ks@2x.png in Resources */,
 				640AA57B16B06F470024D1E4 /* pbutton-play@2x.png in Resources */,
 				640AA57C16B06F470024D1E4 /* pbutton-psd-active.png in Resources */,
+				64757183182A3E3A00BC5B0A /* 128ks.png in Resources */,
 				640AA57D16B06F470024D1E4 /* pbutton-psd-active@2x.png in Resources */,
 				640AA57E16B06F470024D1E4 /* pbutton-psd.png in Resources */,
 				640AA57F16B06F470024D1E4 /* pbutton-psd@2x.png in Resources */,
@@ -842,12 +892,13 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -869,12 +920,13 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -891,7 +943,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RP HD/RadioKitLib\"",
@@ -913,13 +965,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/RP HD/RadioKitLib\"",
 				);
 				PRODUCT_NAME = RadioParadise;
-				PROVISIONING_PROFILE = "B440A993-DCE5-4E81-B928-C0059691C1A5";
+				PROVISIONING_PROFILE = "58E59B7D-1584-4C62-AD6E-39EEAE448472";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

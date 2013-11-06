@@ -118,7 +118,7 @@
 
 - (IBAction)userDone:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)editTable:(id)sender
@@ -247,7 +247,7 @@
             break;
         case 1:
             action = @"twit";
-            if([TWTweetComposeViewController canSendTweet])
+            if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
                 [self sendSongByTweet];
             else
             {
@@ -268,26 +268,30 @@
 
 -(void) sendSongByTweet
 {
-    TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init];
-    [tweetViewController setInitialText:[NSString stringWithFormat:@"%@ - %@\n", self.theSelectedArtist, self.theSelectedTitle]];
-    [tweetViewController addImage:[UIImage imageWithData:self.theSelectedCover]];
-    [tweetViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
-        switch (result) {
-            case TWTweetComposeViewControllerResultCancelled:
-                DLog(@"Tweet cancelled.");
-                [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"tweetCancelled" label:@""];
-                break;
-            case TWTweetComposeViewControllerResultDone:
-                DLog(@"Tweet done.");
-                [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"tweetDone" label:@""];
-                break;
-            default:
-                break;
-        }        
-        [self dismissModalViewControllerAnimated:YES];
-    }];
-    
-    [self presentModalViewController:tweetViewController animated:YES];
+    SLComposeViewController *tweetController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        SLComposeViewControllerCompletionHandler __block completionHandler = ^(SLComposeViewControllerResult result) {
+            [tweetController dismissViewControllerAnimated:YES completion:nil];
+            switch(result) {
+                case SLComposeViewControllerResultDone:
+                    DLog(@"Tweet done.");
+                    [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"tweetDone" label:@""];
+                    break;
+                case SLComposeViewControllerResultCancelled:
+                default:
+                    DLog(@"Tweet cancelled.");
+                    [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"tweetCancelled" label:@""];
+            }
+            [self dismissViewControllerAnimated:YES completion:nil];
+        };
+        [tweetController setInitialText:[NSString stringWithFormat:@"%@ - %@\n", self.theSelectedArtist, self.theSelectedTitle]];
+        [tweetController addImage:[UIImage imageWithData:self.theSelectedCover]];
+        [tweetController setCompletionHandler:completionHandler];
+        [self presentViewController:tweetController animated:YES completion:nil];
+    } else {
+        UIAlertView *alertBox = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Sorry, cannot post to twitter now from this device. Please check network and/or configuration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertBox show];
+    }
 }
 
 -(void) sendSongByEmail
@@ -298,7 +302,7 @@
     [controller setMessageBody:[NSString stringWithFormat:@"%@ - %@\n", self.theSelectedArtist, self.theSelectedTitle] isHTML:NO];
     [controller addAttachmentData:self.theSelectedCover mimeType:@"image/png" fileName:@"Cover.png"];
     if (controller)
-        [self presentModalViewController:controller animated:YES];
+        [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller
@@ -309,7 +313,7 @@
         DLog(@"e-mail Sent!");
         [[PiwikTracker sharedInstance] sendEventWithCategory:@"favorites" action:@"emailSent" label:@""];
     }
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -

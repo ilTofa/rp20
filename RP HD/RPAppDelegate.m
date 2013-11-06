@@ -62,6 +62,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    if ([self.window respondsToSelector:@selector(setTintColor:)]) {
+        [self.window setTintColor:[UIColor colorWithRed:0.843 green:0.698 blue:0.482 alpha:1.000]];
+    }
     self.viewController = [[RPViewController alloc] initWithNibName:@"RPViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

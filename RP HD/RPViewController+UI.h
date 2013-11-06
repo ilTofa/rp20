@@ -21,5 +21,6 @@
 -(void)interfaceToNormal;
 -(void)interfaceToZoomed;
 -(void)interfaceToPortrait:(NSTimeInterval)animationDuration;
+-(void)fixSegmentedControlForiOS7;
 
 @end
