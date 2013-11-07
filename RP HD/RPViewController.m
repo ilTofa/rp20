@@ -632,20 +632,13 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 - (IBAction)bitrateChanged:(id)sender 
 {
     // Set custom images
-    NSArray *imageNamesPhone = @[@"24k", @"64k", @"128k"];
-    NSArray *imageNamesPad = @[@"24kp", @"64kp", @"128kp"];
+    NSArray *imageNames = @[@"24k", @"64k", @"128k"];
     for (int i = 0; i < 3; i++) {
-        NSString *imageName;
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            imageName = imageNamesPhone[i];
-        } else {
-            imageName = imageNamesPad[i];
-        }
         UIImage *theImage;
         if([[UIDevice currentDevice] systemVersion].integerValue >= 7) {
-            theImage = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            theImage = [[UIImage imageNamed:imageNames[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         } else {
-            theImage = [UIImage imageNamed:imageName];
+            theImage = [UIImage imageNamed:imageNames[i]];
         }
         [sender setImage:theImage forSegmentAtIndex:i];
     }
@@ -654,29 +647,17 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     {
         case 0:
             self.theRedirector = kRPURL24K;
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                imageToBeSet = @"24ks";
-            } else {
-                imageToBeSet = @"24ksp";
-            }
+            imageToBeSet = @"24ks";
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"24Kselected" label:@""];
             break;
         case 1:
             self.theRedirector = kRPURL64K;
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                imageToBeSet = @"64ks";
-            } else {
-                imageToBeSet = @"64ksp";
-            }
+            imageToBeSet = @"64ks";
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"64Kselected" label:@""];
             break;
         case 2:
             self.theRedirector = kRPURL128K;
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                imageToBeSet = @"128ks";
-            } else {
-                imageToBeSet = @"128ksp";
-            }
+            imageToBeSet = @"128ks";
             [[PiwikTracker sharedInstance] sendEventWithCategory:@"bitrateChanged" action:@"128Kselected" label:@""];
             break;
         default:
