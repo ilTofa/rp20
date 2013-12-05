@@ -155,7 +155,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
          DLog(@"metadata received %@ ", (data) ? @"successfully." : @"with errors.");
          if(data)
          {
-             // Get name and massage it (it's web encoded and with triling spaces)
+             // Get name and massage it (it's web encoded and with trailing spaces)
              NSString *stringData = [[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding];
              NSArray *values = [stringData componentsSeparatedByString:@"|"];
              if([values count] != 4)
@@ -560,7 +560,12 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
              {
                  NSLog(@"ERROR: wrong number of values (%d) returned from ajax_replace", [values count]);
                  NSLog(@"retValue: <%@>", retValue);
-                 [self playMainStream];
+                 // This could be from the password changed on the RP web site in itself. Reset the cache so that the next PSD request will trigger a new login and get back to the current stream.
+                 self.cookieString = nil;
+                 [STKeychain deleteItemForUsername:@"cookies" andServiceName:@"RP" error:&err];
+                 NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+                 [STKeychain deleteItemForUsername:userName andServiceName:@"RP" error:&err];
+                 [self interfacePlay];
                  return;
              }
              NSString *psdSongUrl = [values objectAtIndex:0];
