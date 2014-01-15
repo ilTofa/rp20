@@ -123,9 +123,9 @@
     // Only if the app is active and is landscape or iPad or remote screen active. otherwise there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
         [self scheduleImagesTimer];
-    // Start metadata reading.
-    DLog(@"Starting metadata handler...");
-    [self metatadaHandler:nil];
+//    // Start metadata reading.
+//    DLog(@"Starting metadata handler...");
+//    [self metatadaHandler:nil];
 }
 
 -(void)interfacePlayPending
@@ -172,7 +172,7 @@
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive  && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
         [self scheduleImagesTimer];
     DLog(@"Getting PSD metadata...");
-    [self metatadaHandler:nil];
+    [self newMetadataHandler:nil];
 }
 
 -(void)interfacePsdPending

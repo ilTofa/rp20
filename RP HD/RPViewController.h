@@ -32,6 +32,9 @@
 #define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
 #define kHDImagePSDURL @"http://www.radioparadise.com/ajax_image_ipad.php"
 
+#define kRPMetadataEndpoint @"http://radioparadise.com/ajax_xml_song_info.php?title=%@&comments=no&slideshow=no"
+#define kRPPSDMetadataEndpoint @"http://radioparadise.com/ajax_xml_song_info.php?&comments=no&slideshow=no"
+
 #define kPsdFadeOutTime 4.0
 #define kFadeInTime 2.5
 
@@ -97,6 +100,7 @@ typedef enum {
 // Called from UI category
 -(void)scheduleImagesTimer;
 -(void)metatadaHandler:(NSTimer *)timer;
+- (void)newMetadataHandler:(NSString *)title;
 
 - (IBAction)playOrStop:(id)sender;
 - (IBAction)bitrateChanged:(id)sender;

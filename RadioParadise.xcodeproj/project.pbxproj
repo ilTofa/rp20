@@ -95,6 +95,8 @@
 		64DF349216B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64DF349116B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
+		64E48334188707AB00DEB470 /* RXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E48333188707AB00DEB470 /* RXMLElement.m */; };
+		64E4833618870C1200DEB470 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E4833518870C1200DEB470 /* libxml2.dylib */; };
 		64EBBD4F16B2890400F6C077 /* pbutton-appinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */; };
 		64EBBD5016B2890400F6C077 /* pbutton-appinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */; };
 		64F5AF7415EE5EAE0018B38A /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F5AF6F15EE5EAE0018B38A /* CoreDataController.m */; };
@@ -238,6 +240,9 @@
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPiPadTestsViewController.xib; sourceTree = "<group>"; };
+		64E48332188707AB00DEB470 /* RXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMLElement.h; sourceTree = "<group>"; };
+		64E48333188707AB00DEB470 /* RXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMLElement.m; sourceTree = "<group>"; };
+		64E4833518870C1200DEB470 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pbutton-appinfo.png"; path = "Images/pbutton-appinfo.png"; sourceTree = "<group>"; };
 		64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pbutton-appinfo@2x.png"; path = "Images/pbutton-appinfo@2x.png"; sourceTree = "<group>"; };
 		64F5AF6E15EE5EAE0018B38A /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
@@ -268,6 +273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E4833618870C1200DEB470 /* libxml2.dylib in Frameworks */,
 				64757168182A345100BC5B0A /* Social.framework in Frameworks */,
 				64971BAA17D6A7B7002CA180 /* CoreLocation.framework in Frameworks */,
 				64971BA817D6A7B0002CA180 /* MobileCoreServices.framework in Frameworks */,
@@ -407,6 +413,16 @@
 			path = "RP HD/iRate";
 			sourceTree = "<group>";
 		};
+		64E48331188707AB00DEB470 /* RaptureXML */ = {
+			isa = PBXGroup;
+			children = (
+				64E48332188707AB00DEB470 /* RXMLElement.h */,
+				64E48333188707AB00DEB470 /* RXMLElement.m */,
+			);
+			name = RaptureXML;
+			path = "RP HD/RaptureXML";
+			sourceTree = "<group>";
+		};
 		64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				64914E87182BF88C0063BC7A /* Images.xcassets */,
+				64E48331188707AB00DEB470 /* RaptureXML */,
 				64A68AE21804465A00BE0B88 /* RadioKitLib */,
 				64971B9817D6A671002CA180 /* PiwikTracker2 */,
 				64971B7B17D6A639002CA180 /* AFNetworking */,
@@ -462,6 +479,7 @@
 		64F8022F1512272E0080D442 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64E4833518870C1200DEB470 /* libxml2.dylib */,
 				64757167182A345100BC5B0A /* Social.framework */,
 				64971BA917D6A7B7002CA180 /* CoreLocation.framework */,
 				64971BA717D6A7B0002CA180 /* MobileCoreServices.framework */,
@@ -711,6 +729,7 @@
 				64D298D417D4E36F00AD5D78 /* iRate.m in Sources */,
 				64971B8F17D6A639002CA180 /* AFHTTPClient.m in Sources */,
 				64971B9017D6A639002CA180 /* AFHTTPRequestOperation.m in Sources */,
+				64E48334188707AB00DEB470 /* RXMLElement.m in Sources */,
 				64971B9117D6A639002CA180 /* AFImageRequestOperation.m in Sources */,
 				64971B9217D6A639002CA180 /* AFJSONRequestOperation.m in Sources */,
 				64971B9317D6A639002CA180 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -828,6 +847,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SDK_DIR)\"/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -852,6 +876,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RP HD/RadioParadise-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SDK_DIR)\"/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = "RP HD/RadioParadise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
