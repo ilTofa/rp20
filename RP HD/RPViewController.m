@@ -555,6 +555,13 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
          {
              NSString *retValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
              retValue = [retValue stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+             if (!retValue || [retValue length] == 0) {
+                 // This is an invalid login
+                 [STKeychain deleteItemForUsername:@"cookies" andServiceName:@"RP" error:&err];
+                 self.cookieString = nil;
+                 [self startPSD:self];
+                 return;
+             }
              NSArray *values = [retValue componentsSeparatedByString:@"|"];
              if([values count] != 5)
              {
@@ -565,7 +572,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                  [STKeychain deleteItemForUsername:@"cookies" andServiceName:@"RP" error:&err];
                  NSString *userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
                  [STKeychain deleteItemForUsername:userName andServiceName:@"RP" error:&err];
-                 [self interfacePlay];
+                 [self startPSD:self];
                  return;
              }
              NSString *psdSongUrl = [values objectAtIndex:0];
