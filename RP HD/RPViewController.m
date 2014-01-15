@@ -163,7 +163,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
     DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
 }
 
-- (void)newMetadataHandler:(NSString *)title {
+- (void)metadataHandler:(NSString *)title {
     // This function get metadata directly in case of PSD (no stream metadata)
     NSString *urlString;
     if (title) {
@@ -252,189 +252,6 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateSelected];
                           });
                       }
-                  }
-              }];
-         }
-     }];
-}
-
--(void)metatadaHandler:(NSTimer *)timer
-{
-    // This function get metadata directly in case of PSD (no stream metadata)
-    DLog(@"This is metatadaHandler: called %@", (timer == nil) ? @"directly" : @"from the 'self-timer'");
-    // Get song name first
-    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://www.radioparadise.com/ajax_rp2_playlist_ipad.php"]];
-    // Shutdown cache (don't) and cookie management (we'll send them manually, if needed)
-    [req setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
-    [req addValue:@"no-cache" forHTTPHeaderField:@"Cache-Control"];
-    [req setHTTPShouldHandleCookies:NO];
-    // Add cookies only for PSD play
-    if(self.isPSDPlaying)
-        [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
-    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-     {
-         DLog(@"metadata received %@ ", (data) ? @"successfully." : @"with errors.");
-         if(data)
-         {
-             // Get name and massage it (it's web encoded and with trailing spaces)
-             NSString *stringData = [[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding];
-             NSArray *values = [stringData componentsSeparatedByString:@"|"];
-             if([values count] != 4)
-             {
-                 NSLog(@"Error in reading metadata from http://www.radioparadise.com/ajax_rp2_playlist_ipad.php: <%@> received.", stringData);
-                 return;
-             }
-             NSString *metaText = [values objectAtIndex:0];
-             metaText = [metaText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-             metaText = [metaText stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"-"];
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 self.metadataInfo.text = self.rawMetadataString = metaText;
-                 // If we have a second screen, update also there
-                 if ([[UIScreen screens] count] > 1)
-                     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = metaText;
-                 // Update metadata info
-                 NSArray *songPieces = [metaText componentsSeparatedByString:@" - "];
-                 if([songPieces count] == 2)
-                 {
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         NSDictionary *mpInfo;
-                         self.coverImage = nil;
-                         UIImage *placeholder = [UIImage imageNamed:@"RP-meta"];
-                         MPMediaItemArtwork *albumArt;
-                         if (placeholder) {
-                             albumArt = [[MPMediaItemArtwork alloc] initWithImage:placeholder];
-                         }
-                         if (albumArt) {
-                             mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
-                                        MPMediaItemPropertyTitle: [songPieces objectAtIndex:1],
-                                        MPMediaItemPropertyArtwork: albumArt};
-                         } else {
-                             mpInfo = @{MPMediaItemPropertyArtist: [songPieces objectAtIndex:0],
-                                        MPMediaItemPropertyTitle: [songPieces objectAtIndex:1]};
-                         }
-                         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                         if(!self.viewIsLandscape)
-                             self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", songPieces[0], songPieces[1]];
-                         DLog(@"set MPNowPlayingInfoCenter to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
-                     });
-                 }
-             });
-             // remembering songid for forum view
-             self.currentSongId = [values objectAtIndex:1];
-             DLog(@"Song id is %@.", self.currentSongId);
-             // In any case, reset the "add song" capability (we have a new song, it seems).
-             self.songIsAlreadySaved = NO;
-             [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateNormal];
-             [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateHighlighted];
-             [self.songListButton setImage:[UIImage imageNamed:@"pbutton-addsong"] forState:UIControlStateSelected];
-             // Reschedule ourselves at the end of the song
-             if(self.theStreamMetadataTimer != nil)
-             {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self.theStreamMetadataTimer invalidate];
-                     self.theStreamMetadataTimer = nil;
-                 });
-             }
-             NSNumber *whenRefresh = [values objectAtIndex:2];
-             if([whenRefresh intValue] <= 0)
-             {
-                 whenRefresh = @([whenRefresh intValue] * -1);
-                 if([whenRefresh intValue] < 5 || [whenRefresh intValue] > 30)
-                     whenRefresh = @(5);
-                 DLog(@"We're into the fade out... skipping %@ seconds", whenRefresh);
-             }
-             else
-             {
-                 DLog(@"Given value for song duration is: %@. Now calculating encode skew.", whenRefresh);
-                 // Manually compensate for skew in encoder on lower bitrates.
-                 if(self.bitrateSelector.selectedSegmentIndex == 0 && !self.isPSDPlaying)
-                     whenRefresh = @([whenRefresh intValue] + 70);
-                 else if(self.bitrateSelector.selectedSegmentIndex == 1 && !self.isPSDPlaying)
-                     whenRefresh = @([whenRefresh intValue] + 25);
-                 DLog(@"This song will last for %.0f seconds, rescheduling ourselves for refresh", [whenRefresh doubleValue]);
-             }
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 self.theStreamMetadataTimer = [NSTimer scheduledTimerWithTimeInterval:[whenRefresh doubleValue] target:self selector:@selector(metatadaHandler:) userInfo:nil repeats:NO];
-             });
-             // Now get album artwork
-             NSString *temp = [NSString stringWithFormat:@"http://www.radioparadise.com/graphics/covers/l/%@.jpg", [values objectAtIndex:3]];
-             DLog(@"URL for Artwork: <%@>", temp);
-             [self.imageLoadQueue cancelAllOperations];
-             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
-             [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-              {
-                  if(data)
-                  {
-                      self.coverImage = [UIImage imageWithData:data];
-                      // Update metadata info
-                      if(self.coverImage != nil)
-                      {
-                          dispatch_async(dispatch_get_main_queue(), ^{
-                              // Set image
-                              self.coverImageView.image = self.coverImage;
-                              // Update cover art cache
-                              MPMediaItemArtwork *albumArt;
-                              if(self.coverImage) {
-                                  albumArt = [[MPMediaItemArtwork alloc] initWithImage:self.coverImage];
-                              }
-                              if(!albumArt) {
-                                  albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"RP-meta"]];
-                              }
-                              NSString *artist = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyArtist];
-                              if(!artist)
-                                  artist = @"";
-                              NSString *title = [[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo] objectForKey:MPMediaItemPropertyTitle];
-                              if(!title)
-                                  title = @"";
-                              NSDictionary *mpInfo;
-                              if (albumArt) {
-                                  mpInfo = @{MPMediaItemPropertyArtist: artist,
-                                             MPMediaItemPropertyTitle: title,
-                                             MPMediaItemPropertyArtwork: albumArt};
-                              } else {
-                                  mpInfo = @{MPMediaItemPropertyArtist: artist,
-                                             MPMediaItemPropertyTitle: title};
-                              }
-
-                              [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mpInfo];
-                              DLog(@"set MPNowPlayingInfoCenter (with album) to \"%@ - %@\"", mpInfo[MPMediaItemPropertyArtist], mpInfo[MPMediaItemPropertyTitle]);
-                              [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateNormal];
-                              [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateHighlighted];
-                              [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateSelected];
-                          });
-                      }
-                  }
-                  else
-                  {
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
-                          [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
-                          [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
-                      });
-                 }
-              }];
-             // Now get song text (iPad only)
-             temp = [NSString stringWithFormat:@"http://radioparadise.com/lyrics/%@.txt", self.currentSongId];
-             NSURLRequest *lyricsReq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:temp]];
-             [NSURLConnection sendAsynchronousRequest:lyricsReq queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-              {
-                  if(data)
-                  {
-                      NSString *lyrics;
-                      if(((NSHTTPURLResponse *)res).statusCode == 404)
-                      {
-                          DLog(@"No lyrics for the song");
-                          lyrics = @"\r\r\r\r\rNo Lyrics Found.";
-                      }
-                      else
-                      {
-                          DLog(@"Got lyrics for the song!");
-                          lyrics = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                      }
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          self.lyricsText.text = lyrics;
-                          [self.lyricsText scrollRangeToVisible:NSMakeRange(0, 0)];
-                      });
                   }
               }];
          }
@@ -655,7 +472,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (void) SRKRealtimeMetaChanged: (NSString *)title withUrl: (NSString *) url {
     NSLog(@"Metadata changed: '%@'", title);
-    [self newMetadataHandler:title];
+    [self metadataHandler:title];
 }
 
 - (void)bufferingTextManager:(NSTimer *)theTimer {

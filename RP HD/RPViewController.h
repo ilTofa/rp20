@@ -99,8 +99,7 @@ typedef enum {
 
 // Called from UI category
 -(void)scheduleImagesTimer;
--(void)metatadaHandler:(NSTimer *)timer;
-- (void)newMetadataHandler:(NSString *)title;
+- (void)metadataHandler:(NSString *)title;
 
 - (IBAction)playOrStop:(id)sender;
 - (IBAction)bitrateChanged:(id)sender;

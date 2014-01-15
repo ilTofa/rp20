@@ -172,7 +172,7 @@
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive  && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
         [self scheduleImagesTimer];
     DLog(@"Getting PSD metadata...");
-    [self newMetadataHandler:nil];
+    [self metadataHandler:nil];
 }
 
 -(void)interfacePsdPending
