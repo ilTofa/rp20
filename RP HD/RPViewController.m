@@ -475,7 +475,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 - (void) SRKRealtimeMetaChanged: (NSString *)title withUrl: (NSString *) url {
     NSLog(@"Metadata changed: '%@'", title);
-    [self metadataHandler:title];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
+        [self metadataHandler:title];
+    });
 }
 
 - (void)bufferingTextManager:(NSTimer *)theTimer {
