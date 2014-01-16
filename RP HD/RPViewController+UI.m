@@ -120,6 +120,12 @@
     self.lyricsButton.enabled = YES;
     self.songIsAlreadySaved = NO;
     [self.spinner stopAnimating];
+    self.metadataInfo.text = self.rawMetadataString;
+    // If we have a second screen, update also there
+    if ([[UIScreen screens] count] > 1) {
+        ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = self.rawMetadataString;
+    }
+
     // Only if the app is active and is landscape or iPad or remote screen active. otherwise there's no need to load images
     if([UIApplication sharedApplication].applicationState == UIApplicationStateActive && (self.viewIsLandscape || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || [[UIScreen screens] count] != 1))
         [self scheduleImagesTimer];

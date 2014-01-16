@@ -29,11 +29,8 @@
 #define kRPURL64K @"http://radioparadise.com/m3u/aac-64.m3u"
 #define kRPURL128K @"http://radioparadise.com/m3u/aac-128.m3u"
 
-#define kHDImageURLURL @"http://radioparadise.com/readtxt.php"
-#define kHDImagePSDURL @"http://www.radioparadise.com/ajax_image_ipad.php"
-
-#define kRPMetadataEndpoint @"http://radioparadise.com/ajax_xml_song_info.php?title=%@&comments=no&slideshow=no"
-#define kRPPSDMetadataEndpoint @"http://radioparadise.com/ajax_xml_song_info.php?&comments=no&slideshow=no"
+#define kRPMetadataEndpoint @"http://radioparadise.com/ajax_xml_song_info.php?title=%@&comments=no"
+#define kRPPSDMetadataEndpoint @"http://radioparadise.com/ajax_xml_song_info.php?&comments=no"
 
 #define kPsdFadeOutTime 4.0
 #define kFadeInTime 2.5

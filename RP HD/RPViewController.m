@@ -26,6 +26,8 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 @property (strong, nonatomic) NSTimer *networkTimer;
 @property NSUInteger bufferSizeInSeconds;
 
+@property NSArray *imagesUrls;
+
 @property BOOL isStatusBarHidden;
 
 @end
@@ -78,59 +80,34 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 -(void)loadNewImage:(NSTimer *)timer
 {
-    NSMutableURLRequest *req;
-    if(self.isPSDPlaying)
-    {
-        DLog(@"Requesting PSD image");
-        req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImagePSDURL]];
-        [req addValue:self.cookieString forHTTPHeaderField:@"Cookie"];
+    NSString *imageUrl;
+    @synchronized(self.imagesUrls) {
+        int r = arc4random() % [self.imagesUrls count];
+        imageUrl = self.imagesUrls[r];
     }
-    else
-    {
-        req = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:kHDImageURLURL]];
-    }
-    [req setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
-    [req addValue:@"no-cache" forHTTPHeaderField:@"Cache-Control"];
-    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-     {
-         if(data)
-         {
-             NSString *imageUrl = [[[NSString alloc]  initWithBytes:[data bytes] length:[data length] encoding: NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-             if(imageUrl)
-             {
-                 NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:imageUrl]];
-                 [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err)
-                  {
-                      if(data)
-                      {
-                          UIImage *temp = [UIImage imageWithData:data];
-                          DLog(@"Loaded %@, sending it to screen", [res URL]);
-                          // Protect from 404's
-                          if(temp)
-                          {
-                              // load images on the main thread (cross-dissolve them)
-                              dispatch_async(dispatch_get_main_queue(), ^{
-                                  self.dissolveHdImage.image = temp;
-                                  [UIView transitionFromView:self.hdImage toView:self.dissolveHdImage duration:1.5 options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished){
-                                      self.hdImage.image = temp;
-                                      self.hdImage.hidden = NO;
-                                      self.dissolveHdImage.hidden = YES;
-                                  }];
-                                  // If we have a second screen, update also there (faster animations)
-                                  if ([[UIScreen screens] count] > 1)
-                                      [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
-                              });
-                          }
-                      }
-                      else
-                      {
-                          DLog(@"Failed loading image from: <%@>", [res URL]);
-                      }
-                  }];
+    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:imageUrl]];
+    [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err) {
+         if(data) {
+             UIImage *temp = [UIImage imageWithData:data];
+             DLog(@"Loaded %@, sending it to screen", [res URL]);
+             // Protect from 404's
+             if(temp) {
+                 // load images on the main thread (cross-dissolve them)
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.dissolveHdImage.image = temp;
+                     [UIView transitionFromView:self.hdImage toView:self.dissolveHdImage duration:1.5 options:UIViewAnimationOptionShowHideTransitionViews | UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished){
+                         self.hdImage.image = temp;
+                         self.hdImage.hidden = NO;
+                         self.dissolveHdImage.hidden = YES;
+                     }];
+                     // If we have a second screen, update also there (faster animations)
+                     if ([[UIScreen screens] count] > 1) {
+                         [((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.TVImage setImage:temp];
+                     }
+                 });
              }
-             else {
-                 DLog(@"Got an invalid URL");
-             }
+         } else {
+             DLog(@"Failed loading image from: <%@>", [res URL]);
          }
      }];
 }
@@ -145,6 +122,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
         albumImage = [UIImage imageNamed:@"RP-meta"];
     } else {
         albumImage = image;
+    }
+    if (!album) {
+        album = @"Radio Paradise";
     }
     MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:albumImage];
     if (albumArt) {
@@ -192,24 +172,29 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
          {
              RXMLElement *rootXML = [RXMLElement elementFromXMLData:data];
              NSString __block *artist = [rootXML child:@"artist"].text;
-             NSString __block *title = [rootXML child:@"title"].text;
+             NSString __block *songTitle = [rootXML child:@"title"].text;
              NSString __block *album = [rootXML child:@"album"].text;
+             if (!title) {
+                 self.rawMetadataString = [NSString stringWithFormat:@"%@ - %@", artist, songTitle];
+             } else {
+                 self.rawMetadataString = title;
+             }
              // remembering songid for forum view
              self.currentSongId = [rootXML child:@"songid"].text;
              DLog(@"Song id is %@.", self.currentSongId);
-             [self nowPlaySetupWithArtist:artist andTitle:title andAlbum:album andArtwork:nil];
+             [self nowPlaySetupWithArtist:artist andTitle:songTitle andAlbum:album andArtwork:nil];
              dispatch_async(dispatch_get_main_queue(), ^{
-                 self.metadataInfo.text = self.rawMetadataString = title;
+                 self.metadataInfo.text = self.rawMetadataString;
                  // If we have a second screen, update also there
                  if ([[UIScreen screens] count] > 1) {
-                     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = title;
+                     ((RPAppDelegate *)[[UIApplication sharedApplication] delegate]).TVviewController.songNameOnTV.text = self.rawMetadataString;
                  }
                  [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateNormal];
                  [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateHighlighted];
                  [self.rpWebButton setBackgroundImage:[UIImage imageNamed:@"RP-meta"] forState:UIControlStateSelected];
                  self.coverImage = nil;
                  if(!self.viewIsLandscape) {
-                     self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", artist, title];
+                     self.metadataInfo.text = [NSString stringWithFormat:@"%@\n%@", artist, songTitle];
                  }
                  // In any case, reset the "add song" capability (we have a new song, it seems).
                  self.songIsAlreadySaved = NO;
@@ -230,6 +215,17 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                  self.lyricsText.text = lyrics;
                  [self.lyricsText scrollRangeToVisible:NSMakeRange(0, 0)];
              });
+             // Recover image urls
+             NSArray *iterate = [rootXML children:@"image"];
+             NSMutableArray *tempImageArray = [[NSMutableArray alloc] initWithCapacity:[iterate count]];
+             for (RXMLElement *image in iterate) {
+                 [tempImageArray addObject:[image child:@"large_url"].text];
+             }
+             DLog(@"Got %d image urls for this song", [tempImageArray count]);
+             @synchronized(self.imagesUrls) {
+                 self.imagesUrls = [NSArray arrayWithArray:tempImageArray];
+             }
+             tempImageArray = nil;
              // Now get album artwork
              NSString *temp = [rootXML child:@"large_cover"].text;
              DLog(@"URL for Artwork: <%@>", temp);
@@ -246,7 +242,7 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
                           dispatch_async(dispatch_get_main_queue(), ^{
                               // Set image
                               self.coverImageView.image = self.coverImage;
-                              [self nowPlaySetupWithArtist:artist andTitle:title andAlbum:album andArtwork:self.coverImage];
+                              [self nowPlaySetupWithArtist:artist andTitle:songTitle andAlbum:album andArtwork:self.coverImage];
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateNormal];
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateHighlighted];
                               [self.rpWebButton setBackgroundImage:self.coverImage forState:UIControlStateSelected];
