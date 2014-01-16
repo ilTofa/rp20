@@ -82,6 +82,9 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 
 -(void)loadNewImage:(NSTimer *)timer
 {
+    if (imagesCount == 0) {
+        return;
+    }
     NSString *imageUrl;
     @synchronized(self.imagesUrls) {
         imageUrl = self.imagesUrls[currentImagePosition % imagesCount];
