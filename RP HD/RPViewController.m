@@ -20,7 +20,9 @@
 
 void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID inPropertyID, UInt32 inPropertyValueSize, const void *inPropertyValue);
 
-@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate, UIActionSheetDelegate>
+@interface RPViewController () <UIPopoverControllerDelegate, RPLoginControllerDelegate, AVAudioSessionDelegate, UIActionSheetDelegate> {
+    int imagesCount, currentImagePosition;
+}
 
 @property (strong, nonatomic) Reachability *internetReachability;
 @property (strong, nonatomic) NSTimer *networkTimer;
@@ -82,14 +84,14 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
 {
     NSString *imageUrl;
     @synchronized(self.imagesUrls) {
-        int r = arc4random() % [self.imagesUrls count];
-        imageUrl = self.imagesUrls[r];
+        imageUrl = self.imagesUrls[currentImagePosition % imagesCount];
+        currentImagePosition++;
     }
     NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:imageUrl]];
     [NSURLConnection sendAsynchronousRequest:req queue:self.imageLoadQueue completionHandler:^(NSURLResponse *res, NSData *data, NSError *err) {
          if(data) {
              UIImage *temp = [UIImage imageWithData:data];
-             DLog(@"Loaded %@, sending it to screen", [res URL]);
+             DLog(@"Loaded %@ (%d), sending it to screen", [res URL], currentImagePosition);
              // Protect from 404's
              if(temp) {
                  // load images on the main thread (cross-dissolve them)
@@ -224,6 +226,8 @@ void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID i
              DLog(@"Got %d image urls for this song", [tempImageArray count]);
              @synchronized(self.imagesUrls) {
                  self.imagesUrls = [NSArray arrayWithArray:tempImageArray];
+                 imagesCount = [self.imagesUrls count];
+                 currentImagePosition = 0;
              }
              tempImageArray = nil;
              // Now get album artwork
