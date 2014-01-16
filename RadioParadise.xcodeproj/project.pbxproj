@@ -40,6 +40,7 @@
 		644C9838170509E90005A603 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644C9837170509E90005A603 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		64563B5815F65EF300664C74 /* SongAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 64563B5715F65EF300664C74 /* SongAdder.m */; };
 		645CA0601887D71600D30CCB /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 645CA05E1887D71600D30CCB /* iRate.m */; };
+		645CA0641887D79900D30CCB /* RXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 645CA0631887D79900D30CCB /* RXMLElement.m */; };
 		646ACA7515B46901001B5B73 /* STKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA7415B46901001B5B73 /* STKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		646ACA7815B46A12001B5B73 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646ACA7715B46A12001B5B73 /* Security.framework */; };
 		646ACA8815B46D6A001B5B73 /* RPLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646ACA8615B46D6A001B5B73 /* RPLoginController.m */; };
@@ -95,7 +96,6 @@
 		64DF349216B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64DF349116B49A3B00237D40 /* RPViewControllerLandscapeTest-iphone4.xib */; };
 		64DFC65315F7469C00214188 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65215F7469C00214188 /* Song.m */; };
 		64DFC65C15F74F9800214188 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */; };
-		64E48334188707AB00DEB470 /* RXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E48333188707AB00DEB470 /* RXMLElement.m */; };
 		64E4833618870C1200DEB470 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E4833518870C1200DEB470 /* libxml2.dylib */; };
 		64EBBD4F16B2890400F6C077 /* pbutton-appinfo.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */; };
 		64EBBD5016B2890400F6C077 /* pbutton-appinfo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */; };
@@ -156,6 +156,8 @@
 		64563B5715F65EF300664C74 /* SongAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongAdder.m; sourceTree = "<group>"; };
 		645CA05D1887D71600D30CCB /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		645CA05E1887D71600D30CCB /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		645CA0621887D79900D30CCB /* RXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMLElement.h; sourceTree = "<group>"; };
+		645CA0631887D79900D30CCB /* RXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMLElement.m; sourceTree = "<group>"; };
 		646ACA7315B46901001B5B73 /* STKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKeychain.h; sourceTree = "<group>"; };
 		646ACA7415B46901001B5B73 /* STKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKeychain.m; sourceTree = "<group>"; };
 		646ACA7715B46A12001B5B73 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -240,8 +242,6 @@
 		64DFC65A15F74F9800214188 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		64DFC65B15F74F9800214188 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		64DFD37A1685B75800C33279 /* RPiPadTestsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RPiPadTestsViewController.xib; sourceTree = "<group>"; };
-		64E48332188707AB00DEB470 /* RXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMLElement.h; sourceTree = "<group>"; };
-		64E48333188707AB00DEB470 /* RXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMLElement.m; sourceTree = "<group>"; };
 		64E4833518870C1200DEB470 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		64EBBD4D16B2890400F6C077 /* pbutton-appinfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pbutton-appinfo.png"; path = "Images/pbutton-appinfo.png"; sourceTree = "<group>"; };
 		64EBBD4E16B2890400F6C077 /* pbutton-appinfo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pbutton-appinfo@2x.png"; path = "Images/pbutton-appinfo@2x.png"; sourceTree = "<group>"; };
@@ -334,6 +334,7 @@
 		645CA05A1887D70B00D30CCB /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				645CA0611887D79900D30CCB /* RaptureXML */,
 				645CA05B1887D71600D30CCB /* iRate */,
 			);
 			name = Submodules;
@@ -347,6 +348,16 @@
 			);
 			name = iRate;
 			path = Libraries/iRate/iRate;
+			sourceTree = "<group>";
+		};
+		645CA0611887D79900D30CCB /* RaptureXML */ = {
+			isa = PBXGroup;
+			children = (
+				645CA0621887D79900D30CCB /* RXMLElement.h */,
+				645CA0631887D79900D30CCB /* RXMLElement.m */,
+			);
+			name = RaptureXML;
+			path = Libraries/RaptureXML/RaptureXML;
 			sourceTree = "<group>";
 		};
 		646ACA7215B46901001B5B73 /* STKeychain */ = {
@@ -421,16 +432,6 @@
 			path = "RP HD/Reachability";
 			sourceTree = "<group>";
 		};
-		64E48331188707AB00DEB470 /* RaptureXML */ = {
-			isa = PBXGroup;
-			children = (
-				64E48332188707AB00DEB470 /* RXMLElement.h */,
-				64E48333188707AB00DEB470 /* RXMLElement.m */,
-			);
-			name = RaptureXML;
-			path = "RP HD/RaptureXML";
-			sourceTree = "<group>";
-		};
 		64F5AF6D15EE5EAE0018B38A /* SongsInTheCloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +462,6 @@
 			children = (
 				645CA05A1887D70B00D30CCB /* Submodules */,
 				64914E87182BF88C0063BC7A /* Images.xcassets */,
-				64E48331188707AB00DEB470 /* RaptureXML */,
 				64A68AE21804465A00BE0B88 /* RadioKitLib */,
 				64971B9817D6A671002CA180 /* PiwikTracker2 */,
 				64971B7B17D6A639002CA180 /* AFNetworking */,
@@ -736,8 +736,8 @@
 				64B839211704A55B0097868E /* Reachability.m in Sources */,
 				64971B8F17D6A639002CA180 /* AFHTTPClient.m in Sources */,
 				64971B9017D6A639002CA180 /* AFHTTPRequestOperation.m in Sources */,
-				64E48334188707AB00DEB470 /* RXMLElement.m in Sources */,
 				64971B9117D6A639002CA180 /* AFImageRequestOperation.m in Sources */,
+				645CA0641887D79900D30CCB /* RXMLElement.m in Sources */,
 				64971B9217D6A639002CA180 /* AFJSONRequestOperation.m in Sources */,
 				645CA0601887D71600D30CCB /* iRate.m in Sources */,
 				64971B9317D6A639002CA180 /* AFNetworkActivityIndicatorManager.m in Sources */,

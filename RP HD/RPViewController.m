@@ -16,7 +16,7 @@
 #import "RPViewController+UI.h"
 #import "Reachability.h"
 #import "PiwikTracker.h"
-#import "RaptureXML/RXMLElement.h"
+#import "RXMLElement.h"
 
 void audioRouteChangeListenerCallback(void *inUserData, AudioSessionPropertyID inPropertyID, UInt32 inPropertyValueSize, const void *inPropertyValue);
 
